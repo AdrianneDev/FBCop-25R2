@@ -6,7 +6,6 @@ import {
 	PXFieldState,
 	gridConfig,
 	GridPreset,
-	GridFastFilterVisibility,
 } from "client-controls";
 
 @graphInfo({
@@ -19,7 +18,7 @@ export class SM200530 extends PXScreen {
 
 @gridConfig({
 	mergeToolbarWith: "ScreenToolbar",
-	preset: GridPreset.Primary, showFastFilter: GridFastFilterVisibility.False
+	preset: GridPreset.Primary
 })
 export class Certificate extends PXView {
 	Name: PXFieldState;

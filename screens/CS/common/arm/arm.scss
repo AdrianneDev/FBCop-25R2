@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: column;
 
-	qp-field:has(> .wrapper > .control-container > qp-field) {
+	qp-field:is(.arm-delim-fields, .arm-range-fields):has(> .wrapper > .control-container > qp-field) {
 		> .wrapper > .control-container > .main-field {
 			padding-inline-end: 20px;
 		}

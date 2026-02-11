@@ -463,7 +463,7 @@ export class Invoices extends PXView {
 @gridConfig({
 	preset: GridPreset.ReadOnly,
 	allowUpdate: false,
-	syncPosition: true,
+	syncPosition: true
 })
 export class ChangeOrders extends PXView {
 	CreateChangeOrder: PXActionState;
@@ -502,6 +502,7 @@ export class ReversingChangeOrders extends PXView {
 @gridConfig({
 	preset: GridPreset.ReadOnly,
 	allowUpdate: false,
+	syncPosition: true
 })
 export class ChangeRequests extends PXView {
 	CreateChangeRequest: PXActionState;

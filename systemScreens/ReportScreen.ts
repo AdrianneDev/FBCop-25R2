@@ -169,6 +169,11 @@ export class ReportScreen extends PXScreen {
 		return key ? urlParams.get(key) : undefined;
 	}
 
+	getKeys(): { [key: string]: string } {
+		// add report's screenid to keys so the rewritten url can identify the report
+		return { ...super.getKeys(), id: this.reportId || "" };
+	}
+
 	get siteMapScreenID(): string {
 		return this.Report?.ScreenId?.value || "ReportScreen";
 	}

@@ -22,7 +22,7 @@ import {
 	SYSubstitutionInfo,
 } from "./views";
 
-@graphInfo({graphType: "PX.Api.SYImportProcessSingle", primaryView: "MappingsSingle", })
+@graphInfo({graphType: "PX.Api.SYImportProcessSingle", primaryView: "MappingsSingle", identifyingField: "Name"})
 export class SM206036 extends PXScreen {
 	replaceOneValue: PXActionState;
 	replaceAllValues: PXActionState;

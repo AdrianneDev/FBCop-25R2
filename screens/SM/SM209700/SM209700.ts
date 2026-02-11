@@ -5,6 +5,7 @@ import {
 	PXScreen,
 	PXView,
 	RowSelectedHandlerArgs,
+	SessionURL,
 	createSingle,
 	graphInfo,
 	handleEvent,
@@ -29,7 +30,7 @@ export class SM209700 extends PXScreen {
 	getPDFUrl(args: RowSelectedHandlerArgs<PdfFileInfo>) {
 		if (args.screenModel instanceof SM209700) {
 			this.contentUrl = this.File?.FileId?.value
-				? this.redirectHelper.getAbsoluteUrl(`/ui/file/${this.File?.FileId?.value}`)
+				? new SessionURL(`/ui/file/${this.File?.FileId?.value}`, window.location).href
 				: "";
 		}
 	}

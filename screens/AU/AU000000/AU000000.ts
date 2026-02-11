@@ -4,10 +4,10 @@ import {
 	ScreenUpdateParams, QpTreeCustomElement, ScreenApiSettings, autoinject, RedirectHandlersProvider,
 	BaseRedirectExceptionHandler, IOpenWindowResult, RedirectType, IRedirectData, IRedirectHandlerParams,
 	WindowMode, IGraphInfoConfig, Guid, UrlOpenerEngine, PXActionState, actionConfig, customDataHandler,
-	IInlineScreenConfig, SessionUrlSerializer,
+	IInlineScreenConfig, SessionURL
 } from "client-controls";
 import { RowFilter, SiteMapTree, RowSolutionConfig, RowCheckinFile, RowISVInitials, RowFilesTree, RowValidate } from "./views";
-import { CustomizationManagerParams, CustomizationManagerParamsHelper, WithUrlSerializer } from "../common/au-base-screen";
+import { CustomizationManagerParams, CustomizationManagerParamsHelper } from "../common/au-base-screen";
 
 interface RefreshTreeParams {
 	projectSelectedNode?: string;
@@ -16,14 +16,12 @@ interface RefreshTreeParams {
 };
 
 @graphInfo({graphType: "PX.Web.Customization.ProjectBrowserMaint", primaryView: "Filter", disableReminder: true })
-export class AU000000 extends PXScreen implements WithUrlSerializer {
+export class AU000000 extends PXScreen  {
 	activeScreenVM?: QpInlineScreenCustomElement;
 	@autoinject
 	protected screenApiSettings: ScreenApiSettings;
 	@autoinject
 	protected redirectHandlersProvider: RedirectHandlersProvider;
-	@autoinject
-	public urlSerializer: SessionUrlSerializer;
 
 	@viewInfo({syncAlways: true})
 	Filter = createSingle(RowFilter);
@@ -58,7 +56,7 @@ export class AU000000 extends PXScreen implements WithUrlSerializer {
 
 	afterConstructor() {
 		super.afterConstructor();
-		this.compilationPanelFrameUrl = this.redirectHelper.getAbsoluteUrl("/Controls/Publish.aspx?compile=true");
+		this.compilationPanelFrameUrl = new SessionURL("/Controls/Publish.aspx?compile=true", window.location).href;
 		/*this.screenEventManager.subscribe(OpenPopupEvent, (message: OpenPopupEvent) => {
 			if (message.content === "PanelCompiler") {
 				message.detail.popupCommand = "Refresh";
@@ -115,7 +113,7 @@ export class AU000000 extends PXScreen implements WithUrlSerializer {
 		if (selectFirstNode) await this.selectFirstNode();
 	}
 
-	@customDataHandler<CustomizationManagerParams>((screen: AU000000) => CustomizationManagerParamsHelper.getParamsFromUrl(screen))
+	@customDataHandler<CustomizationManagerParams>((screen: AU000000) => CustomizationManagerParamsHelper.getParamsFromLocation())
 	CustomizationManagerCustomHandler() {
 		return;
 	}
@@ -151,8 +149,8 @@ export class AU000000 extends PXScreen implements WithUrlSerializer {
 			activeScreen = this.availableScreens[nodeId];
 		}
 
-		const nodeParams = this.urlSerializer.parseUrl(activeScreen.navigationUrl).queryParams;
-		const allParams = CustomizationManagerParamsHelper.getParamsFromUrl(this);
+		const nodeParams = (new SessionURL(activeScreen.navigationUrl)).searchParamsAsObject;
+		const allParams = CustomizationManagerParamsHelper.getParamsFromLocation();
 		const urlParams = {};
 		for (const [k, v] of Object.entries(allParams)) {
 			if (v !== undefined) {
@@ -167,7 +165,7 @@ export class AU000000 extends PXScreen implements WithUrlSerializer {
 			...(this.Filter?.ProjectID?.value.id && { ProjectId: this.Filter.ProjectID?.value.id }),
 			...nodeParams,
 			...urlParams
-		};
+		} as Record<string, string>;
 
 		this.screenApiSettings.updateBrowserLocation(activeScreen.screenId, false, keyParams);
 

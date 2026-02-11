@@ -1,5 +1,5 @@
-import { delegationStrategy } from "aurelia-binding";
-import { autoinject, PLATFORM, computedFrom, ElementEvents } from "aurelia-framework";
+import { delegationStrategy, Disposable } from "aurelia-binding";
+import { autoinject, PLATFORM, ElementEvents } from "aurelia-framework";
 import {
 	ReportResultApiClient,
 	PXScreen,
@@ -19,6 +19,13 @@ import {
 	Disposables,
 	SelectedNode,
 	QpTreeCustomElement,
+	CustomEventType,
+	handleEvent,
+	CallbackCompletedHandlerArgs,
+	ICommandUpdateResult,
+	IScreenUpdateInfo,
+	MenuButton,
+	QpToolBarCustomElement,
 } from "client-controls";
 import { Container } from "aurelia-dependency-injection";
 import {
@@ -30,18 +37,20 @@ import {
 	getResultUrl,
 	ReportResultParams,
 } from "./report-utils";
-
-const GROUPS_BUTTON = "groups";
-const HTML_MODE_BUTTON = "htmlmode";
-const VIEW_PDF_BUTTON = "viewpdf";
-const REFRESH_BUTTON = "refresh";
-const PRINT_BUTTON = "print";
+import {
+	GROUPS_BUTTON, HTML_MODE_BUTTON, VIEW_PDF_BUTTON, REFRESH_BUTTON,
+	PRINT_BUTTON, PAGE_FIRST_BUTTON, PAGE_PREVIOUS_BUTTON, PAGE_NEXT_BUTTON,
+	PAGE_LAST_BUTTON, IPageInfo,
+} from "./report-types";
+const GROUP_NODE_SELECTED = "groupNodeSelected";
 
 @graphInfo({ graphType: "PX.Data.Reports.ReportViewerMaint", primaryView: "Report" })
 @autoinject
 export class ReportViewer extends PXScreen {
 	@actionConfig({ toggleMode: true })
 	groups: PXActionState;
+
+	groupNodeSelected: PXActionState;
 
 	@viewInfo({ containerName: "Report" })
 	Report = createSingle(ReportExp);
@@ -50,8 +59,7 @@ export class ReportViewer extends PXScreen {
 	GroupsTree = createCollection(GroupTree);
 
 	private msg = Messages;
-	private isRefresh = true;
-	private refreshScreenDataAfterLoadOfReportResults = true;
+	private isRefresh = false;
 	private domEvents: ElementEvents;
 	private groupsHidden: boolean = true;
 	private groupsSplitterState: SplitterState = "collapsed-first";
@@ -60,6 +68,7 @@ export class ReportViewer extends PXScreen {
 	private resultUrl: string;
 	private printUrl = "about:blank";
 	private subscriptions: Disposables = new Disposables();
+	private treeSubscription?: Disposable = undefined;
 	private treeElement?: HTMLElement;
 	private treeViewModel: QpTreeCustomElement;
 	private refreshing = false;
@@ -85,7 +94,26 @@ export class ReportViewer extends PXScreen {
 		super.afterConstructor();
 		this.screenService.registerViewBinding(this.element, "Report");
 		this.subscriptions.append(
-			this.eventAggregator.subscribe("screen-updated", () => {
+			this.eventAggregator.subscribe("screen-updated", (args: IScreenUpdateInfo) => {
+				const serverCommand = args.dueToQuery?.command;
+				if (serverCommand && serverCommand.length > 0) {
+					if (serverCommand[0].name === GROUP_NODE_SELECTED) {
+						return;
+					}
+					if (serverCommand[0].name === REFRESH_BUTTON) {
+						this.refreshGroupView();
+						this.attachTreeEvent();
+					}
+				}
+				if (!this.Report?.ViewPdf?.value) {
+					try {
+						const pageInfo = this.getPageInfo(this.resultFrame.contentWindow);
+						this.enablePageButtons(pageInfo);
+					}
+					catch (error) {
+						console.warn("Couldn't calculate pageInfo", error);
+					}
+				}
 				this.recalculateResultUrl();
 			})
 		);
@@ -94,11 +122,6 @@ export class ReportViewer extends PXScreen {
 
 	async attached() {
 		await super.attached();
-		if (this.treeElement) {
-			this.subscriptions.append(
-				this.eventManager.addEventListener(this.treeElement, "onSelect",
-					(e: Event) => this.groupNodeSelect(e as any), delegationStrategy.none, true));
-		}
 		this.domEvents = new ElementEvents(document.body);
 		this.domEvents.subscribe("buttonpressed", (e: CustomEvent) => this.processButtonPressed(e));
 	}
@@ -120,14 +143,43 @@ export class ReportViewer extends PXScreen {
 	onFrameLoad(iFrame: HTMLIFrameElement) {
 		if (iFrame.contentDocument?.body?.classList?.contains("report-loading")) {
 			this.isRefresh = false;
-			this.resultFrame.contentWindow.location.href = this.resultUrl;
+
+			if (!this.refreshing && this.initialized) {
+				this.refreshing = true;
+				this.refreshingMessage = this.refreshingMessage ?? this.model?.loadingMessage;
+			}
+
+			if (!this.recalculateResultUrl()) {
+				this.resultFrame.contentWindow.location.href = this.resultUrl;
+			}
 		}
 		else {
 			this.refreshing = false;
 		}
 	}
 
-	private recalculateResultUrl(params?: { pageNum?: number; groupId?: string; search?: string }) {
+	@handleEvent(CustomEventType.CallbackCompleted)
+	onCallbackCompleted(args: CallbackCompletedHandlerArgs<ICommandUpdateResult>) {
+		if (!args.data?.succeeded) {
+			// Exception
+			return;
+		}
+
+		if (this.Report?.IsArm.value && args.actionName === GROUP_NODE_SELECTED) {
+			if (this.resultFrame) {
+				this.refreshing = true;
+				this.isRefresh = true;
+				this.resultFrame.contentWindow.location.href = this.getUrl({ pageNum: 0 });
+			}
+		}
+	}
+
+	getKeys(): { [key: string]: string } {
+		// add instanceId to keys so the rewritten url can identify the report instance
+		return { ...super.getKeys(), instanceId: this.instanceId || "" };
+	}
+
+	private recalculateResultUrl(params?: { pageNum?: number; groupId?: string; search?: string }): boolean {
 		const newUrl = this.getUrl(params);
 		if (newUrl !== this.resultUrl) {
 			if (!this.urlLoading) {
@@ -140,7 +192,11 @@ export class ReportViewer extends PXScreen {
 				this.resultUrl = newUrl;
 				this.hideIframe = false;
 			});
+
+			return true;
 		}
+
+		return false;
 	}
 
 	private getUrl(params?: { pageNum?: number; groupId?: string; search?: string }) {
@@ -176,16 +232,21 @@ export class ReportViewer extends PXScreen {
 
 		switch (commandLowerCase) {
 			case GROUPS_BUTTON:
-				this.toogleGroups(buttonConfig);
+				this.toogleGroups();
 				e.stopPropagation();
 				(<any>e).propagationStopped = true;
 				break;
 
 			case HTML_MODE_BUTTON:
-			case VIEW_PDF_BUTTON:
-				this.refreshScreenDataAfterLoadOfReportResults = true;
 				this.refreshing = true;
 				this.refreshingMessage = "";
+				break;
+			case VIEW_PDF_BUTTON:
+				this.refreshing = true;
+				this.refreshingMessage = "";
+				if (!this.groupsHidden) {
+					this.toogleGroups();
+				}
 				break;
 
 			case REFRESH_BUTTON:
@@ -214,6 +275,74 @@ export class ReportViewer extends PXScreen {
 					}
 				}
 				break;
+
+			case PAGE_FIRST_BUTTON:
+			case PAGE_PREVIOUS_BUTTON:
+			case PAGE_NEXT_BUTTON:
+			case PAGE_LAST_BUTTON:
+				this.isRefresh = false;
+				this.onPageButton(commandLowerCase);
+				e.stopPropagation();
+				(<any>e).propagationStopped = true;
+				break;
+		}
+	}
+
+	private onPageButton(pageButtonCommand: string) {
+		const win = this.resultFrame.contentWindow;
+		const pageInfo = this.getPageInfo(win);
+
+		switch (pageButtonCommand) {
+			case PAGE_FIRST_BUTTON:
+				pageInfo.startPage = 0;
+				break;
+
+			case PAGE_PREVIOUS_BUTTON:
+				if (pageInfo.startPage > 0) {
+					pageInfo.startPage--;
+				}
+				break;
+
+			case PAGE_NEXT_BUTTON:
+				if (pageInfo.startPage < pageInfo.pageCount - 1) {
+					pageInfo.startPage++;
+				}
+				break;
+
+			case PAGE_LAST_BUTTON:
+				if (pageInfo.pageCount > 0) {
+					pageInfo.startPage = pageInfo.pageCount - 1;
+				}
+				break;
+		}
+
+
+		this.recalculateResultUrl({ pageNum: pageInfo.startPage });
+		this.enablePageButtons(pageInfo);
+	}
+
+	private getPageInfo(win: Window) {
+		const elem = win.document.getElementById("reportInfo") as HTMLElement;
+		const startPage = typeof elem?.dataset?.startPage === "string" ? Number(elem.dataset.startPage) : 0;
+		const pageCount = typeof elem?.dataset?.pageCount === "string" ? Number(elem.dataset.pageCount) : 0;
+		return { startPage, pageCount };
+	}
+
+	private enablePageButtons(pageInfo: IPageInfo) {
+		this.checkButtonIsEnabled(PAGE_FIRST_BUTTON, pageInfo,
+			(pageInfo) => pageInfo.startPage > 0);
+		this.checkButtonIsEnabled(PAGE_PREVIOUS_BUTTON, pageInfo,
+			(pageInfo) => pageInfo.startPage > 0 && pageInfo.pageCount > 1);
+		this.checkButtonIsEnabled(PAGE_NEXT_BUTTON, pageInfo,
+			(pageInfo) => pageInfo.startPage < pageInfo.pageCount - 1 && pageInfo.pageCount > 1);
+		this.checkButtonIsEnabled(PAGE_LAST_BUTTON, pageInfo,
+			(pageInfo) => pageInfo.startPage < pageInfo.pageCount - 1);
+	}
+
+	private checkButtonIsEnabled(actionName: string, pageInfo: IPageInfo, condition: (pageInfo: IPageInfo) => boolean) {
+		const button = this.actions.get(actionName);
+		if (button) {
+			button.enabled = condition(pageInfo);
 		}
 	}
 
@@ -225,11 +354,37 @@ export class ReportViewer extends PXScreen {
 		this.printFrame?.contentWindow.print();
 	}
 
-	private toogleGroups(buttonConfig: IToolBarMenuButton) {
-		//buttonConfig.togleMode = true;
+	private toogleGroups() {
 		this.groupsHidden = !this.groupsHidden;
+		this.refreshGroupView();
+		this.attachTreeEvent();
+	}
+
+	private refreshGroupView() {
 		this.groupsSplitterState = this.groupsHidden ? "collapsed-first" : "normal";
-		buttonConfig.pushed = !this.groupsHidden;
+		const toolbar: QpToolBarCustomElement | undefined = (this.screenService.getDataComponent("ScreenToolbar") as any)?.toolBarVM;
+		const button = toolbar?.items?.find((i: MenuButton) => i.commandName === GROUPS_BUTTON) as MenuButton;
+		if (!button) {
+			return;
+		}
+		button.pushed = !this.groupsHidden;
+	}
+
+	private attachTreeEvent() {
+		if (this.treeSubscription) {
+			this.treeSubscription.dispose();
+		}
+		if (!this.groupsHidden) {
+			this.tq.queueTask(() => {
+				if (!this.treeElement) {
+					return;
+				}
+				this.treeSubscription = this.eventManager.addEventListener(
+					this.treeElement,
+					"onSelect",
+					(e: Event) => this.groupNodeSelect(e as any), delegationStrategy.none, true);
+			});
+		}
 	}
 
 	private groupNodeSelect(e: CustomEvent<Array<SelectedNode>>) {
@@ -240,15 +395,7 @@ export class ReportViewer extends PXScreen {
 			return;
 		}
 
-		// Indirect sign that the report is ARM report
-		// TODO: replace later with a direct indicator of ARM reports if it will be passed to the frontend
-		const isArmReport = idParts.length !== 2;
-
-		if (isArmReport) {
-			this.screenService.setControlParameter("GroupsTree", "GroupId", idParts[0]);
-			this.screenService.update();
-		}
-		else {
+		if (this.Report?.IsArm.value !== true) {
 			let pageIndex = parseInt(idParts[0]) - 1;
 			let groupId = idParts[1];
 			const isTopLevelGroup = pageIndex < 0;
@@ -265,6 +412,9 @@ export class ReportViewer extends PXScreen {
 			}
 
 			this.recalculateResultUrl({ pageNum: pageIndex, groupId: groupId });
+		}
+		else {
+			this.busyCounter.increment();
 		}
 	}
 
@@ -309,14 +459,9 @@ export class ReportViewer extends PXScreen {
 			console.warn("Couldn't attach event to IFRAME", error);
 		}
 
-		// We need to make an extra request for screen data to backend after report results are loaded for the first time
-		// to ensure that actual screen data are obtained in the end. All other requests for screen data may return incorrect data
-		// due to a report object in the server memory being outdated. Only this request always happens after the report object's refresh.
-		if (this.refreshScreenDataAfterLoadOfReportResults) {
-			this.refreshScreenDataAfterLoadOfReportResults = false;
-			if (this.screenService.initialized || this.screenService.isReloadRequest) {
-				await this.screenService.update();
-			}
+		if (!this.Report?.ViewPdf?.value) {
+			this.enablePageButtons(this.getPageInfo(win));
+			this.refreshGroupView();
 		}
 	}
 
@@ -333,9 +478,13 @@ export class ReportViewer extends PXScreen {
 	}
 
 	private onSearch(filter: string) {
-		this.recalculateResultUrl({ pageNum: 0, search: filter });
+		if (!this.recalculateResultUrl({ pageNum: 0, search: filter })) {
+			this.busyCounter.increment();
+		}
+
 		if (this.resultFrame) {
-			this.resultFrame.contentWindow.location.href = this.resultUrl;
+			const win = this.resultFrame.contentWindow;
+			win.location.href = this.resultUrl;
 		}
 	}
 }

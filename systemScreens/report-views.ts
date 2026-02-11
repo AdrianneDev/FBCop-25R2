@@ -105,9 +105,6 @@ export class ReportParameters extends PXView {
 }
 
 export class ReportExp extends PXView {
-	IsDefault: PXFieldState;
-	Shared: PXFieldState;
-
 	@controlConfig({allowEdit: false, allowNull: false})
 	Format: PXFieldState;
 
@@ -140,6 +137,7 @@ export class ReportExp extends PXView {
 	InstanceId: PXFieldState;
 	PageIndex: PXFieldState;
 	ShowPdfSignWarning: PXFieldState<PXFieldOptions.Hidden>;
+	IsArm: PXFieldState<PXFieldOptions.Hidden>;
 }
 
 export class ReportSettingsExp extends PXView {
@@ -147,9 +145,10 @@ export class ReportSettingsExp extends PXView {
 }
 
 export class EditTemplateDialog extends PXView {
+	@fieldConfig({ controlConfig: { immediateApplyValue: true } })
 	Template: PXFieldState;
-	IsDefault: PXFieldState;
-	Shared: PXFieldState;
+	IsDefaultTemplate: PXFieldState;
+	IsSharedTemplate: PXFieldState;
 }
 
 @treeConfig({
@@ -159,6 +158,7 @@ export class EditTemplateDialog extends PXView {
 	modifiable: false,
 	mode: "single",
 	singleClickSelect: true,
+	onSelect: "groupNodeSelected",
 	hideToolbarSearch: true,
 	hideRootNode: true,
 })
@@ -169,20 +169,18 @@ export class GroupTree extends PXView {
 }
 
 @gridConfig({
-	preset: GridPreset.ShortList,
 	allowUpdate: false,
-	allowInsert: false,
-	allowDelete: false,
+	preset: GridPreset.ReadOnly,
 	adjustPageSize: true,
 	autoGrowInHeight: GridAutoGrowMode.Fill,
 	syncPosition: true,
 	columns: [
 		{ field: "NotificationID", visible: false, allowShowHide: GridColumnShowHideMode.False },
-		{ field: "Name", caption: Messages.EmailTemplate },
+		{ field: "EmailTemplate", caption: Messages.EmailTemplate },
 		{ field: "ScreenID", caption: Messages.ScreenID },
-		{ field: "NTo", caption: Messages.Recipients },
-		{ field: "ReportSettings__Name", caption: Messages.ReportTemplate },
-		{ field: "ReportSettings__Username", caption: Messages.ReportTemplateOwner},
+		{ field: "Recipients", caption: Messages.Recipients },
+		{ field: "ReportTemplate", caption: Messages.ReportTemplate },
+		{ field: "ReportTemplateOwner", caption: Messages.ReportTemplateOwner},
 	],
 	topBarItems: {
 		scheduleReport: {
@@ -200,9 +198,9 @@ export class EmailNotification extends PXView {
 	NotificationID: PXFieldState<PXFieldOptions.Hidden>;
 
 	@linkCommand("viewNotification")
-	Name: PXFieldState;
+	EmailTemplate: PXFieldState;
 	ScreenID: PXFieldState;
-	NTo: PXFieldState;
-	ReportSettings__Name: PXFieldState;
-	ReportSettings__Username: PXFieldState;
+	Recipients: PXFieldState;
+	ReportTemplate: PXFieldState;
+	ReportTemplateOwner: PXFieldState;
 }

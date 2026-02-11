@@ -304,7 +304,7 @@ export class App {
 					this.initialized = true;
 					if (this.isMainFrame && ![ScreenPlacement.PopupDialog, ScreenPlacement.Embedded].includes(this.screenApiSettings.placement)) {
 						const primaryView = this.viewModel[this.viewModel.graphInfo.primaryView];
-						const newParams = data?.urlFieldNames
+						const newParams: Record<string, string> = data?.urlFieldNames
 							? data.urlFieldNames
 								.reduce((prev, fieldName) => {
 									const field = primaryView[fieldName] as PXFieldState;
@@ -316,7 +316,6 @@ export class App {
 											prev[fieldName] = field.textValue;
 										}
 									}
-
 									return prev;
 								}, {})
 							: this.viewModel.getKeys();

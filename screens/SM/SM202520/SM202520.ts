@@ -10,8 +10,7 @@ import {
 	RowSelectedHandlerArgs,
 	PXViewCollection,
 	PXPageLoadBehavior,
-	customDataHandler, autoinject,
-	Params, SessionUrlSerializer
+	customDataHandler,
 } from "client-controls";
 import { ClearDateFilter, GetLinkFilterType, FilesFilter, UploadFile } from "./views";
 
@@ -26,13 +25,10 @@ export class SM202520 extends PXScreen {
 	Filter = createSingle(FilesFilter);
 	Files = createCollection(UploadFile);
 
-	@autoinject
-	public urlSerializer: SessionUrlSerializer;
-
 	@customDataHandler((screen: SM202520) => {
-		const parsedParams = <Params>screen.urlSerializer.parseQueryParams(window.location.search);
+		const parsedParams = new URLSearchParams(window.location.search);
 		return {
-			Note: parsedParams.note
+			Note: parsedParams.get("note") ?? undefined,
 		};
 	})
 	SM202520Handler() {

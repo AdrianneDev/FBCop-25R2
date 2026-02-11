@@ -14,10 +14,9 @@ import {
 	treeConfig,
 	ControlParameter,
 	customDataHandler,
-	autoinject,
-    QpTreeCustomElement} from "client-controls";
+	QpTreeCustomElement
+} from "client-controls";
 import { PXScreenWithSiteMapSupport } from "src/screens/common/screen-with-site-map-refresh";
-import { Params, SessionUrlSerializer } from "client-controls/services/session-url-serializer";
 
 
 interface RedirectToAccessRightsParam {
@@ -35,12 +34,9 @@ export class SM201020 extends PXScreenWithSiteMapSupport {
 
 	treeVM: QpTreeCustomElement;
 
-	@autoinject
-	public urlSerializer: SessionUrlSerializer;
-
 	@customDataHandler<RedirectToAccessRightsParam>((screen: SM201020) => {
-		const parsedParams = <Params>screen.urlSerializer.parseQueryParams(window.location.search);
-		const screenNodeId = parsedParams.Screen;
+		const parsedParams = new URLSearchParams(window.location.search);
+		const screenNodeId = parsedParams.get("Screen") ?? undefined;
 		return {
 			OriginalScreenNodeId: screenNodeId
 		};

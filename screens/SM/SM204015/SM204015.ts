@@ -27,6 +27,7 @@ export class SM204015 extends PXScreen {
 export class EMailSyncServer extends PXView {
 	AccountCD: PXFieldState;
 	Address: PXFieldState;
+	ServerType: PXFieldState<PXFieldOptions.CommitChanges>;
 	AuthenticationMethod: PXFieldState<PXFieldOptions.CommitChanges>;
 	AzureTenantID: PXFieldState;
 	@controlConfig<ISelectorControlConfig>({ allowEdit: true })

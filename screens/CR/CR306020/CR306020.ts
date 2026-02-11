@@ -52,6 +52,7 @@ export class CRActivityHeader extends PXView {
 	UIStatus: PXFieldState<PXFieldOptions.CommitChanges>;
 	StartDate_Date: PXFieldState<PXFieldOptions.CommitChanges>;
 	EndDate_Date: PXFieldState<PXFieldOptions.CommitChanges>;
+	ExchangeTaskListName: PXFieldState<PXFieldOptions.Disabled>;
 	PercentCompletion: PXFieldState<PXFieldOptions.CommitChanges>;
 	Priority: PXFieldState;
 	IsPrivate: PXFieldState;

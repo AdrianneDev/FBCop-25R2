@@ -16,7 +16,8 @@ import {
 	GridPagerMode,
 	OpenPopupEvent,
 	controlConfig,
-	actionConfig
+	actionConfig,
+	SessionURL
 } from "client-controls";
 
 interface ProjectListParams {
@@ -76,7 +77,7 @@ export class SM204505 extends PXScreen {
 
 	afterConstructor() {
 		super.afterConstructor();
-		this.compilationPanelFrameUrl = this.redirectHelper.getAbsoluteUrl("/Controls/Publish.aspx?compile=true");
+		this.compilationPanelFrameUrl = new SessionURL("/Controls/Publish.aspx?compile=true", window.location).href;
 		this.screenEventManager.subscribe(OpenPopupEvent, (message: OpenPopupEvent) => {
 			if (message.content === "PanelCompiler") {
 				message.detail.popupCommand = "Reload";

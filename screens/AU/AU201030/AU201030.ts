@@ -1,7 +1,6 @@
 import {
 	createCollection, createSingle, graphInfo, PXActionState, viewInfo, handleEvent, CustomEventType, RowSelectedHandlerArgs,
-	PXViewCollection, PXPageLoadBehavior, ControlParameter, customDataHandler, autoinject, PXDatetimeFieldState,
-	Params, SessionUrlSerializer
+	PXViewCollection, PXPageLoadBehavior, ControlParameter, customDataHandler, PXDatetimeFieldState,
 } from "client-controls";
 import {
 	RowPageTitle, WorkflowStateNode, WorkflowStateProperties, WorkflowStateProperty, WorkflowOnEnterStateField, WorkflowOnLeaveStateField, WorkflowStateAction, WorkflowStateEventHandler,
@@ -52,9 +51,6 @@ export class AU201030 extends AuPanelViewChangesScreen {
 
 	Workflow = createSingle(Workflow);
 	CurrentTreeNode = createSingle(WorkflowStateNode);
-
-	@autoinject
-	public urlSerializer: SessionUrlSerializer;
 
 	CurrentWorkflowIsReadonly: boolean;
 

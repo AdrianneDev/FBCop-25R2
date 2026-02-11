@@ -11,7 +11,7 @@ import {
 	IMenuControlConfig
 } from "client-controls";
 
-import { CustObject, RowPageTitle, RowExtensionInfo, RowScreenHtmlEdit, RowScreenTsEdit, NewTsDataFieldFilter, NewFieldPropsFilter, NewTsDataViewFilter, RowNewFieldToTs, EditTsFilter, RowAttributesEditor, NewFilterNewBaseViewPropsFilter, NewFilterNewViewPropsFilter, RowFilterAddAttributes, RowAddDecorators, RowAddDecoratorProperties } from "./views";
+import { CustObject, RowPageTitle, RowExtensionInfo, RowScreenHtmlEdit, RowScreenTsEdit, NewTsDataFieldFilter, NewFieldPropsFilter, NewTsDataViewFilter, RowNewFieldToTs, EditTsFilter, RowAttributesEditor, NewFilterNewBaseViewPropsFilter, NewFilterNewViewPropsFilter, RowFilterAddAttributes, RowAddDecorators, RowAddDecoratorProperties, NewEventHandlerProps } from "./views";
 import { AuBaseScreen } from "../common/au-base-screen";
 import { IFieldListItem, IFieldListItemView } from "client-controls/controls/container/fieldset/types";
 import { bindable, observable } from "aurelia-framework";
@@ -35,6 +35,7 @@ class Names {
 	static AddDataViewExtension = "Add Data View Extension";
 	static AddView = "Add View";
 	static AddGridView = "Add Grid View";
+	static AddCustomHandler = "Add Custom Event Handler";
 	static FormatCode = "Format";
 	static Warning = "Warning";
 	static Ok = "Ok";
@@ -217,6 +218,7 @@ export class AU201080 extends AuBaseScreen {
 
 	finishAddDataFieldToTs: PXActionState;
 	finishAddFieldSnippet: PXActionState;
+	finishAddEventHandlerSnippet: PXActionState;
 	actionAddDecorators: PXActionState;
 
 	ViewPageTitle = createSingle(RowPageTitle);
@@ -228,6 +230,7 @@ export class AU201080 extends AuBaseScreen {
 	FilterNewBaseViewPropsFilter = createSingle(NewFilterNewBaseViewPropsFilter);
 	FilterNewViewPropsFilter = createSingle(NewFilterNewViewPropsFilter);
 	FilterNewView = createSingle(NewTsDataViewFilter);
+	FilterNewEventHandlerProps = createSingle(NewEventHandlerProps);
 
 	FilterEditExtension = createSingle(EditTsFilter);
 	NewFields = createCollection(RowNewFieldToTs);
@@ -272,6 +275,11 @@ export class AU201080 extends AuBaseScreen {
 				text: Names.AddGridView,
 				type: "MenuButton",
 				commandName: "addGridViewSnippet",
+			}, {
+				id: "addCustomHandlerAction",
+				text: Names.AddCustomHandler,
+				type: "MenuButton",
+				commandName: "addCustomHandlerSnippet",
 			}
 		]
 	};
@@ -560,16 +568,16 @@ export class AU201080 extends AuBaseScreen {
 		};
 	})
 	AU201080Handler(result: { SetFocusToExtensionName: boolean; SetFocusToTsCodeEditor: boolean; TsCodeEditorPosition: number }) {
-		if (result.SetFocusToExtensionName) {
-			const el = document.querySelector("[control-id='edFilterEditExtension-ExtensionName'] input") as HTMLElement;
-			if (el) {
-				el.focus();
-			}
-		} else if (result.SetFocusToTsCodeEditor) {
-			const timeOut = 50;
-			setTimeout(()=> {this.editTsControl.currentCursorPosition = result.TsCodeEditorPosition;}, timeOut);
-			this.editTsControl.currentCursorPosition = result.TsCodeEditorPosition;
-		}
+		// if (result.SetFocusToExtensionName) {
+		// 	const el = document.querySelector("[control-id='edFilterEditExtension-ExtensionName'] input") as HTMLElement;
+		// 	if (el) {
+		// 		el.focus();
+		// 	}
+		// } else if (result.SetFocusToTsCodeEditor) {
+		// 	const timeOut = 50;
+		// 	setTimeout(()=> {this.editTsControl.currentCursorPosition = result.TsCodeEditorPosition;}, timeOut);
+		// 	this.editTsControl.currentCursorPosition = result.TsCodeEditorPosition;
+		// }
 	}
 
 	async rollbackAttributes() {

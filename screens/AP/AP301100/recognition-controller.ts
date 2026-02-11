@@ -5,7 +5,8 @@ import { FullTextTerm, Ocr, RecognizedData, RecognizedDocument, RecognizedField,
 import {
 	BaseApiClient, GridCell, GridRowStatus, IGridRow, IToolBarMenuButton, IToolBarMenuOptions, NetType, PXFieldState,
 	PXScreen, PXView, PXViewCollection, QpFieldCustomElement, QpGridCustomElement, RedirectHelper, ScreenUpdateParams, IScreenService,
-	QpGridEventArgs, getColumnDefaultValue
+	QpGridEventArgs, getColumnDefaultValue,
+	SessionURL
 } from "client-controls";
 import { FeedbackCollector, getFieldNameFromFullName, RecognizedColumn, RecognizedTable, RecognizedValue, RecognizedValueMapper, RecognizedValueScroller } from "./documentRecognition/recognition";
 import { HintMode, LinesHintCustomElement } from "./documentRecognition/linesHint/lines-hint";
@@ -135,7 +136,7 @@ export class RecognitionController {
 				this.linesHint.onSelectAllLinesCallback = () => this.recognizedValueMapper.allowSelectMoreRows(false);
 				this.linesHint.onSelectAllLinesPrevCallback = () => this.recognizedValueMapper.allowSelectMoreRows(true);
 				this.switchToBoxMode(false, false, false);
-				const fileUrl = this.redirectHelper.getAbsoluteUrl(`/ui/file/${document.FileID.value}`);
+				const fileUrl = new SessionURL(`/ui/file/${document.FileID.value}`, window.location).href;
 				await this.renderPdf(this.pdfViewer, fileUrl);
 			}
 			const recognizedData = this.getRecognizedData(document);

@@ -20,6 +20,18 @@
 								 state.bind="CurrentTaskTemplate.Body"
 								 wg-field
 								 class="stretch">
+				<insert-data-field
+						data-member="EntityItems"
+						text-field="Name"
+						value-field="Path"
+						icon-field="Icon"
+				></insert-data-field>
+				<insert-data-field-prev
+						data-member="PreviousEntityItems"
+						text-field="Name"
+						value-field="Path"
+						icon-field="Icon">
+				</insert-data-field-prev>
 			</qp-rich-text-editor>
 		</qp-tab>
 		<qp-tab id="tabTaskSettings" caption="Task Settings">

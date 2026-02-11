@@ -40,10 +40,11 @@ export function setParameterDependencies(screen: IReportScreen, p: ReportParamet
 	controlConfig.parameters = (screen: IReportScreen) => {
 		const params = {};
 		for (const dep of deps) {
-			if (!screen.Parameters.hasOwnProperty(dep.fieldNameOnReport)) {
+			const parameterKey = Object.keys(screen.Parameters).find(key => key.toLowerCase() === dep.fieldNameOnReport.toLowerCase());
+			if (!parameterKey) {
 				continue;
 			}
-			const value = (<PXFieldState<any, any>> screen.Parameters[dep.fieldNameOnReport])?.systemValue;
+			const value = (<PXFieldState<any, any>> screen.Parameters[parameterKey])?.systemValue;
 			if (!value) {
 				continue;
 			}

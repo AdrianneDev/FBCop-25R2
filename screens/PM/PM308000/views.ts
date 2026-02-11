@@ -199,6 +199,7 @@ export class AvailablePOLines extends PXView {
 @gridConfig({
 	preset: GridPreset.ReadOnly,
 	allowUpdate: false,
+	syncPosition: true
 })
 export class AvailableChangeRequests extends PXView {
 	@columnConfig({ allowCheckAll: true })

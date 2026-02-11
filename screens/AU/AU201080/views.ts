@@ -62,6 +62,12 @@ export class NewFilterNewViewPropsFilter extends PXView {
 	ContainerName: PXFieldState;
 }
 
+export class NewEventHandlerProps extends PXView {
+	CustomEventType: PXFieldState<PXFieldOptions.CommitChanges>;
+	ViewName: PXFieldState<PXFieldOptions.CommitChanges>;
+	FieldName: PXFieldState<PXFieldOptions.CommitChanges>;
+	ColumnName: PXFieldState<PXFieldOptions.CommitChanges>;
+}
 
 export class EditTsFilter extends PXView {
 	ExtensionName: PXFieldState<PXFieldOptions.CommitChanges>;

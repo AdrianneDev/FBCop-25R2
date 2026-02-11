@@ -32,6 +32,7 @@ export class EMailAccount extends PXView {
 	@headerDescription
 	Description: PXFieldState<PXFieldOptions.CommitChanges>;
 	IsActive: PXFieldState<PXFieldOptions.CommitChanges>;
+	EmailAccountType: PXFieldState<PXFieldOptions.Hidden>;
 	Address: PXFieldState;
 	ReplyAddress: PXFieldState;
 	PluginTypeName: PXFieldState<PXFieldOptions.CommitChanges>;

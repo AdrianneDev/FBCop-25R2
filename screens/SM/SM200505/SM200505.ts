@@ -68,6 +68,7 @@ export class PreferencesGeneral extends PXView {
 	PortalExternalAccessLink: PXFieldState;
 	PersonNameFormat: PXFieldState<PXFieldOptions.CommitChanges>;
 	DefaultUI: PXFieldState<PXFieldOptions.CommitChanges>;
+	OutlookAddInUI: PXFieldState;
 	GridFastFilterCondition: PXFieldState;
 	GridFastFilterMaxLength: PXFieldState;
 	GridActionsText: PXFieldState;

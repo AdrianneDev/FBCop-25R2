@@ -20,7 +20,7 @@
 		invisible.bind="groupsHidden" initial-state="collapsed-first" initial-split="23%">
 		<split-pane>
 			<qp-tree id="viewer_gt" view.bind="GroupsTree" ref="treeElement" wg-container="GroupTree"
-				view-model.ref="treeViewModel">
+				view-model.ref="treeViewModel" if.bind="!groupsHidden">
 			</qp-tree>
 		</split-pane>
 		<split-pane>

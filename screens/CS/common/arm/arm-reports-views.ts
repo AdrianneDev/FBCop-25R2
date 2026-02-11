@@ -43,6 +43,7 @@ export class RMReport extends PXView  {
 	HeightType: PXFieldState;
 
 	RequestOrganizationID: PXFieldState;
+	RequestUseMasterCalendar: PXFieldState;
 	RequestLedgerID: PXFieldState;
 	RequestStartAccount: PXFieldState;
 	RequestEndAccount: PXFieldState;
@@ -77,6 +78,7 @@ export class RMDataSource extends PXView  {
 	RowDescription: PXFieldState<PXFieldOptions.CommitChanges>;
 
 	OrganizationID: PXFieldState<PXFieldOptions.CommitChanges>;
+	UseMasterCalendar: PXFieldState<PXFieldOptions.CommitChanges>;
 	LedgerID: PXFieldState<PXFieldOptions.CommitChanges>;
 	StartAccount: PXFieldState<PXFieldOptions.CommitChanges>;
 	EndAccount: PXFieldState<PXFieldOptions.CommitChanges>;

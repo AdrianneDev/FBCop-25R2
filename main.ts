@@ -7,7 +7,16 @@ import { Aurelia, PLATFORM, TemplatingEngine, TaskQueue, DOM } from "aurelia-fra
 import * as env from "../config/environment.json";
 import { disableConnectQueue } from "aurelia-binding";
 import { HttpClient } from "aurelia-fetch-client";
-import { IScreenModel, DEFAULT_HTTP_CONFIGURATION, BASE_PATH, BusyCounterHttpInterceptor, ScreenService } from "client-controls";
+import {
+	IScreenModel,
+	DEFAULT_HTTP_CONFIGURATION,
+	BASE_PATH,
+	BusyCounterHttpInterceptor,
+	ScreenService,
+	handleSessionId,
+	SessionURL,
+	siteRoot,
+} from "client-controls";
 import { HttpClientConfiguration } from "aurelia-fetch-client";
 import { getScreenIdFromUrl } from "./screen-utils";
 
@@ -28,6 +37,7 @@ window.confirm = function (msg) {
 	return nativeConfirm(msg);
 };
 
+handleSessionId();
 
 disableConnectQueue();
 
@@ -197,6 +207,7 @@ export function configure(aurelia: Aurelia): void {
 	const busyCounterHttpInterceptor = aurelia.container.get(BusyCounterHttpInterceptor);
 	const path = PLATFORM.global.location.pathname;
 	const root = path.substring(0, path.toLowerCase().indexOf("scripts/"));
+	SessionURL.initSite(PLATFORM.global.location.origin, siteRoot);
 	aurelia.container.registerInstance(BASE_PATH, root);
 	const defaultConfiguration = (config: HttpClientConfiguration) =>
 		config

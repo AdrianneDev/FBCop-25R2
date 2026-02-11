@@ -1,6 +1,6 @@
 import {
 	autoinject, customDataHandler, PXScreen, IRedirectHandlerParams, IRedirectData, IOpenWindowResult,
-	RedirectHandlersProvider, RedirectType, BaseRedirectExceptionHandler, SessionUrlSerializer,
+	RedirectHandlersProvider, RedirectType, BaseRedirectExceptionHandler, SessionURL,
 	isLegacyEnv
 } from "client-controls";
 
@@ -17,14 +17,7 @@ export interface CustomizationManagerParams {
 	controlID?: string;
 }
 
-export interface WithUrlSerializer {
-	urlSerializer: SessionUrlSerializer;
-}
-
-export class AuBaseScreen extends PXScreen implements WithUrlSerializer {
-	@autoinject
-	public urlSerializer: SessionUrlSerializer;
-
+export class AuBaseScreen extends PXScreen {
 	@autoinject
 	protected redirectHandlersProvider: RedirectHandlersProvider;
 
@@ -46,7 +39,7 @@ export class AuBaseScreen extends PXScreen implements WithUrlSerializer {
 		}
 	}
 
-	@customDataHandler<CustomizationManagerParams>((screen: AuBaseScreen) => CustomizationManagerParamsHelper.getParamsFromUrl(screen))
+	@customDataHandler<CustomizationManagerParams>(() => CustomizationManagerParamsHelper.getParamsFromLocation())
 	CustomizationManagerCustomHandler() {
 		return;
 	}
@@ -69,8 +62,8 @@ class AUBaseScreenGoToRedirectHadler extends BaseRedirectExceptionHandler {
 }
 
 export class CustomizationManagerParamsHelper {
-	public static getParamsFromUrl(screen: WithUrlSerializer) {
-		const parsedParams = screen.urlSerializer.parseQueryParams(window.location.search);
+	public static getParamsFromLocation() {
+		const parsedParams = (new SessionURL(window.location.search)).searchParamsAsObject;
 		return {
 			editorScreenId: parsedParams.EditScreenID,
 			workflowId: parsedParams.WorkflowID,

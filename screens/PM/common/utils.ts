@@ -1,5 +1,4 @@
-import { BaseApiClient } from "client-controls";
-import { getAbsoluteUrl } from "client-controls/utils/url-utils";
+import { BaseApiClient, SessionURL } from "client-controls";
 
 const sliceSize = 1024;
 
@@ -38,7 +37,7 @@ export const generatePdfPreview = async (baseApiClient: BaseApiClient, fileType:
 	}
 
 	const baseUrl = window.location.origin;
-	const fileUrl = getAbsoluteUrl(`/ui/file/${fileId}/${fileVersion}`);
+	const fileUrl = new SessionURL(`/ui/file/${fileId}/${fileVersion}`, window.location).href;
 
 	baseApiClient.get(`${baseUrl}${fileUrl}`).then(async e => {
 		if (e) {

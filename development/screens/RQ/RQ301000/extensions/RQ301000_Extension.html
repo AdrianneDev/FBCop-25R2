@@ -1,0 +1,29 @@
+<template>
+	<!-- Column C: Custom fields after OpenOrderQty -->
+	<field
+		after="#fsColumnC-Request [name='OpenOrderQty']"
+		name="UsrICFBTotalPotentialLoss"
+	></field>
+	<field
+		after="#fsColumnC-Request [name='UsrICFBTotalPotentialLoss']"
+		name="UsrICFBIsProject"
+	></field>
+
+	<!-- Notes Log Tab -->
+	<qp-tab id="tabICFBNotesLog" after="#tab-Other" caption="Notes Log">
+		<qp-grid id="gridNotesLog" view.bind="NotesLog">
+		</qp-grid>
+	</qp-tab>
+
+	<!-- Transaction History Tab -->
+	<qp-tab id="tabICFBTransactionHistory" after="#tabICFBNotesLog" caption="Transaction History">
+		<qp-grid id="gridTransactionHistory" view.bind="TransactionHistory">
+		</qp-grid>
+	</qp-tab>
+
+	<!-- Hyperlink Tab -->
+	<qp-tab id="tabICFBHyperlink" after="#tabICFBTransactionHistory" caption="Hyperlink">
+		<qp-grid id="gridFileDetails" view.bind="FileDetails">
+		</qp-grid>
+	</qp-tab>
+</template>

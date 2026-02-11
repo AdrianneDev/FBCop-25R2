@@ -1,0 +1,26 @@
+<template>
+	<qp-tab id="tab-Ship" before="#tab-Logs" caption="Ship" visible.bind="HeaderView.ShowShip.value == true">
+		<qp-template id="form-Ship" name="1-2" class="stretch unlimited-width">
+			<div id="divColumnA-Ship" slot="A" class="v-stack">
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="fsShipAddress-Ship"
+					fs-wg-container="Shipping_Address_formShipAddress"
+					address-view="Shipping_Address"
+					fs-caption="Address"
+					override-fieldname
+				></qp-include>
+				<qp-fieldset id="fsShipInfo-Ship" view.bind="CurrentDocument" caption="Shipping" wg-container="CurrentDocument_formShipInfo">
+					<field name="ShipmentQty"></field>
+					<field name="ShipmentWeight"></field>
+					<field name="ShipmentVolume"></field>
+					<field name="PackageCount"></field>
+					<field name="PackageWeight"></field>
+				</qp-fieldset>
+			</div>
+			<div id="divColumnB-Ship" slot="B" class="v-stack">
+				<qp-grid id="gridRates-Ship" view.bind="CarrierRates" caption="Carrier Rates" class="framed-section" wg-container="CarrierRates_gridRates"></qp-grid>
+				<qp-grid id="gridPackages-Ship" view.bind="Packages" caption="Packages" class="framed-section" wg-container="Packages_gridPackages"></qp-grid>
+			</div>
+		</qp-template>
+	</qp-tab>
+</template>

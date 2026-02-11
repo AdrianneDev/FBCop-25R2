@@ -1,0 +1,39 @@
+<template>
+	<require from="./status-styles.scss"></require>
+	<qp-template id="form" name="1-1" class="equal-height label-size-m" qp-collapsible wg-container="Lead_form">
+		<qp-fieldset id="form_LeadLeft" slot="A" view.bind="Lead">
+			<field name="ContactID"></field>
+			<field name="Status" class="colored"></field>
+			<field name="Resolution"></field>
+			<field name="ClassID" wg-container="LeadCurrent_tab"></field>
+			<field name="Description" config.bind="{ type:1, rows:4 }"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_LeadRight" slot="B" view.bind="Lead">
+			<field name="RefContactID">
+				<qp-include url="src/screens/CR/common/teams/form-teams/form-teams-contact.html"></qp-include>
+			</field>
+			<field name="BAccountID"></field>
+			<field name="OwnerID">
+				<qp-include url="src/screens/CR/common/teams/form-teams/form-teams-owner.html"></qp-include>
+			</field>
+			<field name="Source"></field>
+			<field name="CampaignID"></field>
+			<field name="DuplicateStatus"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="LeadCurrent_tab" class="label-size-m" wg-container>
+		<qp-tab id="tabGeneral" caption="General" ref="tabGeneral_Content"></qp-tab>
+		<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+		<qp-tab id="tabAdditionalInfo" caption="Additional Info" ref="tabAdditionalInfo_Content"></qp-tab>
+		<qp-tab id="tabDuplicates" caption="Duplicates" ref="tabDuplicates_Content" visible.bind="Lead.DuplicateFound.value === true" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes" ref="tabAttributes_Content"></qp-tab>
+		<qp-tab id="tabRelations" caption="Relations" ref="tabRelations_Content"></qp-tab>
+		<qp-tab id="tabCampaigns" caption="Campaigns" ref="tabCampaigns_Content" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabMarketingLists" caption="Marketing Lists" ref="tabMarketingLists_Content"></qp-tab>
+		<qp-tab id="tabOpportunities" caption="Opportunities" load-on-demand="true">
+			<qp-grid id="gridOpportunities" view.bind="Opportunities"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSalesforce" caption="Salesforce" ref="tabSalesforce_Content"></qp-tab>
+		<qp-tab id="tabHubSpot" caption="HubSpot" ref="tabHubSpot_Content"></qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,28 @@
+<template>
+	<qp-include-parameters
+		fs-id.required
+		contact-view.required
+		fs-wg-container="Contact_Contact"
+		fs-caption="Contact">
+	</qp-include-parameters>
+
+	<qp-fieldset
+		id="{{fs-id}}"
+		view.bind="{{contact-view}}"
+		caption="{{fs-caption}}"
+		wg-container="{{fs-wg-container}}"
+	>
+		<field name="FirstName"></field>
+		<field name="LastName"></field>
+		<field name="FullName"></field>
+		<field name="Salutation"></field>
+		<field name="EMail"></field>
+		<field name="WebSite"></field>
+		<field name="Phone1">
+			<qp-field slot="label" control-state.bind="{{contact-view}}.Phone1Type"></qp-field>
+		</field>
+		<field name="Phone2">
+			<qp-field slot="label" control-state.bind="{{contact-view}}.Phone2Type"></qp-field>
+		</field>
+	</qp-fieldset>
+</template>

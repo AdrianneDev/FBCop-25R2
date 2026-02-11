@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID"></field>
+			<field name="InventoryID"></field>
+			<field name="ShippedBefore"></field>
+			<field name="ShowOverdueItems"></field>
+			<field name="ShowItemsWithoutReceipt"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="SellingCompany"></field>
+			<field name="SellingSiteID"></field>
+			<field name="PurchasingCompany"></field>
+			<field name="PurchasingSiteID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Results"></qp-grid>
+</template>

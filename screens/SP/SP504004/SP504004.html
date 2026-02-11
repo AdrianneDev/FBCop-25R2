@@ -1,0 +1,349 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP504004.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+	<qp-include url="../sp-base-pm.html"></qp-include>
+
+	<div class="h-stack" tabindex="0">
+		<div class="h-stack gray-pane col-sm-12 col-md-7 col-lg-8 order-review">
+
+			<div class="${Document.CustomerLocationIDList.visible ? '' : 'hidden'}">
+				<qp-fieldset id="fsDocument" view.bind="Document" caption="Location">
+					<field name="CustomerLocationIDList" no-label.bind="!Document.CustomerLocationIDList.enabled"
+						class.bind="Document.CustomerLocationIDList.enabled ? 'sp-customer-location' : 'sp-no-label sp-customer-location'"></field>
+					<field name="unboundContinueCustomerLocation" unbound replace-content
+						state.bind="ContinueCustomerLocation">
+						<qp-button id="btnContinueCustomerLocation" class="sp-continue-button major-button"
+							state.bind="ContinueCustomerLocation"></qp-button>
+					</field>
+				</qp-fieldset>
+				<qp-button id="btnChangeCustomerLocation" class="change-button"
+					state.bind="ChangeCustomerLocation"></qp-button>
+			</div>
+			<div>
+				<qp-fieldset id="fsShippingAddressSection" view.bind="ShippingAddressSection"
+					caption="Shipping Address">
+					<field name="Address" no-label="true" class="sp-field-text-replaced" replace-content>
+						<div class="sp-section-item-address sp-address-link">
+							<div class="sp-section-item-address">${ShippingAddressSection.Address.value}</div>
+							<qp-address-lookup id="alShippingAddressSection" class="col-12" view.bind="Shipping_Address"
+								address-line1.bind="ShippingAddressSection.Address.value"></qp-address-lookup>
+						</div>
+					</field>
+					<field name="Contact" no-label="true" class="sp-field-text-replaced" replace-content>
+						<div class="sp-section-item-contact">${ShippingAddressSection.Contact.value}</div>
+					</field>
+					<field name="IsEdited" class="hidden"></field>
+
+					<field name="unboundRecentShippingAddresses" unbound replace-content>
+						<div
+							class="sp-section sp-section-shipping-addresses ${ContinueShippingAddress.visible ? '' : 'hidden'}">
+							<label repeat.for="address of RecentShippingAddresses.records" wg-exclude
+								class="sp-section-item ${(selectedShippingAddress ===  address) ? 'sp-section-item-selected' : ''}">
+								<div class="sp-radio">
+									<input type="radio" model.bind="address" checked.bind="selectedShippingAddress"
+										name="radioRecentShippingAddresses" />
+									<div class="sp-section-item-description">
+										<div class="sp-address-link">
+											<div class="sp-section-item-address">${address.Address.value}</div>
+											<qp-address-lookup id="alShippingAddress" class="col-12"
+												view.bind="Shipping_Address"
+												address-line1.bind="address.Address.value"></qp-address-lookup>
+										</div>
+										<div class="sp-section-item-contact">${address.Contact.value}</div>
+									</div>
+								</div>
+								<qp-button if.bind="(selectedShippingAddress ===  address)"
+									id="btnContinueShippingAddress" wg-name="btnContinueShippingAddress"
+									class="sp-continue-button major-button"
+									state.bind="ContinueShippingAddress"></qp-button>
+							</label>
+							<label
+								class="sp-section-item sp-section-item-new ${!selectedShippingAddress ? 'sp-section-item-selected' : ''}">
+								<div class="sp-radio">
+									<input type="radio" model.bind="undefined" checked.bind="selectedShippingAddress"
+										name="radioRecentShippingAddresses" />
+									<div class="sp-section-item-description">
+										<div class="sp-section-item-contact">${msg.NewShippingAddress}</div>
+									</div>
+								</div>
+								<div class="sp-section-entered"></div>
+								<qp-button if.bind="!selectedShippingAddress" id="btnContinueShippingAddressNewAddress"
+									wg-name="btnContinueShippingAddressNewAddress"
+									class="sp-continue-button major-button"
+									state.bind="ContinueShippingAddress"></qp-button>
+							</label>
+						</div>
+					</field>
+
+				</qp-fieldset>
+				<div if.bind="!selectedShippingAddress">
+					<qp-fieldset id="fsShippingContact" view.bind="Shipping_Contact" 
+						portal=".sp-section-shipping-addresses .sp-section-entered">
+						<field name="FullName" caption="Contact Name"></field>
+						<field name="Email" caption="Contact Email"></field>
+						<field name="Phone1" caption="Phone"></field>
+						<field name="Shipping_Address.AddressLine1"></field>
+						<field name="Shipping_Address.AddressLine2"></field>
+						<field name="Shipping_Address.City"></field>
+						<field name="Shipping_Address.State"></field>
+						<field name="Shipping_Address.PostalCode"></field>
+						<field name="Shipping_Address.CountryID"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset id="fsUnusedSC" view.bind="Shipping_Contact" class="hidden" caption="">
+					<!-- we need this unused section due to a bug in platform -->
+					<field name="IsDefaultContact"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsUnusedSA" view.bind="Shipping_Address" class="hidden" caption="">
+					<!-- we need this unused section due to a bug in platform -->
+					<field name="IsDefaultAddress"></field>
+				</qp-fieldset>
+				<div class="hidden">
+					<qp-grid id="gridRecentShippingAddresses" view.bind="RecentShippingAddresses"
+						on-data-ready.call="shippingAddressesDataReadyHandler(grid, args)">
+					</qp-grid>
+				</div>
+				<qp-button id="btnChangeShippingAddress" class="change-button"
+					state.bind="ChangeShippingAddress"></qp-button>
+			</div>
+			<div>
+				<qp-fieldset id="fsBillingAddressSection" view.bind="BillingAddressSection" caption="Billing Address">
+					<field name="SameAsShippingLabel" wg-name="lblSameAsShipping" class="sp-no-value"></field>
+					<field name="Address" no-label="true" class="sp-field-text-replaced" replace-content>
+						<div class="sp-section-item-address sp-address-link">
+							<div class="sp-section-item-address">${BillingAddressSection.Address.value}</div>
+							<qp-address-lookup id="alBillingAddressSection" class="col-12" view.bind="Billing_Address"
+								address-line1.bind="BillingAddressSection.Address.value"></qp-address-lookup>
+						</div>
+					</field>
+					<field name="Contact" no-label="true" class="sp-field-text-replaced" replace-content>
+						<div class="sp-section-item-contact">${BillingAddressSection.Contact.value}</div>
+					</field>
+					<field name="IsEdited" class="hidden"></field>
+
+					<field name="SameAsShipping" no-label="true"></field>
+					<field name="unboundContinueBillingAddress" unbound replace-content>
+						<qp-button if.bind="BillingAddressSection.SameAsShipping.value" id="btnContinueBillingAddress"
+							class="sp-continue-button major-button" state.bind="ContinueBillingAddress"></qp-button>
+					</field>
+
+					<field name="unboundRecentBillingAddresses" unbound replace-content
+						class="${!BillingAddressSection.SameAsShipping.value && ContinueBillingAddress.visible ? '' : 'hidden'}">
+						<div class="sp-section sp-section-billing-addresses">
+							<label repeat.for="address of RecentBillingAddresses.records" wg-exclude
+								class="sp-section-item ${(selectedBillingAddress ===  address) ? 'sp-section-item-selected' : ''}">
+								<div class="sp-radio">
+									<input type="radio" model.bind="address" checked.bind="selectedBillingAddress"
+										name="radioRecentBillingAddresses" />
+									<div class="sp-section-item-description">
+										<div class="sp-address-link">
+											<div class="sp-section-item-address">${address.Address.value}</div>
+											<qp-address-lookup id="alBillingAddress" class="col-12"
+												view.bind="Billing_Address"
+												address-line1.bind="address.Address.value"></qp-address-lookup>
+										</div>
+										<div class="sp-section-item-contact">${address.Contact.value}</div>
+									</div>
+								</div>
+								<qp-button if.bind="(selectedBillingAddress ===  address)"
+									id="btnContinueBillingAddress" wg-name="btnContinueBillingAddress"
+									class="sp-continue-button major-button"
+									state.bind="ContinueBillingAddress"></qp-button>
+							</label>
+							<label
+								class="sp-section-item sp-section-item-new ${!selectedBillingAddress ? 'sp-section-item-selected' : ''}">
+								<div class="sp-radio">
+									<input type="radio" model.bind="undefined" checked.bind="selectedBillingAddress"
+										name="radioRecentBillingAddresses" />
+									<div class="sp-section-item-description">
+										<div class="sp-section-item-contact">${msg.NewBillingAddress}</div>
+									</div>
+								</div>
+								<div class="sp-section-entered"></div>
+								<qp-button if.bind="!selectedBillingAddress" id="btnContinueBillingAddressNewAddress"
+									wg-name="btnContinueBillingAddressNewAddress"
+									class="sp-continue-button major-button"
+									state.bind="ContinueBillingAddress"></qp-button>
+							</label>
+						</div>
+					</field>
+
+				</qp-fieldset>
+				<div if.bind="!selectedBillingAddress">
+					<qp-fieldset id="fsBillingContact" view.bind="Billing_Contact" 
+						portal=".sp-section-billing-addresses .sp-section-entered">
+						<field name="FullName" caption="Contact Name"></field>
+						<field name="Email" caption="Contact Email"></field>
+						<field name="Phone1" caption="Phone"></field>
+						<field name="Billing_Address.AddressLine1"></field>
+						<field name="Billing_Address.AddressLine2"></field>
+						<field name="Billing_Address.City"></field>
+						<field name="Billing_Address.State"></field>
+						<field name="Billing_Address.PostalCode"></field>
+						<field name="Billing_Address.CountryID"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset id="fsUnusedBC" view.bind="Billing_Contact" class="hidden" caption="">
+					<!-- we need this unused section due to a bug in platform -->
+					<field name="IsDefaultContact"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsUnusedBA" view.bind="Billing_Address" class="hidden" caption="">
+					<!-- we need this unused section due to a bug in platform -->
+					<field name="IsDefaultAddress"></field>
+				</qp-fieldset>
+				<div class="hidden">
+					<qp-grid id="gridRecentBillingAddresses" view.bind="RecentBillingAddresses"
+						on-data-ready.call="billingAddressesDataReadyHandler(grid, args)">
+					</qp-grid>
+				</div>
+				<qp-button id="btnChangeBillingAddress" class="change-button"
+					state.bind="ChangeBillingAddress"></qp-button>
+			</div>
+			<div>
+				<qp-fieldset id="fsShippingInformation" view.bind="Document" caption="Shipping Information"
+					class="${ChangeShippingInformation.visible ? 'sp-filled-section sp-condensed-section' : ''} ${!ChangeShippingInformation.visible && !ContinueShippingInformation.visible ? 'sp-unfilled-section' : ''}">
+					<field name="ShipVia"></field>
+					<field name="UseCustomerAccountField" unbound replace-content>
+						<div class="use-customer-account">
+							<qp-field id="uca" class="col-sm-12 col-md-6 col-lg-6"
+								control-state.bind="Document.UseCustomerAccount"></qp-field>
+						</div>
+					</field>
+
+					<field name="ShipComplete" class="no-row-gap">
+						<qp-info-box caption.bind="Document.ShipCompleteComment.value" type="info"
+							class="ship-complete-comment"
+							show.bind="Document.ShipCompleteComment.visible"></qp-info-box>
+					</field>
+
+					<field name="unboundContinueShippingInformation" unbound replace-content>
+						<qp-button id="btnContinueShippingInformation" class="sp-continue-button major-button"
+							state.bind="ContinueShippingInformation"></qp-button>
+					</field>
+				</qp-fieldset>
+				<qp-button id="btnChangeShippingInformation" class="change-button"
+					state.bind="ChangeShippingInformation"></qp-button>
+			</div>
+			<div class="sp-payment-methods">
+				<qp-fieldset id="fsPaymentMethod" view.bind="PaymentMethodSection" caption="Payment Method"
+					class="${ChangePaymentMethod.visible ? 'sp-filled-section sp-condensed-section' : ''} ${!ChangePaymentMethod.visible && !ContinuePaymentMethod.visible ? 'sp-unfilled-section' : ''}">
+					<field name="selectedPaymentMethod" unbound replace-content>
+						<div
+							class="sp-paymethod sp-current-paymethod ${(ContinuePaymentMethod.visible || !selectedPaymentMethod) ? 'hidden' : ''}">
+							<qp-include url="../sp-paymethod.html" view="PaymentMethodSection"></qp-include>
+							<div class="sp-pm-expiration">${selectedPaymentMethod.expiration}</div>
+						</div>
+					</field>
+					<field name="ProceedNoPaymentLabel" class="sp-no-value"></field>
+					<field name="Document.PMInstanceID" class="hidden"></field>
+
+					<field name="unboundPaymentMethods" unbound replace-content>
+						<div class="sp-section ${ContinuePaymentMethod.visible ? '' : 'hidden'}">
+							<label repeat.for="method of PaymentMethods.records"
+								class="sp-section-item ${(selectedPaymentMethod ===  method) ? 'sp-section-item-selected' : ''}">
+								<div class="sp-radio">
+									<input type="radio" model.bind="method" checked.bind="selectedPaymentMethod"
+										name="radioPaymentMethod" />
+									<div class="sp-paymethod">
+										<qp-include url="../sp-paymethod.html" view="method"></qp-include>
+										<div class="sp-pm-expiration">${method.expiration}</div>
+									</div>
+									<div class="sp-pm-default" if.bind="!!method.IsPortalDefault.value">
+										<span class="sp-xxs-hidden">${PMbaseMessages.Default}</span>
+										<span class="sp-non-xxs-hidden">
+											<qp-hyper-icon
+												images.bind="{ normal: 'svg:main@doneMark' }"></qp-hyper-icon>
+										</span>
+									</div>
+									<qp-menu config.bind="paymentMethodCommands(method)" class="sp-pm-menu"
+										menuselected.delegate="processPaymentMethodMenuCommand(method, $event)">
+									</qp-menu>
+								</div>
+								<qp-button if.bind="(selectedPaymentMethod ===  method)" id="btnContinuePaymentMethod"
+									wg-name="btnContinuePaymentMethod" class="sp-continue-button major-button"
+									state.bind="ContinuePaymentMethod"></qp-button>
+							</label>
+							<label class="sp-section-item ${!selectedPaymentMethod ? 'sp-section-item-selected' : ''}">
+								<div class="sp-radio">
+									<input type="radio" model.bind="undefined" checked.bind="selectedPaymentMethod"
+										name="radioPaymentMethod" />
+									<div class="sp-paymethod">
+										<div class="sp-section-item-pm-descr">${msg.ProceedNoPayment}</div>
+									</div>
+								</div>
+								<qp-button if.bind="!selectedPaymentMethod" id="btnContinuePaymentMethodNoPay"
+									wg-name="btnContinuePaymentMethodNoPay" class="sp-continue-button major-button"
+									state.bind="ContinuePaymentMethod"></qp-button>
+							</label>
+						</div>
+						<qp-button id="btnAddNewCard" class="sp-add-card-button first"
+							state.bind="AddNewCard"></qp-button>
+					</field>
+				</qp-fieldset>
+
+				<div class="hidden">
+					<qp-grid id="gridPaymentMethods" view.bind="PaymentMethods" view-model.ref="PaymentMethodsGrid"
+						on-data-ready.call="paymentMethodsDataReadyHandler(grid, args)">
+					</qp-grid>
+				</div>
+				<qp-button id="btnChangePaymentMethod" class="change-button"
+					state.bind="ChangePaymentMethod"></qp-button>
+			</div>
+
+			<qp-fieldset id="Fifth" view.bind="Document" caption="Order Information">
+				<field name="CustomerOrderNbr"></field>
+				<field name="OrderDesc"></field>
+			</qp-fieldset>
+
+			<compose class="sp-full-width" view-model="../sp-ordered-items"></compose>
+		</div>
+		<div class="sp-sticky-summary sp-wide-only">
+			<div class="h-stack gray-pane sp-documents-summary-fixed col-sm-12 col-md-5 col-lg-4">
+				<qp-fieldset slot="A" id="first" view.bind="Document" caption="Order Summary"
+					class="sp-fieldset-summary">
+					<!-- <field name="OrderQty"></field> -->
+					<field name="CuryLineTotal_Text"></field>
+					<field name="CuryDiscTot_Text"></field>
+					<field name="CuryFreightAmt_Text"></field>
+					<field name="CuryTaxTotal_Text"></field>
+					<field name="CuryOrderTotal_Text"></field>
+					<!-- <field name="CuryID"></field> -->
+					<field name="PlaceOrderField" unbound replace-content>
+						<qp-button id="btnPlaceOrder" class="major-button" state.bind="PlaceOrder"></qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</div>
+
+		<qp-swipe-menu class="sp-mobile-only">
+			<div slot="collapsed">
+				<qp-fieldset id="first-collapsed" view.bind="Document" caption="Order Summary"
+					class="sp-fieldset-summary">
+					<field name="CuryOrderTotal_Text"></field>
+					<field name="PlaceOrderField" unbound replace-content>
+						<qp-button id="btnPlaceOrder" class="major-button" state.bind="PlaceOrder"></qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+			<div slot="expanded">
+
+				<qp-fieldset id="first-expanded" view.bind="Document" caption="Order Summary"
+					class="sp-fieldset-summary">
+
+					<field name="CuryLineTotal_Text"></field>
+					<field name="CuryDiscTot_Text"></field>
+					<field name="CuryFreightAmt_Text"></field>
+					<field name="CuryTaxTotal_Text"></field>
+					<field name="CuryOrderTotal_Text"></field>
+
+					<field name="PlaceOrderField" unbound replace-content>
+						<qp-button id="btnPlaceOrder" class="major-button" state.bind="PlaceOrder"></qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-swipe-menu>
+
+	</div>
+</template>

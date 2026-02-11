@@ -1,0 +1,10 @@
+<template>
+	<qp-splitter id="splitter" split="height">
+		<split-pane>
+			<qp-grid id="gridNotifications" wg-container="NotificationSources_gridNS" view.bind="NotificationSources" caption="Mailings"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="gridRecipients" wg-container="NotificationRecipients_gridNR" view.bind="NotificationRecipients" caption="Recipients"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

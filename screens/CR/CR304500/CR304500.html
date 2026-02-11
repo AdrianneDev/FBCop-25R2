@@ -1,0 +1,53 @@
+<template>
+	<!-- Primary Form -->
+	<require from="./status-styles.scss"></require>
+	<qp-template id="form" name="7-10-7" class="equal-height" qp-collapsible wg-container="Quote_form">
+		<qp-fieldset id="fsHeader_A" slot="A" view.bind="Quote">
+			<field name="OpportunityID"></field>
+			<field name="QuoteNbr" pinned></field>
+			<field name="IsPrimary" pinned config-enabled.bind="false"></field>
+			<field name="Status" class="colored"></field>
+			<field name="DocumentDate" pinned="false"></field>
+			<field name="ExpirationDate" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsHeader_B" slot="B" view.bind="Quote">
+			<field name="BAccountID" pinned></field>
+			<field name="LocationID" pinned></field>
+			<field name="ContactID" pinned></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="currencyinfo"></field>
+			<field name="OwnerID"></field>
+			<field name="Subject" pinned config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsHeader_C" slot="C" view.bind="Quote" class="highlights-section">
+			<field name="ManualTotalEntry"></field>
+			<field name="CuryAmount"></field>
+			<field name="CuryLineDiscountTotal"></field>
+			<field name="CuryDiscTot"></field>
+			<field name="AMCuryEstimateTotal"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryProductsAmount"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<!-- Tabs -->
+	<qp-tabbar id="QuoteCurrent_tab" wg-container>
+		<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="ProductsGrid" view.bind="Products" wg-container="Products_ProductsGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAdditionalInfo" caption="Additional Info" ref="tabAdditionalInfo_Content"></qp-tab>
+		<qp-tab id="tabEstimates" caption="Estimates">
+			<qp-grid id="gridEstimates" view.bind="OpportunityEstimateRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabContact" caption="Contact" ref="tabContact_Content"></qp-tab>
+		<qp-tab id="tabAddresses" caption="Addresses" ref="tabAddresses_Content"></qp-tab>
+		<qp-tab id="tabTaxes" caption="Taxes">
+			<qp-grid id="grid1" view.bind="Taxes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDiscounts" caption="Discounts">
+			<qp-grid id="formDiscountDetail" view.bind="DiscountDetails"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+		<qp-tab id="tabRelations" caption="Relations" ref="tabRelations_Content"></qp-tab>
+	</qp-tabbar>
+</template>

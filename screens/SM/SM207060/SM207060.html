@@ -1,0 +1,109 @@
+<template>
+
+	<qp-template id="Endpoint_form" name="1-1" class="label-size-m" wg-container>
+		<qp-fieldset id="formEndpoint1"  view.bind="Endpoint" slot="A">
+			<field name="InterfaceName"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formEndpoint2" view.bind="Endpoint" slot="B">
+			<field name="GateVersion"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitFields" initial-split="30%">
+		<split-pane>
+			<qp-caption caption="Endpoint Structure"></qp-caption>
+			<qp-tree id="entityTree" view.bind="EntityTree" ></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="tab" load-on-demand.bind="false">
+				<qp-tab id="EndpointTab" caption="Endpoint Properties">
+					<qp-template id="SelectedEndpoint_endpointPropertiesForm" name="1-1" class="equal-height label-size-m" wg-container>
+						<qp-fieldset id="endpointPropertiesForm1" view.bind="SelectedEndpoint" slot="A">
+							<field name="InterfaceName"></field>
+							<field name="GateVersion"></field>
+							<field name="SystemContractVersion"></field>
+						</qp-fieldset>
+						<qp-fieldset id="endpointPropertiesForm2" view.bind="SelectedEndpoint" slot="B">
+							<field name="ExtendsName"></field>
+							<field name="ExtendsVersion"></field>
+						</qp-fieldset>
+					</qp-template>
+				</qp-tab>
+				<qp-tab id="EntityTab" caption="Entity Properties">
+					<qp-fieldset id="entityPropertiesForm" view.bind="SelectedEntity" class="label-size-m">
+						<field name="ObjectName"></field>
+						<field name="ObjectType"></field>
+						<field name="ScreenID"></field>
+						<field name="ScreenIDValue"></field>
+						<field name="DefaultActionId"></field>
+					</qp-fieldset>
+				</qp-tab>
+				<qp-tab id="ActionTab" caption="Action Properties">
+					<qp-fieldset id="actionPropertiesForm" view.bind="SelectedAction" class="label-size-m">
+						<field name="ActionName"></field>
+						<field name="MappedAction"></field>
+					</qp-fieldset>
+				</qp-tab>
+				<qp-tab id="FieldsTab" caption="Fields">
+					<qp-grid id="fieldsGrid" wg-container="Fields_fieldsGrid" view.bind="Fields"></qp-grid>
+				</qp-tab>
+				<qp-tab id="ParametersTab" caption="Parameters">
+					<qp-grid id="actionsGrid" view.bind="Parameters"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="CreateEntityView" caption="Create Entity" auto-repaint="true">
+		<qp-fieldset id="formCreateEntity" view.bind="CreateEntityView">
+			<field name="FieldName"></field>
+			<field name="ParameterName"></field>
+			<field name="UseExisting"></field>
+			<field name="ObjectName"></field>
+			<field name="ObjectType"></field>
+			<field name="ScreenID"></field>
+			<field name="ScreenIDValue"></field>
+			<field name="EntityType"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ExtendEndpointView" caption="Extend Current Endpoint" auto-repaint="true">
+		<qp-fieldset id="formExtendEndpoint" view.bind="ExtendEndpointView">
+			<field name="ExtendedEndpointName"></field>
+			<field name="ExtendedEndpointVersion"></field>
+			<field name="EndpointName"></field>
+			<field name="EndpointVersion"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnExtendOk" dialog-result="OK"></qp-button>
+			<qp-button id="BtnExtendCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CreateActionView" caption="Create Action" auto-repaint="true">
+		<qp-fieldset id="formCreateAction" view.bind="CreateActionView">
+			<field name="MappedAction"></field>
+			<field name="ActionName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnActionOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnActionCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="PopulateFilterView" caption="Populate Fields" auto-repaint="true" width="md" height="60vh">
+		<qp-fieldset id="formPopulateFields" view.bind="PopulateFilterView">
+			<field name="Container"></field>
+			<field name="ShowSelectorFields"></field>
+		</qp-fieldset>
+		<qp-grid id="populateGrid" view.bind="PopulatingFields"></qp-grid>
+		<footer>
+			<qp-button id="PXButton5" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton6" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

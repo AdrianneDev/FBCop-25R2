@@ -1,0 +1,26 @@
+<template>
+	<qp-template id="emailForm_template" name="2-1" class="equal-height" wg-container="Email_frmViewMessage" qp-collapsible>
+		<qp-fieldset slot="A" id="emailFormLeft" view.bind="Email">
+			<field name="MailFrom" pinned></field>
+			<field name="MailTo" pinned></field>
+			<field name="mailCc"></field>
+			<field name="mailBcc"></field>
+			<field name="Subject" pinned></field>
+		</qp-fieldset>
+		<div slot="B">
+			<qp-fieldset id="emailFormRight" view.bind="Email">
+				<field name="MPStatus" pinned></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-template id="emailForm_body_template" name="1" class="stretch">
+		<qp-rich-text-editor
+			slot="A"
+			id="emailBody_template"
+			class="stretch"
+			state.bind="Email.Body"
+			wg-container="Email_frmViewMessage"
+			wg-field>
+		</qp-rich-text-editor>
+	</qp-template>
+</template>

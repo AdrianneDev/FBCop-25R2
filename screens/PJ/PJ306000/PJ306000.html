@@ -1,0 +1,41 @@
+<template>
+	<require from="../../PM/common/pm-status-colors-common.scss"></require>
+	<qp-template id="Submittals_form" name="7-10-7" class="equal-height" qp-collapsible wg-container>
+		<qp-fieldset id="form01" slot="A" view.bind="Submittals">
+			<field name="SubmittalID" pinned></field>
+			<field name="RevisionID" pinned></field>
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="Reason"></field>
+			<field name="TypeID"></field>
+			<field name="SpecificationInfo"></field>
+			<field name="SpecificationSection"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form02" slot="B" view.bind="Submittals">
+			<field name="ProjectId" pinned></field>
+			<field name="ProjectTaskId"></field>
+			<field name="CostCodeID"></field>
+			<field name="OwnerID"></field>
+			<field name="CurrentWorkflowItemContactID" config-display-mode.bind="'text'"></field>
+			<field name="Summary" pinned config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form03" slot="C" view.bind="Submittals">
+			<field name="DateCreated" pinned></field>
+			<field name="DueDate" pinned></field>
+			<field name="DateOnSite" pinned></field>
+			<field name="DateClosed"></field>
+			<field name="DaysOverdue" control-type="qp-text-editor"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentSubmittal_tab" wg-container>
+		<qp-tab id="DescriptionTab" caption="Description">
+			<qp-rich-text-editor id="edCurrentSubmittalDescription"
+								 state.bind="CurrentSubmittal.Description"
+								 class="stretch"
+								 wg-field></qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="SubmittalWorkflowTab" caption="Submittal Workflow">
+			<qp-grid id="gridItems" view.bind="SubmittalWorkflowItems"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ActivitesTab" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height label-size-s" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="SiteID"></field>
+			<field name="StorageType" control-type.bind="'qp-radio'" config-name.bind="'StorageTypeRB'" show.bind="false"></field>
+			<field name="LocationID">
+				<qp-radio-item slot="label" name="StorageTypeRB" value="L"></qp-radio-item>
+			</field>
+			<field name="CartID">
+				<qp-radio-item slot="label" name="StorageTypeRB" value="C"></qp-radio-item>
+			</field>
+			<field name="StorageID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="InventoryID"></field>
+			<field name="SubItemID"></field>
+			<field name="ExpandByLotSerialNbr"></field>
+			<field name="LotSerialNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="storages"></qp-grid>
+</template>

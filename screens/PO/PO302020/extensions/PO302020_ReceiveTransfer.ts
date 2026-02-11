@@ -1,0 +1,96 @@
+import {
+	PXView,
+	PXFieldState,
+	PXFieldOptions,
+
+	createCollection,
+
+	viewInfo,
+	columnConfig,
+	gridConfig,
+	handleEvent,
+	linkCommand,
+
+	CustomEventType,
+	RowCssHandlerArgs,
+	GridPreset,
+	GridNoteFilesShowMode,
+	PXViewCollection
+} from "client-controls";
+
+import { PO302020, ScanHeader } from "../PO302020";
+
+export interface PO302020_ReceiveTransfer extends PO302020 { }
+export class PO302020_ReceiveTransfer {
+	@viewInfo({ containerName: "Receipt Splits for Receiving Transfer" })
+	ReceivedForTransfer = createCollection(ReceiptSplitsForReceiveTransfer);
+
+	@handleEvent(CustomEventType.GetRowCss, { view: "ReceivedForTransfer" })
+	getReceivedTransferRowCss(args: RowCssHandlerArgs<PXViewCollection<ReceiptSplitsForReceiveTransfer>>): string | undefined {
+		const split = args?.selector?.row;
+
+		if (split == null) {
+			return undefined;
+		}
+		else if (this.Document?.WMSSingleOrder?.value === true) {
+			if (split.RestQty.value === 0) {
+				return "startedLine completedLine";
+			}
+			else if (split.ReceivedQty.value > 0) {
+				return "startedLine";
+			}
+		}
+		else {
+			if (split.ReceivedQty.value > split.Qty.value) {
+				return "startedLine excessedLine";
+			}
+			else if (split.ReceivedQty.value === split.Qty.value) {
+				return "startedLine completedLine";
+			}
+			else if (split.ReceivedQty.value > 0) {
+				return "startedLine";
+			}
+		}
+
+		return undefined;
+	}
+}
+
+@gridConfig({
+	preset: GridPreset.ReadOnly,
+	showNoteFiles: GridNoteFilesShowMode.Suppress,
+	allowUpdate: false,
+})
+export class ReceiptSplitsForReceiveTransfer extends PXView {
+	LineNbr: PXFieldState<PXFieldOptions.Disabled>;
+
+	@linkCommand("ViewTransferOrder")
+	POReceiptLine__SOOrderNbr: PXFieldState<PXFieldOptions.Disabled>;
+
+	@linkCommand("ViewShipment")
+	POReceiptLine__SOShipmentNbr: PXFieldState<PXFieldOptions.Disabled>;
+
+	InventoryID: PXFieldState<PXFieldOptions.Disabled>;
+	POReceiptLine__TranDesc: PXFieldState<PXFieldOptions.Disabled>;
+
+	@columnConfig({ hideViewLink: true })
+	LotSerialNbr: PXFieldState<PXFieldOptions.Disabled>;
+
+	ExpireDate: PXFieldState<PXFieldOptions.Disabled>;
+	SiteID: PXFieldState<PXFieldOptions.Disabled>;
+
+	@columnConfig({ hideViewLink: true })
+	LocationID: PXFieldState<PXFieldOptions.Disabled>;
+
+	ReceivedQty: PXFieldState<PXFieldOptions.Disabled>;
+	Qty: PXFieldState<PXFieldOptions.Disabled>;
+	RestQty: PXFieldState<PXFieldOptions.Disabled>;
+
+	@columnConfig({ hideViewLink: true })
+	UOM: PXFieldState<PXFieldOptions.Disabled>;
+}
+
+export interface ScanHeader_ReceiveTransfer extends ScanHeader { }
+export class ScanHeader_ReceiveTransfer {
+	ShowReceiveTransfer: PXFieldState<PXFieldOptions.Hidden | PXFieldOptions.Disabled>;
+}

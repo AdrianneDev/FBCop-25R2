@@ -1,0 +1,29 @@
+<template>
+	<qp-label id="lblCaption" caption="Custom Files"></qp-label>
+	<qp-grid id="grid" view.bind="Items"></qp-grid>
+	<qp-panel id="ViewSelectFile" wg-container="ViewSelectFile_ViewSelectFile" caption="Add Files" auto-repaint="true" height="500px">
+		<qp-grid id="gridAddFile" batchUpdate="True" view.bind="ViewSelectFile"></qp-grid>
+		<footer>
+			<qp-button id="PXButton1" caption="Save" dialog-result="OK" class="major-button"></qp-button>
+			<qp-button id="PXButton2" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="FilterFileEdit" caption="Edit File" auto-repaint="true" width="90vw" height="90vh">
+		<qp-fieldset id="FormEditFile" wg-container view.bind="FilterFileEdit" class="stretch">
+			<field name="Content" class="no-label stretch"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton3" caption="Save" dialog-result="OK" class="major-button"></qp-button>
+			<qp-button id="PXButton4" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewCheckinFiles" caption="Modified Files Detected" auto-repaint="true" width="md" height="500px">
+		<qp-label caption="Some files have been modified in the file system. Please resolve the conflicts."></qp-label>
+		<qp-grid id="ViewCheckinFiles_gridCheckinFiles" wg-container batchUpdate="True"
+			view.bind="ViewCheckinFiles"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonUpdate" wg-name="UpdateCustomizationProject" state.bind="ActionFileCheckIn" class="major-button"></qp-button>
+			<!-- <qp-button id="PXButtonDiscard" wg-name="Discardallchanges" dialog-result="Cancel" state.bind="ActionRemoveConflicts"></qp-button> -->
+		</footer>
+	</qp-panel>
+</template>

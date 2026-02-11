@@ -1,0 +1,7 @@
+@import 'static/status-colors.scss';
+@include colored-status('N', var(--status-blue-color));
+@include colored-status('H', var(--status-orange-color));
+@include colored-status('I', var(--status-blue-color));
+@include colored-status('P', var(--status-blue-color));
+@include colored-status('C', var(--status-gray-color));
+@include colored-status('L', var(--status-gray-color));

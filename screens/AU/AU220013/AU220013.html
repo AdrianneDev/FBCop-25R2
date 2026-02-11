@@ -1,0 +1,20 @@
+<template>
+	<qp-template name="1-1" id="fields" wg-container>
+		<qp-fieldset slot="A" id="workspacesForm" wg-container="Workspaces_form" view.bind="Workspaces">
+			<field name="Name"><qp-field control-state.bind="Workspaces.IsActive" config-enabled.bind="false"></qp-field></field>
+			<field name="DisplayName"></field>
+			<field name="Icon"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabScreens" caption="Screens">
+			<qp-grid id="WorkspaceItems_grdItems" wg-container view.bind="WorkspaceItems"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabWidgets" caption="Widgets">
+			<qp-grid id="WorkspaceWidgetsV2_grdWidgets" wg-container view.bind="WorkspaceWidgetsV2"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabClassicWidgets" caption="Classic Widgets">
+			<qp-grid id="WorkspaceWidgets_grdWidgets" wg-container view.bind="WorkspaceWidgets"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

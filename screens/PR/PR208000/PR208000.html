@@ -1,0 +1,76 @@
+﻿<template>
+    <qp-tabbar id="tabbar" active-tab-id="General" view.bind="Filter">
+        <qp-tab id="tab-TaxMaintenance" if.bind="false">
+            <qp-fieldset id="fsFakeFormForImport" view.bind="Filter">
+                <field name="FilterStates"></field>
+            </qp-fieldset>
+        </qp-tab>
+
+        <qp-tab id="tab-TaxCodes" caption="Tax Codes">
+            <qp-splitter id="splitter-TaxCodes" split="width" initial-split="70%">
+                <split-pane id="splitPaneA-TaxCodes">
+                    <qp-grid id="grid-Taxes" caption="Tax Codes" view.bind="Taxes" wg-container="Taxes_grdTaxes" class="framed-section"></qp-grid>
+                </split-pane>
+
+                <split-pane id="splitPaneB-TaxSettings">
+                    <qp-grid id="grid-TaxAttributes" caption="Tax Settings" view.bind="TaxAttributes" wg-container="TaxAttributes_grdTaxAttributes" class="framed-section"></qp-grid>
+                </split-pane>
+            </qp-splitter>
+        </qp-tab>
+
+        <qp-tab id="tab-CompanyTax" caption="Global Tax Settings" load-on-demand.bind="false">
+            <qp-fieldset id="fsFilterForm" view.bind="Filter" class="no-label transparent-section">
+                <field name="FilterStates"></field>
+            </qp-fieldset>
+
+            <qp-grid id="grid-CompanyAttributes" view.bind="CompanyAttributes" wg-container="CompanyAttributes_grdCompanyAttributes"></qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tab-Employees" if.bind="false">
+            <qp-grid id="grid-Employees" view.bind="Employees"></qp-grid>
+        </qp-tab>
+
+        <qp-panel id="CurrentTax" caption="Tax Details" auto-repaint="true">
+            <qp-template id="form-TaxDetails" name="1">
+                <qp-fieldset id="fsTaxDetails" wg-container view.bind="CurrentTax" slot="A">
+                    <field name="VndInvDescr"></field>
+                    <field name="GovtRefNbr"></field>
+                </qp-fieldset>
+
+                <qp-fieldset id="fsTaxDetails_0" wg-container="CurrentTax_frmTaxDetails" view.bind="CurrentTax" slot="A" caption="Tax Engine Info">
+                    <field name="TaxTypeDescription"></field>
+                    <field name="TaxUniqueCode"></field>
+                    <field name="JurisdictionLevel"></field>
+                </qp-fieldset>
+            </qp-template>
+
+            <footer id="footer">
+                <qp-button id="buttonOK-taxDetails" dialog-result="OK"></qp-button>
+            </footer>
+        </qp-panel>
+
+        <qp-panel id="EntityTaxCodeAttribute" wg-container="EntityTaxCodeAttribute_EntityTaxCodeAttribute" caption="Configure Tax Settings" auto-repaint="true" width="sm" height="50vh">
+            <qp-grid id="grid-EntityTaxCodeAttribute" view.bind="EntityTaxCodeAttribute"></qp-grid>
+            <footer>
+                <qp-button id="EntityTaxCodeAttributeOkButton" caption="Save & Close" dialog-result="OK"></qp-button>
+                <qp-button id="EntityTaxCodeAttributeCancelButton" caption="Close" dialog-result="Cancel"></qp-button>
+            </footer>
+        </qp-panel>
+
+        <qp-panel id="EntityCompanyTaxAttribute" wg-container="EntityCompanyTaxAttribute_EntityCompanyTaxAttribute" caption="Configure Tax Settings" auto-repaint="true" width="sm" height="50vh">
+            <qp-grid id="grid-EntityCompanyTaxAttribute" view.bind="EntityCompanyTaxAttribute"></qp-grid>
+            <footer>
+                <qp-button id="EntityCompanyTaxAttributeOkButton" caption="Save & Close" dialog-result="OK"></qp-button>
+                <qp-button id="EntityCompanyTaxAttributeCancelButton" caption="Close" dialog-result="Cancel"></qp-button>
+            </footer>
+        </qp-panel>
+
+        <qp-panel id="TaxRegistrationAttribute" wg-container="TaxRegistrationAttribute_TaxRegistrationAttribute" caption="Configure Tax Settings" auto-repaint="true" width="sm" height="50vh">
+            <qp-grid id="TaxRegistrationAttribute_grdTaxRegistrationAttribute" view.bind="TaxRegistrationAttribute"></qp-grid>
+            <footer>
+                <qp-button id="TaxRegistrationAttributeOkButton" caption="Save & Close" dialog-result="OK"></qp-button>
+                <qp-button id="TaxRegistrationAttributeCancelButton" caption="Close" dialog-result="Cancel"></qp-button>
+            </footer>
+        </qp-panel>
+    </qp-tabbar>
+</template>

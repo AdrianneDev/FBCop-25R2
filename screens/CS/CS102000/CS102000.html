@@ -1,0 +1,179 @@
+﻿<template>
+
+    <qp-template name="1-1" id="formBAccount" wg-container="BAccount_PXFormView1" class="label-size-m equal-height">
+
+        <qp-fieldset slot="A" id="columnFirst" view.bind="BAccount">
+            <field name="AcctCD"></field>
+            <field name="AcctName"></field>
+            <field name="OrganizationID"></field>
+        </qp-fieldset>
+
+        <qp-fieldset slot="B" id="columnSecond" view.bind="BAccount">
+            <field name="Active" class="no-label"></field>
+        </qp-fieldset>
+
+    </qp-template>
+
+    <qp-tabbar id="tabs" class="label-size-m">
+
+        <qp-tab id="tabBranchDetails" caption="Branch Details">
+            <qp-template name="1-1" id="formBranchDetails">
+                <div slot="A" id="columnFirst-BranchDetails">
+
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupMainContact"
+						contact-view="DefContact"
+						fs-caption="Main Contact"
+						fs-wg-container="DefContact_DefContact">
+					</qp-include>
+
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupMainAddress"
+						fs-wg-container="DefAddress_DefAddress"
+						address-view="DefAddress"
+						fs-caption="Main Address"
+						view-on-map-action-name="ViewMainOnMap"
+						override-fieldname
+					>
+						<field modify="#groupMainAddress [name='CountryID']" after="#groupMainAddress [name='PostalCode']"></field>
+						<field append="#groupMainAddress" name="CurrentBAccount.CarrierFacility" wg-container="CurrentBAccount_formCarrierFacility"></field>
+					</qp-include>
+
+                </div>
+
+                <div slot="B" id="columnSecond-BranchDetails">
+
+                    <qp-fieldset id="groupConfigurationSettings" view.bind="CurrentBAccount" caption="Configuration Settings" wg-container="CurrentBAccount_tab">
+                        <field name="BranchRoleName"></field>
+                        <field name="BranchCountryID"></field>
+                        <field name="DefaultPrinterID"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupTaxRegistrationInfo" view.bind="CurrentBAccount" caption="Tax Registration Info" wg-container="CurrentBAccount_tab">
+                        <field name="LegalName"></field>
+                        <field name="TaxRegistrationID"></field>
+                        <field name="MTDApplicationID"></field>
+                        <using view="DefLocation" wg-container="DefLocation_PXFormViewLocation">
+                            <field name="CAvalaraExemptionNumber"></field>
+                            <field name="CAvalaraCustomerUsageType"></field>
+                        </using>
+                        <field name="Reporting1099"></field>
+                        <field name="RegisteredEntityForReporting"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupDunningProcessSettings" view.bind="CurrentBAccount" caption="Dunning Process Settings" wg-container="CurrentBAccount_tab">
+                        <field name="IsDunningCompanyBranchID"></field>
+                    </qp-fieldset>
+
+                </div>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabDeliverySettings" caption="Delivery Settings">
+            <qp-template name="1-1" id="formDeliverySettings">
+                <div slot="A" id="columnFirst-DeliverySettings">
+
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupDeliveryContact"
+						contact-view="DefLocationContact"
+						fs-caption="Delivery Contact"
+						fs-wg-container="DefLocationContact_DefLocationContact"
+						override-fieldname="DefLocation.OverrideContact"
+						override-wg-container="DefLocation_frmDefLocation">
+					</qp-include>
+
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupDeliveryAddress"
+						address-view="DefLocationAddress"
+						fs-caption="Delivery Address"
+						fs-wg-container="DefLocationAddress_DefLocationAddress"
+						override-fieldname="DefLocation.OverrideAddress"
+						override-wg-container="DefLocation_frmDefLocation"
+						view-on-map-action-name="ViewDefLocationAddressOnMap"
+					>
+						<field modify="#groupDeliveryAddress [name='CountryID']" after="#groupDeliveryAddress [name='PostalCode']"></field>
+					</qp-include>
+                </div>
+
+                <div slot="B" id="columnSecond-DeliverySettings">
+
+                    <qp-fieldset id="groupShippingInstructions" view.bind="DefLocation" caption="Shipping Instructions" wg-container="DefLocation_frmDefLocation">
+                        <field name="VTaxZoneID"></field>
+                        <field name="CShipComplete"></field>
+                    </qp-fieldset>
+
+                </div>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabEmployees" caption="Employees">
+            <qp-grid id="gridEmployees" view.bind="Employees" wg-container="Employees_grdEmployees">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabLedgers" caption="Ledgers">
+            <qp-grid id="gridLedgers" view.bind="LedgersView" wg-container="LedgersView_grdLedgers">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabGLAccounts" caption="GL Accounts">
+            <qp-template name="1-1" id="formGLAccounts">
+                <qp-fieldset slot="A" id="columnFirst-GLAccounts" view.bind="DefLocation" wg-container="DefLocation_frmDefLocationGL">
+                    <field name="CMPSalesSubID"></field>
+                    <field name="CMPExpenseSubID"></field>
+                    <field name="CMPFreightSubID"></field>
+                    <field name="CMPDiscountSubID"></field>
+                    <field name="CMPGainLossSubID"></field>
+                    <field name="CMPPayrollSubID"></field>
+                </qp-fieldset>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabVisualAppearance" caption="Visual Appearance">
+            <qp-template name="1-1" id="formVisualAppearance" wg-container="CurrentBAccount_frmLogo">
+                <div slot="A" id="columnFirst-VisualAppearance">
+                    <qp-fieldset id="groupSiteLogo" view.bind="CurrentBAccount" caption="Site Logo">
+
+                        <field name="BranchLogoName" unbound>
+							<qp-label slot="label" caption="Logo"></qp-label>
+                            <qp-image-uploader id="BranchLogoName" state.bind="CurrentBAccount.BranchLogoName"
+                                               width="100% 7/2"></qp-image-uploader>
+                        </field>
+
+						<field name="LogoNameLabel" unbound>
+							<qp-label slot="label" caption="Recommended Size"></qp-label>
+							<qp-label caption="Width 210px, Height 50px"></qp-label>
+						</field>
+
+                        <field name="BranchLogoNameGetter"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="groupTheme" view.bind="CurrentBAccount" caption="Theme">
+                        <field name="OverrideThemeVariables"></field>
+                        <field name="PrimaryColor" control-type="qp-color-picker"></field>
+                        <field name="BackgroundColor" control-type="qp-color-picker"></field>
+                    </qp-fieldset>
+                </div>
+
+                <div slot="B" id="columnSecond-VisualAppearance">
+                    <qp-fieldset id="groupReportLogo" view.bind="CurrentBAccount" caption="Report Logo">
+
+                        <field name="BranchLogoNameReport" unbound>
+							<qp-label slot="label" caption="Logo"></qp-label>
+                            <qp-image-uploader id="BranchLogoNameReport" state.bind="CurrentBAccount.BranchLogoNameReport"
+                                               width="100% 7/2"></qp-image-uploader>
+                        </field>
+
+						<field name="LogoReportNameLabel" unbound>
+							<qp-label slot="label" caption="Recommended Size"></qp-label>
+							<qp-label caption="Width 300px, Height 100px"></qp-label>
+						</field>
+
+                        <field name="BranchLogoNameReportGetter"></field>
+                    </qp-fieldset>
+                </div>
+            </qp-template>
+        </qp-tab>
+
+    </qp-tabbar>
+
+</template>

@@ -1,0 +1,41 @@
+<template>
+	<qp-panel id="AccountInfo" caption="Create Account" auto-repaint="true">
+		<qp-tabbar id="panel_CreateAccount_mainTabBar" wg-container="ContactInfo_tabCreateAccount">
+			<qp-tab id="panel_CreateAccount_tabMain" caption="Main">
+				<qp-fieldset id="formCreateAccountForBoth" view.bind="AccountInfo" caption="Business Account" wg-container="AccountInfo_formCreateAccountForBoth">
+					<field name="BAccountID"></field>
+					<field name="AccountName"></field>
+					<field name="AccountClass"></field>
+					<field name="LinkContactToAccount"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formCreateContactForBoth" view.bind="ContactInfo" caption="Contact" wg-container="ContactInfo_formCreateContactForBoth">
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="FullName"></field>
+					<field name="Salutation"></field>
+					<field name="Phone1">
+						<qp-field slot="label" control-state.bind="ContactInfo.Phone1Type" class="no-label"></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field slot="label" control-state.bind="ContactInfo.Phone2Type" class="no-label"></qp-field>
+					</field>
+					<field name="Email"></field>
+					<field name="ContactClass"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateAccount_tabAttributes" caption="Attributes" style="min-height: 570px;">
+				<qp-grid id="grdAccountInfoAttributesBoth" view.bind="AccountInfoAttributes" caption="Business Account" class="framed-section" wg-container="AccountInfoAttributes_grdAccountInfoAttributesBoth"></qp-grid>
+				<qp-grid id="grdContactInfoAttributesBoth" view.bind="ContactInfoAttributes" caption="Contact" class="framed-section" wg-container="ContactInfoAttributes_grdContactInfoAttributesBoth"></qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateAccount_tabUDFS" caption="User-Defined Fields" style="min-height: 570px;">
+				<qp-grid id="grdAccountInfoUDFBoth" view.bind="AccountInfoUDF" caption="Business Account" class="framed-section" wg-container="AccountInfoUDF_grdAccountInfoUDFBoth"></qp-grid>
+				<qp-grid id="grdContactInfoUDFBoth" view.bind="ContactInfoUDF" caption="Contact" class="framed-section" wg-container="ContactInfoUDF_grdContactInfoUDFBoth"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="CreateContactAndAccountBtnReview" dialog-result="Yes" caption="Create & Review" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="CreateContactAndAccountBtnConvert" dialog-result="OK" caption="Create" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="CreateContactAndAccountBtnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

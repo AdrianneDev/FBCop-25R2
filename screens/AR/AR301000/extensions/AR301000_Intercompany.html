@@ -1,0 +1,9 @@
+<template>
+	<qp-fieldset after="#groupDunningInfo" id="groupIntercompanyInvoicing"
+				 view.bind="CurrentDocument" caption="Intercompany Invoicing" wg-container="CurrentDocument_tab">
+		<using view="RelatedIntercompanyAPDocument">
+			<field name="DocumentKey"></field>
+		</using>
+		<field name="IsHiddenInIntercompanySales"></field>
+	</qp-fieldset>
+</template>

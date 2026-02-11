@@ -1,0 +1,18 @@
+<template>
+    <div replace="#change-orders-section">
+        <qp-splitter id="splitter-change-orders" split="height" initial-split="50%" if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['ChangeRequest']">
+            <split-pane>
+                <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenChangeRequests'}" value.two-way="captions.ChangeRequests" class="caption-with-link"></qp-text-editor>
+                <qp-grid id="change-requests-grid" view.bind="ChangeRequests" class="grid-with-caption"></qp-grid>    
+            </split-pane>
+            <split-pane>
+                <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenChangeOrders'}" value.two-way="captions.ChangeOrders" class="caption-with-link"></qp-text-editor>
+                <qp-grid id="change-orders-grid" view.bind="ChangeOrders" class="grid-with-caption"></qp-grid>    
+            </split-pane>
+        </qp-splitter>
+        <div if.bind="!featuresService.features['PX.Objects.CS.FeaturesSet']['ChangeRequest']" class="stretch">
+            <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenChangeOrders'}" value.two-way="captions.ChangeOrders" class="caption-with-link"></qp-text-editor>
+            <qp-grid id="change-orders-only-grid" view.bind="ChangeOrders" class="grid-with-caption"></qp-grid>    
+        </div>
+    </div>
+</template>

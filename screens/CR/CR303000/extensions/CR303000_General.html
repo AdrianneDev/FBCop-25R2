@@ -1,0 +1,64 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template name="1-1" id="formGeneral">
+			<div slot="A" id="columnFirstInTabGeneral">
+				<qp-fieldset id="AdditionalInfo_CRM" caption="Account Details" view.bind="CurrentBAccount" wg-container="CurrentBAccount_frmCRMinfo">
+					<field name="Type"></field>
+					<field name="ParentBAccountID"></field>
+					<field name="WorkgroupID"></field>
+					<field name="SalesTerritoryID">
+						<qp-field id="OverrideSalesTerritoryField" control-state.bind="CurrentBAccount.OverrideSalesTerritory"></qp-field>
+					</field>
+					<field name="CampaignSourceID"></field>
+					<field name="DefLocation.CDefProjectID"></field>
+					<field name="AcctReferenceNbr"></field>
+				</qp-fieldset>
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="groupAccountAddress"
+					address-view="DefAddress"
+					fs-caption="Account Address"
+					override-fieldname
+					fs-wg-container="DefAddress_DefAddress"
+					view-on-map-action-name="ViewMainOnMap"
+				>
+					<field modify="#groupAccountAddress [name='CountryID']" after="#groupAccountAddress [name='PostalCode']"></field>
+				</qp-include>
+				<qp-fieldset id="frmFinancialSettings" caption="Financial Settings" view.bind="CurrentBAccount" wg-container="CurrentBAccount_frmFinancialSettings">
+					<field name="CuryID">
+						<qp-field id="OverrideCuryField" control-state.bind="CurrentBAccount.AllowOverrideCury"></qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_Activities" caption="Activity Statistics" view.bind="BAccountActivityStatistics" wg-container="CurrentBAccount_frmCRMinfo">
+					<field name="LastIncomingActivityDate"></field>
+					<field name="LastOutgoingActivityDate"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupAccountPersonalDataPrivacy" caption="Account Personal Data Privacy" view.bind="DefContact" wg-container="DefContact_DefContact2">
+					<field name="ConsentAgreement"></field>
+					<field name="ConsentDate"></field>
+					<field name="ConsentExpirationDate"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B" id="columnSecondInTabGeneral" wg-container="PrimaryContactCurrent_frmPrimaryContact">
+				<qp-include url="src/screens/CR/common/forms/form-primary-contact/form-primary-contact.html" view-name="CurrentBAccount" primary-wg-container="CurrentBAccount_tab"></qp-include>
+				<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+					fs-id="groupAdditionalAccountInfo"
+					contact-view="DefContact"
+					fs-caption="Account Contact Information"
+					fs-wg-container="DefContact_DefContact"
+					show-personal-fields="false">
+				</qp-include>
+				<qp-fieldset id="frmNoBother" caption="Contact Preferences" view.bind="DefContact" wg-container="DefContact_frmNoBother">
+					<field name="Method"></field>
+					<field name="NoCall"></field>
+					<field name="NoMarketing"></field>
+					<field name="NoEMail"></field>
+					<field name="NoMassMail"></field>
+					<field name="CurrentBAccount.LocaleName"></field>
+				</qp-fieldset>
+				<qp-include url="src/screens/CR/common/forms/form-primary-contact/form-primary-contact-personal-data-privacy.html">
+					<template modify="#groupContactPersonalDataPrivacy" caption="Personal Data Privacy of Primary Contact"></template>
+				</qp-include>
+			</div>
+		</qp-template>
+	</template>
+</template>

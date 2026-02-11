@@ -1,0 +1,100 @@
+<template>
+	<qp-include url="../common/au-panel-view-changes.html"></qp-include>
+
+	<qp-grid id="ViewActionsWithoutCategories_gridActions" wg-container
+		view.bind="ViewActionsWithoutCategories"></qp-grid>
+	<qp-panel id="FilterActionEdit" caption="Action Properties" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="FormActionEdit" name="1-1" class="equal-height label-size-m">
+			<qp-fieldset id="FormActionEdit_0" wg-container="FilterActionEdit_FormActionEdit"
+				view.bind="FilterActionEdit" slot="A">
+				<field name="ActionName"></field>
+				<field name="GraphActionName"></field>
+				<field name="DisplayName"></field>
+				<field name="DisableCondition"></field>
+				<field name="HideCondition"></field>
+				<field name="Form"></field>
+				<field name="Icon"></field>
+				<field name="MassProcessingScreen"></field>
+				<field name="BatchMode"></field>
+			</qp-fieldset>
+			<qp-fieldset id="FormActionEdit_1" wg-container="FilterActionEdit_FormActionEdit"
+				view.bind="FilterActionEdit" slot="B">
+				<field name="ActionType"></field>
+				<field name="MenuFolderType"></field>
+				<field name="DestinationScreenID"></field>
+				<field name="WindowMode"></field>
+				<field name="MapEnableRights"></field>
+				<field name="MapViewRights"></field>
+				<field name="ExposedToMobile"></field>
+				<field name="DisplayOnToolbar"></field>
+				<field name="Connotation"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-tabbar id="tabActionsDetails" view-model.ref="tabbarVM">
+			<qp-tab id="ViewActionParamsFiltered_tab" caption="Navigation Parameters">
+				<qp-grid id="ViewActionParamsFiltered_gridParams" wg-container
+					view.bind="ViewActionParamsFiltered"></qp-grid>
+			</qp-tab>
+			<qp-tab id="StateActionFieldsPerAction_tab" caption="Field Update">
+				<qp-grid id="StateActionFieldsPerAction_gridStateActionsFields" wg-container
+					view.bind="StateActionFieldsPerAction"></qp-grid>
+			</qp-tab>
+			<qp-tab id="StateActionParamsPerAction_tab" caption="Action Parameters">
+				<qp-grid id="StateActionParamsPerAction_gridStateActionsParams" wg-container
+					view.bind="StateActionParamsPerAction"></qp-grid>
+			</qp-tab>
+			<qp-tab id="NextActionsPerAction_tab" caption="Actions Executed on Success">
+				<qp-grid id="NextActionsPerAction_gridNextActions" wg-container
+					view.bind="NextActionsPerAction"></qp-grid>
+			</qp-tab>
+			<qp-tab id="PrevActionsPerAction_tab" caption="Triggering Actions">
+				<qp-grid id="PrevActionsPerAction_gridPrevActions" wg-container
+					view.bind="PrevActionsPerAction"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="FilterActionEditButtonOK" wg-name="Ok3" dialog-result="OK" caption="Save" config.bind="{validateInput: true}" class="major-button"></qp-button>
+			<qp-button id="FilterActionEditButtonCancel" wg-name="Cancel3" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="FilterActionsFolder" caption="Reorder Actions" auto-repaint="true" width="md" height="70vh">
+		<qp-template id="FilterActionsFolder_form" name="1-1">
+			<qp-fieldset id="FormFilterActionsFolder_0" wg-container="FilterActionsFolder_FormFilterActionsFolder"
+				view.bind="FilterActionsFolder" slot="A">
+				<field name="MenuFolderType"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="ViewActionsOrder_GridActionsOrder" wg-container view.bind="ViewActionsOrder"></qp-grid>
+		<footer>
+			<qp-button id="FilterActionsFolderButtonOK" dialog-result="OK"></qp-button>
+			<qp-button id="FilterActionsFolderButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ManageCategories" wg-container="ManageCategories_ManageCategories" caption="Manage Categories"
+		auto-repaint="true" width="md" height="70vh">
+		<qp-grid id="ManageCategories_GridCategoryManagment" wg-container view.bind="ManageCategories"></qp-grid>
+		<footer>
+			<qp-button id="ManageCategoriesButtonOK" dialog-result="OK"></qp-button>
+			<qp-button id="ManageCategoriesButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddCategoryRecord" wg-container="AddCategoryRecord_AddCategoryRecord" caption="New Category"
+		auto-repaint="true">
+		<qp-fieldset id="PXFormView5" wg-container view.bind="AddCategoryRecord" slot="A">
+			<field name="CategoryName"></field>
+			<field name="DisplayName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="AddCategoryRecordButtonOK" dialog-result="OK"></qp-button>
+			<qp-button id="AddCategoryRecordButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="SelectedActionSequence" wg-container="SelectedActionSequence_SelectedActionSequence"
+		caption="Dialog Box Values" auto-repaint="true">
+		<qp-grid id="FormFieldValuesPerActionSequence_GridActionSequenceFormFieldValues" wg-container
+			view.bind="FormFieldValuesPerActionSequence"></qp-grid>
+		<footer>
+			<qp-button id="SelectedActionSequenceButtonOk" caption="Close" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

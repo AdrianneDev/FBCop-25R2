@@ -1,0 +1,44 @@
+<template>
+	<template id="tabDetails_Content">
+		<qp-template id="details" name="1-1">
+			<qp-fieldset id="tabDetails_MessageLeft" slot="A" view.bind="CurrentMessage" caption="Email Details">
+				<field name="Type"></field>
+				<field name="OwnerID"></field>
+				<field name="WorkgroupID"></field>
+				<field name="BAccountID"></field>
+				<field name="ContactID"></field>
+                <field name="ResponseDueDateTime"></field>
+                <field name="ResponseActivityNoteID"></field>
+				<field name="ResponseToNoteID"></field>
+				<field name="ParentNoteID"></field>
+				<field name="SendAt"></field>
+			</qp-fieldset>
+			<qp-fieldset id="tabDetails_SendGrid" slot="A" view.bind="CurrentMessage" caption="SendGrid">
+				<field name="Categories"></field>
+				<field name="BypassSuppressionChecks"></field>
+				<field name="TrackEmailOpens"></field>
+				<field name="TrackClicksInEmail"></field>
+			</qp-fieldset>
+			<qp-fieldset id="tabDetails_MessageRight" slot="B" view.bind="TimeActivity" caption="Activity Time Details">
+				<field name="TrackTime"></field>
+				<field name="ProjectID"></field>
+				<field name="CertifiedJob"></field>
+				<field name="ProjectTaskID"></field>
+				<field name="CostCodeID"></field>
+				<field name="LabourItemID"></field>
+				<field name="UnionID"></field>
+				<field name="ApprovalStatus"></field>
+				<field name="ApproverID"></field>
+				<field name="EarningTypeID"></field>
+				<field name="WorkCodeID"></field>
+				<field name="ShiftID"></field>
+				<field name="TimeSpent"></field>
+				<field name="OvertimeSpent"></field>
+				<field name="IsBillable"></field>
+				<field name="Released"></field>
+				<field name="TimeBillable"></field>
+				<field name="OvertimeBillable"></field>
+			</qp-fieldset>
+		</qp-template>
+	</template>
+</template>

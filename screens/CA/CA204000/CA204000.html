@@ -1,0 +1,119 @@
+<template>
+	<qp-template id="formPaymentMethod" name="1-1" class="equal-height" wg-container="PaymentMethod_form">
+		<qp-fieldset id="columnFirstPaymentMethod" view.bind="PaymentMethod" slot="A" class="label-size-m">
+			<field name="PaymentMethodID"></field>
+			<field name="IsActive"></field>
+			<field name="ContainsPersonalData"></field>
+			<field name="PaymentType"></field>
+			<field name="DirectDepositFileFormat"></field>
+			<field name="ExternalPaymentProcessorID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondPaymentMethod" view.bind="PaymentMethod" class="no-label" slot="B">
+			<field name="UseForAP"></field>
+			<field name="UseForAR"></field>
+			<field name="UseForPR"></field>
+			<field name="PaymentDateToBankDate"></field>
+			<field name="UseForCA"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+
+		<qp-tab id="tabAllowedCashAccounts" caption="Allowed Cash Accounts">
+			<qp-grid id="gridCashAccounts" view.bind="CashAccounts" wg-container="CashAccounts_grdCashAccounts"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabARSettings" caption="Settings for Use in AR" if.bind="PaymentMethod.UseForAR.value == true">
+			<qp-template id="formARSettings" name="1-1" class="equal-height" wg-container="PaymentMethodCurrent_tab">
+				<qp-fieldset id="columnFirstARSettings" view.bind="PaymentMethodCurrent" class="no-label" slot="A">
+					<field name="ARIsProcessingRequired"></field>
+					<field name="IsAccountNumberRequired"></field>
+					<field name="ARHasBillingInfo"></field>
+				</qp-fieldset>
+				<qp-fieldset id="columnSecondARSettings" view.bind="PaymentMethodCurrent" class="no-label" slot="B">
+					<field name="ARVoidOnDepositAccount"></field>
+					<field name="ARDefaultVoidDateToDocumentDate"></field>
+					<field name="SendPaymentReceiptsAutomatically"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridPaymentMethodsAR" view.bind="DetailsForReceivable" caption="Payment Method Details"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabAPSettings" caption="Settings for Use in AP" if.bind="PaymentMethod.UseForAP.value == true">
+			<qp-template id="formAPSettings" name="1-1" class="equal-height" wg-container="PaymentMethodCurrent_tab">
+				<qp-fieldset id="groupAdditionalProcessing" view.bind="PaymentMethodCurrent" slot="A" class="no-label" caption="Additional Processing">
+					<field name="APAdditionalProcessing" control-type="qp-radio" config-class.bind="'vertical'"></field>
+				</qp-fieldset>
+
+				<div id="columnSecondAPSettings" slot="B">
+					<qp-fieldset id="groupCheckPrintingSettings" view.bind="PaymentMethodCurrent" caption="Check Printing Settings" class="label-size-m">
+						<field name="APCheckReportID"></field>
+						<field name="APStubLines"></field>
+						<field name="APPrintRemittance"></field>
+						<field name="APRemittanceReportID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupExportSettings" view.bind="PaymentMethodCurrent" caption="Export Settings" class="label-size-m">
+						<field name="APBatchExportMethod"></field>
+						<field name="APBatchExportSYMappingID"></field>
+						<field name="APBatchExportPlugInTypeName"></field>
+						<field name="SkipPaymentsWithZeroAmt"></field>
+						<field name="RequireBatchSeqNum"></field>
+						<field name="SkipExport"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPaymentSettings" view.bind="PaymentMethodCurrent" class="no-label" caption="Payment Settings">
+						<field name="APRequirePaymentRef"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+			<qp-grid id="gridPaymentMethodsAP" view.bind="DetailsForVendor" caption="Payment Method Details"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabPRSettings" caption="Settings for Use in PR" if.bind="PaymentMethod.UseForPR.value == true">
+			<qp-template id="formPRSettings" name="1-1" wg-container="PaymentMethodCurrent_tab">
+				<div id="columnFirstPRSettings" slot="A">
+					<qp-fieldset id="groupPRSettings" view.bind="PaymentMethodCurrent" class="no-label" caption="Processing">
+						<field name="PRProcessing" control-type="qp-radio" config-class.bind="'vertical'"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPRPrintSettings" view.bind="PaymentMethodCurrent" caption="Print Settings" class="label-size-m">
+						<field name="PRCheckReportID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPRExportSettings" view.bind="PaymentMethodCurrent" caption="Export Settings" class="label-size-m">
+						<field name="PRBatchExportSYMappingID"></field>
+						<field name="PRSkipPaymentsWithZeroAmounts"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPRReportSettings" view.bind="PaymentMethodCurrent" caption="Report Settings" class="label-size-m">
+						<field name="UseDetailedPayStubReport"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabRemittanceSettings" caption="Remittance Settings" if.bind="PaymentMethod.UseForCA.value == true">
+			<qp-grid id="gridPaymentMethodsRemit" view.bind="DetailsForCashAccount"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabProcessingCenters" caption="Processing Centers" if.bind="PaymentMethod.HasProcessingCenters.value == true">
+			<qp-template name="1-1" id="tabProcessingCentersTemplate" wg-container>
+				<qp-grid slot="A" id="gridProcCenters" view.bind="ProcessingCenters" wg-container="ProcessingCenters_grdProcCenters" caption="Processing Centers"></qp-grid>
+				<qp-grid slot="B" id="gridBranchProcessingCenters" view.bind="BranchProcessingCenters" wg-container="BranchProcessingCenters_grdBranchProcessingCenters" caption="Overrides by Branch"></qp-grid>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabPluginSettings" caption="Plug-In Settings" if.bind="PaymentMethod.IsUsingPlugin.value == true">
+			<qp-template id="formPluginSettings" name="1" class="stretch">
+				<div slot="A">
+					<qp-fieldset id="panelPluginSettings" view.bind="PlugInFilter" class="transparent-section" wg-container="PlugInFilter_formPlugInFilter">
+						<field name="ShowAllSettings" class="no-label"></field>
+						<field name="ShowOffsetSettings" class="no-label"></field>
+					</qp-fieldset>
+					<qp-grid id="gridPlugInSettings" view.bind="aCHPlugInParameters" wg-container="aCHPlugInParameters_plugInSettingsGrid"
+						on-get-cell-editor-type.call="onGetCellEditorTypeHandler(args)">
+					</qp-grid>
+				</div>
+				<qp-grid id="gridPlugInSettingsGridCopyPaste" view.bind="PlugInParameters" wg-container="PlugInParameters_plugInSettingsGridCopyPaste"></qp-grid>
+			</qp-template>
+		</qp-tab>
+
+	</qp-tabbar>
+</template>

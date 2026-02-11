@@ -1,0 +1,48 @@
+<template>
+	<qp-panel id="OpportunityInfo" caption="Create Opportunity" auto-repaint="true" wg-container="OpportunityInfo_formCreateOpportunity">
+		<qp-tabbar id="OpportunityInfo_tabCreateOpportunity" wg-container>
+			<qp-tab id="panel_CreateOpportunityAll_tabMain" caption="Main">
+				<qp-fieldset id="formCreateOpportunityAll" view.bind="OpportunityInfo" caption="Opportunity" wg-container="OpportunityInfo_formCreateOpportunityAll">
+					<field name="Subject"></field>
+					<field name="CloseDate"></field>
+					<field name="OpportunityClass"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formCreateOpportunityAll_Account" view.bind="AccountInfo" caption="Business Account" wg-container="AccountInfo_formCreateOpportunityAll_Account" if.bind="AccountInfo.NeedToUse.value">
+					<field name="BAccountID"></field>
+					<field name="AccountName"></field>
+					<field name="AccountClass"></field>
+					<field name="LinkContactToAccount"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formCreateOpportunityAll_Contact" view.bind="ContactInfo" caption="Contact" wg-container="ContactInfo_formCreateOpportunityAll_Contact" if.bind="ContactInfo.NeedToUse.value">
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="FullName"></field>
+					<field name="Salutation"></field>
+					<field name="Phone1">
+						<qp-field slot="label" control-state.bind="ContactInfo.Phone1Type" class="no-label"></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field slot="label" control-state.bind="ContactInfo.Phone2Type" class="no-label"></qp-field>
+					</field>
+					<field name="Email"></field>
+					<field name="ContactClass"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateOpportunityAll_tabAttributes" caption="Attributes" style.bind="AccountInfo.NeedToUse.value == true ? 'min-height: 754px;' : 'min-height: 570px;'">
+				<qp-grid id="grdOpportunityInfoAttributesAll" view.bind="OpportunityInfoAttributes" caption="Opportunity" class="framed-section"></qp-grid>
+				<qp-grid id="grdAccountInfoAttributesAll" view.bind="AccountInfoAttributes" caption="Business Account" class="framed-section" if.bind="AccountInfo.NeedToUse.value"></qp-grid>
+				<qp-grid id="grdContactInfoAttributesAll" view.bind="ContactInfoAttributes" caption="Contact" class="framed-section" if.bind="ContactInfo.NeedToUse.value"></qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateOpportunityAll_tabUDFS" caption="User-Defined Fields" style.bind="AccountInfo.NeedToUse.value == true ? 'min-height: 754px;' : 'min-height: 570px;'">
+				<qp-grid id="grdOpportunityInfoUDFAll" view.bind="OpportunityInfoUDF" caption="Opportunity" class="framed-section"></qp-grid>
+				<qp-grid id="grdAccountInfoUDFAll" view.bind="AccountInfoUDF" caption="Business Account" class="framed-section" if.bind="AccountInfo.NeedToUse.value"></qp-grid>
+				<qp-grid id="grdContactInfoUDFAll" view.bind="ContactInfoUDF" caption="Contact" class="framed-section" if.bind="ContactInfo.NeedToUse.value"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="CreateOpportunityBtnReview" dialog-result="Yes" caption="Create & Review" config.bind="{ validateInput: true }" wg-container="OpportunityInfo_tabCreateOpportunity"></qp-button>
+			<qp-button id="CreateOpportunityBtnConvert" dialog-result="OK" caption="Create" config.bind="{ validateInput: true }" wg-container="OpportunityInfo_tabCreateOpportunity"></qp-button>
+			<qp-button id="CreateOpportunityBtnCancel" dialog-result="Cancel" wg-container="OpportunityInfo_tabCreateOpportunity"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

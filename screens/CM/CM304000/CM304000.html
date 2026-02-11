@@ -1,0 +1,28 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template id="formHeader" name="7-10-7" wg-container="TranslHistRecords_form" class="equal-height">
+		<qp-fieldset id="columnFirstHeader" view.bind="TranslHistRecords" slot="A">
+			<field name="ReferenceNbr"></field>
+			<field name="Status" class="colored"></field>
+			<field name="DateEntered"></field>
+			<field name="CuryEffDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHeader" view.bind="TranslHistRecords" slot="B">
+			<field name="TranslDefId"></field>
+			<field name="BranchID"></field>
+			<field name="LedgerID"></field>
+			<field name="DestCuryID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdHeader" view.bind="TranslHistRecords" slot="C" class="highlights-section">
+			<field name="DebitTot"></field>
+			<field name="CreditTot"></field>
+			<field name="ControlTot"></field>
+			<field name="BatchNbr" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridTranslHistDetRecords" view.bind="TranslHistDetRecords" wg-container="TranslHistDetRecords_grid"></qp-grid>
+</template>

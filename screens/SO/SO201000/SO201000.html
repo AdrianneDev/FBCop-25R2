@@ -1,0 +1,151 @@
+<template>
+	<qp-template id="form-OrderType" name="1-1" class="label-size-m equal-height" wg-container="soordertype_form">
+		<qp-fieldset id="fsColumnA-OrderType" slot="A" view.bind="soordertype">
+			<field name="OrderType"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-OrderType" slot="B" view.bind="soordertype">
+			<field name="Descr"></field>
+			<field name="Template"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-General" caption="General">
+			<qp-template id="form-General" name="1-1" class="label-size-m" wg-container="currentordertype_tab">
+				<div id="divColumnA-General" slot="A">
+					<qp-fieldset id="fsOrder-General" view.bind="currentordertype" caption="Order Settings">
+						<field name="OrderNumberingID"></field>
+						<field name="DaysToKeep"></field>
+						<field name="HoldEntry"></field>
+						<field name="CreditHoldEntry"></field>
+						<field name="RemoveCreditHoldByPayment" class="indent-1"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="BillSeparately"></field>
+						<field name="ShipSeparately"></field>
+						<field name="CalculateFreight"></field>
+						<field name="ShipFullIfNegQtyAllowed"></field>
+						<field name="DisableAutomaticDiscountCalculation"></field>
+						<field name="RecalculateDiscOnPartialShipment"></field>
+						<field name="DisableAutomaticTaxCalculation"></field>
+						<field name="AllowRefundBeforeReturn"></field>
+						<field name="CustomerOrderIsRequired"></field>
+						<field name="CustomerOrderValidation"></field>
+						<field name="EncryptAndPseudonymizePII"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsCopying-General" view.bind="currentordertype" caption="Copying Settings">
+						<field name="CopyNotes"></field>
+						<field name="CopyFiles"></field>
+						<field name="CopyHeaderNotesToShipment"></field>
+						<field name="CopyHeaderFilesToShipment"></field>
+						<field name="CopyHeaderNotesToInvoice"></field>
+						<field name="CopyHeaderFilesToInvoice"></field>
+						<field name="CopyLineNotesToShipment"></field>
+						<field name="CopyLineFilesToShipment"></field>
+						<field name="CopyLineNotesToInvoice"></field>
+						<field name="CopyLineNotesToInvoiceOnlyNS" class="indent-1"></field>
+						<field name="CopyLineFilesToInvoice"></field>
+						<field name="CopyLineFilesToInvoiceOnlyNS" class="indent-1"></field>
+						<field name="CopyLineNotesToChildOrder"></field>
+						<field name="CopyLineFilesToChildOrder"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-General" slot="B">
+					<qp-fieldset id="fsAccountReceivable-General" view.bind="currentordertype" caption="Accounts Receivable Settings">
+						<field name="InvoiceNumberingID"></field>
+						<field name="MarkInvoicePrinted"></field>
+						<field name="MarkInvoiceEmailed"></field>
+						<field name="InvoiceHoldEntry"></field>
+						<field name="UseCuryRateFromSO"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsPosting-General" view.bind="currentordertype" caption="Posting Settings">
+						<field name="SalesAcctDefault"></field>
+						<field name="SalesSubMask"></field>
+						<field name="FreightAcctID"></field>
+						<field name="FreightAcctDefault"></field>
+						<field name="FreightSubID"></field>
+						<field name="FreightSubMask"></field>
+						<field name="DiscountAcctID"></field>
+						<field name="DiscAcctDefault"></field>
+						<field name="DiscountSubID"></field>
+						<field name="DiscSubMask"></field>
+						<field name="UseShippedNotInvoiced"></field>
+						<field name="ShippedNotInvoicedAcctID"></field>
+						<field name="ShippedNotInvoicedSubID"></field>
+						<field name="PostLineDiscSeparately"></field>
+						<field name="UseDiscountSubFromSalesSub"></field>
+						<field name="COGSAcctDefault"></field>
+						<field name="COGSSubMask"></field>
+						<field name="AutoWriteOff"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsIntercompanyPosting-General" view.bind="currentordertype" caption="Intercompany Posting Settings">
+						<field name="IntercompanySalesAcctDefault"></field>
+						<field name="IntercompanyCOGSAcctDefault"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsOrderOrchestration-General" view.bind="currentordertype" caption="Order Orchestration">
+						<field name="OrchestrationStrategy"></field>
+						<field name="LimitWarehouse"></field>
+						<field name="NumberOfWarehouses"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsPayment-General" view.bind="currentordertype" caption="Payment Settings">
+						<field name="ValidateCCRefundsOrigTransactions"></field>
+						<field name="AuthorizeRemainderAfterPartialCapture"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsChildOrder-General" view.bind="currentordertype" caption="Child Order Settings">
+						<field name="DfltChildOrderType"></field>
+						<field name="UseCuryRateFromBL"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Template" caption="Template">
+			<qp-template id="form-Template" name="1-1" class="label-size-m">
+				<qp-fieldset id="fsColumnA-Template" slot="A" view.bind="currentordertype" wg-container="currentordertype_tab">
+					<field name="Behavior"></field>
+					<field name="DefaultOperation"></field>
+					<field name="ARDocType"></field>
+					<field name="RequireShipping"></field>
+					<field name="RequireLotSerial"></field>
+					<field name="RequireAllocation"></field>
+					<field name="AllowQuickProcess"></field>
+				</qp-fieldset>
+				<qp-grid id="grid-Template" slot="B" view.bind="operations" caption="Operations" class="framed-section" wg-container="operations_grid"></qp-grid>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-QuickProcess" caption="Quick Processing" visible.bind="soordertype.AllowQuickProcess.value == true">
+			<qp-template id="form-QuickProcess" name="1-1" class="label-size-m" wg-container="currentordertype_tab">
+				<div id="divColumnA-QuickProcess" slot="A">
+					<qp-fieldset id="fsReports-QuickProcess" view.bind="quickProcessPreset" caption="Printable Document Processing">
+						<field name="AutoRedirect"></field>
+						<field name="AutoDownloadReports"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsShipping-QuickProcess" view.bind="quickProcessPreset" caption="Shipping">
+						<field name="CreateShipment"></field>
+						<field name="PrintPickList"></field>
+						<field name="ConfirmShipment"></field>
+						<field name="PrintLabels"></field>
+						<field name="PrintConfirmation"></field>
+						<field name="UpdateIN"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-QuickProcess" slot="B">
+					<qp-fieldset id="fsInvoicing-QuickProcess" view.bind="quickProcessPreset" caption="Invoicing">
+						<field name="PrepareInvoiceFromShipment"></field>
+						<field name="PrepareInvoice"></field>
+						<field name="PrintInvoice"></field>
+						<field name="EmailInvoice"></field>
+						<field name="ReleaseInvoice"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsDeviceHub-QuickProcess" view.bind="quickProcessPreset" caption="Printing Settings">
+						<field name="PrintWithDeviceHub"></field>
+						<field name="DefinePrinterManually"></field>
+						<field name="PrinterID"></field>
+						<field name="NumberOfCopies"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

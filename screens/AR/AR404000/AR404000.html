@@ -1,0 +1,18 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" class="equal-height" wg-container="Filter_form">
+
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+			<field name="StatementCycleId"></field>
+			<field name="StartDate" caption="Date Range">
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+			<field name="IncludeOnDemandStatements"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="History">
+	</qp-grid>
+
+</template>

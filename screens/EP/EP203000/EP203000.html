@@ -1,0 +1,48 @@
+<template>
+	<qp-template id="form" name="1-1" class="equal-height label-size-m" wg-container="Employee_form">
+		<qp-fieldset id="form_EmployeeLeft" slot="A" view.bind="Employee">
+			<field name="AcctCD"></field>
+			<field name="AcctName"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_EmployeeRight" slot="B" view.bind="Employee">
+			<field name="CurrentEmployee.VendorClassID" wg-container="CurrentEmployee_tab"></field>
+			<field name="VStatus"></field>
+			<field name="ChkServiceManagement"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTabBar" class="label-size-m" wg-container="CurrentEmployee_tab">
+		<qp-tab id="tabGeneral" caption="General" ref="tabGeneral_Content"></qp-tab>
+		<qp-tab id="tabHistory" caption="History">
+			<qp-grid id="gridHistory" view.bind="EmployeePositions" wg-container="EmployeePositions_gridPositions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial" ref="tabFinancial_Content"></qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes" ref="tabAttributes_Content"></qp-tab>
+		<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content" class="fit-to-content" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing" load-on-demand="true">
+			<qp-grid id="gridMailingPrinting" view.bind="NWatchers" wg-container="NWatchers_gridNC"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabWorkgroups" caption="Workgroups">
+			<qp-grid id="gridWorkgroups" view.bind="CompanyTree" wg-container="CompanyTree_companyTreeGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAssignmentandApprovalMaps" caption="Assignment and Approval Maps">
+			<qp-grid id="gridAssignmentandApprovalMaps" view.bind="AssigmentAndApprovalMaps"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDelegates" caption="Delegates" ref="tabEmployeeDelegates_Content" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabUser" caption="User" ref="tabUser_Content" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabCorporateCards" caption="Corporate Cards">
+			<qp-grid id="gridCorporateCards" view.bind="EmployeeCorpCards" wg-container="EmployeeCorpCards_gridCorpCards"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabLaborItemOverrides" caption="Labor Item Overrides">
+			<qp-grid id="gridLaborItemOverrides" view.bind="LaborMatrix" wg-container="LaborMatrix_LaborClassesGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSkills" caption="Skills">
+			<qp-grid id="gridSkills" view.bind="EmployeeSkills" wg-container="EmployeeSkills_gridEmployeeSkills"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabServiceAreas" caption="Service Areas">
+			<qp-grid id="gridServiceAreas" view.bind="EmployeeGeoZones" wg-container="EmployeeGeoZones_gridEmployeeGeoZones"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabLicenses" caption="Licenses">
+			<qp-grid id="gridLicenses" view.bind="EmployeeLicenses" wg-container="EmployeeLicenses_gridEmployeeLicenses"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

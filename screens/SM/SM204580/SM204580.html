@@ -1,0 +1,24 @@
+<template>
+	<qp-fieldset id="FormEditContent" class="stretch" wg-container="Files_FormEditContent" view.bind="Files">
+		<field name="FileContent" class="no-label stretch"></field>
+	</qp-fieldset>
+	<qp-panel id="ViewBaseMethod" wg-container="ViewBaseMethod_ViewBaseMethod" caption="Select Methods to Override" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="ViewBaseMethod_gridAddFile" wg-container view.bind="ViewBaseMethod"></qp-grid>
+		<footer>
+			<qp-button id="ViewBaseMethodButtonSave" caption="Save" dialog-result="OK"></qp-button>
+			<qp-button id="ViewBaseMethodButtonNo" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewActionWizard" wg-container="ViewActionWizard_ViewActionWizard" caption="Create Action" auto-repaint="true">
+		<qp-fieldset id="ViewActionWizardFieldset" wg-container="ViewActionWizard_FormActionWizard" view.bind="ViewActionWizard">
+			<field name="ActionName"></field>
+			<field name="DisplayName"></field>
+		</qp-fieldset>
+		<div class="v-stack" id="ViewActionButtons" wg-container>
+			<footer>
+				<qp-button id="ViewActionButtonOk" dialog-result="OK"></qp-button>
+				<qp-button id="ViewActionButtonCancel" dialog-result="Cancel"></qp-button>
+			</footer>
+		</div>
+	</qp-panel>
+</template>

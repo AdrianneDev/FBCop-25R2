@@ -1,0 +1,25 @@
+<template>
+	<qp-include url="../../common/barcode-processing/barcode-processing-screen.html">
+
+		<field append="#fsColumnA-Header" name="SiteID"></field>
+		<field append="#fsColumnA-Header" name="InventoryID"></field>
+
+		<qp-tab id="tab-Item" before="#tab-Logs" caption="Item">
+			<qp-template id="form-Item" name="1-2" class="full-width equal-height stretch" wg-container="InventoryItem_form">
+				<qp-fieldset id="fsColumnA-Item" slot="A" view.bind="InventoryItem">
+					<field name="ItemClassID"></field>
+					<field name="ItemType"></field>
+					<field name="KitItem"></field>
+					<field name="ValMethod"></field>
+					<field name="LotSerClassID"></field>
+					<field name="BaseUnit"></field>
+					<field name="SalesUnit"></field>
+					<field name="PurchaseUnit"></field>
+					<field name="ProductWorkgroupID"></field>
+					<field name="ProductManagerID"></field>
+				</qp-fieldset>
+				<qp-grid id="gridAvailability-Item" slot="B" view.bind="ISERecords" caption="Inventory Summary" class="framed-section" wg-container="ISERecords_grid"></qp-grid>
+			</qp-template>
+		</qp-tab>
+	</qp-include>
+</template>

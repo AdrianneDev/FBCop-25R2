@@ -1,0 +1,11 @@
+<template>
+	<qp-tab id="tab-Risks" after="#tab-Payments" caption="Risks">
+		<qp-template id="form-Risks" name="17-17-14" wg-container="CurrentDocument_Risk">
+			<qp-fieldset id="fsColumnA-Risks" slot="A" view.bind="CurrentDocument" class="transparent-section">
+				<field name="RiskStatus"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-Risks" view.bind="OrderRisks" wg-container="OrderRisks_gridOrderRisks"></qp-grid>
+	</qp-tab>
+</template>

@@ -1,0 +1,103 @@
+<template>
+	<qp-template name="1" id="Allocations_form" class="stretch" wg-container>
+		<qp-splitter id="Splitter" initial-split="33%" slot="A">
+			<split-pane id="AllocationsSummary" class="v-stack">
+				<qp-fieldset id="form" view.bind="Allocations">
+					<field name="AllocationID" config-display-mode.bind="'id'"></field>
+					<field name="Description"></field>
+				</qp-fieldset>
+				<qp-grid id="Steps_grid" wg-container view.bind="Steps" class="framed-section" caption="Allocation Steps">
+				</qp-grid>
+			</split-pane>
+			<split-pane id="AllocationRulesTab">
+				<qp-tabbar id="mainTab">
+					<qp-tab id="CalculationRulesTab" caption="Calculation Rules">
+						<qp-template name="1" id="MethodAndPostForm" wg-container="StepRules_formRules">
+							<qp-fieldset slot="A" id="MethodAndPostFieldset" view.bind="StepRules">
+								<field name="Method">
+									<qp-field control-state.bind="StepRules.Post"></qp-field>
+								</field>
+							</qp-fieldset>
+							<qp-fieldset slot="A" id="SelectionCriteriaFieldset" view.bind="StepRules" caption="Selection Criteria">
+								<field name="SelectOption"></field>
+								<field name="SourceBranchID"></field>
+								<field name="AccountGroupFrom"></field>
+								<field name="AccountGroupTo"></field>
+								<field name="RangeStart"></field>
+								<field name="RangeEnd"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="A" id="CalculationSettingsFieldset" view.bind="StepRules" caption="Calculation Settings">
+								<field name="RateTypeID"></field>
+								<field name="NoRateOption"></field>
+								<field name="StepRules.QtyFormula" control-type="qp-formula-editor">
+								</field>
+								<field name="StepRules.BillableQtyFormula" control-type="qp-formula-editor">
+								</field>
+								<field name="StepRules.AmountFormula" control-type="qp-formula-editor">
+								</field>
+								<field name="StepRules.DescriptionFormula" control-type="qp-formula-editor">
+								</field>
+							</qp-fieldset>
+						</qp-template>
+					</qp-tab>
+					<qp-tab id="AllocationSettingTab" caption="Allocation Settings">
+						<qp-template name="1-1" id="DateSourceForm" wg-container="StepSettings_formSettings">
+							<qp-fieldset slot="A" id="DateSourceFieldset" view.bind="StepSettings" caption="Transaction Options">
+								<field name="DateSource"></field>
+								<field name="UpdateGL"></field>
+								<field name="AllocateZeroQty"></field>
+								<field name="AllocateZeroAmount"></field>
+								<field name="AllocateNonBillable"></field>
+								<field name="MarkAsNotAllocated"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="A" id="TransactionBranchFieldset" view.bind="StepSettings" caption="Transaction Branch">
+								<field name="OffsetBranchOrigin"></field>
+								<field name="TargetBranchID"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="A" id="TransactionReversalFieldset" view.bind="StepSettings" caption="Transaction Reversal">
+								<field name="Reverse"></field>
+								<field name="UseReversalDateFromOriginal"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="A" id="AggregateTransactionsFieldset" view.bind="StepSettings" caption="Aggregate Transactions">
+								<field name="GroupByDate"></field>
+								<field name="GroupByEmployee"></field>
+								<field name="GroupByVendor"></field>
+								<field name="GroupByItem"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="B" id="DebitTransactionFieldset" view.bind="StepSettings" caption="Debit Transaction">
+								<field name="ProjectOrigin"></field>
+								<field name="ProjectID" caption="Replace Project With"></field>
+								<field name="TaskOrigin" caption="Project Task"></field>
+								<field name="TaskID" caption="Replace Task With"></field>
+								<field name="TaskCD" caption="Replace Task With"></field>
+								<field name="CostCodeOrigin" caption="Cost Code"></field>
+								<field name="CostCodeID" caption="Replace Cost Code With"></field>
+								<field name="AccountGroupOrigin" control-type="qp-drop-down"></field>
+								<field name="AccountGroupID" caption="Replace Account Group With"></field>
+								<field name="AccountOrigin"></field>
+								<field name="AccountID" caption="Replace Account Origin With"></field>
+								<field name="SubMask" caption="Subaccount Mask"></field>
+								<field name="SubID" caption="Replace Subaccount With"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="B" id="CreditTransactionFieldset" view.bind="StepSettings" caption="Credit Transaction">
+								<field name="OffsetProjectOrigin"></field>
+								<field name="OffsetProjectID" caption="Replace Project With"></field>
+								<field name="OffsetTaskOrigin" caption="Project Task"></field>
+								<field name="OffsetTaskID" caption="Replace Task With"></field>
+								<field name="OffsetTaskCD" caption="Replace Task With"></field>
+								<field name="OffsetCostCodeOrigin" caption="Cost Code"></field>
+								<field name="OffsetCostCodeID" caption="Replace Cost Code With"></field>
+								<field name="OffsetAccountGroupOrigin" control-type="qp-drop-down"></field>
+								<field name="OffsetAccountGroupID" caption="Replace Account Group With"></field>
+								<field name="OffsetAccountOrigin"></field>
+								<field name="OffsetAccountID" caption="Replace Account With"></field>
+								<field name="OffsetSubMask" caption="Subaccount Mask"></field>
+								<field name="OffsetSubID" caption="Replace Subaccount With"></field>
+							</qp-fieldset>
+						</qp-template>
+					</qp-tab>
+				</qp-tabbar>
+			</split-pane>
+		</qp-splitter>
+	</qp-template>
+</template>

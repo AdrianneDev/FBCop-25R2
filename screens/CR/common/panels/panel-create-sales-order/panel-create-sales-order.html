@@ -1,0 +1,44 @@
+<template>
+	<qp-panel id="CreateOrderParams"
+		caption="Create Sales Order"
+		auto-repaint="true"
+		width="sm"
+		wg-container="CreateOrderParams_tabCreateSalesOrder"
+		close-button-locator="#btnCreateSalesOrderCancel"
+	>
+		<qp-info-box id="edCustomerInfo-WarningMessage" caption.bind="CustomerInfo.WarningMessage.value" if.bind="CustomerInfo.WarningMessage.value" type="warning"></qp-info-box>
+		<qp-tabbar id="panel_CreateSalesOrder_mainTabBar">
+			<qp-tab id="tabCreateSalesOrder" caption="Main">
+				<qp-fieldset id="frmCreateSalesOrderSummary" view.bind="CreateOrderParams" caption="Sales Order" wg-container="CreateOrderParams_frmCreateSalesOrderSummary">
+					<field name="OrderType"></field>
+					<field name="OrderNbr"></field>
+					<field name="MakeQuotePrimary"></field>
+					<field name="RecalculatePrices"></field>
+					<field name="OverrideManualPrices" class="indent-1"></field>
+					<field name="RecalculateDiscounts"></field>
+					<field name="OverrideManualDiscounts" class="indent-1"></field>
+					<field name="OverrideManualDocGroupDiscounts" class="indent-1"></field>
+					<field name="ConfirmManualAmount"></field>
+					<field name="AMIncludeEstimate"></field>
+					<field name="AMCopyConfigurations"></field>
+				</qp-fieldset>
+				<qp-fieldset id="frmCustomerInfo" view.bind="CustomerInfo" caption="Customer" wg-container="CustomerInfo_frmCustomerInfo">
+					<field name="AcctCD"></field>
+					<field name="ClassID"></field>
+					<field name="Email" control-type="qp-mail-editor"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateSalesOrder_tabAttributes" caption="Attributes" if.bind="CustomerInfo.AcctCD.visible === true" style="min-height: 532px;">
+				<qp-grid id="grdCustomerInfoAttributes" view.bind="CustomerInfoAttributes" caption="Customer" class="framed-section" wg-container="CustomerInfoAttributes_grdCustomerInfoAttributes"></qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateSalesOrderAll_tabUDFS" caption="User-Defined Fields" if.bind="CustomerInfo.AcctCD.visible === true" style="min-height: 532px;">
+				<qp-grid id="grdCustomerInfoOrderUDF" view.bind="CustomerInfoUDF" caption="Customer" class="framed-section" wg-container="CustomerInfoUDF_grdCustomerInfoOrderUDF"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="btnCreateSalesOrderCreateCustomer" dialog-result="Retry" state.bind="CreateCustomerInPanel" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="btnCreateSalesOrderOK" dialog-result="OK" state.bind="CreateSalesOrderInPanel" caption="Create & Review" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="btnCreateSalesOrderCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

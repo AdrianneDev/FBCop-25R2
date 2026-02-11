@@ -1,0 +1,21 @@
+<template>
+	<qp-tab id="tab-MachineLearning" caption="Machine Learning" after="#tab-WarehouseManagement">
+		<qp-template id="form-MachineLearning" name="1-1" class="label-size-xm" wg-container="sosetup_tab">
+			<div id="divColumnA-MachineLearning" slot="A">
+				<qp-fieldset id="fsCrossSellAssistant-MachineLearning" view.bind="mlcrosssalessetup" caption="Cross-Sell Assistant Settings">
+					<field name="DataPeriodForAnalysis"></field>
+					<field name="MinRelevanceScorePercent"></field>
+					<field name="MaxNumberOfSuggestions"></field>
+					<field name="AddRelationsAsActive"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsNotificationSettings-MachineLearning" view.bind="mlcrosssalessetup" caption="Notification Settings" wg-container="mlcrosssalessetup_formNotificationSetting" >
+					<field name="GeneratedSuggestionNotification" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</div>
+			<div id="divColumnB-MachineLearning" slot="B">
+				<qp-grid id="gridExcludedItemClasses-MachineLearning" view.bind="MLExcludedItemClasses" caption="Excluded Item Classes" class="framed-section" wg-container="MLExcludedItemClasses_gridExcludedClasses"></qp-grid>
+				<qp-grid id="gridExcludedOrderTypes-MachineLearning" view.bind="MLExcludedOrderTypes" caption="Excluded Order Types" class="framed-section" wg-container="MLExcludedOrderTypes_gridExcludedOrderTypes"></qp-grid>
+			</div>
+		</qp-template>
+	</qp-tab>
+</template>

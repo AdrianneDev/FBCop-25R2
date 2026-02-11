@@ -1,0 +1,96 @@
+<template>
+	<qp-splitter initial-split="300px" split="width" id="splitterId">
+		<split-pane>
+			<qp-tree id="tree_TreeProj" view.bind="SiteMapTree" view-model.ref="treeVM" ></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-inline-screen view-model.ref="activeScreenVM" config.bind="activeScreen" if.bind="activeScreen" placement="ProjectBrowser"></qp-inline-screen>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="ViewCheckinFiles" caption="Modified Files Detected" auto-repaint="true" width="md">
+		<qp-label caption="Some files have been modified in the file system. Please resolve the conflicts."></qp-label>
+		<qp-grid id="ViewCheckinFiles_gridCheckinFiles" wg-container batchUpdate="True"
+			view.bind="ViewCheckinFiles"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonUpdate" wg-name="UpdateCustomizationProject" state.bind="ActionFileCheckIn"></qp-button>
+			<qp-button id="PXButtonDiscard" wg-name="Discardallchanges" dialog-result="Cancel" state.bind="ActionRemoveConflicts"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewValidateExtensions" caption="Validate Extensions" auto-repaint="true" width="md" height="65vh">
+		<qp-rich-text-editor
+			id="viewValidateExtensionsMessages"
+			state.bind="ViewValidateExtensions.Messages"
+			class="stretch"
+			read-only="true"
+		></qp-rich-text-editor>
+	</qp-panel>
+	<qp-panel id="ViewManageISVSolutionInitials" caption="Customization Project Prefix" auto-repaint="true" width="md" height="85vh">
+		<qp-fieldset id="PXFormViewISVSolutionInitials" wg-container="ViewManageISVSolutionInitials_PXFormViewISVSolutionInitials" view.bind="ViewManageISVSolutionInitials">
+			<field name="Initials">
+				<qp-button id="PXButtonValidateSolutionObjects" wg-name="VALIDATEPROJECTITEMS" state.bind="ActionValidateInitials"></qp-button>
+			</field>
+		</qp-fieldset>
+		<qp-caption caption="Validation Result"></qp-caption>
+		<qp-rich-text-editor
+			id="pXFormViewISVSolutionInitials_Message"
+			state.bind="ViewManageISVSolutionInitials.Messages"
+			class="stretch"
+			read-only="true"
+			value-format="html"
+			wg-container="ViewManageISVSolutionInitials_PXFormViewISVSolutionInitials"
+		></qp-rich-text-editor>
+		<footer>
+			<qp-button id="PXButtonISVSave" wg-name="SAVE" state.bind="ActionISVInitialsSave"></qp-button>
+			<qp-button id="PXButtonISVSaveClose" wg-name="SAVECLOSE" dialog-result="OK" state.bind="ActionISVInitialsSaveClose"></qp-button>
+			<qp-button id="PXButtonISVCancel" wg-name="CANCEL" dialog-result="Cancel" state.bind="ActionISVInitialsCancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="PanelCompiler" width="lg" height="80vh" caption="Customization Publishing">
+		<iframe src.bind="compilationPanelFrameUrl" width="100%" height="100%" style="border: none; box-shadow: none;"></iframe>
+	</qp-panel>
+	<qp-panel id="ViewSaveToTFS" auto-repaint="true" width="sm" caption="Save Project to Folder">
+		<qp-fieldset id="ViewSaveToTFS_Form" wg-container='ViewSaveToTFS_PXFormView2' view.bind="ViewSaveToTFS">
+			<field name="ParentFolder"></field>
+			<field name="ProjectName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="ViewSaveToTFSOk" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="ViewSaveToTFSCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewCreateFromTFS" auto-repaint="true" width="sm" caption="Open Project from Folder">
+		<qp-fieldset id="ViewCreateFromTFS_Form" wg-container='ViewCreateFromTFS_PXFormView3' view.bind="ViewCreateFromTFS">
+			<field name="ContainingFolder"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="ViewCreateFromTFSOk" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="ViewCreateFromTFSCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewSolutionNew" auto-repaint="true" width="sm" caption="Create Extension Library">
+		<qp-fieldset id="ViewSolutionNew_Form" wg-container='ViewSolutionNew_PXFormView1' view.bind="ViewSolutionNew">
+			<field name="ParentFolder"></field>
+			<field name="ProjectName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="ViewSolutionNewOk" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="ViewSolutionNewCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewSolutionExisting" auto-repaint="true" width="sm" caption="Bind to Extension Library">
+		<qp-fieldset id="ViewSolutionExisting_Form" wg-container='ViewSolutionExisting_PXFormView22' view.bind="ViewSolutionExisting">
+			<field name="ContainingFolder"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="ViewSolutionExistingOk" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="ViewSolutionExistingCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-upload-dialog
+		id="ProjectBrowser_UploadPackageDlg"
+		key="UploadPanel"
+		session-key="ProjectBrowser_UploadPackage"
+		caption="Open Package"
+		allowed-types=".zip">
+	</qp-upload-dialog>
+</template>

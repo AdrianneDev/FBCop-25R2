@@ -1,0 +1,44 @@
+.sp-payment-methods {
+	width: 100%;
+	text-wrap: nowrap;
+
+	.sp-add-card-button {
+		margin-top: 4px;
+
+		&.first {
+			margin-inline-start: 8px;
+			padding-inline-start: 0px;
+		}
+	}
+
+	.sp-current-paymethod {
+		line-height: 32px;
+		padding-inline-start: 8px;
+	}
+
+	.sp-paymethod {
+		display: flex;
+	}
+
+	.sp-pm-expiration {
+		padding-inline-start: 8px;
+		color: #9c9c9c;
+	}
+
+	.sp-pm-default {
+		margin-inline-start: 16px;
+		align-self: center;
+
+		&:before {
+			content: "\00B7";
+			padding-inline-end: 2px;
+			position: absolute;
+			margin-inline-start: -10px;
+		}
+	}
+
+	.sp-pm-menu {
+		flex: 1;
+		text-align: end;
+	}
+}

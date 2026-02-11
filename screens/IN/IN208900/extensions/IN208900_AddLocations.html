@@ -1,0 +1,15 @@
+<template>
+	<qp-panel id="LocationFilter" caption="Add Locations" auto-repaint="true">
+		<qp-template id="form-AddLocations" name="1" class="equal-height" wg-container="LocationFilter_optform">
+			<qp-fieldset id="fsColumnA-AddLocations" slot="A" view.bind="LocationFilter">
+				<field name="StartLocationID"></field>
+				<field name="EndLocationID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-AddLocations">
+			<qp-button id="buttonAdd-AddLocations" dialog-result="OK" caption="Add"></qp-button>
+			<qp-button id="buttonCancel-AddLocations" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

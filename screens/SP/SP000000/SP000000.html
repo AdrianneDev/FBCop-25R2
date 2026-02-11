@@ -1,0 +1,169 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="../catalog/catalog.scss"></require>
+	<require from="./SP000000.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="sp-dashboard">
+		<div class="sp-dashboard__header col-12">${DashboardInfo.Header.value}</div>
+
+		<div show.bind="Portal.ShowTopMessage.value" class="sp-dashboard__banner col-12"
+			tabindex="0">
+			<div>
+				<qp-image-uploader if.bind="!!Portal.TopMessageImage.value" id="TopMessageImage"
+					state.bind="Portal.TopMessageImage" config-id="TopMessageImage"
+					value.two-way="Portal.TopMessageImage.value" width="88px" enabled="false"
+					height="88px"></qp-image-uploader>
+				<div if.bind="!Portal.TopMessageImage.value" class="sp-dashboard__banner__stubimg"
+					style="background-image: url(${siteRoot}icons/portal-top-message.svg)"></div>
+				<div class="sp-dashboard__banner__text">${Portal.TopMessageText.value || msg.BannerText}</div>
+			</div>
+		</div>
+
+		<div if.bind="ViewCatalog.visible" show.bind="Portal.ShowGoToCartButton.value"
+			class="sp-dashboard__panel sp-dashboard__browse col-sm-12 col-md-12 ${ViewBalance.visible ? 'col-lg-6' : 'col-lg-12'}" tabindex="0">
+			<div style="background-image: url(${siteRoot}icons/portal-browse-bg.svg)"></div>
+			<div class="sp-dashboard__browse__overlay">
+				<qp-image-uploader if.bind="!!Portal.GoToCartImage.value" id="GoToCartImage"
+					state.bind="Portal.GoToCartImage" config-id="GoToCartImage"
+					value.two-way="Portal.GoToCartImage.value" width="134px" enabled="false"
+					height="117px"></qp-image-uploader>
+				<div if.bind="!Portal.GoToCartImage.value" class="sp-dashboard__browse__back" style="background-image: url(${siteRoot}icons/portal-browse-btn.svg)"></div>
+				<div class="sp-dashboard__browse__text">
+					${Portal.GoToCartText.value || msg.BrowseCatalog}
+				</div>
+				<qp-hyper-icon images.bind="{ normal: 'svg:main@arrowRight' }"></qp-hyper-icon>
+			</div>
+			<field name="unboundViewDetails" unbound replace-content>
+				<qp-button id="btnViewDetails" class="sp-view-details" state.bind="ViewCatalog"></qp-button>
+			</field>
+
+			<!-- <qp-hyper-icon images.bind="{ normal: 'svg:sp@browseCatalog' }"></qp-hyper-icon> -->
+		</div>
+
+		<div class="sp-dashboard__matrix col-sm-12 col-md-12 ${Portal.ShowGoToCartButton.value && ViewCatalog.visible ? 'col-lg-6' : 'col-lg-12'}"
+			tabindex="0">
+			<div if.bind="ViewBalance.visible" class="sp-dashboard__panel sp-dashboard__indicator green col-sm-12 col-md-6 col-lg-3" tabindex="0">
+				<div>${DocumentTotal.CustomerBalance_Text.value}</div>
+				<div>${msg.CurrentBalance}</div>
+				<qp-button id="btnViewBalance1" wg-name="ViewBalance1" class="sp-view-details" config.bind="{ action: 'ViewBalance' }"></qp-button>
+			</div>
+			<div if.bind="ViewBalance.visible" class="sp-dashboard__panel sp-dashboard__indicator ${unappliedIndicator} col-sm-12 col-md-6 col-lg-3" tabindex="0">
+				<div>${DocumentTotal.UnappliedPayment_Text.value}</div>
+				<div>${msg.UnappliedPayments}</div>
+				<qp-button id="btnViewBalance2" wg-name="ViewBalance2" class="sp-view-details" config.bind="{ action: 'ViewBalance' }"></qp-button>
+			</div>
+			<div if.bind="ViewBalance.visible" class="sp-dashboard__panel sp-dashboard__indicator ${overdueIndicator} col-sm-12 col-md-6 col-lg-3" tabindex="0">
+				<div>${DocumentTotal.Due7Days_Text.value}</div>
+				<div>${msg.Overdue}</div>
+				<qp-button id="btnViewBalance3" wg-name="ViewBalance3" class="sp-view-details" config.bind="{ action: 'ViewBalance' }"></qp-button>
+			</div>
+			<div if.bind="viewCase.visible" class="sp-dashboard__panel sp-dashboard__indicator ${casesIndicator} col-sm-12 col-md-6 col-lg-3" tabindex="0">
+				<div>${DashboardInfo.OpenCases.value}</div>
+				<div>${msg.OpenCases}</div>
+				<qp-button id="btnViewCases" class="sp-view-details" state.bind="ViewCases"></qp-button>
+			</div>
+		</div>
+
+		<div if.bind="ViewBalance.visible" class="sp-documents sp-dashboard__panel blue col-sm-12 col-md-12 col-lg-6" tabindex="0">
+			<div class="sp-dashboard__panel__header sp-dashboard__panel__header--invoices">
+				<span>${msg.InvoicesToBePaid}</span>
+				<qp-button id="btnViewBalance" wg-name="ViewBalance" class="major-button" state.bind="ViewBalance" if.bind="OpenInvoices.totalRowCount > 0"></qp-button>
+			</div>
+
+			<div class="sp-empty-document-list" if.bind="OpenInvoices.totalRowCount === 0">
+				<div class="sp-empty-label">${msg.NoDocuments}</div>
+			</div>
+
+			<qp-text-light-scope>
+				<qp-data-feed id="dfOpenInvoices" class="no-toolbar sp-documents-feed" view.bind="OpenInvoices"
+					page-size.bind="6" auto-resize="true" empty-message-mode="0">
+					<template width="100%">
+						<div class="${ {{$viewName}}.getClass(SummaryFilter) }">
+							<qp-template id="dfOpenInvoice" wg-container name="record-3-2-2-2">
+								<qp-include url="../ar-document/ar-document-mini.html"
+									view="{{$viewName}}"></qp-include>
+							</qp-template>
+						</div>
+					</template>
+					<footer></footer>
+				</qp-data-feed>
+			</qp-text-light-scope>
+		</div>
+
+		<div class="sp-dashboard__group col-sm-12 col-md-12 ${ViewBalance.visible ? 'col-lg-6' : 'col-lg-12'}">
+			<div class="sp-cases sp-documents sp-dashboard__panel blue" if.bind="viewCase.visible && Cases.totalRowCount > 0">
+				<div class="sp-dashboard__panel__header"><span>${msg.RecentlyAnsweredCases}</span></div>
+				<qp-text-light-scope>
+					<qp-data-feed id="dfCases" class="no-toolbar sp-documents-feed sp-colors--cases" view.bind="Cases"
+						page-size.bind="2" auto-resize="true" empty-message-mode="0">
+						<template width="100%">
+							<div class="sp-documents-document no-animation">
+								<qp-template id="dfCase" wg-container name="record-1">
+									<qp-fieldset slot="A1" id="fsCaseA1" view.bind="{{$viewName}}">
+										<field name="CaseCD"></field>
+										<field name="Status" class="colored"></field>
+										<field name="CreatedDateTime" class="field--secondary"></field>
+										<field name="OwnerID"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="AX" id="fsCaseA2" view.bind="{{$viewName}}"
+										class="fieldset--condensed">
+										<field name="Subject" replace-content>
+											<div class="wrapper field--header sp-cases-header">
+												${{{$viewName}}.SPCRActivity__Subject.cellText}</div>
+										</field>
+										<field name="LastMessage" replace-content>
+											<div class="wrapper field--text">${{{$viewName}}.LastMessage.value}</div>
+										</field>
+									</qp-fieldset>
+								</qp-template>
+							</div>
+						</template>
+						<footer></footer>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</div>
+
+			<div if.bind="viewOrder.visible" class="${ViewBalance.visible ? 'sp-dashboard__limited-height' : 'sp-dashboard__full-height'}">
+				<div class="sp-documents sp-dashboard__panel blue col-12" tabindex="0">
+					<div class="sp-dashboard__panel__header"><span>${msg.OpenOrders}</span></div>
+
+					<div class="sp-empty-document-list" if.bind="OpenOrders.totalRowCount === 0">
+						<div class="sp-empty-label">${msg.NoDocuments}</div>
+					</div>
+
+					<qp-text-light-scope>
+						<qp-data-feed id="dfOpenOrders" class="no-toolbar sp-documents-feed" view.bind="OpenOrders"
+							page-size.bind="6" auto-resize="true" empty-message-mode="0">
+							<template width="100%">
+								<div class="${ {{$viewName}}.getClass(SummaryFilter) }">
+									<qp-template id="dfOpenOrder" wg-container name="record-3-2-2-2">
+										<qp-include url="../order/order-mini.html" view="{{$viewName}}"></qp-include>
+									</qp-template>
+								</div>
+							</template>
+							<footer></footer>
+						</qp-data-feed>
+					</qp-text-light-scope>
+				</div>
+				<div class="sp-dashboard__shade"></div>
+			</div>
+		</div>
+
+		<div if.bind="ViewCatalog.visible" class="sp-catalog sp-wide-feed-container sp-dashboard__panel col-lg-12" tabindex="0">
+			<div class="sp-dashboard__panel__header"><span>${msg.RecentlyOrderedItems}</span></div>
+
+			<div class="sp-empty-document-list" if.bind="FilteredItems.totalRowCount === 0">
+				<div class="sp-empty-label">${msg.NoDocuments}</div>
+			</div>
+
+			<qp-data-feed id="dfItems" class="no-toolbar sp-catalog-feed" view.bind="FilteredItems" page-size.bind="20"
+				auto-resize="true" empty-message-mode="0">
+				<template>
+					<qp-include url="../catalog/catalog.html"></qp-include>
+				</template>
+			</qp-data-feed>
+		</div>
+	</div>
+</template>

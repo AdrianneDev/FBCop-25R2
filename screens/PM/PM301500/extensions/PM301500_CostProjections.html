@@ -1,0 +1,27 @@
+<template>
+    <div replace="#cost-projections-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenCostProjection'}" value.two-way="captions.CostProjection" class="caption-with-link"></qp-text-editor>
+        <qp-template id="template-cost-projection-header" name="1-2" class="equal-height"> 
+            <qp-fieldset id="cost-projection-header-1" view.bind="ActualCostProjection" slot="A">
+                <field name="RefNbr" pinned></field>
+                <field name="ProjectionDate" pinned></field>
+                <field name="Description" config-rows.bind="3"></field>
+            </qp-fieldset>			
+            <qp-template id="template-cost-projection-summary" slot="B" name="1-1" class="equal-height"> 
+                <qp-fieldset id="cost-projection-summary-1" view.bind="ActualCostProjection" slot="A" class="label-size-sm highlights-section">
+                    <field name="CuryRevisedRevenueBudgetedAmountTotal" ></field>
+                    <field name="CuryPendingRevenueChangeOrderAmountTotal" ></field>
+                    <field name="CuryBilledRevenueAmountTotal" ></field>
+                    <field name="CuryRevenueBudgetBacklogAmountTotal"></field>
+                </qp-fieldset>			
+                <qp-fieldset id="cost-projection-summary-2" view.bind="ActualCostProjection" slot="B" class="label-size-sm highlights-section">
+                    <field name="CuryRevenueExpectedAmountTotal" ></field>
+                    <field name="CuryOverbillingAmountTotal" ></field>
+                    <field name="CuryProjectedMarginTotal" ></field>
+                    <field name="ProjectedMarginPctTotal" ></field>
+                </qp-fieldset>			
+            </qp-template>
+        </qp-template>
+        <qp-grid id="cost-projection-grid" view.bind="ActualCostProjectionItems"></qp-grid>        
+    </div>
+</template>

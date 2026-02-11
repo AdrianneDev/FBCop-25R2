@@ -1,0 +1,52 @@
+<template>
+	<qp-template id="form_30" name="7-10-7" class="equal-height" qp-collapsible>
+		<qp-fieldset id="Document_form00" wg-container="Document_form" view.bind="Document" slot="A">
+			<field name="RefNbr" config-display-mode.bind="'id'" pinned></field>
+			<field name="Status" pinned="false"></field>
+			<field name="Date"></field>
+			<field name="ProjectionDate" pinned></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Document_form11" wg-container="Document_form" view.bind="Document" slot="B">
+			<field name="BranchID" pinned></field>
+			<field name="OwnerID" pinned="false"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo" pinned="false"></field>
+			<field name="ProjectStatus" pinned></field>
+			<field name="IncludePendingChangeOrders"></field>
+			<field name="Description" config-rows.bind="3" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset id="Document_form202" wg-container="Document_form" view.bind="Document" slot="C" class="highlights-section">
+			<field name="CuryOverbillingAmount" ></field>
+			<field name="CuryUnderbillingAmount" ></field>
+			<field name="CuryTotalAmount" pinned></field>
+			<field name="CuryOverbillingAdjustmentAmount" ></field>
+			<field name="CuryUnderbillingAdjustmentAmount" ></field>
+			<field name="CuryTotalAdjustmentAmount" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tab0" caption="Details">
+			<qp-grid id="Items_grid" view.bind="Items"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab1" caption="Financial">
+			<qp-template id="tab1_2" name="1-1">
+				<qp-fieldset id="CurrentDocument_tab100"
+					slot="A"
+					view.bind="CurrentDocument"
+					class="label-size-m"
+					wg-container="CurrentDocument_tab">
+					<field name="BatchNbr" config-allow-edit.bind="true"></field>
+					<field name="OverbillingUnderbillingOption" ></field>
+					<field name="RevenueOption" ></field>
+					<field name="OverbillingAccountID" ></field>
+					<field name="OverbillingSubID" ></field>
+					<field name="UnderbillingAccountID" ></field>
+					<field name="UnderbillingSubID" ></field>
+					<field name="RevenueAccountID" ></field>
+					<field name="RevenueSubID" ></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+</template>

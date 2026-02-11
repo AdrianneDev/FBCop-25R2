@@ -1,0 +1,161 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template name="7-10-7" id="formSummary" wg-container="Document_form" class="equal-height" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirstSummary" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="DocDate"></field>
+			<field name="FinPeriodID" pinned="false"></field>
+			<field name="InvoiceNbr" pinned="false"></field>
+			<field name="IsJointPayees"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondSummary" view.bind="Document">
+			<field name="VendorID"></field>
+			<field name="VendorLocationID" pinned="false"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="currencyinfo"></field>
+			<field name="TermsID" pinned="false"></field>
+			<field name="DueDate" pinned>
+				<qp-field control-state.bind="Document.RetainageApply" pinned></qp-field>
+				<qp-field control-state.bind="Document.IsRetainageDocument" pinned></qp-field>
+			</field>
+			<field name="DiscDate" pinned="false">
+				<qp-field control-state.bind="Document.PaymentsByLinesAllowed"></qp-field>
+			</field>
+			<field name="ProjectID" pinned></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThirdSummary" view.bind="Document" class="highlights-section">
+			<field name="CuryDetailExtPriceTotal" pinned></field>
+			<field name="CuryLineDiscTotal"></field>
+			<field name="CuryDiscTot"></field>
+			<field name="CuryLineRetainageTotal"></field>
+			<field name="CuryTaxTotal" pinned></field>
+			<field name="CuryInitDocBal"></field>
+			<field name="CuryRoundDiff"></field>
+			<field name="CuryOrigDocAmt" pinned></field>
+			<field name="CuryDocBal" pinned>
+				<qp-label slot="label" caption.bind="Document.CuryDocBal_Label.value"></qp-label>
+			</field>
+			<field name="CuryTaxAmt"></field>
+			<field name="CuryOrigDiscAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs" wg-container="CurrentDocument_form2">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridTransactions" view.bind="Transactions" wg-container="Transactions_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial" load-on-demand.bind="false">
+			<qp-template name="17-17-14" id="formFinancial">
+				<div slot="A" id="columnFirstFinancial">
+					<qp-fieldset id="columnFirstFinancialLinkToGL" caption="Link to GL" view.bind="CurrentDocument">
+						<field name="BatchNbr"></field>
+						<field name="PrebookBatchNbr"></field>
+						<field name="VoidBatchNbr"></field>
+						<field name="DisplayCuryInitDocBal"></field>
+						<field name="BranchID"></field>
+						<field name="APAccountID"></field>
+						<field name="APSubID"></field>
+						<field name="PrepaymentAccountID"></field>
+						<field name="PrepaymentSubID"></field>
+						<field name="PrebookAcctID"></field>
+						<field name="PrebookSubID"></field>
+						<field name="RetainageAcctID"></field>
+						<field name="RetainageSubID"></field>
+						<field name="OrigRefNbr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="columnFirstFinancialAssignedTo" caption="Assigned To" view.bind="CurrentDocument">
+						<field name="EmployeeWorkgroupID"></field>
+						<field name="EmployeeID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondFinancial">
+					<qp-fieldset id="columnSecondFinancialDefaultPaymentInfo" caption="Default Payment Info" view.bind="CurrentDocument">
+						<field name="SeparateCheck"></field>
+						<field name="PaySel"></field>
+						<field name="PayDate"></field>
+						<field name="PayLocationID"></field>
+						<field name="PayTypeID"></field>
+						<field name="PayAccountID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="columnSecondFinancialReceiptInfo" caption="Receipt Info" view.bind="CurrentDocument">
+						<field name="SuppliedByVendorID"></field>
+						<field name="SuppliedByVendorLocationID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="columnSecondFinancialIntercompanyInvoicing" caption="Intercompany Invoicing" view.bind="CurrentDocument">
+						<field name="IntercompanyInvoiceNoteID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabTaxes" caption="Taxes">
+			<qp-template name="17-7" id="formTaxes">
+				<div slot="A" id="columnFirst-Taxes">
+					<qp-grid id="gridTaxes" view.bind="Taxes" wg-container="Taxes_grid1" class="framed-section"></qp-grid>
+				</div>
+				<div slot="B" id="columnSecond-Taxes">
+					<qp-fieldset id="groupTaxInfo" caption="Tax Info" view.bind="CurrentDocument">
+						<field name="TaxZoneID"></field>
+						<field name="TaxCalcMode"></field>
+						<field name="TaxCostINAdjRefNbr"></field>
+						<field name="ExternalTaxExemptionNumber"></field>
+						<field name="EntityUsageType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupTaxTotals" class="highlights-section" caption="Tax Totals" view.bind="CurrentDocument">
+						<field name="CuryVatTaxableTotal"></field>
+						<field name="CuryVatExemptTotal"></field>
+						<using view="Document" wg-container="Document_form">
+							<field name="CuryTaxTotal"></field>
+							<field name="CuryOrigWhTaxAmt"></field>
+						</using>
+						<field name="CuryDiscountedTaxableTotal"></field>
+						<field name="CuryDiscountedPrice"></field>
+						<field name="CuryDiscountedDocTotal"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+		<qp-tab id="tabDiscounts" caption="Discounts">
+			<qp-grid id="gridDiscountDetails" view.bind="DiscountDetails" wg-container="DiscountDetails_formDiscountDetail"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabRetainage" caption="Retainage" if.bind="Document.RetainageApply.value==true">
+			<qp-template name="17-17-14" id="formRetainage" class="equal-height" wg-container="CurrentDocument_formRetainage">
+				<qp-fieldset slot="A" id="columnFirstRetainage" view.bind="CurrentDocument">
+					<field name="DefRetainagePct"></field>
+					<field name="CuryOrigDocAmtWithRetainageTotal"></field>
+					<field name="CuryRetainageTotal"></field>
+					<field name="CuryRetainedTaxTotal"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="columnSecondRetainage" view.bind="CurrentDocument">
+					<field name="CuryRetainageUnreleasedAmt"></field>
+					<field name="CuryRetainageReleased"></field>
+					<field name="CuryRetainageUnpaidTotal"></field>
+					<field name="CuryRetainagePaidTotal"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridRetainageDocuments" view.bind="RetainageDocuments" wg-container="RetainageDocuments_detgrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApplications" caption="Applications" load-on-demand="true">
+			<qp-grid id="gridAdjustments" view.bind="Adjustments" wg-container="Adjustments_detgrid"></qp-grid>
+			<qp-grid id="gridAdjustments_1" view.bind="Adjustments_1" wg-container="Adjustments_1_gridApplications"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="recalcdiscountsfilter" caption="Recalculate Prices" auto-repaint="true">
+		<qp-fieldset id="panelRecalcDiscountsFilter" view.bind="recalcdiscountsfilter" wg-container="recalcdiscountsfilter_formRecalcDiscounts">
+			<field name="RecalcTarget"></field>
+			<field name="RecalcUnitPrices"></field>
+			<field name="OverrideManualPrices" class="indent-1"></field>
+			<field name="RecalcDiscounts"></field>
+			<field name="OverrideManualDiscounts" class="indent-1"></field>
+			<field name="OverrideManualDocGroupDiscounts" class="indent-1"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-recalcdiscountsfilter" dialog-result="OK" state.bind="RecalcOk"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,5 @@
+@import '../common/pm-status-colors-common.scss';
+
+/* override default red -> grey */
+@include colored-status('R', var(--status-gray-color)); // Released
+@include colored-status('B', var(--status-blue-color)); // Balanced

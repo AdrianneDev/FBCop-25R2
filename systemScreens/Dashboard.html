@@ -1,0 +1,719 @@
+﻿<template>
+	<require from="client-controls/controls/compound/grid/qp-filter-bar"></require>
+
+	<div id="hidden-grids" show.bind="false">
+		<qp-grid id="DashboardFilterColumnsId" view.bind="DashboardFilterColumns" view-model.ref="dashboardFilterColumnsGridVM" on-data-ready.call="reloadFilters()"></qp-grid>
+		<qp-grid id="ActiveFilterId" view.bind="ActiveFilter" view-model.ref="filtersGridVM" on-filter-changed.call="saveFilters(args)" on-control-ready.call="onActiveFilterGridReady()"></qp-grid>
+	</div>
+	<div class="dashboard-filters" if.bind="dashboardFilterColumnsGridVM.rows.length">
+		<qp-filter-bar
+			id="DashboardFilterColumnsId_filterBar"
+			if.bind="!hideFilters"
+			view-model.ref="dashboardFilterBarVM"
+			filter-id.two-way="filtersGridVM.filterID"
+			filters.bind="filtersGridVM.filters"
+			filter-rows.bind="getFilterRows()"
+			is-dirty-filter.two-way="filtersGridVM.isDirtyFilter"
+			on-filter-changed.call="filtersGridVM.onFilterApplied(filter, filterID)"
+			on-filter-save.call="filtersGridVM.onFilterSave(filter, createNew)"
+			on-filter-remove.call="filtersGridVM.onFilterRemove(filterID)"
+			on-filters-order-changed.call="filtersGridVM.onFilterOrderChanged()"
+			on-filter-favorite-changed.call="filtersGridVM.onFilterFavoriteChanged(filterID, isFavorite)"
+			on-filter-row-changed.call="filtersGridVM.onFilterRowsSetChanged(false)"
+			on-filter-row-removed.call="filtersGridVM.onFilterRowsSetChanged(false)"
+			on-rows-set-changed.call="filtersGridVM.onFilterRowsSetChanged(false)"
+			config.bind="{ columns: getFilterColumns(dashboardFilterColumnsGridVM), hideHeaders: true, allowStoredFilters: true, isSharedEditable: true, showFastFilter: false, showFilterPicker: 2, advancedFilterMode: 'none', allowRemoveFilter: false, allowSort: false, readOnly: isInsideSidePanel }">
+		</qp-filter-bar>
+	</div>
+
+	<qp-data-component if.bind="screenService" name="DashboardData" screen.bind="viewModel"></qp-data-component>
+
+	<qp-panel id="headerSettings" wg-container="AddPXHeaderWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<qp-fieldset id="fs-headerSettings-form-header" view.bind="CurrentWidget">
+			<field name="Caption"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="headerSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="headerSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="linkSettings" wg-container="AddPXLinkWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<qp-fieldset id="fs-linkSettings-form-header" view.bind="CurrentWidget">
+			<field name="Caption"></field>
+			<!-- <field name="Type"></field> -->
+			<using view="linkSettings">
+				<field name="Link"></field>
+				<field name="Parameters"></field>
+				<field name="WindowMode"></field>
+				<field name="Description"></field>
+			</using>
+		</qp-fieldset>
+		<qp-fieldset id="fs-linkSettings-form-appearance" view.bind="linkSettings" caption="Appearance">
+			<field name="Icon"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="linkSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="linkSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="inlineFrameSettings" wg-container="AddPXInlineFrameWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<qp-fieldset id="fs-inlineFrameSettings-form-header" view.bind="CurrentWidget">
+			<field name="Caption"></field>
+			<!-- <field name="type"></field> -->
+			<using view="inlineFrameSettings">
+				<field name="Source"></field>
+			</using>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="inlineFrameSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="inlineFrameSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="powerbiSettings" wg-container="AddPXPowerBIWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<qp-fieldset id="fs-powerbiSettings-form-header" view.bind="CurrentWidget">
+			<field name="Caption"></field>
+			<!-- <field name="type"></field> -->
+			<using view="powerbiSettings">
+				<field name="ClientID"></field>
+				<field name="ClientSecret" config-type.bind="2">
+					<qp-button id="btnPowerBISignIn" caption="Sign In" class="col-2" click.delegate="powerBISignIn(powerbiSettings)" config.bind="{ id: btnPowerBISignIn }"></qp-button>
+				</field>
+				<field name="DashboardID"></field>
+				<field name="TileID"></field>
+				<field name="AccessCode"></field>
+				<field name="RedirectUri"></field>
+				<field name="AccessToken"></field>
+				<field name="RefreshToken"></field>
+			</using>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="powerbiSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="powerbiSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="trendcardSettings" wg-container="AddPXTrendcardWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="trendcardSettingsDiv" show.bind="trendcardSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-trendcardSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="trendcardSettings">
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-trendcardSettings-form-filter" view.bind="trendcardSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="trendcardSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-trendcardSettings-form-appearance" view.bind="trendcardSettings" caption="Appearance">
+				<field name="AggregateField"></field>
+				<field name="AggregateFunction"></field>
+				<field name="TimelineField"></field>
+				<field name="Period"></field>
+				<field name="NormalColor"></field>
+				<field name="WarningColor"></field>
+				<field name="ErrorColor"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="trendcardSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="trendcardSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="scorecardSettings" wg-container="AddKPIScoreWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="scorecardSettingsDiv" show.bind="scorecardSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-scorecardSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="scorecardSettings">
+					<field name="VisualizationType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-scorecardSettings-form-filter" view.bind="scorecardSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="scorecardSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-scorecardSettings-form-appearance" view.bind="scorecardSettings" caption="Appearance">
+				<field name="AggregateField"></field>
+				<field name="AggregateFunction"></field>
+				<field name="NormalColor"></field>
+				<field name="NormalLevelType"></field>
+				<field name="NormalLevelField"></field>
+				<field name="NormalLevel"></field>
+				<field name="WarningColor"></field>
+				<field name="ErrorColor"></field>
+				<field name="ErrorLevelType"></field>
+				<field name="ErrorLevelField"></field>
+				<field name="ErrorLevel"></field>
+				<field name="Icon"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="scorecardSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="scorecardSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="gaugeSettings" wg-container="AddPXGaugeWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="gaugeSettingsDiv" show.bind="gaugeSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-gaugeSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="gaugeSettings">
+					<field name="VisualizationType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-gaugeSettings-form-filter" view.bind="gaugeSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="gaugeSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-gaugeSettings-form-appearance" view.bind="gaugeSettings" caption="Appearance">
+				<field name="AggregateField"></field>
+				<field name="AggregateFunction"></field>
+				<field name="NormalColor"></field>
+				<field name="NormalLevelType"></field>
+				<field name="NormalLevelField"></field>
+				<field name="NormalLevel"></field>
+				<field name="WarningColor"></field>
+				<field name="ErrorColor"></field>
+				<field name="ErrorLevelType"></field>
+				<field name="ErrorLevelField"></field>
+				<field name="ErrorLevel"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="gaugeSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="gaugeSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="wikiSettings" wg-container="AddPXWikiWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<qp-fieldset id="fs-wikiSettings-form-header" view.bind="CurrentWidget">
+			<field name="Caption"></field>
+			<!-- <field name="Type"></field> -->
+			<using view="wikiSettings">
+				<field name="PageID"></field>
+			</using>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="wikiSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="wikiSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="tableSettings" wg-container="AddPXTableWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="tableSettingsDiv" show.bind="tableSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-tableSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="tableSettings">
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-tableSettings-form-filter" view.bind="tableSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="tableSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-tableSettings-form-appearance" view.bind="tableSettings" caption="Appearance">
+				<field name="tableSettings.AutoHeight"></field>
+				<field name="tableSettings.RecordsLimit"></field>
+				<field name="columnSettings" unbound>
+					<div show.bind="false">
+						<qp-grid view.bind="Columns" view-model.ref="columnSettingsGrid"></qp-grid>
+					</div>
+					<qp-button id="btnColumnSettings" caption="Column Settings" click.delegate="showTableColumnSettings(CurrentWidget.dashboardID, CurrentWidget.widgetID)" config.bind="{ id: btnColumnSettings }"></qp-button>
+				</field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="tableSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="tableSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="columnSettings" wg-container="AddPXColumnWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="columnSettingsDiv" show.bind="columnSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-columnSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="columnSettings">
+					<field name="ChartType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-columnSettings-form-filter" view.bind="columnSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="columnSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-columnSettings-form-categories" view.bind="columnSettings" caption="Categories">
+				<field name="CategoryField"></field>
+				<field name="CategorySortType">
+					<qp-field no-label control-state.bind="columnSettings.CategorySortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="CategorySortField"></field>
+				<field name="CategoryTotalAfter"></field>
+				<field name="CategoryShowTotal"></field>
+				<field name="CategoryDateRounding"></field>
+				<field name="CategoryFormat"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-columnSettings-form-series" view.bind="columnSettings" caption="Series">
+				<field name="SeriesField"></field>
+				<field name="SeriesSortType">
+					<qp-field no-label control-state.bind="columnSettings.SeriesSortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="SeriesSortField"></field>
+				<field name="SeriesTotalAfter"></field>
+				<field name="SeriesShowTotal"></field>
+				<field name="SeriesDateRounding"></field>
+				<field name="SeriesFormat"></field>
+				<field name="SeriesColor"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-columnSettings-form-values" view.bind="columnSettings" caption="Values">
+				<field name="ValueField">
+					<qp-field no-label control-state.bind="columnSettings.ValueAggregate" class="col-4"></qp-field>
+				</field>
+				<field name="ValueFormat"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="columnSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="columnSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="lineSettings" wg-container="AddPXLineWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="lineSettingsDiv" show.bind="lineSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-lineSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="lineSettings">
+					<field name="ChartType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-lineSettings-form-filter" view.bind="lineSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="lineSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-lineSettings-form-categories" view.bind="lineSettings" caption="Categories">
+				<field name="CategoryField"></field>
+				<field name="CategorySortType">
+					<qp-field no-label control-state.bind="lineSettings.CategorySortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="CategorySortField"></field>
+				<field name="CategoryTotalAfter"></field>
+				<field name="CategoryShowTotal"></field>
+				<field name="CategoryDateRounding"></field>
+				<field name="CategoryFormat"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-lineSettings-form-series" view.bind="lineSettings" caption="Series">
+				<field name="SeriesField"></field>
+				<field name="SeriesSortType">
+					<qp-field no-label control-state.bind="lineSettings.SeriesSortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="SeriesSortField"></field>
+				<field name="SeriesTotalAfter"></field>
+				<field name="SeriesShowTotal"></field>
+				<field name="SeriesDateRounding"></field>
+				<field name="SeriesFormat"></field>
+				<field name="SeriesColor"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-lineSettings-form-values" view.bind="lineSettings" caption="Values">
+				<field name="ValueField">
+					<qp-field no-label control-state.bind="lineSettings.ValueAggregate" class="col-4"></qp-field>
+				</field>
+				<field name="ValueFormat"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="lineSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="lineSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="stackedcolSettings" wg-container="AddPXStackedcolWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="stackedcolSettingsDiv" show.bind="stackedcolSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-stackedcolSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="stackedcolSettings">
+					<field name="ChartType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-stackedcolSettings-form-filter" view.bind="stackedcolSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="stackedcolSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-stackedcolSettings-form-categories" view.bind="stackedcolSettings" caption="Categories">
+				<field name="CategoryField"></field>
+				<field name="CategorySortType">
+					<qp-field no-label control-state.bind="stackedcolSettings.CategorySortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="CategorySortField"></field>
+				<field name="CategoryTotalAfter"></field>
+				<field name="CategoryShowTotal"></field>
+				<field name="CategoryDateRounding"></field>
+				<field name="CategoryFormat"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-stackedcolSettings-form-series" view.bind="stackedcolSettings" caption="Series">
+				<field name="SeriesField"></field>
+				<field name="SeriesSortType">
+					<qp-field no-label control-state.bind="stackedcolSettings.SeriesSortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="SeriesSortField"></field>
+				<field name="SeriesTotalAfter"></field>
+				<field name="SeriesShowTotal"></field>
+				<field name="SeriesDateRounding"></field>
+				<field name="SeriesFormat"></field>
+				<field name="SeriesColor"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-stackedcolSettings-form-values" view.bind="stackedcolSettings" caption="Values">
+				<field name="ValueField">
+					<qp-field no-label control-state.bind="stackedcolSettings.ValueAggregate" class="col-4"></qp-field>
+				</field>
+				<field name="ValueFormat"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="stackedcolSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="stackedcolSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="barSettings" wg-container="AddPXBarWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="barSettingsDiv" show.bind="barSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-barSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="barSettings">
+					<field name="ChartType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-barSettings-form-filter" view.bind="barSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="barSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-barSettings-form-categories" view.bind="barSettings" caption="Categories">
+				<field name="CategoryField"></field>
+				<field name="CategorySortType">
+					<qp-field no-label control-state.bind="barSettings.CategorySortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="CategorySortField"></field>
+				<field name="CategoryTotalAfter"></field>
+				<field name="CategoryShowTotal"></field>
+				<field name="CategoryDateRounding"></field>
+				<field name="CategoryFormat"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-barSettings-form-series" view.bind="barSettings" caption="Series">
+				<field name="SeriesField"></field>
+				<field name="SeriesSortType">
+					<qp-field no-label control-state.bind="barSettings.SeriesSortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="SeriesSortField"></field>
+				<field name="SeriesTotalAfter"></field>
+				<field name="SeriesShowTotal"></field>
+				<field name="SeriesDateRounding"></field>
+				<field name="SeriesFormat"></field>
+				<field name="SeriesColor"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-barSettings-form-values" view.bind="barSettings" caption="Values">
+				<field name="ValueField">
+					<qp-field no-label control-state.bind="barSettings.ValueAggregate" class="col-4"></qp-field>
+				</field>
+				<field name="ValueFormat"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="barSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="barSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="stackedbarSettings" wg-container="AddPXStackedbarWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="stackedbarSettingsDiv" show.bind="stackedbarSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-stackedbarSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="stackedbarSettings">
+					<field name="ChartType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-stackedbarSettings-form-filter" view.bind="stackedbarSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="stackedbarSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-stackedbarSettings-form-categories" view.bind="stackedbarSettings" caption="Categories">
+				<field name="CategoryField"></field>
+				<field name="CategorySortType">
+					<qp-field no-label control-state.bind="stackedbarSettings.CategorySortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="CategorySortField"></field>
+				<field name="CategoryTotalAfter"></field>
+				<field name="CategoryShowTotal"></field>
+				<field name="CategoryDateRounding"></field>
+				<field name="CategoryFormat"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-stackedbarSettings-form-series" view.bind="stackedbarSettings" caption="Series">
+				<field name="SeriesField"></field>
+				<field name="SeriesSortType">
+					<qp-field no-label control-state.bind="stackedbarSettings.SeriesSortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="SeriesSortField"></field>
+				<field name="SeriesTotalAfter"></field>
+				<field name="SeriesShowTotal"></field>
+				<field name="SeriesDateRounding"></field>
+				<field name="SeriesFormat"></field>
+				<field name="SeriesColor"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-stackedbarSettings-form-values" view.bind="stackedbarSettings" caption="Values">
+				<field name="ValueField">
+					<qp-field no-label control-state.bind="stackedbarSettings.ValueAggregate" class="col-4"></qp-field>
+				</field>
+				<field name="ValueFormat"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="stackedbarSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="stackedbarSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="doughnutSettings" wg-container="AddPXDoughnutWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="doughnutSettingsDiv" show.bind="doughnutSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-doughnutSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="doughnutSettings">
+					<field name="ChartType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-doughnutSettings-form-filter" view.bind="doughnutSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="doughnutSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-doughnutSettings-form-categories" view.bind="doughnutSettings" caption="Categories">
+				<field name="LegendPosition"></field>
+				<field name="CategoryField"></field>
+				<field name="CategorySortType">
+					<qp-field no-label control-state.bind="doughnutSettings.CategorySortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="CategorySortField"></field>
+				<field name="CategoryTotalAfter"></field>
+				<field name="CategoryShowTotal"></field>
+				<field name="CategoryDateRounding"></field>
+				<field name="CategoryFormat"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-doughnutSettings-form-values" view.bind="doughnutSettings" caption="Values">
+				<field name="ValueField">
+					<qp-field no-label control-state.bind="doughnutSettings.ValueAggregate" class="col-4"></qp-field>
+				</field>
+				<field name="ValueFormat"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="doughnutSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="doughnutSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="funnelSettings" wg-container="AddPXFunnelWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="funnelSettingsDiv" show.bind="funnelSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-funnelSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="funnelSettings">
+					<field name="ChartType"></field>
+					<field name="InquiryScreenID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-funnelSettings-form-filter" view.bind="funnelSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="funnelSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-funnelSettings-form-categories" view.bind="funnelSettings" caption="Categories">
+				<field name="LegendPosition"></field>
+				<field name="CategoryField"></field>
+				<field name="CategorySortType">
+					<qp-field no-label control-state.bind="funnelSettings.CategorySortOrder" class="col-4"></qp-field>
+				</field>
+				<field name="CategorySortField"></field>
+				<field name="CategoryTotalAfter"></field>
+				<field name="CategoryShowTotal"></field>
+				<field name="CategoryDateRounding"></field>
+				<field name="CategoryFormat"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-funnelSettings-form-values" view.bind="funnelSettings" caption="Values">
+				<field name="ValueField">
+					<qp-field no-label control-state.bind="funnelSettings.ValueAggregate" class="col-4"></qp-field>
+				</field>
+				<field name="ValueFormat"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="funnelSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="funnelSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="pivotSettings" wg-container="AddPXPivotTableWidget" class="dashboard-settings" caption="Widget Properties" auto-repaint="{ commitChanges: true }" width="sm">
+		<!-- surprisingly this show bind doesn't work on qp-fieldset (we need it there to hide fieldsets with unbound fields that aren't ready) -->
+		<div id="pivotSettingsDiv" show.bind="pivotSettings.FilterID.visible != null">
+			<qp-fieldset id="fs-pivotSettings-form-header" view.bind="CurrentWidget">
+				<field name="Caption"></field>
+				<!-- <field name="Type"></field> -->
+				<using view="pivotSettings">
+					<field name="InquiryScreenID"></field>
+					<field name="PivotTableID"></field>
+					<field name="RefreshData">
+						<qp-label slot="label" caption="Refresh Widget"></qp-label>
+					</field>
+				</using>
+			</qp-fieldset>
+			<qp-dashboard-widget-parameters widget-parameters.bind="widgetParameters"></qp-dashboard-widget-parameters>
+			<qp-dashboard-inquiry-parameters inquiry-parameters.bind="inquiryParameters" widget-parameters.bind="widgetParameters"></qp-dashboard-inquiry-parameters>
+			<qp-fieldset id="fs-pivotSettings-form-filter" view.bind="pivotSettings" caption="Filter">
+				<field name="FilterID"></field>
+				<field name="FilterEditor" unbound replace-content>
+					<qp-dashboard-widget-filters filter-columns.bind="filterColumns" filter-rows.bind="filterRows" settings-view.bind="pivotSettings"></qp-dashboard-widget-filters>
+				</field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<qp-button id="pivotSettings_btnOk" caption="Save" dialog-result="OK" class="major-button" config.bind="{ validateInput: true }">
+			</qp-button>
+			<qp-button id="pivotSettings_btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

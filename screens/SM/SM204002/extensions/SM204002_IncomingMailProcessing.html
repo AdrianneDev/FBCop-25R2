@@ -1,0 +1,36 @@
+<template>
+	<template id="tabIncomingMailProcessing_Content">
+		<qp-template id="tabIncomingMailProcessing_template1" name="1">
+			<qp-fieldset id="CurrentEMailAccounts_IncomingMailProcessing" slot="A" view.bind="EMailAccounts" class="transparent-section no-label">
+				<field name="IncomingProcessing"></field>
+				<field name="AddIncomingProcessingTags"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-template id="tabIncomingMailProcessing_template2" name="1-1">
+			<div slot="A">
+				<qp-fieldset id="CurrentEMailAccounts_InitialProcessing" view.bind="EMailAccounts" caption="Initial Processing">
+					<field name="ConfirmReceipt"></field>
+					<field name="ConfirmReceiptNotificationID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CurrentEMailAccounts_MainProcessing" view.bind="EMailAccounts" caption="Main Processing">
+					<field name="CreateCase"></field>
+					<field name="CreateCaseClassID"></field>
+					<field name="RouteEmployeeEmails"></field>
+					<field name="CreateActivity"></field>
+					<field name="CreateLead"></field>
+					<field name="CreateLeadClassID"></field>
+					<field name="ProcessUnassigned"></field>
+					<field name="ResponseNotificationID"></field>
+					<field name="SubmitToIncomingAPDocuments"></field>
+					<field name="DefaultBranchID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CurrentEMailAccounts_FinalProcessing" view.bind="EMailAccounts" caption="Final Processing">
+					<field name="TypeDelete">
+						<qp-field slot="label" control-state.bind="EMailAccounts.DeleteUnProcessed"></qp-field>
+					</field>
+					<field name="AddUpInformation" class="no-label"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

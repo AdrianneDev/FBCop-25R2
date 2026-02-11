@@ -1,0 +1,68 @@
+<template>
+
+	<qp-template id="formFilter" name="10-7-7" class="equal-height" wg-container="Filter_form">
+
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="CashAccountID"></field>
+			<field name="StartDate">
+				<qp-field control-state.bind="Filter.ShowSummary" config-enabled.bind="false"></qp-field>
+			</field>
+			<field name="EndDate">
+				<qp-field control-state.bind="Filter.IncludeUnreleased" config-enabled.bind="false"></qp-field>
+			</field>
+			<field name="CuryID"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" caption="All Transactions" class="highlights-section" slot="B">
+			<field name="BegBal"></field>
+			<field name="DebitTotal"></field>
+			<field name="CreditTotal"></field>
+			<field name="EndBal"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="columnThirdFilter" view.bind="Filter" caption="Cleared Only" class="highlights-section" slot="C">
+			<field name="BegClearedBal"></field>
+			<field name="DebitClearedTotal"></field>
+			<field name="CreditClearedTotal"></field>
+			<field name="EndClearedBal"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="CATranListRecords"></qp-grid>
+
+    <qp-panel id="AddFilter" caption="Quick Transaction" auto-repaint="true">
+		<qp-template id="formQuickTransaction" name="1" wg-container="AddFilter_AddFilter">
+			<qp-fieldset id="columnFirstQuickTransaction" view.bind="AddFilter" slot="A">
+				<field name="CashAccountID"></field>
+				<field name="EntryTypeID"></field>
+				<field name="TranDate"></field>
+				<field name="FinPeriodID"></field>
+				<field name="CuryID" control-type="qp-currency" view.bind="_AddTrxFilter_CurrencyInfo_"></field>
+				<field name="ExtRefNbr"></field>
+				<field name="ReferenceID"></field>
+				<field name="LocationID"></field>
+				<field name="PaymentMethodID"></field>
+				<field name="PMInstanceID" config-display-mode.bind="'text'"></field>
+				<field name="CuryTranAmt"></field>
+				<field name="DrCr"></field>
+				<field name="OrigModule"></field>
+				<field name="Status"></field>
+				<field name="Hold"></field>
+				<field name="Cleared"></field>
+				<field name="AccountID"></field>
+				<field name="SubID"></field>
+				<field name="ProjectID"></field>
+				<field name="TaskID"></field>
+				<field name="CostCodeID"></field>
+				<field name="Descr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK" dialog-result="OK" caption="Save" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="buttonRelease" dialog-result="Yes" caption="Release" state.bind="releaseTransaction" config.bind="{validateInput: true}" wg-name="Release"></qp-button>
+			<qp-button id="buttonCancel" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

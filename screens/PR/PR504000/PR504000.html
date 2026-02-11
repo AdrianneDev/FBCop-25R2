@@ -1,0 +1,32 @@
+<template>
+	<qp-template name="17-17-14" id="form_Header">
+		<qp-fieldset id="filterForm_0" class="label-size-m" slot="A" wg-container="Filter_filterForm" view.bind="Filter">
+			<field name="TaxRegistrationID"></field>
+			<field name="FederalOnly"></field>
+		</qp-fieldset>
+		<qp-fieldset id="filterForm_1" class="label-size-m" slot="B" wg-container="Filter_filterForm" view.bind="Filter">
+			<field name="State"></field>
+			<field name="ReportingPeriod"></field>
+			<field name="AatrixVendorID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="Reports_formGrid" wg-container view.bind="Reports"></qp-grid>
+
+	<qp-panel id="CurrentReport" wg-container="CurrentReport_CurrentReport" caption="Run Report" auto-repaint="true">
+		<qp-fieldset id="formRunReport_0" wg-container="CurrentReport_formRunReport" view.bind="CurrentReport">
+			<field name="FormName"></field>
+			<field name="FormDisplayName"></field>
+			<field name="Year"></field>
+			<field name="Quarter"></field>
+			<field name="Month"></field>
+			<field name="DateFrom"></field>
+			<field name="DateTo"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="RunReportOkButton" caption="Run Report" dialog-result="OK" click.delegate="onRunReport()"></qp-button>
+			<qp-button id="RunReportCancelButton" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

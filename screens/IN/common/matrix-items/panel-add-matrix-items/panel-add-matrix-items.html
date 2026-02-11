@@ -1,0 +1,64 @@
+<template>
+	<qp-panel id="Header" caption="Add Matrix Item: Table View" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="formTableView-AddMatrixItems" name="17-31">
+			<qp-fieldset id="fsTableView-AddMatrixItems" slot="A" view.bind="Header" hide-caption="true" wg-container="Header_MatrixEntryFormView">
+				<field name="TemplateItemID"></field>
+				<field name="Description"></field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridItems-AddMatrixItems"
+				view.bind="MatrixItems"
+				on-filter-columns.call="MatrixItemsOnFilterColumns(col)"
+				on-initialize-columns.call="MatrixItemsOnColumnsGenerated(columns)"
+				wg-container="MatrixItems_MatrixItems">
+		</qp-grid>
+		<footer>
+			<qp-button id="InventoryMatrixEntrySmartPanelButtonToLookup" caption="Open Matrix View"
+				dialog-result="Yes">
+			</qp-button>
+			<qp-button id="InventoryMatrixEntrySmartPanelButtonOK" caption="Add and Close" wg-name="Addandclose"
+				dialog-result="OK">
+			</qp-button>
+			<qp-button id="InventoryMatrixEntrySmartPanelButtonCancel"
+				dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="Matrix" caption="Add Matrix Item: Matrix View" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="formMatrixView-AddMatrixItems" name="17-31">
+			<qp-fieldset id="fsMatrixView-AddMatrixItems" slot="A" view.bind="Header" hide-caption="true" wg-container="Header_MatrixFormView">
+				<field name="TemplateItemID"></field>
+				<field name="ColAttributeID"></field>
+				<field name="RowAttributeID"></field>
+				<field name="ShowAvailable"></field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+			<div slot="B">
+				<qp-grid id="gridAttributes-AddMatrixItems"
+						view.bind="AdditionalAttributes"
+						class="framed-section"
+						on-filter-columns.call="AdditionalAttributesOnFilterColumns(col)"
+						wg-container="AdditionalAttributes_MatrixAttributes">
+				</qp-grid>
+			</div>
+		</qp-template>
+
+		<qp-grid id="gridMatrix-AddMatrixItems"
+				view.bind="Matrix"
+				class="framed-section"
+				on-filter-columns.call="MatrixOnFilterColumns(col)"
+				on-initialize-columns.call="MatrixOnColumnsGenerated(columns)"
+				on-get-cell-text.call="onGetMatrixCellText(args)"
+				on-active-cell-changed.call="onMatrixCellChanged(args)"
+				wg-container="Matrix_MatrixMatrix">
+		</qp-grid>
+
+		<footer>
+			<qp-button id="buttonMatrixViewToTableView-AddMatrixItems" dialog-result="Yes" caption="Open Table View"></qp-button>
+			<qp-button id="buttonMatrixViewOK-AddMatrixItems" dialog-result="OK" caption="Add and close" wg-name="Addandclose"></qp-button>
+			<qp-button id="buttonMatrixViewCancel-AddMatrixItems" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,7 @@
+.gi-grid {
+	min-height: 300px;
+}
+
+.gi-filter:has(qp-fieldset-layout > .qp-fieldset-layout-root) {
+	margin-bottom: 5px;
+}

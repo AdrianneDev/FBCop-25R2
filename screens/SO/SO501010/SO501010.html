@@ -1,0 +1,26 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="Action"></field>
+			<field name="SiteID"></field>
+			<field name="SelectBy"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="InventoryID"></field>
+			<field name="CustomerClassID"></field>
+			<field name="CustomerID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC" slot="C" view.bind="Filter">
+			<field name="OrderType"></field>
+			<field name="OrderStatus"></field>
+			<field name="Priority"></field>
+			<field name="OrderNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Allocations"></qp-grid>
+</template>

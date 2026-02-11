@@ -1,0 +1,11 @@
+<template>
+	<qp-splitter id="sp1" initial-split="300px">
+		<split-pane>
+			<qp-tree id="tree" view.Bind="EntitiesWithLeafs" caption="Screens" wg-container="SitemapTree"
+					 view-model.ref="treeVM"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="grid" view.Bind="EntityRoles" caption="Access Rights"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

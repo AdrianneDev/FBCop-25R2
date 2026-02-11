@@ -1,0 +1,120 @@
+<template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template name="1-1" id="formARSetupRecord" wg-container="ARSetupRecord_tab" class="label-size-xm">
+				<div slot="A" id="columnFirstInTabGeneral">
+					<qp-fieldset id="groupNumberingSettings" view.bind="ARSetupRecord" caption="Numbering Settings">
+						<field name="BatchNumberingID"></field>
+						<field name="InvoiceNumberingID"></field>
+						<field name="PaymentNumberingID"></field>
+						<field name="DebitAdjNumberingID"></field>
+						<field name="CreditAdjNumberingID"></field>
+						<field name="WriteOffNumberingID"></field>
+						<field name="PrepaymentInvoiceNumberingID"></field>
+						<field name="FinChargeNumberingID"></field>
+						<field name="PriceWSNumberingID"></field>
+						<field name="DunningFeeNumberingID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPostingSettings" view.bind="ARSetupRecord" caption="Posting Settings">
+						<field name="AutoPost"></field>
+						<field name="SummaryPost"></field>
+						<field name="MigrationMode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDataEntrySettings" view.bind="ARSetupRecord" caption="Data Entry Settings">
+						<field name="DfltCustomerClassID"></field>
+						<field name="SalesSubMask"></field>
+						<field name="IntercompanySalesAccountDefault"></field>
+						<field name="InvoiceRounding"></field>
+						<field name="InvoicePrecision"></field>
+						<field name="HoldEntry"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="RequireExtRef"></field>
+						<field name="CreditCheckError"></field>
+						<field name="PrintBeforeRelease"></field>
+						<field name="EmailBeforeRelease"></field>
+						<field name="TermsInCreditMemos"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondInTabGeneral">
+					<qp-fieldset id="groupDataProcessingSettings" view.bind="ARSetupRecord" caption="Data Processing Settings">
+						<field name="IntegratedCCProcessing"></field>
+						<field name="AgeCredits"></field>
+						<field name="DefFinChargeFromCycle"></field>
+						<field name="FinChargeOnCharge"></field>
+						<field name="FinChargeFirst"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupSalespersonCommissionSettings" view.bind="ARSetupRecord" caption="Salesperson Commission Settings">
+						<field name="SPCommnCalcType"></field>
+						<field name="SPCommnPeriodType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupConsolidationSettings" view.bind="ARSetupRecord" caption="Consolidation Settings">
+						<field name="PrepareStatements"></field>
+						<field name="StatementBranchID"></field>
+						<field name="PrepareDunningLetters"></field>
+						<field name="DunningLetterBranchID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDefaultWriteOffReasonCodes" view.bind="ARSetupRecord" caption="Default Write-Off Reason Codes">
+						<field name="BalanceWriteOff"></field>
+						<field name="CreditWriteOff"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupVATRecalculationSettings" view.bind="ARSetupRecord" caption="VAT Recalculation Settings">
+						<field name="AutoReleasePPDCreditMemo"></field>
+						<field name="PPDCreditMemoDescr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRetainageSettings" view.bind="ARSetupRecord" caption="Retainage Settings">
+						<field name="RetainTaxes"></field>
+						<field name="RetainageInvoicesAutoRelease"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPricing" caption="Pricing">
+			<qp-template name="1-1" id="formARSetupRecordPricing" wg-container="ARSetupRecord_tab" class="label-size-xm">
+				<div slot="A" id="columnFirstInTabPricing">
+					<qp-fieldset id="groupPriceMaintenance" view.bind="ARSetupRecord" caption="Price Maintenance">
+						<field name="DefaultRateTypeID"></field>
+						<field name="AlwaysFromBaseCury"></field>
+						<field name="LoadSalesPricesUsingAlternateID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPriceRetention" view.bind="ARSetupRecord" caption="Price Retention">
+						<field name="RetentionType"></field>
+						<field name="NumberOfMonths"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDiscountApplication" view.bind="ARSetupRecord" caption="Discount Application">
+						<field name="LineDiscountTarget"></field>
+						<field name="ApplyQuantityDiscountBy"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval">
+			<qp-grid id="gridApproval" view.bind="SetupApproval">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDunning" caption="Dunning">
+			<qp-template name="1-1" id="formARSetupRecordDunningProcessSettings" wg-container="ARSetupRecord_tab" class="label-size-xm">
+				<div id="columnFirstDunning" slot="A">
+					<qp-fieldset id="groupDunningLetterSettings" view.bind="ARSetupRecord" caption="Dunning Letter Settings">
+						<field name="IncludeNonOverdueDunning" class="no-label"></field>
+						<field name="AddOpenPaymentsAndCreditMemos" class="no-label"></field>
+						<field name="AddUnpaidPPI" class="no-label"></field>
+					</qp-fieldset>
+					<qp-grid id="gridDunningSetup" caption="Dunning Letter Levels" view.bind="DunningSetup" class="framed-section" wg-container="DunningSetup_gridDunningLevels">
+					</qp-grid>
+				</div>
+				<div id="columnSecondDunning" slot="B">
+					<qp-fieldset id="groupDunningProcessSettings" view.bind="ARSetupRecord" caption="Dunning Process Settings">
+						<field name="DunningLetterProcessType"></field>
+						<field name="AutoReleaseDunningLetter"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDunningFeeSettings" view.bind="ARSetupRecord" caption="Dunning Fee Settings">
+						<field name="DunningFeeInventoryID"></field>
+						<field name="DunningFeeTermID"></field>
+						<field name="AutoReleaseDunningFee"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailingPrintingPreferences" caption="Mailing & Printing" ref="tabMailingPrintingPreferences_Content"></qp-tab>
+	</qp-tabbar>
+</template>

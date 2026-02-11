@@ -1,0 +1,15 @@
+<template>
+	<qp-include url="../../common/barcode-processing/barcode-processing-screen.html">
+
+		<field append="#fsColumnA-Header" name="RefNbr" config-allow-edit.bind="true"></field>
+		<field append="#fsColumnA-Header" name="SiteID"></field>
+
+		<div append="#fsColumnB-Header" id="header-flags" class="h-stack col-12">
+			<qp-info-box id="ibRemove-Header" type="warning" caption.bind="HeaderView.Remove.displayName" show.bind="HeaderView.Remove.visible == true" class="col-4"></qp-info-box>
+		</div>
+
+		<qp-tab id="tabIssue" before="#tab-Logs" caption="Issue">
+			<qp-grid id="gridPicked" view.bind="transactions"></qp-grid>
+		</qp-tab>
+	</qp-include>
+</template>

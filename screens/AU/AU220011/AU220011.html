@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="grid-Items" wg-container="Items_grid" view.bind="Items"></qp-grid>
+   <qp-panel id="ViewSelectWorkspaces"
+            wg-container="ViewSelectWorkspaces_ViewSelectWorkspaces"
+            caption="Add Workspace"
+            auto-repaint="true"
+            width="60vw"
+            height="60vh">
+      <qp-grid id="grid-ViewSelectWorkspaces" wg-container="ViewSelectWorkspaces_gridAddworkspace" view.bind="ViewSelectWorkspaces"></qp-grid>
+      <footer>
+         <qp-button id="buttonOK-ViewSelectWorkspaces" caption="Save" dialog-result="OK"></qp-button>
+         <qp-button id="buttonCancel-ViewSelectWorkspaces" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="CreateSOFilter" caption="Create Sales Order">
+		<qp-template id="form-CreateSalesOrder" name="1" wg-container="createSOFilter_createSOOrderForm">
+			<qp-fieldset id="fsColumnA" slot="A" view.bind="createSOFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="CustomerID"></field>
+				<field name="CustomerLocationID"></field>
+				<field name="CustomerOrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-CreateSalesOrder">
+			<qp-button id="buttonOK-CreateSalesOrder" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

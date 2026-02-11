@@ -1,0 +1,18 @@
+<template>
+	<qp-panel id="CopyQuoteInfo" caption="Copy Quote" auto-repaint="true">
+		<qp-fieldset id="panel_CopyQuote_Contact" view.bind="CopyQuoteInfo" caption="Contact" wg-container="CopyQuoteInfo_formCopyQuote">
+			<field name="OpportunityId"></field>
+			<field name="Description"></field>
+			<field name="RecalculatePrices"></field>
+			<field name="OverrideManualPrices" class="indent-1"></field>
+			<field name="RecalculateDiscounts"></field>
+			<field name="OverrideManualDiscounts" class="indent-1"></field>
+			<field name="OverrideManualDocGroupDiscounts" class="indent-1"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="CopyQuoteBtnConvert" dialog-result="Yes" caption="OK"></qp-button>
+			<qp-button id="CopyQuoteBtnCancel" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

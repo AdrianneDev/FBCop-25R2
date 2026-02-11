@@ -1,0 +1,45 @@
+<template>
+	<qp-template id="form" name="1-1" class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="LoginType_formA" view.bind="LoginType" wg-container="LoginType_form">
+			<field name="LoginTypeName"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="LoginType_formB" view.bind="LoginType" wg-container="LoginType_form">
+			<field name="Entity"></field>
+			<field name="AllowThisTypeForContacts"></field>
+			<field name="AllowThisTypeForEmployees"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab" >
+		<qp-tab id="tabDetails" caption="Security Policies">
+			<qp-template name="1-1" id="CurrentLoginType_tab" class="stretch label-size-m" wg-container>
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="currentLoginTypeA" view.bind="LoginType" caption="Sign-In">
+						<field name="AllowedLoginType"></field>
+						<field name="EmailAsLogin"></field>
+						<field name="ResetPasswordOnLogin"></field>
+						<field name="RequireLoginActivation"></field>
+						<field name="AllowedSessions"></field>
+					</qp-fieldset>
+					<qp-fieldset id="currentLoginTypeB" view.bind="LoginType" caption="Two-Factor Authentication">
+						<field name="DisableTwoFactorAuth"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="allowedRoles"
+						view.bind="AllowedRoles"
+						caption="Roles Permitted for User"
+						wg-container="AllowedRoles_allowsRolesGrid"
+						class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabUsers" caption="Users">
+			<qp-grid id="users" view.bind="Users" wg-container="Users_usersGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabManagedUserTypes" caption="Managed User Types" if.bind="LoginType.Entity.value == 'C'">
+			<qp-grid id="managedUserTypes" view.bind="ManagedLoginTypes" wg-container="ManagedLoginTypes_managedLoginTypesGrid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

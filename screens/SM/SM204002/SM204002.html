@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="EmailAccounts_template" name="1-1" class="equal-height label-size-m" wg-container="EMailAccounts_form">
+		<qp-fieldset id="EmailAccounts_formLeft" slot="A" view.bind="EMailAccounts">
+			<field name="EmailAccountID"></field>
+			<field name="UserId"></field>
+			<field name="Description"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+		<qp-fieldset id="EmailAccounts_formRight" slot="B" view.bind="EMailAccounts">
+			<field name="Address"></field>
+			<field name="ReplyAddress"></field>
+			<field name="PluginTypeName"></field>
+			<field name="IsOfPluginType"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentEMailAccounts_tab" class="label-size-m" wg-container load-on-demand.bind="false">
+		<qp-tab id="tabPlugIn" caption="Plug-In" if.bind="EMailAccounts.IsOfPluginType.value == true">
+			<qp-grid id="Details_PXGridSettings" view.bind="Details"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabService" caption="Service" ref="tabService_Content" visible.bind="EMailAccounts.IsOfPluginType.value !== true"></qp-tab>
+		<qp-tab id="tabIncomingMailProcessing" caption="Incoming Mail Processing" ref="tabIncomingMailProcessing_Content"></qp-tab>
+		<qp-tab id="tabAssignmentSettings" caption="Additional Settings" ref="tabAssignmentSettings_Content"></qp-tab>
+	</qp-tabbar>
+</template>

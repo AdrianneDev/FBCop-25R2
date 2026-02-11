@@ -1,0 +1,32 @@
+<template>
+	<qp-template id="formExternalPaymentProcessor" name="1-1" wg-container="ExternalPaymentProcessor_form" class="equal-height">
+		<qp-fieldset id="columnFirstExternalPaymentProcessor" view.bind="ExternalPaymentProcessor" slot="A">
+			<field name="ExternalPaymentProcessorID"></field>
+			<field name="Name"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondExternalPaymentProcessor" view.bind="ExternalPaymentProcessor" slot="B">
+			<field name="Type"></field>
+			<field name="IsProduction"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="splitContainerEPP" initial-split="50%" split="width">
+		<split-pane>
+			<qp-grid id="gridCompanies" caption="Companies" view.bind="PaymentProcessorOrganizations" wg-container="PaymentProcessorOrganizations_gridOrg"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="tabs">
+				<qp-tab id="tabUsers" caption="Users">
+					<qp-grid id="gridUsers" view.bind="PaymentProcessorUsers" wg-container="PaymentProcessorUsers_gridUser"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabFundingAccounts" caption="Funding Accounts">
+					<qp-grid id="gridFundingAccounts" view.bind="PaymentProcessorAccounts" wg-container="PaymentProcessorAccounts_gridAccount"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabFundingAccountUsers" caption="Funding Account Users">
+					<qp-grid id="gridFundingAccountUsers" view.bind="PaymentProcessorAccountUsers" wg-container="PaymentProcessorAccountUsers_gridAccountUser"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

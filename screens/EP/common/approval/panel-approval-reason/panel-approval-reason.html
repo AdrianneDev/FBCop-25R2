@@ -1,0 +1,12 @@
+<template>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true" wg-container="ReasonApproveRejectParams_PXFormViewPanelReason">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field name="Reason"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnReasonOk" dialog-result="Yes" caption="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnReasonCancel" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

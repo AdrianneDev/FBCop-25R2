@@ -1,0 +1,126 @@
+<template>
+	<require from="./style.scss"></require>
+	<qp-template
+		name="7-10-7"
+		class="equal-height"
+		id="ExpenseClaim_form"
+		wg-container
+		qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="ExpenseClaim">
+			<field name="RefNbr" pinned></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="DocDate" pinned></field>
+			<field name="ApproveDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB01" view.bind="ExpenseClaim">
+			<field name="EmployeeID" pinned></field>
+			<field name="DepartmentID" pinned="false"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_EPExpenseClaim_CurrencyInfo_"></field>
+			<field name="DocDesc" config-rows.bind="3" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formSlotC01" view.bind="ExpenseClaim" class="highlights-section">
+			<field name="CuryDocBal" pinned></field>
+			<field name="CuryTaxTotal" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="ExpenseClaimCurrent_tab" wg-container>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-grid id="grid" view.bind="ExpenseClaimDetails"></qp-grid>
+		</qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-template name="17-7" id="TaxesForm">
+				<div id="columnFirst-Taxes" slot="A">
+					<qp-grid
+						id="gridTaxes"
+						view.bind="Taxes"
+						wg-container="Taxes_grid1"
+						class="framed-section"></qp-grid>
+				</div>
+				<div id="columnSecond-TaxInfo" slot="B">
+					<qp-fieldset
+						id="formExpenseClaimCurrent02"
+						view.bind="ExpenseClaimCurrent"
+						caption="Tax Info">
+						<field name="TaxZoneID"></field>
+						<field name="TaxCalcMode"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="formExpenseClaimCurrent01"
+						view.bind="ExpenseClaimCurrent"
+						wg-container="CurrentClaimDetails_TaxRoundDiffForm"
+						caption="Tax Totals"
+						class="highlights-section">
+						<field name="CuryTaxRoundDiff"></field>
+						<field name="ExpenseClaim.CuryTaxTotal"></field>
+						<field name="ExpenseClaim.CuryVatTaxableTotal" wg-container="ExpenseClaim_form"></field>
+						<field name="ExpenseClaim.CuryVatExemptTotal" wg-container="ExpenseClaim_form"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="FinancialTab" caption="Financial">
+			<qp-template id="Financial-form" name="17-31">
+				<div slot="A">
+					<qp-fieldset
+						id="formExpenseClaimCurrent03"
+						view.bind="ExpenseClaimCurrent"
+						caption="Financial Information">
+						<field name="BranchID"></field>
+						<field name="FinPeriodID"></field>
+						<field name="ExpenseClaim.CustomerID"></field>
+						<field name="ExpenseClaim.CustomerLocationID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid
+						id="gridAPDocuments"
+						caption="Link to AP"
+						view.bind="APDocuments"
+						class="framed-section"
+						wg-container="APDocuments_apDocsGrig">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+	<qp-panel
+		id="ReceiptsForSubmit"
+		caption="Add Receipts"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-grid id="gridReceiptsForSubmit" view.bind="ReceiptsForSubmit"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" state.bind="SubmitReceipt"></qp-button>
+			<qp-button id="PXButtonAddClose" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButtonClose" state.bind="CancelSubmitReceipt" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CustomerUpdateAsk" auto-repaint="true" width="sm">
+		<qp-label caption="Do you want to update customer in expense claim detail lines that are not linked to project or contract?"></qp-label>
+		<qp-fieldset id="formCustomerUpdateAsk" view.bind="CustomerUpdateAsk" wg-container="CustomerUpdateAsk_ctl02">
+			<field name="CustomerUpdateAnswer"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="ChangeOk" state.bind="ChangeOk" dialog-result="OK"></qp-button>
+			<qp-button id="ChangeCancel" state.bind="ChangeCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="Tax_Rows" caption="Document Taxes" auto-repaint="true">
+		<qp-fieldset id="formExpenseClaimDetailsCurrent" view.bind="ExpenseClaimDetailsCurrent" wg-container="ExpenseClaimCurrent_ctl01">
+			<field name="CuryTaxRoundDiff"></field>
+		</qp-fieldset>
+		<qp-grid id="gridTax_Rows" view.bind="Tax_Rows" wg-container="Tax_Rows_PXGrid1"></qp-grid>
+		<footer>
+			<qp-button id="PXButton1" state.bind="CommitTaxes" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="TaxZoneUpdateAskView" auto-repaint="true" wg-container="TaxZoneUpdateAskView_PXFormView1">
+		<qp-label caption="Do you want to use the specified tax zone for expense receipts by default?"></qp-label>
+		<footer>
+			<qp-button id="SaveTaxZone" state.bind="SaveTaxZone" dialog-result="OK"></qp-button>
+			<qp-button id="CancelTaxZone" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

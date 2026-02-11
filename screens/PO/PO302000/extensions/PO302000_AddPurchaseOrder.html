@@ -1,0 +1,21 @@
+<template>
+	<qp-panel id="openOrders" caption="Add Purchase Order" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddPurchaseOrder" name="1-1-1" class="equal-height" wg-container="Filter_frmOrderFilter1">
+			<qp-fieldset id="fsColumnA-AddPurchaseOrder" slot="A" view.bind="filter">
+				<field name="OrderType"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddPurchaseOrder" slot="B" view.bind="filter">
+				<field name="ShipToBAccountID"></field>
+				<field name="ShipToLocationID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddPurchaseOrder" view.bind="openOrders" wg-container="openOrders_grdOpenOrders"></qp-grid>
+
+		<footer id="footer-AddPurchaseOrder">
+			<qp-button id="buttonAdd-AddPurchaseOrder" state.bind="AddPOOrder2"></qp-button>
+			<qp-button id="buttonAddClose-AddPurchaseOrder" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddPurchaseOrder" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

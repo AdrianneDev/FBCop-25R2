@@ -1,0 +1,18 @@
+<template>
+	<qp-template id="formFilter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="AccountID"></field>
+			<field name="SubID"></field>
+			<field name="ShowReconciled"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="BranchID"></field>
+			<field name="EmployeeID"></field>
+			<field name="Department"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-resizer id="resizer-gridGLTransactions" min-size="320px" initial-size="320px">
+		<qp-grid id="gridGLTransactions" view.bind="GLTransactions" caption="Purchase Transactions" wg-container="GLTransactions_grid"></qp-grid>
+	</qp-resizer>
+	<qp-grid id="gridSplit" view.bind="FATransactions" caption="Fixed Assets"></qp-grid>
+</template>

@@ -1,0 +1,19 @@
+﻿<template>
+    <qp-template name="17-17-14" id="formFilter" class="equal-height" wg-container="Filter_form">
+        <qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+            <field name="BranchID"></field>
+            <field name="EntryTypeID"></field>
+            <field name="CashAccountID"></field>
+            <field name="CuryID"></field>
+            <field name="IncludeUnreleased"></field>
+        </qp-fieldset>
+        <qp-fieldset slot="B" id="columnSecond" view.bind="Filter">
+            <field name="StartDate" caption="Date Range">
+                <qp-field control-state.bind="Filter.EndDate"></qp-field>
+            </field>
+            <field name="ShowReclassified"></field>
+            <field name="CopyDescriptionfromDetails"></field>
+        </qp-fieldset>
+    </qp-template>
+    <qp-grid id="grid" view.bind="Adjustments"></qp-grid>
+</template>

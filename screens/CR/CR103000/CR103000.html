@@ -1,0 +1,24 @@
+<template>
+	<qp-fieldset id="ValidationSettings" view.bind="Setup" caption="Validation Settings" class="col-2 no-label">
+		<field name="DuplicateScoresNormalization"></field>
+	</qp-fieldset>
+	<qp-splitter id="splitterId" split="width" initial-split="270px" state="normal">
+		<split-pane>
+			<qp-tree id="tree" view.bind="Nodes" caption="Comparison" wg-container="Comparison"> </qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-template id="CurrentNode_template" name="1" class="stretch">
+				<div slot="A" id="CurrentNode_slotA">
+					<qp-template id="CurrentNode_template_fieldset" name="1-1" class="label-size-xm">
+						<qp-fieldset id="frmCurrentNode" view.bind="CurrentNode" caption="Rules of Comparison" slot="A">
+							<field name="ValidationThreshold">
+								<qp-field id="fldValidateOnEntry" control-state.bind="CurrentNode.ValidateOnEntry"></qp-field>
+							</field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-grid id="bottomGrid" view.bind="ValidationRules"></qp-grid>
+				</div>
+			</qp-template>
+		</split-pane>
+	</qp-splitter>
+</template>

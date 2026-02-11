@@ -1,0 +1,64 @@
+<template>
+	<div class="sp-fieldset sp-items">
+		<qp-fieldset id="fsOrderedItems" class="sp-feed-grid" caption="Ordered Items" view.bind="OrderedItems">
+			<field name="OrderedItemsFeed" unbound replace-content>
+				<div class="sp-items-header">
+					<div class="sp-items-col-image sp-items-header-item">${msg.Item}</div>
+					<div class="sp-items-col-desc">
+						<div class="col-lg-6 sp-items-header-desc"></div>
+						<div class="col-lg-2 sp-items-header-price">${msg.Price}</div>
+						<div class="col-lg-2 sp-items-header-uom">${msg.UnitOfMeasure}</div>
+						<div class="col-lg-2 sp-items-header-qty">${msg.Quantity}</div>
+					</div>
+					<div class="col-lg-3">
+						<div class="col-lg-6 sp-items-header-discount">${msg.Discount}</div>
+						<div class="col-lg-6 sp-items-header-total">${msg.Total}</div>
+					</div>
+				</div>
+			</field>
+		</qp-fieldset>
+		
+		<qp-data-feed id="dfOrderedItems" class="no-toolbar sp-data-feed sp-filled-section"
+			view="OrderedItems" auto-resize="true">
+			<template width="100%">
+				<qp-fieldset id="fsShipment" view.bind="{{$viewName}}" class="sp-data-feed-fieldset no-animation">
+					<field name="fieldImage" unbound replace-content class="sp-items-col-image sp-data-feed-field">
+						<div class="sp-image">
+							<div if.bind="OrderedItems.Data.value !== ''" class="sp-image-blob"
+								style="background-image: url(data:image/png;base64,${OrderedItems.Data.value})">
+							</div>
+							<div if.bind="OrderedItems.Data.value === ''" class="sp-image-empty small">
+								<qp-hyper-icon images.bind="{ normal: 'svg:sp@photo' }"></qp-hyper-icon>
+							</div>
+						</div>
+					</field>
+
+					<field name="fieldDescr" unbound replace-content class="sp-items-col-desc sp-data-feed-field">
+						<div class="col-sm-12 col-md-12 col-lg-6 sp-items-desc">
+							${OrderedItems.description}
+							<qp-button class="sp-view-details" state.bind="OrderedItems.ViewDetails"></qp-button>
+						</div>
+						<div class="col-lg-2 sp-items-price">${OrderedItems.unitPrice}</div>
+						<div class="col-lg-2 sp-items-uom"><span>/</span>${OrderedItems.unit.toLowerCase()}</div>
+						<div class="col-sm-12 col-md-12 col-lg-2 sp-items-qty">
+							<span>${msg.Qty}:</span>${OrderedItems.quantity}
+						</div>
+					</field>
+
+					<field name="fieldTotal" unbound replace-content
+						class="col-3 sp-data-feed-field sp-items-totals-col">
+						<div
+							class="col-lg-6 sp-items-discount ${OrderedItems.discount > 0 ? '' : 'sp-pane-view-invisible'}">
+							<span>${msg.Discount}: </span>${OrderedItems.discount}%
+						</div>
+						<div
+							class="col-lg-6 sp-items-extprice sp-grid-view-hidden ${OrderedItems.discount > 0 ? '' : 'sp-pane-view-invisible'}">
+							${OrderedItems.extPrice}
+						</div>
+						<div class="col-lg-6 sp-items-total">${OrderedItems.totalPrice}</div>
+					</field>
+				</qp-fieldset>
+			</template>
+		</qp-data-feed>
+	</div>
+</template>

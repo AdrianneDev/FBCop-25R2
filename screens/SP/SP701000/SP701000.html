@@ -1,0 +1,102 @@
+<template>
+	<qp-template id="dfMainSettings" wg-container name="1-1" class="label-size-m">
+		<qp-fieldset id="first" slot="A" view.bind="Portal" hide-caption="true"
+			label-size="col-sm-12 col-md-6 col-lg-6">
+			<field name="PortalName"></field>
+			<field name="PortalURL"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" slot="B" view.bind="Portal" hide-caption="true"
+			label-size="col-sm-12 col-md-6 col-lg-6">
+			<field name="PortalDescription"></field>
+			<field control-type="qp-check-box" name="IsActive" config-enabled="false"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar active-tab-id="tbGeneral" id="mainTab">
+		<qp-tab id="tbGeneral" caption="General">
+			<qp-template id="dfSettings" wg-container name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="fsSettingsOrders" view.bind="Portal" caption="Finance & Order Settings"
+						preferences.bind="{collapsed: false}">
+						<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+						<field name="DefaultBranchID"></field>
+						<field name="DefaultOrderType"></field>
+						<field name="VisibleWarehouses" config-allow-multi-select.bind="true"></field>
+						<field name="DefaultStockItemWareHouse"></field>
+						<field name="DefaultNonStockItemWareHouse"></field>
+						<field name="DisplayAvailableQuantities"></field>
+						<field name="AllowOnlySalesUnitForPurchase"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="fsSettingsPayment" view.bind="Portal" caption="Payment Settings">
+						<field name="ProcessingCenterID"></field>
+						<field name="CCPaymentMethodID"></field>
+						<field name="CCCashAccountID"></field>
+						<field name="EFTPaymentMethodID"></field>
+						<field name="EFTCashAccountID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="fsSettingsCRM" view.bind="Portal" caption="CRM & Support Settings">
+						<field name="CaseClassID"></field>
+						<field name="CaseActivityNotificationTemplateID"></field>
+						<field name="ContactClassID"></field>
+						<field name="LoginTypeID"></field>
+						<field name="AccessRole"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsAddressSettingsCaption" view.bind="Portal" caption="Address Settings">
+						<field name="AddressLookupPluginID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tbUsers" caption="Portal Users" load-on-demand="true">
+			<qp-grid view.bind="PortalUsers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tbPortalView" caption="Portal Settings" load-on-demand="true">
+			<qp-template id="dfPortalView" wg-container name="1-1" class="label-size-m">
+				<qp-fieldset slot="A" id="fsSettingsDisplay" view.bind="Portal" caption="Display Settings">
+					<field name="InterfaceTheme"></field>
+					<field name="PrimaryColor" control-type="qp-color-picker"></field>
+					<field name="PortalLogoUpload" unbound>
+						<qp-label slot="label" caption.bind="Portal.PortalLogo.text"></qp-label>
+						<qp-info-box type="info" caption="Recommended Size: Width 210px, Height 50px"></qp-info-box>
+						<qp-image-uploader id="PortalLogo" state.bind="Portal.PortalLogo" config-id="PortalLogo"
+							value.two-way="Portal.PortalLogo.value" width="100%"
+							height="120px"></qp-image-uploader>
+					</field>
+					<field name="CompanyNameToDisplay"></field>
+					<field name="SignInPageImageUpload" unbound>
+						<qp-label slot="label" caption.bind="Portal.SignInPageImage.text"></qp-label>
+						<qp-info-box type="info" caption="Recommended Size: Width 1403px, Height 962px"></qp-info-box>
+						<qp-image-uploader id="SignInPageImage" state.bind="Portal.SignInPageImage"
+							config-id="SignInPageImage" value.two-way="Portal.SignInPageImage.value" width="100%"
+							height="288px"></qp-image-uploader>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="fsSettingsLanding" view.bind="Portal" caption="Landing Page Settings">
+					<field name="DefaultScreenID"></field>
+					<field name="ShowNavigation"></field>
+					<field name="ShowTopMessage"></field>
+					<field name="TopMessageImageUpload" unbound>
+						<qp-label slot="label" caption.bind="Portal.TopMessageImage.text"></qp-label>
+						<qp-info-box type="info" caption="Recommended Size: Width 88px, Height 88px"></qp-info-box>
+						<qp-image-uploader id="TopMessageImage" state.bind="Portal.TopMessageImage" config-id="TopMessageImage"
+							value.two-way="Portal.TopMessageImage.value" width="100%"
+							height="120px"></qp-image-uploader>
+					</field>
+					<field name="TopMessageText"></field>
+					<field name="ShowGoToCartButton"></field>
+					<field name="GoToCartImageUpload" unbound>
+						<qp-label slot="label" caption.bind="Portal.GoToCartImage.text"></qp-label>
+						<qp-info-box type="info" caption="Recommended Size: Width 134px, Height 117px"></qp-info-box>
+						<qp-image-uploader id="GoToCartImage" state.bind="Portal.GoToCartImage" config-id="GoToCartImage"
+							value.two-way="Portal.GoToCartImage.value" width="100%"
+							height="120px"></qp-image-uploader>
+					</field>
+					<field name="GoToCartText"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,21 @@
+@import 'static/status-colors.scss';
+
+/* ---------- orange (always) -------------------------------------- */
+@include colored-status('H', var(--status-orange-color)); // On Hold
+
+/* ---------- blue (always) ---------------------------------------- */
+@include colored-status('O', var(--status-blue-color)); // Open
+@include colored-status('N', var(--status-blue-color)); // New
+
+/* ---------- red (always) ----------------------------------------- */
+@include colored-status('A', var(--status-red-color)); // Pending Approval (default)
+@include colored-status('R', var(--status-red-color)); // Rejected (default)
+@include colored-status('X', var(--status-red-color)); // Canceled
+@include colored-status('J', var(--status-red-color)); // Rejected (Daily Field Report)
+
+/* ---------- grey (always) ---------------------------------------- */
+@include colored-status('C', var(--status-gray-color)); // Closed / Completed
+@include colored-status('L', var(--status-gray-color)); // Declined / Cancelled
+@include colored-status('Z', var(--status-gray-color)); // Cancelled (Projects)
+@include colored-status('F', var(--status-gray-color)); // Completed (Tasks)
+@include colored-status('M', var(--status-gray-color)); // Completed (Subcontract Entry)

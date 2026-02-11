@@ -1,0 +1,13 @@
+<template>
+	<qp-panel id="GenTimeCardFilter" caption="Generate Time Cards" auto-repaint="true">
+		<qp-fieldset id="panel_GenerateTimeCards" view.bind="GenTimeCardFilter" wg-container="GenTimeCardFilter_gentcform">
+			<field name="LastDateGenerated"></field>
+			<field name="GenerateUntil"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnOKTimeCards" wg-name="Generate" dialog-result="OK" caption="Generate"></qp-button>
+			<qp-button id="btnCancelTimeCards" wg-name="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

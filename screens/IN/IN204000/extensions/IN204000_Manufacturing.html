@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="form-Manufactoring" after="#form-DefaultLocations" name="1-1" class="label-size-m">
+		<qp-fieldset id="fsScrap-Manufactoring" slot="A" view.bind="siteaccounts" caption="Scrap" wg-container="siteaccounts_tab">
+			<field name="AMScrapSiteID" config-allow-edit.bind="true"></field>
+			<field name="AMScrapLocationID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tab id="tab-InventoryPlanning" after="#tab-Address" caption="Inventory Planning">
+		<qp-template id="form-InventoryPlanning" name="1-1" class="label-size-m">
+			<qp-fieldset id="fsColumnA-InventoryPlanning" slot="A" view.bind="siteaccounts" caption="Inventory Planning Settings" wg-container="siteaccounts_tab">
+				<field name="AMMRPFcst"></field>
+				<field name="AMMRPPO"></field>
+				<field name="AMMRPFlag"></field>
+				<field name="AMMRPProd"></field>
+				<field name="AMMRPMPS"></field>
+				<field name="AMMRPSO"></field>
+				<field name="AMMRPShip"></field>
+			</qp-fieldset>
+
+			<qp-grid id="grid-InventoryPlanning" slot="B" view.bind="AMLeadTimes" caption="Transfer Lead Time" class="framed-section" wg-container="AMLeadTimes_grid2"></qp-grid>
+		</qp-template>
+	</qp-tab>
+</template>

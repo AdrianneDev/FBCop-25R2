@@ -1,0 +1,12 @@
+﻿<template>
+	<qp-template id="formPlugin" wg-container="Plugin_form" name="1-1" class="label-size-m">
+		<qp-fieldset id="first" view.bind="Plugin" slot="A">
+			<field name="AddressValidatorPluginID"></field>
+			<field name="Description"></field>
+			<field name="PluginTypeName"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="PXGridSettings" view.bind="Details" caption="Plug-in Parameters"></qp-grid>
+</template>

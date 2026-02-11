@@ -1,0 +1,20 @@
+<template>
+	<qp-template name="1-1" id="form">
+		<div slot="A" class="v-stack label-size-m">
+			<qp-fieldset id="form" view.bind="Locations">
+				<field name="LocationCD"></field>
+				<field name="Description"></field>
+				<field name="IsActive"></field>
+				<field name="BranchID"></field>
+			</qp-fieldset>
+
+			<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="PXFormView2"
+						address-view="Address"
+						fs-caption="Main Address"
+						with-validation="false"
+						override-fieldname
+						view-on-map-action-name="ViewOnMap"></qp-include>
+		</div>
+	</qp-template>
+</template>

@@ -1,0 +1,39 @@
+﻿<template>
+	<qp-template id="form-LotSerAttribute" name="1-1" class="equal-height label-size-m" wg-container="ItemLotSerial_form">
+		<qp-fieldset id="fsColumnA-LotSerAttribute" slot="A" view.bind="ItemLotSerial">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="LotSerialNbr"></field>
+			<field name="MfgLotSerialNbr"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-LotSerAttribute" slot="B" view.bind="ItemLotSerial">
+			<field name="InventoryItem__LotSerClassID"></field>
+			<field name="INItemLotSerial__ExpireDate"></field>
+			<field name="SalesPrice" config-allow-null.bind="true"></field>
+			<field name="RecPrice" config-allow-null.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar" class="label-size-m">
+		<qp-tab id="tab-Attributes" caption="Attributes">
+			<qp-grid id="grid-Attributes" view.bind="LotSerialAttributes" wg-container="LotSerialAttributes_PXGridAttributeValues"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Description" caption="Description">
+			<qp-template id="form-Description" name="17-31" wg-container="CurrentItemLotSerial_tab">
+				<div id="divColumnA-Description" slot="A">
+					<qp-image-uploader id="ImageUrl" state.bind="CurrentItemLotSerial.ImageUrl"	width="100%" height="400px"	config.bind="{showFeed: true}" wg-field></qp-image-uploader>
+				</div>
+				<div id="divColumnB-Description" slot="B">
+					<qp-rich-text-editor id="edBody" state.bind="CurrentItemLotSerial.Body" expand-to-content="true" class="stretch" wg-field></qp-rich-text-editor>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-eCommerce" caption="eCommerce"></qp-tab>
+
+		<qp-tab id="tab-History" caption="History">
+			<qp-grid id="grid-History" view.bind="History" wg-container="History_PXGridHistory"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

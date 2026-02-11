@@ -1,0 +1,23 @@
+<template>
+	<qp-include-parameters view.required></qp-include-parameters>
+
+	<qp-fieldset slot="A1" id="fsOpenOrderA1" view.bind="{{view}}">
+		<field name="OrderNbr"></field>
+		<field name="Status" class="colored"></field>
+		<field name="OrderDate"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="AX" id="fsOpenOrderAX" view.bind="{{view}}"
+		class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg">
+		<field name="ShipDate"></field>
+		<field name="CuryOrderTotal_Text" class="field--bold"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="BX" id="fsOpenOrderBX" view.bind="{{view}}">
+		<field name="CuryUnpaidBalance_Text" class="grayed-zero"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="CX" id="fsOpenOrderCX" view.bind="{{view}}">
+		<field name="CuryUnbilledOrderTotal_Text" class="grayed-zero"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="DX" id="fsOpenOrderDX" view.bind="{{view}}">
+		<field name="OpenOrderQty" class="grayed-zero"></field>
+	</qp-fieldset>
+</template>

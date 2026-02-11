@@ -1,0 +1,62 @@
+<template>
+	<qp-template id="SyncPolicy_form" name="1-1" class="equal-height label-size-xm" wg-container>
+		<qp-fieldset id="SyncPolicy_form_left" slot="A" view.bind="SyncPolicy">
+			<field name="PolicyName"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="mainTab" class="label-size-xm">
+		<qp-tab id="CurrentSyncPolicy_tab" caption="Synchronization Settings" wg-container>
+			<qp-template id="mainTemplate" name="1-1" class="v-stack">
+				<div slot="A">
+					<qp-fieldset id="general_left" view.bind="SyncPolicy" caption="General">
+						<field name="Category"></field>
+						<field name="Priority"></field>
+						<field name="Color"></field>
+						<field name="SkipError"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="contacts_left" view.bind="SyncPolicy" caption="Contacts">
+						<field name="ContactsSync"></field>
+						<field name="ContactsDirection"></field>
+						<field name="ContactsMerge"></field>
+						<field name="ContactsSeparated"></field>
+						<field name="ContactsFolder"></field>
+						<field name="ContactsSkipCategory"></field>
+						<field name="ContactsFilter"></field>
+						<field name="ContactsClass"></field>
+						<field name="ContactsGenerateLink"></field>
+						<field name="LinkTemplate"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="email_left" view.bind="SyncPolicy" caption="Emails">
+						<field name="EmailsSync"></field>
+						<field name="EmailsAttachments"></field>
+						<field name="EmailsFolder"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="task_left" view.bind="SyncPolicy" caption="Tasks">
+						<field name="TasksSync"></field>
+						<field name="TasksDirection"></field>
+						<field name="TasksSeparated"></field>
+						<field name="TasksFolder"></field>
+						<field name="TasksSkipCategory"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="events_left" view.bind="SyncPolicy" caption="Events">
+						<field name="EventsSync"></field>
+						<field name="EventsDirection"></field>
+						<field name="EventsSeparated"></field>
+						<field name="EventsFolder"></field>
+						<field name="EventsSkipCategory"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabUsers" caption="Users">
+			<qp-grid id="gridEMailSyncAccount" view.bind="Preferences"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

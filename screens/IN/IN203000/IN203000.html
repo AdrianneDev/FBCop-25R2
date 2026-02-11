@@ -1,0 +1,288 @@
+<template>
+	<qp-template id="form-TemplateItem" name="1-1" class="equal-height label-size-m" wg-container="Item_form">
+		<qp-fieldset id="fsColumnA-TemplateItem" slot="A" view.bind="Item">
+			<field name="InventoryCD"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-TemplateItem" slot="B" view.bind="Item">
+			<field name="StkItem" class="no-label"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar" class="label-size-m">
+		<qp-tab id="tab-General" caption="General">
+			<qp-template id="form-General" name="1-1" wg-container="ItemSettings_tab">
+				<div id="divColumnA-General" slot="A">
+					<qp-fieldset id="fsItemDefaults-General" view.bind="ItemSettings" caption="Item Defaults">
+						<field name="ItemStatus"></field>
+						<field name="ItemClassID" config-allow-edit.bind="true"></field>
+						<field name="ItemType"></field>
+						<field name="ValMethod"></field>
+						<field name="TaxCategoryID" config-allow-edit.bind="true"></field>
+						<field name="PostClassID" config-allow-edit.bind="true"></field>
+						<field name="LotSerClassID" config-allow-edit.bind="true"></field>
+						<field name="CountryOfOrigin"></field>
+						<field name="NonStockReceipt"></field>
+						<field name="NonStockReceiptAsService"></field>
+						<field name="NonStockShip"></field>
+						<field name="CompletePOLine"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsFieldServiceDefaults-General" view.bind="ItemSettings" caption="Field Service Defaults">
+						<field name="EstimatedDuration"></field>
+						<field name="ItemClass.Mem_RouteService"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsWarehouseDefaults-General" view.bind="ItemSettings" caption="Warehouse Defaults">
+						<using view="ItemCurySettings" wg-container="ItemCurySettings_CurySettingsFormDefaultSite">
+							<field name="DfltSiteID" config-allow-edit.bind="true"></field>
+							<field name="DfltShipLocationID" config-allow-edit.bind="true"></field>
+							<field name="DfltReceiptLocationID" config-allow-edit.bind="true"></field>
+						</using>
+						<field name="DefaultSubItemID">
+							<qp-field control-state.bind="ItemSettings.DefaultSubItemOnEntry" class="no-label"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-General" slot="B">
+					<qp-fieldset id="fsUnitOfMeasure-General" view.bind="ItemSettings" caption="Unit of Measure">
+						<field name="BaseUnit">
+							<qp-field control-state.bind="ItemSettings.DecimalBaseUnit" class="no-label" pinned="true"></qp-field>
+						</field>
+						<field name="SalesUnit">
+							<qp-field control-state.bind="ItemSettings.DecimalSalesUnit" class="no-label" pinned="true"></qp-field>
+						</field>
+						<field name="PurchaseUnit">
+							<qp-field control-state.bind="ItemSettings.DecimalPurchaseUnit" class="no-label" pinned="true"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-grid id="gridUnits-General" view.bind="itemunits" caption="Conversion Rules" class="framed-section" wg-container="itemunits_gridUnits"></qp-grid>
+					<qp-fieldset id="fsPhysicalInventory-General" view.bind="ItemSettings" caption="Physical Inventory">
+						<field name="CycleID" config-allow-edit.bind="true"></field>
+						<field name="ABCCodeID" config-allow-edit.bind="true"></field>
+						<field name="ABCCodeIsFixed"></field>
+						<field name="MovementClassID" config-allow-edit.bind="true"></field>
+						<field name="MovementClassIsFixed"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Fulfillment" caption="Fulfillment">
+			<qp-template id="form-Fulfillment" name="1-1">
+				<div id="divColumnA-Fulfillment" slot="A" wg-container="ItemSettings_tab">
+					<qp-fieldset id="fsDimensions-Fulfillment" view.bind="ItemSettings" caption="Dimensions">
+						<field name="BaseItemWeight"></field>
+						<field name="WeightUOM"></field>
+						<field name="BaseItemVolume"></field>
+						<field name="VolumeUOM"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsInternationalShipping-Fulfillment" view.bind="ItemSettings" caption="International Shipping">
+						<field name="HSTariffCode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsShipingThreshold-Fulfillment" view.bind="ItemSettings" caption="Shipping Thresholds">
+						<field name="UndershipThreshold"></field>
+						<field name="OvershipThreshold"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-Fulfillment" slot="B">
+					<qp-fieldset id="fsAutomaticPackaging-Fulfillment" view.bind="ItemSettings" caption="Automatic Packaging" wg-container="ItemSettings_tab">
+						<field name="PackageOption">
+							<qp-field control-state.bind="ItemSettings.PackSeparately" class="no-label"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-grid id="gridBoxesFulfillment-" view.bind="Boxes" caption="Boxes" class="framed-section" wg-container="Boxes_PXGridBoxes"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-PriceCost" caption="Price/Cost">
+			<qp-template id="form-PriceCost" name="1-1">
+				<div id="divColumnA-PriceCost" slot="A">
+					<qp-fieldset id="fsPriceManagement-PriceCost" view.bind="ItemSettings" caption="Price Management" wg-container="ItemSettings_tab">
+						<field name="PriceClassID" config-allow-edit.bind="true"></field>
+						<field name="PriceWorkgroupID"></field>
+						<field name="PriceManagerID"></field>
+						<field name="Commisionable"></field>
+						<field name="MinGrossProfitPct"></field>
+						<field name="MarkupPct"></field>
+						<using view="ItemCurySettings" wg-container="ItemCurySettings_curySettingsForm">
+							<field name="RecPrice">
+								<qp-label slot="label" caption.bind="ItemCurySettings.RecPrice_Label.value"></qp-label>
+							</field>
+							<field name="BasePrice">
+								<qp-label slot="label" caption.bind="ItemCurySettings.BasePrice_Label.value"></qp-label>
+							</field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="fsFieldServicesDefaults-PriceCost" view.bind="ItemSettings" caption="Field Service Defaults" wg-container="ItemSettings_tab">
+						<field name="DfltEarningType"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-PriceCost" slot="B">
+					<qp-fieldset id="fsStandardCost-PriceCost" view.bind="ItemCurySettings" caption="Standard Cost" wg-container="ItemCurySettings_curySettingsForm2">
+						<field name="PendingStdCost">
+							<qp-label slot="label" caption.bind="ItemCurySettings.PendingStdCost_Label.value"></qp-label>
+						</field>
+						<field name="PendingStdCostDate"></field>
+						<field name="StdCost">
+							<qp-label slot="label" caption.bind="ItemCurySettings.StdCost_Label.value"></qp-label>
+						</field>
+						<field name="StdCostDate"></field>
+						<field name="LastStdCost">
+							<qp-label slot="label" caption.bind="ItemCurySettings.LastStdCost_Label.value"></qp-label>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="fsItemCostPosting-PriceCost" view.bind="ItemSettings" caption="Posting of Item Cost" wg-container="ItemSettings_tab">
+						<field name="PostToExpenseAccount"></field>
+						<field name="CostBasis"></field>
+						<field name="PercentOfSalesPrice"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Vendors" caption="Vendors">
+			<qp-grid id="grid-Vendors" view.bind="VendorItems" wg-container="VendorItems_PXGridVendorItems"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-GLAccounts" caption="GL Accounts">
+			<qp-template id="form-GLAccounts" name="1-1" wg-container="ItemSettings_tab">
+				<qp-fieldset id="fsInventory-GLAccounts" slot="A" view.bind="ItemSettings">
+					<field name="InvtAcctID"></field>
+					<field name="ExpenseAccrualAcctID"></field>
+					<field name="InvtSubID"></field>
+					<field name="ExpenseAccrualSubID"></field>
+					<field name="ReasonCodeSubID"></field>
+					<field name="SalesAcctID"></field>
+					<field name="SalesSubID"></field>
+					<field name="COGSAcctID"></field>
+					<field name="ExpenseAcctID"></field>
+					<field name="COGSSubID"></field>
+					<field name="ExpenseSubID"></field>
+					<field name="StdCstVarAcctID"></field>
+					<field name="StdCstVarSubID"></field>
+					<field name="StdCstRevAcctID"></field>
+					<field name="StdCstRevSubID"></field>
+					<field name="POAccrualAcctID"></field>
+					<field name="POAccrualSubID"></field>
+					<field name="PPVAcctID"></field>
+					<field name="PPVSubID"></field>
+					<field name="LCVarianceAcctID"></field>
+					<field name="LCVarianceSubID"></field>
+					<field name="DeferralAcctID"></field>
+					<field name="DeferralSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Description" caption="Description">
+			<qp-template id="form-Description" name="17-31" wg-container="ItemSettings_tab">
+				<div id="divColumnA-Description" slot="A">
+					<qp-image-uploader id="ImageUrl"
+							state.bind="ItemSettings.ImageUrl"
+							width="100%"
+							height="400px"
+							config.bind="{showFeed: true, allowNull: false}"
+							wg-field>
+					</qp-image-uploader>
+				</div>
+				<div id="divColumnB-Description" slot="B">
+					<qp-rich-text-editor id="edBody"
+							state.bind="ItemSettings.Body"
+							class="stretch"
+							wg-field>
+					</qp-rich-text-editor>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Attributes" caption="Attributes">
+			<qp-template id="template-Attributes" name="1">
+				<div id="div-gridAnswers" slot="A">
+					<qp-grid id="gridAnswers-Configuration" view.bind="Answers" wg-container="Answers_PXGridAnswers"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-MatrixItemsSettings" caption="Matrix Items">
+			<qp-tabbar id="tabbar-matrix">
+				<qp-tab id="tab-MatrixItems" caption="	Item List">
+					<qp-template id="form-MatrixItems" name="1-1">
+						<qp-fieldset id="fsColumnA-MatrixItems" slot="A" view.bind="ItemSettings" class="transparent-section" wg-container="ItemSettings_tab">
+							<field name="UpdateOnlySelected" class="no-label"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-grid id="grdMatrixItems"
+							view.bind="MatrixItems"
+							on-filter-columns.call="matrixItemsOnFilterColumns(col)"
+							on-initialize-columns.call="matrixItemsColumnsGenerated(columns)"
+							wg-container="MatrixItems_grdMatrixItems">
+					</qp-grid>
+				</qp-tab>
+				<qp-tab id="tab-Configuration" caption="Configuration">
+					<qp-template id="form-Configuration" name="1-1" wg-container="ItemSettings_tab">
+						<qp-fieldset id="fsDefaultAttributes-ConfigurationColumn" slot="A" view.bind="ItemSettings" >
+							<field name="DefaultColumnMatrixAttributeID" config-allow-edit.bind="true"></field>
+						</qp-fieldset>
+						<qp-fieldset id="fsDefaultAttributes-ConfigurationRow" slot="B" view.bind="ItemSettings">
+							<field name="DefaultRowMatrixAttributeID" config-allow-edit.bind="true"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-template id="grid-IDConfiguration" name="1">
+						<div id="divColumnA-Configuration" slot="A">
+							<qp-include url="../common/matrix-items/id-generation-rules/id-generation-rules.html"></qp-include>
+							<qp-include url="../common/matrix-items/description-generation-rules/description-generation-rules.html"></qp-include>
+						</div>
+					</qp-template>
+				</qp-tab>
+				<qp-tab id="tab-UpdateExcludeSettings" caption="Update Settings">
+					<qp-template id="grid-Excludes" name="1">
+						<div id="divColumnA-Excludes" slot="A">
+							<qp-grid id="gridFields-UpdateExcludeSettings"
+									view.bind="FieldsExcludedFromUpdate"
+									caption="Fields Excluded from Update"
+									class="framed-section"
+									wg-container="FieldsExcludedFromUpdate_gridFieldsExcludedFromUpdate">
+							</qp-grid>
+							<qp-grid id="gridAttributes-UpdateExcludeSettings"
+									view.bind="AttributesExcludedFromUpdate"
+									caption="Attributes Excluded from Update"
+									class="framed-section"
+									wg-container="AttributesExcludedFromUpdate_gridAttributesExcludedFromUpdate">
+							</qp-grid>
+						</div>
+					</qp-template>
+				</qp-tab>
+			</qp-tabbar>
+		</qp-tab>
+
+		<qp-tab id="tab-Commerce" caption="eCommerce">
+			<qp-template id="from-Commerce" name="1-1" wg-container="ItemSettings_tab">
+				<div id="divColumnA-Commerce" slot="A">
+					<qp-fieldset id="fsSynchronization" view.bind="ItemSettings" caption="Synchronization">
+						<field name="ExportToExternal"></field>
+						<field name="Visibility"></field>
+						<field name="Availability"></field>
+						<field name="NotAvailMode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsSearchOptimization" view.bind="ItemSettings" caption="Search Engine Optimization">
+						<field name="CustomURL"></field>
+						<field name="PageTitle"></field>
+						<field name="ShortDescription"></field>
+						<field name="SearchKeywords"></field>
+						<field name="MetaKeywords"></field>
+						<field name="MetaDescription" config-type.bind="1" config-rows.bind="5"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-Commerce" slot="B">
+					<qp-grid id="gridCategory-Fulfillment" view.bind="Category" caption="Sales Categories" class="framed-section" wg-container="Category_PXGridCategory"></qp-grid>
+					<qp-grid id="gridUrls-Commerce"
+							view.bind="InventoryFileUrls"
+							caption="Media URLs"
+							class="framed-section"
+							wg-container="InventoryFileUrls_gridInventoryFileUrls">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

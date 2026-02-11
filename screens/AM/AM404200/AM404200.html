@@ -1,0 +1,17 @@
+﻿<template>
+	<qp-template id="ForecastFilter_form" name="17-17-14" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="form" view.bind="ForecastFilter">
+			<field name="ForecastID"></field>
+			<field name="TimePeriod"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form2" view.bind="ForecastFiltersummary" class="highlights-section">
+			<field name="ForecastedQty">
+				<qp-field control-state.bind="ForecastFiltersummary.BaseUOM"></qp-field>
+			</field>
+			<field name="OrderedQty">
+				<qp-field control-state.bind="ForecastFiltersummary.BaseUOM"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="DetailRecs"></qp-grid>
+</template>

@@ -1,0 +1,41 @@
+<template>
+	<template id="tabAddresses_Content">
+		<qp-template id="Addresses_form" name="17-17-14">
+			<div slot="A">
+				<qp-include url="src/screens/common/form-contact-document/form-contact-document.html"
+					fs-id="formB_shipping"
+					contact-view="Shipping_Contact"
+					fs-wg-container="Shipping_Contact_formB"
+					fs-caption="Ship-To Contact">
+				</qp-include>
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="groupShipping_Address"
+					address-view="Shipping_Address"
+					fs-caption="Ship-To Address"
+					fs-wg-container="Shipping_Address_formA"
+					with-coordinates="true"
+					view-on-map-action-name="ViewShippingOnMap"
+				>
+					<field modify="#groupShipping_Address [name='CountryID']" after="#groupShipping_Address [name='PostalCode']"></field>
+				</qp-include>
+			</div>
+			<div slot="B">
+				<qp-include url="src/screens/common/form-contact-document/form-contact-document.html"
+					fs-id="formB_contact"
+					contact-view="Billing_Contact"
+					fs-wg-container="Billing_Contact_formB"
+					fs-caption="Bill-To Contact">
+				</qp-include>
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="groupBilling_Address"
+					address-view="Billing_Address"
+					fs-caption="Bill-To Address"
+					fs-wg-container="Billing_Address_formA"
+					view-on-map-action-name="ViewBillingOnMap"
+				>
+					<field modify="#groupBilling_Address [name='CountryID']" after="#groupBilling_Address [name='PostalCode']"></field>
+				</qp-include>
+			</div>
+		</qp-template>
+	</template>
+</template>

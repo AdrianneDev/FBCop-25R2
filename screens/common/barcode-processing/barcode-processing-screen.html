@@ -1,0 +1,78 @@
+<template>
+	<require from="screens/common/barcode-processing/barcode-processing-screen.scss"></require>
+
+	<qp-template id="form-Header" name="1-1-1" class="equal-height" wg-container="HeaderView_formHeader">
+		<qp-fieldset id="fsColumnA-Header" slot="A" view.bind="HeaderView">
+			<field name="BarcodeHolder" unbound replace-content>
+				<div class="h-stack col-12">
+					<qp-icon id="iconBarcode-Header"
+						imagesrc="svg:main@scan"
+						class="col-1"
+						style="height: var(--qp-input-height)">
+					</qp-icon>
+					<qp-field id="fldBarcode-Header"
+						control-state.bind="HeaderView.Barcode"
+						control-type="qp-barcode-input"
+						config-submit-command.bind="Scan"
+						config-sound-control.bind="Info.MessageSoundFile"
+						config-placeholder.bind="HeaderView.Barcode.displayName"
+						class="no-label col-11">
+					</qp-field>
+				</div>
+			</field>
+		</qp-fieldset>
+
+		<div id="fsColumnB-Header" slot="B" view.bind="HeaderView" class="no-label">
+			<qp-info-box
+				id="ibMessageText-Header"
+				type.bind="
+					Info.MessageType.value === 'ERR' ? 'error' :
+					Info.MessageType.value === 'WRN' ? 'warning' :
+					Info.MessageType.value === 'COM' ? 'custom' :
+					'info'
+				"
+				caption.bind="Info.Message.value"
+				custom-icon="svg:main@successCheckFilled"
+				class="col-12 success"
+				wg-name="MessageText">
+			</qp-info-box>
+			<qp-info-box
+				id="ibQuestionText-Header"
+				type="custom"
+				caption.bind="Info.Question.value"
+				show.bind="!!Info.Question.value"
+				custom-icon="svg:main@questionFilled"
+				class="col-12 motivation"
+				wg-name="QuestionText">
+			</qp-info-box>
+			<qp-info-box
+				id="ibInstructionsText-Header"
+				type="custom"
+				caption.bind="Info.Instructions.value"
+				show.bind="!!Info.Instructions.value"
+				custom-icon="svg:main@location"
+				class="col-12 motivation"
+				wg-name="InstructionsText">
+			</qp-info-box>
+			<qp-info-box
+				id="ibPromptText-Header"
+				type="custom"
+				caption.bind="Info.Prompt.value"
+				custom-icon="svg:main@scan"
+				class="col-12 motivation"
+				wg-name="PromptText">
+			</qp-info-box>
+		</div>
+
+		<!-- the whole fieldset with a single field is needed for proper work of the sound mechanism, do not remove or transform -->
+		<qp-fieldset id="fsInfo-Header" view.bind="Info">
+			<field name="MessageSoundFile" show.bind="false"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Logs" caption="Scan Log">
+			<qp-grid id="grid-Logs" view.bind="Logs" wg-container="Logs_grid4"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

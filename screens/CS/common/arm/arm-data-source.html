@@ -1,0 +1,75 @@
+<template>
+	<qp-include-parameters view.required></qp-include-parameters>
+
+	<qp-fieldset id="groupDataSource" view.bind="{{view}}" caption="Data Source" class="label-size-sm">
+		<field name="groupAccountGroup" unbound replace-content class="arm-delimiter">
+			<div if.bind="{{view}}.StartAccountGroup.visible"></div>
+		</field>
+		<field name="StartAccountGroup" caption="Account Groups" class="arm-range-fields">
+			<qp-field id="fieldEndAccountGroup"
+				control-state.bind="{{view}}.EndAccountGroup"></qp-field>
+		</field>
+
+		<field name="groupProject" unbound replace-content class="arm-delimiter">
+			<div if.bind="{{view}}.StartProject.visible || {{view}}.StartProjectTask.visible || {{view}}.StartInventory.visible"></div>
+		</field>
+		<field name="StartProject" caption="Project" class="arm-range-fields">
+			<qp-field id="fieldEndProject"
+				control-state.bind="{{view}}.EndProject"></qp-field>
+		</field>
+		<field name="StartProjectTask" caption="Project Tasks" class="arm-range-fields">
+			<qp-field id="fieldEndProjectTask"
+				control-state.bind="{{view}}.EndProjectTask"></qp-field>
+		</field>
+		<field name="StartInventory" caption="Inventory" class="arm-range-fields">
+			<qp-field id="fieldEndInventory"
+				control-state.bind="{{view}}.EndInventory"></qp-field>
+		</field>
+
+		<field name="groupAccount" unbound replace-content class="arm-delimiter">
+			<div if.bind="{{view}}.LedgerID.visible || {{view}}.AccountClassID.visible || {{view}}.StartAccount.visible || {{view}}.StartSub.visible"></div>
+		</field>
+		<field name="LedgerID"></field>
+		<field name="AccountClassID"></field>
+		<field name="StartAccount" caption="Account" class="arm-range-fields">
+			<qp-field id="fieldEndAccount"
+				control-state.bind="{{view}}.EndAccount"></qp-field>
+		</field>
+		<field name="StartSub" caption="Subaccount" class="arm-range-fields">
+			<qp-field id="fieldEndSub"
+				control-state.bind="{{view}}.EndSub"></qp-field>
+		</field>
+
+		<field name="groupExpand" unbound replace-content class="arm-delimiter">
+			<div if.bind="{{view}}.Expand.visible || {{view}}.AmountType.visible"></div>
+		</field>
+		<field name="AmountType"></field>
+		<field name="Expand"></field>
+		<field name="RowDescription"></field>
+
+		<field name="groupOrganization" unbound replace-content class="arm-delimiter">
+			<div if.bind="{{view}}.OrganizationID.visible || {{view}}.StartBranch.visible"></div>
+		</field>
+		<field name="OrganizationID"></field>
+		<field name="StartBranch" caption="Branch" class="arm-range-fields">
+			<qp-field id="fieldEndBranch"
+				control-state.bind="{{view}}.EndBranch"></qp-field>
+		</field>
+
+		<field name="groupPeriod" unbound replace-content class="arm-delimiter">
+			<div if.bind="{{view}}.StartPeriod.visible || {{view}}.StartPeriodYearOffset.visible || {{view}}.StartPeriodOffset.visible"></div>
+		</field>
+		<field name="StartPeriod" caption="Period" class="arm-range-fields">
+			<qp-field id="fieldEndPeriod"
+				control-state.bind="{{view}}.EndPeriod"></qp-field>
+		</field>
+		<field name="StartPeriodYearOffset" caption="Offset">
+			<qp-field id="fieldEndPeriodYearOffset"
+				control-state.bind="{{view}}.EndPeriodYearOffset"></qp-field>
+		</field>
+		<field name="StartPeriodOffset" caption="">
+			<qp-field id="fieldEndPeriodOffset"
+				control-state.bind="{{view}}.EndPeriodOffset"></qp-field>
+		</field>
+	</qp-fieldset>
+</template>

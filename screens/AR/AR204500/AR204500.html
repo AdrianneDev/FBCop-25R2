@@ -1,0 +1,40 @@
+<template>
+	<qp-template id="formHeader" name="1-1" wg-container="ARFinChargesList_form">
+		<qp-fieldset id="groupHeader" slot="A" class="label-size-m" view.bind="ARFinChargesList">
+			<field name="FinChargeID"></field>
+			<field name="FinChargeDesc"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template id="formMain" name="1-1" wg-container="ARFinChargesList_form">
+		<div id="columnFirstMain" slot="A" class="label-size-m">
+			<qp-fieldset id="groupGeneralSettings" view.bind="ARFinChargesList" caption="General Settings">
+				<field name="CalculationMethod"></field>
+				<field name="TermsID"></field>
+				<field name="BaseCurFlag"></field>
+				<field name="FinChargeAccountID"></field>
+				<field name="FinChargeSubID"></field>
+				<field name="TaxCategoryID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupOverdueFeeSettings" view.bind="ARFinChargesList" caption="Overdue Fee Settings">
+				<field name="FeeAmount"></field>
+				<field name="FeeAccountID"></field>
+				<field name="FeeSubID"></field>
+				<field name="FeeDesc"></field>
+			</qp-fieldset>
+		</div>
+
+		<qp-fieldset id="groupChargingSettings" slot="B" view.bind="ARFinChargesList" caption="Charging Settings">
+			<field name="MinChargeDocumentAmt"></field>
+			<field name="ChargingMethod"></field>
+			<field name="FixedAmount"></field>
+			<field name="LineThreshold"></field>
+			<field name="MinFinChargeAmount"></field>
+
+			<field name="gridPercentListContainer" unbound replace-content>
+				<div class="transparent-section col-12">
+					<qp-grid id="gridPercentList" view.bind="PercentList" wg-container="PercentList_gridNS"></qp-grid>
+				</div>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+</template>

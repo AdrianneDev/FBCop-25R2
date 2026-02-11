@@ -1,0 +1,43 @@
+<template>
+	<qp-template id="PhotoLog_form" name="1-1" class="equal-height" wg-container>
+		<qp-fieldset id="form01" slot="A" view.bind="PhotoLog">
+			<field name="PhotoLogCd"></field>
+			<field name="StatusId"></field>
+			<field name="Date"></field>
+			<field name="CreatedById" config-display-mode.bind="'text'"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form02" slot="B" view.bind="PhotoLog">
+			<field name="ProjectId"></field>
+			<field name="ProjectTaskId"></field>
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="PhotosTab" caption="Photos">
+			<qp-multi-upload
+				config.bind="{
+					'graph': 'PX.Objects.PJ.PhotoLogs.PJ.Graphs.PhotoLogEntry',
+					'view': 'Photos',
+					'action': 'UploadFiles',
+					'dropTarget': '#gridPhotos',
+					'autoRepaint': true,
+				}"></qp-multi-upload>
+			<div wg-container="PhotoImage_formPhoto">
+				<qp-splitter id="GridAndImageForm" name="2-1" split="width">
+					<split-pane>
+						<qp-grid id="gridPhotos" view.bind="Photos"></qp-grid>
+					</split-pane>
+					<split-pane>
+						<qp-image-view
+								state.bind="PhotoImage.ImageUrl"
+								aspect-ratio="auto 4/2.8"
+								object-fit="contain"
+								wg-field></qp-image-view>
+					</split-pane>
+				</qp-splitter>
+			</div>
+		</qp-tab>
+		<qp-tab id="ActivitesTab" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+	</qp-tabbar>
+</template>

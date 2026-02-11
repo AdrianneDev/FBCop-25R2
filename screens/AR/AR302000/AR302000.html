@@ -1,0 +1,147 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template name="7-10-7" id="formDocument" class="equal-height" wg-container="Document_form" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirst-Document" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="CCPaymentStateDescr"></field>
+			<field name="AdjDate"></field>
+			<field name="AdjFinPeriodID" pinned="false"></field>
+			<field name="ExtRefNbr" pinned="false"></field>
+			<field name="DepositAfter" pinned="false"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-Document" view.bind="Document">
+			<field name="CustomerID"></field>
+			<field name="CustomerLocationID" pinned="false"></field>
+			<field name="PaymentMethodID" pinned></field>
+			<field name="CCTransactionRefund"></field>
+			<field name="RefTranExtNbr"></field>
+			<field name="PMInstanceID" config-display-mode.bind="'text'" pinned="false"></field>
+			<field name="ProcessingCenterID" pinned="false"></field>
+			<field name="TerminalID"></field>
+			<field name="NewCard">
+				<qp-field control-state.bind="Document.SaveCard" class="col-6"></qp-field>
+			</field>
+			<field name="NewAccount">
+				<qp-field control-state.bind="Document.SaveAccount" class="col-6"></qp-field>
+			</field>
+			<field name="CashAccountID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+
+			<field name="ChkServiceManagement"></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird-Document" view.bind="Document" class="highlights-section label-size-sm">
+			<field name="CuryOrigDocAmt" replace-content pinned>
+				<qp-field control-state.bind="Document.CuryOrigDocAmt" class="col-10" pinned></qp-field>
+				<qp-button
+					id="buttonAdjustDocumentAmount"
+					wg-name="SetPaymentAmounttoAppliedtoDocumentsAmount"
+					state.bind="AdjustDocAmt"
+					class="col-2"
+					config.bind="{ images : { normal: 'svg:ar@refresh' } }"
+					pinned>
+				</qp-button>
+			</field>
+			<field name="CuryApplAmt" class="col-10"></field>
+			<field name="CurySOApplAmt" class="col-10"></field>
+			<field name="CuryUnappliedBal" class="col-10" pinned></field>
+			<field name="CuryInitDocBal" class="col-10"></field>
+			<field name="CuryWOAmt" class="col-10"></field>
+			<field name="CuryChargeAmt" class="col-10" pinned></field>
+			<field name="CuryConsolidateChargeTotal" class="col-10"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabAdjustments" caption="Documents to Apply">
+			<qp-grid id="gridDocumentsToApply" wg-container="Adjustments_detgrid" view.bind="Adjustments">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApplicationHistory" caption="Application History">
+			<qp-grid id="gridApplicationHistory" wg-container="ARPost_detgrid2" view.bind="ARPost">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial" load-on-demand.bind="false">
+			<qp-template name="17-17-14" id="formCurrentDocument-TabFinancial" wg-container="CurrentDocument_form2">
+				<qp-fieldset slot="A" id="groupLinkToGL" view.bind="CurrentDocument" caption="Link to GL">
+					<field name="BatchNbr"></field>
+					<field name="DisplayCuryInitDocBal"></field>
+					<field name="BranchID"></field>
+					<field name="ARAccountID"></field>
+					<field name="ARSubID"></field>
+					<field name="ProjectID"></field>
+					<field name="TaskID"></field>
+					<field name="OrigRefNbr"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="groupPaymentInformation" view.bind="CurrentDocument" caption="Payment Info">
+					<field name="DocDate"></field>
+					<field name="FinPeriodID"></field>
+					<field name="Cleared"></field>
+					<field name="ClearDate"></field>
+					<field name="DepositAsBatch"></field>
+					<field name="Deposited"></field>
+					<field name="DepositDate"></field>
+					<field name="DepositNbr"></field>
+					<using view="ExternalTran">
+						<field name="CommerceTranNumber"></field>
+					</using>
+				</qp-fieldset>
+				<qp-fieldset slot="A" id="groupPrintAndEmailOptions" view.bind="CurrentDocument" caption="Print and Email Options">
+					<field name="Printed">
+						<qp-field control-state.bind="CurrentDocument.DontPrint"></qp-field>
+					</field>
+					<field name="Emailed">
+						<qp-field control-state.bind="CurrentDocument.DontEmail"></qp-field>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+		<qp-tab id="tabCardProcessing" caption="Card Processing">
+			<qp-grid id="gridCardProcessingTransactions" wg-container="ccProcTran_grdCCProcTran" view.bind="ccProcTran">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCharges" caption="Charges">
+			<qp-grid id="gridPaymentCharges" wg-container="PaymentCharges_detgrid3" view.bind="PaymentCharges">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="loadOpts" caption="Load Options" auto-repaint="true">
+		<qp-template name="1" id="formLoadOptions" wg-container="loadOpts_loform">
+			<div slot="A" id="panelloadOptons">
+				<qp-fieldset id="groupFirst-LoadOptions" view.bind="loadOpts">
+					<field name="OrgBAccountID"></field>
+					<field name="dateRange" unbound>
+						<qp-label slot="label" caption="Date Range"></qp-label>
+						<qp-field control-state.bind="loadOpts.FromDate" class="col-6"></qp-field>
+						<qp-field control-state.bind="loadOpts.TillDate" class="col-6"></qp-field>
+					</field>
+					<field name="refNbrRange" unbound>
+						<qp-label slot="label" caption="Ref. Nbr. Range" if.bind="loadOpts.StartRefNbr.visible == true"></qp-label>
+						<qp-field control-state.bind="loadOpts.StartRefNbr" class="col-6"></qp-field>
+						<qp-field control-state.bind="loadOpts.EndRefNbr" class="col-6"></qp-field>
+					</field>
+					<field name="orderNbrRange" unbound>
+						<qp-label slot="label" caption="Order Nbr. Range" if.bind="loadOpts.StartOrderNbr.visible == true"></qp-label>
+						<qp-field control-state.bind="loadOpts.StartOrderNbr" class="col-6"></qp-field>
+						<qp-field control-state.bind="loadOpts.EndOrderNbr" class="col-6"></qp-field>
+					</field>
+					<field name="LoadChildDocuments"></field>
+					<field name="MaxDocs"></field>
+					<field name="OrderBy"></field>
+					<field name="SOOrderBy"></field>
+					<field name="Apply"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonLoad-loadOpts" caption="Load" dialog-result="OK"></qp-button>
+			<qp-button id="buttonReload-loadOpts" caption="Reload" dialog-result="Yes"></qp-button>
+			<qp-button id="buttonCancel-loadOpts" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

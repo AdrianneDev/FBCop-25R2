@@ -1,0 +1,19 @@
+<template>
+	<qp-panel id="poLinesSelection" caption="Add Purchase Order Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddPurchaseLine" name="1-1-1" class="equal-height" wg-container="Filter_frmPOFilter">
+			<qp-fieldset id="fsColumnA-AddPurchaseLine" slot="A" view.bind="filter">
+				<field name="OrderType"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddPurchaseLine" slot="B" view.bind="filter">
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddPurchaseLine" view.bind="poLinesSelection" wg-container="poLinesSelection_gridOL"></qp-grid>
+
+		<footer id="footer-AddPurchaseLine">
+			<qp-button id="buttonOK-AddPurchaseLine" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="buttonCancel-AddPurchaseLine" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

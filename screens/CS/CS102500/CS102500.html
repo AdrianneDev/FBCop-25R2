@@ -1,0 +1,13 @@
+<template>
+	<qp-template id="formCompanyGroup" name="1-1" class="label-size-m">
+		<qp-fieldset id="groupBAccount" slot="A" view.bind="BAccount" wg-container="BAccount_form">
+			<field name="AcctCD"></field>
+			<field name="AcctName"></field>
+			<using view="OrganizationView" wg-container="OrganizationView_BaseCurrency">
+				<field name="BaseCuryID"></field>
+			</using>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridOrganizations" view.bind="Organizations" wg-container="Organizations_grid"></qp-grid>
+</template>

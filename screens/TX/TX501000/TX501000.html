@@ -1,0 +1,17 @@
+<template>
+	<qp-template name="17-17-14" id="formPeriodHeader" wg-container="Period_Header_form" class="equal-height">
+		<qp-fieldset id="columnFirstPeriodHeader" view.bind="Period_Header" slot="A">
+			<field name="OrganizationID"></field>
+			<field name="BranchID"></field>
+			<field name="VendorID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondPeriodHeader" view.bind="Period_Header" slot="B">
+			<field name="TaxPeriodID"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Period_Header.EndDate"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridDetails" view.bind="Period_Details" wg-container="Period_Details_grid"> </qp-grid>
+</template>

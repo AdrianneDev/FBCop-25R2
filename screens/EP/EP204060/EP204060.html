@@ -1,0 +1,15 @@
+<template>
+	<qp-splitter initial-split="300px" split="width" id="splitterId">
+		<split-pane>
+			<qp-tree id="tree" view.bind="Folders" caption="Company Tree"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-template id="grid_templates" name="1" class="stretch">
+				<div slot="A">
+					<qp-grid id="grid" view.bind="Items" caption="List of Groups"></qp-grid>
+					<qp-grid id="gridMembers" view.bind="Members" caption="Group Members"></qp-grid>
+				</div>
+			</qp-template>
+		</split-pane>
+	</qp-splitter>
+</template>

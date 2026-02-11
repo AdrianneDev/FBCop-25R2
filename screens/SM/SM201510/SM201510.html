@@ -1,0 +1,53 @@
+<template>
+	<qp-upload-dialog config.bind="{
+		id: 'dlgUploadFile',
+		key: 'UploadDialogPanel',
+		sessionKey: 'UploadedLicenseKey',
+		caption: 'Upload New License File',
+		autoSave: false,
+		renderCheckIn: false,
+		renderComment: false,
+		renderLink: false,
+		allowedTypes: '.als'
+	}"></qp-upload-dialog>
+	<qp-template id="pnl_licence" name="1-1-1" wg-container="License_form" class="equal-height">
+		<qp-fieldset slot="A" id="PXLayoutRule1" view.bind="License">
+			<field name="Status" class="license-status"></field>
+			<field name="ValidFrom"></field>
+			<field name="ValidTo"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="PXLayoutRule6" view.bind="License">
+			<field name="Users"></field>
+			<field name="Companies"></field>
+			<field name="Processors"></field>
+			<field name="Version"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="licenseFeatures" view.bind="Features" wg-container="Features_grid" caption="Features in the License"></qp-grid>
+	<qp-panel id="LicenseKeyPanel" auto-repaint="true" caption="Activate New License" wg-container="LicenseKeyPanel_frmInstall" class="label-size-m" width="sm">
+		<qp-info-box caption.bind="LicenseDisclamer.LicenseText" id="lic_disc" type="info"></qp-info-box>
+		<qp-fieldset id="fs-add-license-key" view.bind="LicenseKeyPanel">
+			<field name="LicensingKey"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="LicenseAgreement" auto-repaint="true" class="label-size-m" caption="Agree to proceed" wg-container="LicenseAgreement_frmAgreement" width="sm" height="20vh">
+		<div>
+			${Eula.EulaText}<a href=${EulaLink} target="_blank">${Eula.EulaLinkText}</a>
+		</div>
+		<footer>
+			<qp-button id="btnOk" wg-name="Agree" dialog-result="Yes" caption="Agree"></qp-button>
+			<qp-button id="btnCancel" wg-name="Disagree" dialog-result="No" caption="Disagree"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="LicenseWarning" auto-repaint="true" class="label-size-m" caption="Warning" wg-container="LicenseWarning_frmWarning" width="sm" height="35vh">
+		<qp-info-box caption.bind="LicenseDisclamer.LicenseWarning" id="warn_disc" type="warning"></qp-info-box>
+		<footer>
+			<qp-button id="btnOk" dialog-result="Yes"></qp-button>
+			<qp-button id="btnCancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,10 @@
+<template>
+	<qp-splitter id="splitter" split="height" initial-split="50%">
+		<split-pane>
+			<qp-grid id="gridOrders" view.bind="ProdOrders"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="gridOperations" view.bind="Operations"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

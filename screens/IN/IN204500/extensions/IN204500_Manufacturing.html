@@ -1,0 +1,97 @@
+﻿<template>
+	<qp-fieldset id="fsSettings-InventoryPlanning"
+				 after="#fsPlanningMethod-InventoryPlanning"
+				 view.bind="inventoryPlanningSettings"
+				 caption="Inventory Planning Settings"
+				 wg-container="inventoryPlanningSettings_frmInventoryPlanningSettings">
+		<field name="AMReplenishmentSource">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMReplenishmentSourceOverride" class="no-label"></qp-field>
+		</field>
+		<field name="AMSourceSiteID">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMSourceSiteIDOverride"></qp-field>
+		</field>
+		<field name="AMSafetyStock">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMSafetyStockOverride"></qp-field>
+		</field>
+		<field name="AMMinQty">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMMinQtyOverride"></qp-field>
+		</field>
+		<field name="AMMinOrdQty">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMMinOrdQtyOverride"></qp-field>
+		</field>
+		<field name="AMMaxOrdQty">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMMaxOrdQtyOverride"></qp-field>
+		</field>
+		<field name="AMLotSize">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMLotSizeOverride"></qp-field>
+		</field>
+		<field name="AMMFGLeadTime">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMMFGLeadTimeOverride"></qp-field>
+		</field>
+		<field name="AMTransferLeadTime">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMTransferLeadTimeOverride"></qp-field>
+		</field>
+		<field name="AMGroupWindow">
+			<qp-field control-state.bind="inventoryPlanningSettings.AMGroupWindowOverride"></qp-field>
+		</field>
+	</qp-fieldset>
+
+	<qp-fieldset id="fsProductionDefaults-InventoryPlanning"
+				 after="#fsPreferedVendor-InventoryPlanning"
+				 view.bind="productionOrderDefaultSettings"
+				 caption="Production Order Defaults"
+				 wg-container="ProductionOrderDefaultSettings_frmProductionDefaults">
+		<field name="AMReplenishmentSource">
+			<qp-field control-state.bind="productionOrderDefaultSettings.AMReplenishmentSourceOverride"></qp-field>
+		</field>
+		<field name="AMSourceSiteID">
+			<qp-field control-state.bind="productionOrderDefaultSettings.AMSourceSiteIDOverride"></qp-field>
+		</field>
+		<field name="AMMinOrdQty">
+			<qp-field control-state.bind="productionOrderDefaultSettings.AMMinOrdQtyOverride"></qp-field>
+		</field>
+		<field name="AMMaxOrdQty">
+			<qp-field control-state.bind="productionOrderDefaultSettings.AMMaxOrdQtyOverride"></qp-field>
+		</field>
+		<field name="AMLotSize">
+			<qp-field control-state.bind="productionOrderDefaultSettings.AMLotSizeOverride"></qp-field>
+		</field>
+		<field name="AMMFGLeadTime">
+			<qp-field control-state.bind="productionOrderDefaultSettings.AMMFGLeadTimeOverride"></qp-field>
+		</field>
+	</qp-fieldset>
+
+	<qp-tab id="tab-Manufacturing" after="#tab-PriceCost" caption="Manufacturing">
+		<qp-template id="form-Manufacturing" name="1-1" wg-container="manufacturingSettings_manufacturingSettingsForm">
+			<div id="divColumnA-Manufacturing" slot="A">
+				<qp-fieldset id="fsGeneral-Manufacturing" view.bind="manufacturingSettings" caption="General">
+					<field name="AMBOMID">
+						<qp-button id="buttonViewBOM-Manufacturing" state.bind="ViewBOM" class="col-auto" wg-name="Unnamed"></qp-button>
+					</field>
+					<field name="AMPlanningBOMID">
+						<qp-button id="buttonViewPlanningBOM-Manufacturing" state.bind="ViewPlanningBOM" class="col-auto" wg-name="Unnamed1"></qp-button>
+					</field>
+					<field name="AMConfigurationID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsProductionOrderDefaults-Manufacturing" view.bind="manufacturingSettings" caption="Production Order Defaults">
+					<field name="ReplenishmentSource"></field>
+					<field name="AMMinOrdQty"></field>
+					<field name="AMMaxOrdQty"></field>
+					<field name="AMLotSize"></field>
+					<field name="AMMFGLeadTime"></field>
+				</qp-fieldset>
+				<qp-grid id="grid-Manufacturing"
+						 view.bind="AMSubItemDefaults"
+						 caption="Sub Item Defaults"
+						 class="framed-section"
+						 wg-container="AMSubItemDefaults_AMGridAMSubItemDefault">
+				</qp-grid>
+			</div>
+			<qp-fieldset id="fsScrap-Manufacturing" slot="B" view.bind="manufacturingSettings" caption="Scrap">
+				<field name="AMScrapOverride"></field>
+				<field name="AMScrapSiteID" config-allow-edit.bind="true"></field>
+				<field name="AMScrapLocationID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-tab>
+</template>

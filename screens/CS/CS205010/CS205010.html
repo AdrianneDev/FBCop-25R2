@@ -1,0 +1,9 @@
+<template>
+	<qp-template id="formBuildings" name="1-1" class="label-size-m">
+		<qp-fieldset id="groupFilter" slot="A" view.bind="filter" wg-container="filter_form">
+			<field name="BranchID"></field>
+		</qp-fieldset>
+	</qp-template>	
+
+	<qp-grid id="gridBuildings" view.bind="building" wg-container="building_grid"></qp-grid>
+</template>

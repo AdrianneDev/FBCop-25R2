@@ -1,0 +1,31 @@
+<template>
+    <div replace="#production-orders-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenProductionOrders'}" value.two-way="captions.ProductionOrders" class="caption-with-link"></qp-text-editor>
+        <qp-grid id="production-orders-grid" view.bind="ProductionOrders" class="grid-with-caption"></qp-grid>
+    </div>
+
+	<qp-panel id="CreateProductionOrderFilter" caption="Create Production Order" auto-repaint="true">
+		<qp-template id="CreateProductionOrderFilterForm" name="7-10-7" class="equal-height">
+			<qp-fieldset id="FormCreateProdOrder01" slot="A" view.bind="CreateProductionOrderFilter">
+				<field name="OrderType"></field>
+				<field name="ProdOrdID"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItemID"></field>
+				<field name="SiteID"></field>
+				<field name="LocationID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="FormCreateProdOrder02" slot="B" view.bind="CreateProductionOrderFilter">
+				<field name="ProdDate"></field>
+				<field name="QtytoProd"></field>
+				<field name="ProjectID"></field>
+				<field name="TaskID"></field>
+				<field name="CostCodeID"></field>
+				<field name="CreateLinkedOrders"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnCreate" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

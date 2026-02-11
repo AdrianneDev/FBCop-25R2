@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="formFilter" name="17-17-14" wg-container="Filter_form" class="equal-height" qp-collapsible>
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="OrgBAccountID"></field>
+			<field name="DisposalDate"></field>
+			<field name="DisposalPeriodID" pinned></field>
+			<field name="DisposalMethodID"></field>
+			<field name="ClassID"></field>
+			<field name="ParentAssetID"></field>
+			<field name="BookID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="DisposalAmt" pinned></field>
+			<field name="DisposalAmtMode" pinned></field>
+			<field name="DisposalAccountID"></field>
+			<field name="DisposalSubID"></field>
+			<field name="ActionBeforeDisposal"></field>
+			<field name="Reason"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Assets"></qp-grid>
+
+</template>

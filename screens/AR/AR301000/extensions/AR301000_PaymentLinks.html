@@ -1,0 +1,28 @@
+<template>
+	<qp-tab after="#tabDiscounts" id="tabPaymentLinks" caption="Payment Links">
+		<qp-template id="formPayLinks" name="17-17-14" wg-container="CurrentDocument_PayLinks">
+			<div slot="A" id="columnFirstPayLinks">
+				<qp-fieldset id="columnFirstPayLinksTop" view.bind="CurrentDocument">
+					<field name="ProcessingCenterID"></field>
+					<field name="DeliveryMethod"></field>
+					<using view="PayLink" wg-container="PayLink_PXFormPayLink1">
+						<field name="Url"></field>
+						<field name="LinkStatus"></field>
+					</using>
+				</qp-fieldset>
+			</div>
+
+			<qp-fieldset id="panelPayLinksButtons" slot="B" view.bind="CurrentDocument" class="transparent-section no-label">
+				<field name="CreatePaymentLinkSection" unbound replace-content>
+					<qp-button id="buttonPayLinksCreateLink" state.bind="CreateLink" class="col-7" wg-name="CreatePaymentLink"></qp-button>
+				</field>
+				<field name="SyncPaymentLinkSection" unbound replace-content>
+					<qp-button id="buttonPayLinksSyncLink" state.bind="SyncLink" class="col-7" wg-name="SyncPaymentLink"></qp-button>
+				</field>
+				<field name="ResendPaymentLinkSection" unbound replace-content>
+					<qp-button id="buttonPayLinksResend" state.bind="ResendLink" class="col-7" wg-name="ResendPaymentLink"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-tab>
+</template>

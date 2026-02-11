@@ -1,0 +1,103 @@
+<template>
+
+	<qp-upload-dialog config.bind="{
+		id: 'uplDlg',
+		key: 'UploadPanel',
+		sessionKey: 'sessionKey_fileImportProcess',
+		caption: 'Upload New Revision',
+		autoSave: false,
+		renderCheckIn: false,
+		renderComment: true,
+		renderLink: true,
+	}"></qp-upload-dialog>
+
+	<qp-upload-dialog config.bind="{
+		id: 'upDlgForFileCreation',
+		key: 'CreateFromFilePanel',
+		sessionKey: 'FileForImport',
+		caption: 'Select File For Import',
+		autoSave: false,
+		renderCheckIn: false,
+		renderComment: false,
+		renderLink: false,
+	}"></qp-upload-dialog>
+
+	<qp-template id="MappingsSingle_form" name="10-7-7" class="equal-height" wg-container>
+		<qp-fieldset id="formMappingsSingle_1" view.bind="MappingsSingle" slot="A">
+			<field name="Name"></field>
+			<field name="ScreenID"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fromMappingsSignle_3" view.bind="MappingsSingle" slot="B">
+			<field name="NbrRecords"></field>
+			<field name="IsSimpleMapping" class="no-label"></field>
+			<field name="ProcessInParallel" class="no-label"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formMappingsSingle_2" view.bind="MappingsSingle" class="no-label" slot="C">
+			<field name="BreakOnError"></field>
+			<field name="BreakOnTarget"></field>
+			<field name="DiscardResult"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabPreparedData" caption="Prepared Data">
+			<qp-grid id="PreparedData_gridPreparedData" wg-container view.bind="PreparedData"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMapping" caption="Mapping" if.bind="MappingsSingle.IsSimpleMapping.value==true">
+			<qp-grid id="MappingsSimple_mapping" wg-container view.bind="MappingsSimple"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabHistory" caption="History">
+			<qp-grid id="History_grHistory" wg-container view.bind="History"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template id="MappingsSingleDetails_DetailsForm" name="1-1-1" class="equal-height" wg-container>
+				<qp-fieldset id="formDetailsInfo" wg-container="MappingsSingleDetails_DetailsForm" view.bind="MappingsSingleDetails" caption="Info" slot="A">
+					<field name="ProviderID" config-allow-edit.bind="true"></field>
+					<field name="SyncType"></field>
+					<field name="PreparedOn"></field>
+					<field name="CompletedOn"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formDetailsOptions" wg-container="MappingsSingleDetails_DetailsForm" view.bind="MappingsSingleDetails" caption="Options" slot="B" >
+					<using view="Operation" wg-container="Operation_OperationForm">
+						<field name="SkipHeaders" class="no-label"></field>
+						<field name="Validate" class="no-label"></field>
+						<field name="ValidateAndSave" class="no-label"></field>
+					</using>
+					<field name="BatchSize"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="NewScenarioProperties" caption="Provide New Scenario Properties" auto-repaint="true">
+		<qp-fieldset id="frmNewScenarioCreation" wg-container="NewScenarioProperties_frmNewScenarioCreation" view.bind="NewScenarioProperties">
+			<field name="ScreenID"></field>
+			<field name="Name"></field>
+			<field name="ProviderType"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReplacementProperties" caption="Replace" auto-repaint="true">
+		<qp-fieldset id="FormReplacementProperties" wg-container="ReplacementProperties_FormReplacementProperties" view.bind="ReplacementProperties">
+			<field name="ColumnIndex"></field>
+			<field name="SearchValue"></field>
+			<field name="ReplaceValue"></field>
+			<field name="MatchCase"></field>
+			<field name="ReplaceResult"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="ButtonReplaceOne" caption="Replace" wg-name="Replace" state.bind="replaceOneValue" ></qp-button>
+			<qp-button id="ButtonReplaceAll" caption="Replace All" wg-name="ReplaceAll" state.bind="replaceAllValues" ></qp-button>
+			<qp-button id="ButtonClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="SubstitutionInfo" wg-container="SubstitutionInfo_SubstitutionInfo" caption="Add Substitution">
+		<qp-grid id="SubstitutionInfo_GridSubstitutionInfo" wg-container view.bind="SubstitutionInfo"></qp-grid>
+		<footer>
+			<qp-button id="ButtonSave" caption="Save" wg-name="Save" state.bind="saveSubstitutions"></qp-button>
+			<qp-button id="ButtonCancel" caption="Close" wg-name="Close" dialog-result="Cancel" state.bind="closeSubstitutions"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

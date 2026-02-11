@@ -1,0 +1,84 @@
+<template>
+	<qp-template id="form" name="1-1" class="equal-height label-size-m">
+		<qp-fieldset id="FieldsetLeft" wg-container="CompanyYearlyInformation_form" view.bind="CompanyYearlyInformation" slot="A">
+			<field name="OrgBAccountID"></field>
+			<field name="Year"></field>
+			<field name="Ein"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="FieldsetRight" wg-container="CompanyYearlyInformation_form" view.bind="CompanyYearlyInformation" slot="B" class="no-label">
+			<field name="IsPartOfAggregateGroup"></field>
+			<field name="IsAuthoritativeTransmittal"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="EmployeeTab" caption="Employee">
+			<qp-template id="Employee_form" name="1-1">
+				<qp-fieldset id="monthSelectorForm" wg-container="EmployeeMonthFilter_monthSelectorForm" view.bind="EmployeeMonthFilter" class="label-size-m" slot="A">
+					<field name="Month"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="gridEmployees" view.bind="FilteredEmployeeInformation"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="CompanyTab" caption="Company">
+			<qp-grid id="gridCompany" view.bind="CompanyMonthlyInformation"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="AggregateTab" caption="Aggregate Group" if.bind="CompanyYearlyInformation.IsPartOfAggregateGroup.value == true">
+			<qp-grid id="gridAgg" view.bind="AggregateGroupInformation"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="EmployeeUpdate" caption="Mass Update" auto-repaint="true" width="sm">
+		<qp-label caption="Please select the fields you want to update."></qp-label>
+
+		<qp-template id="EmployeeUpdate_form" name="1">
+			<qp-fieldset id="formEmployeeUpdate" slot="A" view.bind="EmployeeUpdate" class="no-label">
+				<field name="UpdateAcaFTStatus">
+					<qp-field control-state.bind="EmployeeUpdate.AcaFTStatus"> </qp-field>
+				</field>
+
+				<field name="UpdateOfferOfCoverage">
+					<qp-field control-state.bind="EmployeeUpdate.OfferOfCoverage"></qp-field>
+				</field>
+
+				<field name="UpdateSection4980H">
+					<qp-field control-state.bind="EmployeeUpdate.Section4980H" config-enabled.bind="false"></qp-field>
+				</field>
+
+				<field name="UpdateMinimumIndividualContribution">
+					<qp-field control-state.bind="EmployeeUpdate.MinimumIndividualContribution" config-enabled.bind="false"></qp-field>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="EmployeeUpdateOK" class="major-button" caption="Update" dialog-result="Yes"></qp-button>
+			<qp-button id="EmployeeUpdateCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CompanyUpdate" caption="Mass Update" auto-repaint="true" width="sm">
+		<qp-label caption="Please select the fields you want to update."></qp-label>
+
+		<qp-template id="CompanyUpdate_form" name="1">
+			<qp-fieldset id="formCompanyUpdate" slot="A" wg-container="CompanyUpdate_formCompanyUpdate" view.bind="CompanyUpdate" class="no-label">
+				<field name="UpdateCertificationOfEligibility">
+					<qp-field control-state.bind="CompanyUpdate.CertificationOfEligibility"> </qp-field>
+				</field>
+
+				<field name="UpdateSelfInsured">
+					<qp-field control-state.bind="CompanyUpdate.SelfInsured"> </qp-field>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="CompanyUpdateOK" class="major-button" caption="Update" dialog-result="Yes"></qp-button>
+			<qp-button id="CompanyUpdateCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

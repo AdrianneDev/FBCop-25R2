@@ -1,0 +1,14 @@
+<template>
+	<qp-panel
+		id="AttachedFiles"
+		auto-repaint="true"
+		caption="Attach Files"
+		close-button-locator="#btnCancel"
+	>
+		<qp-grid id="grdFiles" view.bind="AttachedFiles"></qp-grid>
+		<footer>
+			<qp-button id="btnOk" dialog-result="OK" caption="Attach"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

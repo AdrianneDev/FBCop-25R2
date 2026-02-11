@@ -1,0 +1,14 @@
+<template>
+    <qp-grid id="grid-ReportItems" wg-container="Items_grid" view.bind="Items"></qp-grid>
+    <qp-panel id="FilterSelectReport" caption="Select Report from Database" auto-repaint="true">
+        <qp-template id="form-FilterSelectReport" name="1"> 
+            <qp-fieldset id="fs-FilterSelectReport" wg-container="FilterSelectReport_PXFormView1" view.bind="FilterSelectReport" slot="A" >
+                <field name="Name"></field>
+            </qp-fieldset>
+        </qp-template> 
+        <footer id="footer-FilterSelectReport">
+            <qp-button id="buttonOK-FilterSelectReport" wg-name="OK" caption="Select" class="major-button" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-FilterSelectReport" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+</template>

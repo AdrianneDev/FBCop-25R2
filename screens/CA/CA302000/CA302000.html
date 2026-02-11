@@ -1,0 +1,75 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template id="formReconciliation" name="10-7-7" class="equal-height" qp-collapsible wg-container="CAReconRecords_form">
+		<qp-fieldset id="columnFirstReconciliation" view.bind="CAReconRecords" slot="A">
+			<field name="CashAccountID"></field>
+			<field name="ReconNbr" class="control-size-m" pinned="false"></field>
+			<field name="CuryID" class="control-size-m"></field>
+			<field name="Status" class="control-size-m colored" pinned></field>
+			<field name="ReconDate"></field>
+			<field name="LoadDocumentsTill"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondReconciliation" view.bind="CAReconRecords" slot="B" class="highlights-section">
+			<field name="CuryBegBalance"></field>
+			<field name="CuryReconciledDebits"></field>
+			<field name="CuryReconciledCredits"></field>
+			<field name="CuryReconciledBalance" pinned></field>
+			<field name="CuryBalance" pinned></field>
+			<field name="CuryDiffBalance" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdReconciliation" view.bind="CAReconRecords" slot="C" class="highlights-section">
+			<field name="CountDebit" pinned></field>
+			<field name="CountCredit" pinned></field>
+			<field name="LastReconDate"></field>
+			<field name="SkipVoided" class="no-label"></field>
+			<field name="ShowBatchPayments" class="no-label"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="grid" view.bind="CAReconTranRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="AddFilter" caption="Quick Transaction" auto-repaint="true">
+
+		<qp-template id="formQuickTransaction" name="1" wg-container="AddFilter_AddFilter">
+			<qp-fieldset id="columnFirstQuickTransaction" view.bind="AddFilter" slot="A">
+				<field name="CashAccountID"></field>
+				<field name="EntryTypeID"></field>
+				<field name="TranDate"></field>
+				<field name="FinPeriodID"></field>
+				<field name="CuryID" control-type="qp-currency" view.bind="_AddTrxFilter_CurrencyInfo_"></field>
+				<field name="ExtRefNbr"></field>
+				<field name="ReferenceID"></field>
+				<field name="LocationID"></field>
+				<field name="PaymentMethodID"></field>
+				<field name="PMInstanceID" config-display-mode.bind="'text'"></field>
+				<field name="CuryTranAmt"></field>
+				<field name="DrCr"></field>
+				<field name="OrigModule"></field>
+				<field name="Status"></field>
+				<field name="Hold"></field>
+				<field name="Cleared"></field>
+				<field name="AccountID"></field>
+				<field name="SubID"></field>
+				<field name="ProjectID"></field>
+				<field name="TaskID"></field>
+				<field name="CostCodeID"></field>
+				<field name="Descr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="buttonOK" dialog-result="OK" caption="Save" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="buttonRelease" dialog-result="Yes" caption="Release" state.bind="releaseTransaction" config.bind="{validateInput: true}" wg-name="Release"></qp-button>
+			<qp-button id="buttonCancel" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+
+	</qp-panel>
+
+</template>

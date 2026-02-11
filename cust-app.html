@@ -1,0 +1,45 @@
+<template>
+	<require from="./app.css"></require>
+
+	<div class="splash ${!initialized ? 'initialization' : 'loading'}" if.bind="!initialized || loading">
+		<div class="message" if.bind="!initialized">Screen is loading...</div>
+	</div>
+	<qp-wait-cursor></qp-wait-cursor>
+	<qp-informer-rack></qp-informer-rack>
+
+	<div class="page-container">
+		<div id="mainWorkspace" class="page-content qp-collapsible-scope">
+			<div id="page-caption" class="page-caption">
+				<qp-screen-configuration-menu screen.bind="viewModel" if.bind="editMode && isMainFrame"></qp-screen-configuration-menu>
+
+				<div id="pageHeader" class="pageHeader ${ !isMainFrame ? 'pageHeader--hidden' : '' }" if.bind="screenService">
+					<qp-data-component name="TitleData" screen.bind="viewModel" hidden.bind="!isMainFrame"></qp-data-component>
+					<qp-data-component name="SysMenu" screen.bind="viewModel" if.bind="isMainFrame"></qp-data-component>
+				</div>
+
+				<qp-translation-validation component.bind="translationValidationComponent"></qp-translation-validation>
+				<div id="InfoBannerContainer" if.bind="isMainFrame"></div>
+				<qp-data-component if.bind="screenService" name="ScreenToolbar" screen.bind="viewModel"></qp-data-component>
+			</div>
+
+			<div class="page-host" ref="contentElement">
+				<qp-data-components if.bind="screenService" category="page-host" screen.bind="viewModel"></qp-data-components>
+
+				<template if.bind="useStaticRendering">
+					<compose class="v-stack page-workspace" view-model.bind="screenName" model.bind="$this" ></compose>
+				</template>
+				<template else>
+					<customizable screen-name.bind="screenName"></customizable>
+				</template>
+
+				<qp-wiki-tooltip screen.bind="viewModel"></qp-wiki-tooltip>
+			</div>
+		</div>
+	</div>
+	<div if.bind="screenService">
+		<!-- TODO: find out if we don't need any of these components for the project browser -->
+		<qp-data-component name="LongRunData" screen.bind="viewModel"></qp-data-component>
+		<qp-data-component name="QuickProcessingData" screen.bind="viewModel"></qp-data-component>
+		<qp-data-component name="ProcessingResultData" screen.bind="viewModel"></qp-data-component>
+	</div>
+</template>

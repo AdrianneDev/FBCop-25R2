@@ -1,0 +1,33 @@
+<template>
+	<qp-panel id="SourceRequests" caption="Select Requested Items" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-SourceRequests" name="1-1" class="equal-height" wg-container="RequestFilter_formRequest">
+			<qp-fieldset id="fsColumnA-SourceRequests" slot="A" view.bind="RequestFilter">
+				<field name="OwnerID">
+					<qp-field control-state.bind="RequestFilter.MyOwner" class="col-3"></qp-field>
+				</field>
+				<field name="WorkGroupID">
+					<qp-field control-state.bind="RequestFilter.MyWorkGroup" class="col-3"></qp-field>
+				</field>
+				<field name="MyEscalated"></field>
+				<field name="AddExists"></field>
+				<field name="InventoryID" config-allow-edit.bind="true"></field>
+				<field name="SubItemID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-SourceRequests" slot="B" view.bind="RequestFilter">
+				<field name="ReqClassID"></field>
+				<field name="SelectedPriority"></field>
+				<field name="EmployeeID"></field>
+				<field name="DepartmentID"></field>
+				<field name="VendorID"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-SourceRequests" view.bind="SourceRequests" wg-container="SourceRequests_addRequest"></qp-grid>
+
+		<footer id="footer-SourceRequests">
+			<qp-button id="buttonSave-SourceRequests" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="buttonCancel-SourceRequests" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

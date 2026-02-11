@@ -1,0 +1,72 @@
+﻿<template>
+	<qp-template id="Documents_form" wg-container name="7-10-7" qp-collapsible class="equal-height label-size-s">
+		<qp-fieldset slot="A" id="Documents1" view.bind="Documents">
+			<field name="ConfigurationID"></field>
+			<field name="Revision"></field>
+			<field name="Status" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Documents2" view.bind="Documents">
+			<field name="BOMID"></field>
+			<field name="BOMRevisionID" config-allow-edit.bind="true"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Documents3" view.bind="Documents">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="IsCompletionRequired" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabFeatures" caption="Features">
+			<qp-resizer id="resizer-gridFeature" initial-size="235px" min-size="235px">
+				<qp-grid id="gridFeature" view.bind="ConfigurationFeatures"></qp-grid>
+			</qp-resizer>
+			<qp-tabbar id="tabFeature">
+				<qp-tab id="tabOptions" caption="Options">
+					<qp-grid id="gridOption" view.bind="FeatureOptions"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabRules" caption="Rules">
+					<qp-grid id="gridFeatureRule" view.bind="FeatureRules"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</qp-tab>
+		<qp-tab id="tabConfigurationAttributes" caption="Attributes">
+			<qp-resizer id="resizer-AttributesGrid" initial-size="235px" min-size="235px">
+				<qp-grid id="AttributesGrid" view.bind="ConfigurationAttributes"></qp-grid>
+			</qp-resizer>
+			<qp-grid id="AttributeRulesGrid" view.bind="AttributeRules" caption="Rules" wg-container="AttributeRules_AttributeRulesGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabKeys" caption="Keys">
+			<qp-template id="SelectedConfiguration_tabKeys" wg-container="SelectedConfiguration_tab" name="17-17-14" class="label-size-s">
+				<qp-fieldset slot="A" id="SelectedConfiguration1" view.bind="SelectedConfiguration">
+					<field name="KeyFormat"></field>
+					<field name="KeyNumberingID"></field>
+					<field name="KeyEquation"></field>
+					<field name="KeyDescription"></field>
+					<field name="TranDescription"></field>
+					<field name="OnTheFlySubItems"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPrice" caption="Price">
+			<qp-template id="SelectedConfiguration_tabPrice" wg-container="SelectedConfiguration_tab" name="7-10-7" class="label-size-s">
+				<qp-fieldset slot="A" id="SelectedConfiguration2" view.bind="SelectedConfiguration">
+					<field name="PriceRollup"></field>
+					<field name="PriceCalc"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="ConfigurationIDUpdateFilter" caption="Set as Default Level" auto-repaint="true">
+		<qp-template id="ConfigurationIDUpdateFilter_formDefaultLevels" wg-container name="1">
+			<qp-fieldset slot="A" id="ConfigurationIDUpdateFilter1" view.bind="ConfigurationIDUpdateFilter">
+				<field name="Item"></field>
+				<field name="Warehouse"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButtonMakeDefaultOk" dialog-result="OK" caption="Update"></qp-button>
+			<qp-button id="PXButtonMakeDefaultCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

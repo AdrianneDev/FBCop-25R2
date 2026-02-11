@@ -1,0 +1,44 @@
+<template>
+	<qp-include url="../common/au-panel-view-changes.html"></qp-include>
+
+	<qp-splitter id="splitConditions" initial-split="20%" split="width">
+		<split-pane>
+			<qp-grid id="ViewForms_GridForms" wg-container view.bind="ViewForms" caption="Dialog Boxes" hide-caption="false"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<div class="v-stack">
+				<qp-template id="DialogBoxFields" name="1-1" class="equal-height">
+					<qp-fieldset id="DialogBoxFieldsLeft" wg-container="ViewForm_form" view.bind="ViewForm" slot="A">
+						<field name="DisplayName"></field>
+						<field name="FormName"></field>
+						<field name="Status"></field>
+					</qp-fieldset>
+					<qp-fieldset id="DialogBoxFieldsRight" wg-container="ViewForm_form" view.bind="ViewForm" slot="B">
+						<field name="Columns"></field>
+						<field name="Actions"></field>
+					</qp-fieldset>
+				</qp-template>
+				<qp-grid id="ViewFieldsPerForm_grid" wg-container view.bind="ViewFieldsPerForm" caption="Dialog Box Fields" hide-caption="false"></qp-grid>
+			</div>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="FilterNewForm" caption="New Dialog Box" auto-repaint="true">
+		<qp-fieldset id="FormFilterNewForm" wg-container view.bind="FilterNewForm">
+			<field name="FormName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="ButtonNewDialogBoxOk" dialog-result="OK" wg-name="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="ButtonNewDialogBoxCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ComboBoxSourceMode" wg-container="ComboBoxSourceMode_ComboBoxValuesSource" caption="Combo Box Values" auto-repaint="true">
+		<qp-fieldset id="ComboBoxFieldSet" view.bind="ComboBoxSourceMode" auto-repaint="true">
+			<field name="ComboBoxValuesSource" control-type="qp-drop-down"></field>
+		</qp-fieldset>
+		<qp-grid id="Combos_Grid" wg-container="Combos_gridCombos" view.bind="Combos"></qp-grid>
+		<footer>
+			<qp-button id="ButtonComboBoxValuesOk" dialog-result="OK" wg-name="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="ButtonComboBoxValuesCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

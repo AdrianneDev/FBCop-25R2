@@ -1,0 +1,81 @@
+<template>
+	<qp-splitter id="splitFields" initial-split="35%" split="width">
+		<split-pane>
+			<qp-grid id="ViewFields_grid" wg-container view.bind="ViewFields" caption="Customized Fields"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<div class="stretch v-stack full-width">
+				<qp-fieldset id="a0" view.bind="ViewAttributes" wg-container="ViewAttributes_FormDataField">
+					<field name="FieldTitle"></field>
+					<field name="Method"></field>
+					<field name="StorageType"></field>
+					<field name="BqlFieldName"></field>
+				</qp-fieldset>
+				<qp-fieldset id="a1" view.bind="ViewAttributes" wg-container="ViewAttributes_FormDataField" caption="Custom Attributes" class="expandable-width">
+					<field name="DacAttrEdit" class="no-label stretch"></field>
+				</qp-fieldset>
+				<qp-fieldset id="a2" view.bind="ViewAttributes" wg-container="ViewAttributes_FormDataField" caption="Original Attributes" class="expandable-width">
+					<field name="DacAttrReadonly" class="no-label stretch"></field>
+				</qp-fieldset>
+			</div>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="ViewAttributes">
+		<qp-fieldset id="a3" view.bind="ViewAttributes" wg-container="ViewAttributes_FormDataField">
+			<field name="Method"></field>
+			<field name="StorageType"></field>
+			<field name="BqlFieldName"></field>
+		</qp-fieldset>
+	</qp-panel>
+	<qp-panel id="NewFieldWizard" wg-container="newfieldwizard_newfieldwizard" caption="Create New Field" auto-repaint="true">
+		<qp-fieldset id="newfieldwizard_pxlayoutrule11" wg-container="NewFieldWizard_FormSelectTable" view.bind="NewFieldWizard">
+			<field name="NewFieldName"></field>
+			<field name="DisplayName"></field>
+			<field name="StorageType"></field>
+			<field name="DataType"></field>
+			<field name="Length"></field>
+			<field name="Precision"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="pxbutton13" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="pxbutton14" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="FieldWizard" wg-container="FieldWizard_FieldWizard" caption="Change Existing Field" auto-repaint="true">
+		<qp-fieldset id="PXFormView1" wg-container view.bind="FieldWizard">
+			<field name="baseFieldName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewSelectorCols" wg-container="ViewSelectorCols_ViewSelectorCols" caption="Customize Selector Columns" auto-repaint="true" height="60vh">
+		<qp-grid id="ViewSelectorCols_GridSelectorCols" wg-container view.bind="ViewSelectorCols"></qp-grid>
+		<footer>
+			<qp-button id="PXButton5" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton6" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewAddSelectorCols" wg-container="ViewAddSelectorCols_ViewAddSelectorCols" caption="Add Columns to Selector" auto-repaint="true" height="60vh">
+		<qp-grid id="ViewAddSelectorCols_GridAddSelectorCols" wg-container view.bind="ViewAddSelectorCols"></qp-grid>
+		<footer>
+			<qp-button id="PXButton3" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton4" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewListAttributes" caption="Customize Attributes" auto-repaint="true" width="lg" height="60vh">
+		<qp-splitter id="PXSplitContainer1" initial-split="250" split="width">
+			<split-pane>
+				<qp-grid id="ViewListAttributes_GridAttributes" wg-container="ViewListAttributes_GridAttributes" view.bind="ViewListAttributes"></qp-grid>
+			</split-pane>
+			<split-pane>
+				<qp-grid id="ViewListProps_GridProps" wg-container="ViewListProps_GridProps" view.bind="ViewListProps"></qp-grid>
+			</split-pane>
+		</qp-splitter>
+		<footer wg-container="ViewListProps_GridProps">
+			<qp-button id="PXButton7" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton8" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

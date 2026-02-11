@@ -1,0 +1,345 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="formCustomer" >
+		<qp-fieldset slot="A" id="columnFirstHeader" view.bind="BAccount" wg-container="BAccount_BAccount">
+			<field name="AcctCD"></field>
+			<using wg-container="CurrentCustomer_tab" view="CurrentCustomer">
+				<field name="AcctName"></field>
+			</using>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondHeader" view.bind="CustomerBalance" class="highlights-section" wg-container="CustomerBalance_CustomerBalance">
+			<field name="Balance">
+				<qp-label slot="label" caption.bind="CustomerBalance.Balance_Label.value"></qp-label>
+			</field>
+			<field name="ConsolidatedBalance">
+				<qp-label slot="label" caption.bind="CustomerBalance.ConsolidatedBalance_Label.value"></qp-label>
+			</field>
+			<field name="SignedDepositsBalance">
+				<qp-label slot="label" caption.bind="CustomerBalance.SignedDepositsBalance_Label.value"></qp-label>
+			</field>
+			<field name="RetainageBalance">
+				<qp-label slot="label" caption.bind="CustomerBalance.RetainageBalance_Label.value"></qp-label>
+			</field>
+		</qp-fieldset>
+
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="formGeneral" name="1-1" class="label-size-m">
+				<div slot="A" id="columnFirstInTabGeneral">
+					<qp-fieldset id="groupAdditionalAccountInfo" view.bind="DefContact" caption="Account Information" wg-container="DefContact_DefContact1">
+						<field name="CurrentCustomer.LegalName"></field>
+						<using view="BAccount" wg-container="BAccount_BAccount">
+							<field name="CustomerClassID"></field>
+							<field name="CustomerCategory"></field>
+							<field name="OwnerID"></field>
+						</using>
+						<using view="CurrentCustomer" wg-container="CurrentCustomer_ReferenceNbr">
+							<field name="AcctReferenceNbr"></field>
+							<field name="LocaleName"></field>
+						</using>
+					</qp-fieldset>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupAccountAddress"
+						address-view="DefAddress"
+						fs-caption="Account Address"
+						fs-wg-container="DefAddress_DefAddress"
+						override-fieldname
+						view-on-map-action-name="ViewMainOnMap"
+					>
+						<field modify="#groupAccountAddress [name='CountryID']" after="#groupAccountAddress [name='PostalCode']"></field>
+					</qp-include>
+				</div>
+				<div slot="B" id="columnSecondInTabGeneral" wg-container="PrimaryContactCurrent_frmPrimaryContact">
+					<qp-include url="src/screens/CR/common/forms/form-primary-contact/form-primary-contact.html" view-name="CurrentCustomer" primary-wg-container="CurrentCustomer_tab"></qp-include>
+
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+								fs-id="panelAccountContactInformation"
+								contact-view="DefContact"
+								fs-caption="Account Contact Information"
+								fs-wg-container="DefContact_DefContact1"
+								show-personal-fields="false">
+					</qp-include>
+
+					<qp-include url="src/screens/CR/common/forms/form-primary-contact/form-primary-contact-personal-data-privacy.html"></qp-include>
+
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template id="formFinancial" name="1-1" class="label-size-m">
+				<div slot="A" id="columnFirstInTabFinancial">
+					<qp-fieldset id="groupFinancialSetting" caption="Financial Settings" view.bind="CurrentCustomer" wg-container="CurrentCustomer_tab">
+						<field name="TermsID"></field>
+						<field name="StatementCycleId"></field>
+						<field name="COrgBAccountID"></field>
+						<field name="AutoApplyPayments"></field>
+						<field name="FinChargeApply"></field>
+						<field name="SmallBalanceAllow"></field>
+						<field name="SmallBalanceLimit">
+							<qp-label slot="label" caption.bind="CurrentCustomer.SmallBalanceLimit_Label.value"></qp-label>
+						</field>
+						<field name="CuryID">
+							<qp-field control-state.bind="CurrentCustomer.AllowOverrideCury" class="col-8"></qp-field>
+						</field>
+						<field name="CuryRateTypeID">
+							<qp-field control-state.bind="CurrentCustomer.AllowOverrideRate" class="col-8"></qp-field>
+						</field>
+						<field name="PaymentsByLinesAllowed"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRetainageSettings" caption="Retainage Settings" view.bind="CurrentCustomer" wg-container="CurrentCustomer_tab">
+						<field name="RetainageApply"></field>
+						<field name="RetainagePct"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondInTabFinancial">
+					<qp-fieldset id="groupParentInfo" caption="Account Relationship" view.bind="CurrentCustomer" wg-container="CurrentCustomer_tab">
+						<field name="ParentBAccountID"></field>
+						<field name="ConsolidateToParent"></field>
+						<field name="ConsolidateStatements"></field>
+						<field name="SharedCreditPolicy"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupCreditVerificationRules" caption="Credit Verification Rules" view.bind="CurrentCustomer" wg-container="CurrentCustomer_tab">
+						<field name="CreditRule"></field>
+						<field name="CreditLimit">
+							<qp-label slot="label" caption.bind="CurrentCustomer.CreditLimit_Label.value"></qp-label>
+						</field>
+						<field name="CreditDaysPastDue"></field>
+						<using view="CustomerBalance" wg-container="CustomerBalance_CustomerBalanceFin">
+							<field name="Balance">
+								<qp-label slot="label" caption.bind="CustomerBalance.Balance_Label.value"></qp-label>
+							</field>
+							<field name="UnreleasedBalance">
+								<qp-label slot="label" caption.bind="CustomerBalance.UnreleasedBalance_Label.value"></qp-label>
+							</field>
+							<field name="OpenOrdersBalance">
+								<qp-label slot="label" caption.bind="CustomerBalance.OpenOrdersBalance_Label.value"></qp-label>
+							</field>
+							<field name="RemainingCreditLimit">
+								<qp-label slot="label" caption.bind="CustomerBalance.RemainingCreditLimit_Label.value"></qp-label>
+							</field>
+							<field name="OldInvoiceDate"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabBilling" caption="Billing">
+			<qp-template id="formBilling" name="1-1" class="label-size-m">
+				<div slot="A" id="columnFirstInTabBilling">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupBillToAddress"
+						address-view="BillAddress"
+						fs-caption="Bill-To Address"
+						fs-wg-container="BillAddress_BillAddress"
+						override-fieldname="CurrentCustomer.OverrideBillAddress"
+						override-wg-container="CurrentCustomer_tab"
+						view-on-map-action-name="ViewBillAddressOnMap"
+					>
+						<field modify="#groupBillToAddress [name='CountryID']" after="#groupBillToAddress [name='PostalCode']"></field>
+					</qp-include>
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupBillToInfo"
+						contact-view="BillContact"
+						fs-caption="Bill-To Info"
+						fs-wg-container="BillContact_BillContact"
+						override-fieldname="CurrentCustomer.OverrideBillContact"
+						override-wg-container="CurrentCustomer_tab">
+					</qp-include>
+					<qp-fieldset id="groupServiceManagement" caption="Service Management" view.bind="CurrentCustomer" wg-container="CurrentCustomer_tab">
+						<field name="RequireCustomerSignature"></field>
+						<field name="BillingCycleID"></field>
+						<field name="SendInvoicesTo"></field>
+						<field name="BillShipmentSource"></field>
+						<field name="DefaultBillingCustomerSource"></field>
+						<field name="BillCustomerID"></field>
+						<field name="BillLocationID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondInTabBilling">
+					<qp-fieldset id="groupPrintAndEmailSettings" caption="Print and Email Settings" view.bind="CurrentCustomer" wg-container="CurrentCustomer_tab">
+						<field name="InvoicesRow" unbound>
+							<qp-field control-state.bind="CurrentCustomer.MailInvoices" class="col-6"></qp-field>
+							<qp-field control-state.bind="CurrentCustomer.PrintInvoices" class="col-6"></qp-field>
+						</field>
+						<field name="DunningLettersRow" unbound>
+							<qp-field control-state.bind="CurrentCustomer.MailDunningLetters" class="col-6"></qp-field>
+							<qp-field control-state.bind="CurrentCustomer.PrintDunningLetters" class="col-6"></qp-field>
+						</field>
+						<field name="StatementsRow" unbound>
+							<qp-field control-state.bind="CurrentCustomer.SendStatementByEmail" class="col-6"></qp-field>
+							<qp-field control-state.bind="CurrentCustomer.PrintStatements" class="col-6"></qp-field>
+						</field>
+						<field name="StatementType"></field>
+						<field name="PrintCuryStatements"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDefaultPaymentMethod" caption="Default Payment Method" view.bind="DefPaymentMethodInstance"
+								 wg-container="DefPaymentMethodInstance_DefPaymentMethodInstance">
+						<using view="CurrentCustomer" wg-container="CurrentCustomer_tab">
+							<field name="DefPaymentMethodID"></field>
+						</using>
+						<field name="CCProcessingCenterID"></field>
+						<field name="CustomerCCPID"></field>
+						<field name="CashAccountID"></field>
+						<field name="Descr"></field>
+					</qp-fieldset>
+					<qp-grid id="gridPaymentMethodDetails" view.bind="DefPaymentMethodInstanceDetails" class="col-12 framed-section"
+							 caption="Payment Method Details" wg-container="DefPaymentMethodInstanceDetails_grdPMInstanceDetails"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabShipping" caption="Shipping" load-on-demand="true">
+			<qp-template id="formShipping" name="1-1" class="label-size-m">
+				<div slot="A" id="columnFirstInTabShipping">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupShipToAdress"
+						address-view="DefLocationAddress"
+						fs-caption="Ship-to Address"
+						fs-wg-container="DefLocationAddress_DefLocationAddress"
+						override-fieldname="DefLocation.OverrideAddress"
+						override-wg-container="DefLocation_DefLocation"
+						with-coordinates="true"
+						view-on-map-action-name="ViewDefLocationAddressOnMap"
+					>
+						<field modify="#groupShipToAdress [name='CountryID']" after="#groupShipToAdress [name='PostalCode']"></field>
+					</qp-include>
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupShipToInfo"
+						contact-view="DefLocationContact"
+						fs-caption="Ship-to Info"
+						fs-wg-container="DefLocationContact_DefLocationContact"
+						override-fieldname="DefLocation.OverrideContact"
+						override-wg-container="DefLocation_DefLocation">
+					</qp-include>
+					<qp-fieldset id="groupOtherShippingSettings" caption="Other Settings" view.bind="DefLocation" wg-container="DefLocation_DefLocation">
+						<field name="CBranchID"></field>
+						<field name="CPriceClassID"></field>
+						<field name="CDefProjectID"></field>
+						<field name="CurrentCustomer.SuggestRelatedItems"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondInTabShipping">
+					<qp-fieldset id="groupTaxSettings" caption="Tax Settings" view.bind="DefLocation" wg-container="DefLocation_DefLocation">
+						<field name="TaxRegistrationID"></field>
+						<field name="CTaxZoneID"></field>
+						<field name="CTaxCalcMode"></field>
+						<field name="CAvalaraExemptionNumber"></field>
+						<field name="CAvalaraCustomerUsageType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupShippingInstructions" view.bind="DefLocation" caption="Shipping Instructions" wg-container="DefLocation_DefLocation">
+						<field name="CSiteID"></field>
+						<field name="CCarrierID"></field>
+						<field name="CShipTermsID"></field>
+						<field name="CShipZoneID"></field>
+						<field name="CFOBPointID"></field>
+						<field name="CResedential"></field>
+						<field name="CSaturdayDelivery"></field>
+						<field name="CInsurance"></field>
+						<field name="CAdditionalHandling"></field>
+						<field name="CShipComplete"></field>
+						<field name="COrderPriority"></field>
+						<field name="CLeadTime"></field>
+						<field name="CCalendarID"></field>
+					</qp-fieldset>
+					<qp-grid id="gridCarrierAccounts" view.bind="Carriers" caption="Carrier Accounts" wg-container="Carriers_PXGridAccounts" class="col-12 framed-section"></qp-grid>
+					<qp-fieldset id="groupLTLFTLSettings" view.bind="DefLocation" caption="LTL/FTL Settings" wg-container="DefLocation_DefLocation">
+						<field name="CLiftGate"></field>
+						<field name="CInsideDelivery"></field>
+						<field name="CLimitedAccess"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabBalances" caption="Balances">
+			<qp-grid id="gridBalances" wg-container="Balances_PXGrid1" view.bind="Balances">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabLocations" caption="Locations" ref="tabLocations_Content" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabPaymentMethods" caption="Payment Methods">
+			<qp-grid id="gridPaymentMethods" view.bind="PaymentMethods"
+					 wg-container="PaymentMethods_grdPaymentMethods"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabContacts" caption="Contacts" ref="tabContacts_Content"></qp-tab>
+		<qp-tab id="tabSalespersons" caption="Salespersons" load-on-demand="true">
+			<qp-grid id="gridSalespersons" view.bind="SalesPersons"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabChildAccounts" caption="Child Accounts">
+			<qp-grid id="gridChildAccounts" view.bind="ChildAccounts"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="gridAttributes" view.bind="Answers"
+					 wg-container="Answers_PXGridAnswers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="Activities_tab" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+		<qp-tab id="tabGlAccounts" caption="GL Accounts">
+			<qp-template id="formGlAccounts" name="1-1" class="label-size-m">
+				<qp-fieldset slot="A" id="columnFirstGlAccounts" view.bind="DefLocation"
+							 wg-container="DefLocation_DefLocationAccount">
+					<field name="CARAccountID"></field>
+					<field name="CARSubID"></field>
+					<field name="CSalesAcctID"></field>
+					<field name="CSalesSubID"></field>
+					<field name="CDiscountAcctID"></field>
+					<field name="CDiscountSubID"></field>
+					<field name="CFreightAcctID"></field>
+					<field name="CFreightSubID"></field>
+
+					<using view="CurrentCustomer" wg-container="CurrentCustomer_tab">
+						<field name="DiscTakenAcctID"></field>
+						<field name="DiscTakenSubID"></field>
+						<field name="PrepaymentAcctID"></field>
+						<field name="PrepaymentSubID"></field>
+						<field name="COGSAcctID"></field>
+					</using>
+					<using view="DefLocation" wg-container="DefLocation_formRetainage">
+						<field name="CRetainageAcctID"></field>
+						<field name="CRetainageSubID"></field>
+					</using>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing" load-on-demand="true" ref="tabMailingPrinting_Content"></qp-tab>
+
+	</qp-tabbar>
+
+	<qp-panel id="OnDemandStatementDialog" caption="Generate On-Demand Statement" auto-repaint="true">
+		<qp-fieldset id="panelGenerateOnDemandStatement" view.bind="OnDemandStatementDialog" wg-container="OnDemandStatementDialog_formOnDemandStatement">
+			<field name="StatementDate"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-OnDemandStatementDialog" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-OnDemandStatementDialog" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CreateCustomerFilter" caption="Select Company Code" auto-repaint="true">
+		<qp-fieldset id="panelCreateCustomerInECM" view.bind="CreateCustomerFilter" wg-container="CreateCustomerFilter_formCreateCustomer">
+			<field name="CompanyCode"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-CreateCustomerFilter" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-CreateCustomerFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ExemptionCertificates" caption="Exemption Certificates" auto-repaint="true" width="md" height="40vh">
+		<qp-grid id="gridCertificates" view.bind="ExemptionCertificates" wg-container="ExemptionCertificates_gridCertificates"></qp-grid>
+	</qp-panel>
+
+	<qp-panel id="RequestCertificateFilter" caption="Request Certificate" auto-repaint="true">
+		<qp-fieldset id="panelRequestCertificateFilter" view.bind="RequestCertificateFilter" wg-container="RequestCertificateFilter_formRequestCertificate">
+			<field name="CompanyCode"></field>
+			<field name="EmailId"></field>
+			<field name="Template"></field>
+			<field name="CountryID"></field>
+			<field name="State"></field>
+			<field name="ExemptReason" config.bind="{displayMode:'text'}"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReqOK-RequestCertificateFilter" dialog-result="OK" caption="Request" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="buttonCancel-RequestCertificateFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>
+

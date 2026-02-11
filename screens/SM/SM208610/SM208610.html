@@ -1,0 +1,33 @@
+<template>
+	<qp-template id="frmHeader" name="1-1" wg-container="Dashboards_frmHeader">
+		<qp-fieldset id="frmHeader_0" view.bind="Dashboards" slot="A">
+			<field name="Name"></field>
+			<field name="DefaultOwnerRole"></field>
+			<field name="AllowCopy"></field>
+			<field name="ExposeViaMobile"></field>
+		</qp-fieldset>
+		<qp-fieldset id="frmHeader_1" view.bind="Dashboards" slot="B">
+			<field name="SitemapTitle"></field>
+			<field name="WorkspaceID"></field>
+			<field name="SubcategoryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tab_0" caption="Visible To">
+			<qp-grid id="EntityRoles_gridRoles" view.bind="EntityRoles"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_1" caption="Parameters">
+			<qp-grid id="Parameters_gridParameters" view.bind="Parameters"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_2" caption="Widgets">
+			<qp-grid id="AllWidgets_gridWidgets" view.bind="AllWidgets"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<div show.bind="false">
+		<qp-grid id="CopyPasteWidgets_gridWidgets" view.bind="CopyPasteWidgets"></qp-grid>
+	</div>
+
+	<qp-include url="src/screens/common/panel-publish-to-ui/panel-publish-to-ui.html"></qp-include>
+</template>

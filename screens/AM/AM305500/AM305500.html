@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="AMUnrelMaterialAllocationsFilterRecs_form" wg-container name="17-17-14" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="AMUnrelMaterialAllocationsFilterRecs1" view.bind="AMUnrelMaterialAllocationsFilterRecs">
+			<field name="SiteID"></field>
+			<field name="OrderType"></field>
+			<field name="ProductionOrderNbr"></field>
+			<field name="InventoryID"></field>
+			<field name="SubItemID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="AMUnrelMaterialAllocationsFilterRecs2" view.bind="AMUnrelMaterialAllocationsFilterRecs">
+			<field name="VendorID"></field>
+			<field name="PONbr"></field>
+			<field name="ReceiptType"></field>
+			<field name="ReceiptNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="AMUnrelMaterialAllocationsFilterRecs3" view.bind="AMUnrelMaterialAllocationsFilterRecs">
+			<field name="SubAssyOrderType"></field>
+			<field name="SubAssyProdOrdID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="UnrelMaterialAllocationsDetailRecs"></qp-grid>
+</template>

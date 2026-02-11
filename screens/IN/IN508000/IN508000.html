@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="ReplenishmentSiteID"></field>
+			<field name="PurchaseDate"></field>
+			<field name="OwnerID">
+				<qp-field control-state.bind="Filter.MyOwner" class="col-3"></qp-field>
+			</field>
+			<field name="WorkGroupID">
+				<qp-field control-state.bind="Filter.MyWorkGroup" class="col-3"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="PreferredVendorID"></field>
+			<field name="ItemClassCD"></field>
+			<field name="InventoryID"></field>
+			<field name="SubItemCD"></field>
+			<field name="OnlySuggested"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Records"></qp-grid>
+</template>

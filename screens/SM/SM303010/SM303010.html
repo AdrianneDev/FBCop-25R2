@@ -1,0 +1,84 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="Clients_form" wg-container>
+		<qp-fieldset slot="A" id="col1" view.bind="Clients" qp-collapsible>
+			<field name="ClientID" pinned></field>
+			<field name="ClientName" pinned></field>
+			<field name="Enabled"></field>
+			<field name="Flow"></field>
+			<field name="Plugin" config-null-text.bind="'No Plug-In'"></field>
+		</qp-fieldset>
+		<div slot="B" id="Clients_Settings" qp-collapsible>
+			<qp-fieldset id="col2" view.bind="Clients" caption="Refresh Tokens">
+				<field name="RefreshMode" pinned></field>
+				<field name="AbsoluteLifetimeInDays" control-type="qp-text-editor">
+					<qp-field control-state.bind="Clients.InfiniteTokenLifetime"></qp-field>
+				</field>
+				<field name="SlidingLifetimeInDays" control-type="qp-text-editor">
+					<div></div><!-- this div for setting same size with AbsoluteLifetimeInDays -->
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="Clients_CloudRegistryData" view.bind="CloudRegistryData" caption="Cloud Registry">
+				<field name="Status" pinned></field>
+				<field name="ServerLastModifiedUtc" class="control-size-m"></field>
+				<field name="ClientLastModifiedUtc" class="control-size-m"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar active-tab-id="clientSecrets" id="tab">
+		<qp-tab id="clientSecretsTab" caption="Secrets">
+			<qp-grid id="clientSecrets" view.bind="ClientSecrets" wg-container="ClientSecrets_clientSecrets">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="redirectUrisTab" caption="Redirect URIs">
+			<qp-grid id="redirectUris" view.bind="RedirectUris" wg-container="RedirectUris_redirectUris">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="claimsTab" caption="Claims">
+			<qp-grid id="claims" view.bind="Claims" wg-container="Claims_claims">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel caption="Add Shared Secret" id="AddSharedSecretView" auto-repaint="true" width="600px">
+		<qp-fieldset id="formAddSharedSecret" view.bind="AddSharedSecretView">
+			<field name="Description"></field>
+			<field name="ExpirationUtc" class="control-size-m"></field>
+			<field name="note" replace-content unbound>
+				<qp-label caption="Copy and save the value of the secret."></qp-label>
+			</field>
+			<field name="Value" replace-content>
+				<qp-field control-state.bind="AddSharedSecretView.Value" class="col-11"></qp-field>
+				<qp-button id="buttonCopySharedSecretValue" config.bind='{ "imageUrl": "main@Copy" }' class="buttonAction col-1" click.delegate="copySharedSecretValueClick()"></qp-button>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel caption="Add JSON Web Key" id="AddJsonWebKeyView" auto-repaint="true" width="600px">
+		<qp-fieldset id="formAddJsonWebKey" view.bind="AddJsonWebKeyView">
+			<field name="Description"></field>
+			<field name="ExpirationUtc" class="control-size-m"></field>
+			<field name="Value" config-type.bind="1" config-rows.bind="8"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnActionJwkOK" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnActionJwkCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel caption="Add JSON Web Key Set URL" id="AddJwksUriView" auto-repaint="true" width="600px">
+		<qp-fieldset id="formAddJwksUri" view.bind="AddJwksUriView">
+			<field name="Description"></field>
+			<field name="ExpirationUtc" class="control-size-m"></field>
+			<field name="Value"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnActionJwksUriOK" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnActionJwksUriCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

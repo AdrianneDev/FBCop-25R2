@@ -1,0 +1,4 @@
+@import '../common/pm-status-colors-common.scss';
+
+@include colored-status('A', var(--status-green-color)); // Active
+@include colored-status('D', var(--status-blue-color)); // Planned

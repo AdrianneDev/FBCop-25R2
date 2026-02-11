@@ -1,0 +1,39 @@
+<template>
+    <qp-grid id="grid-Items" wg-container="Items_grid" view.bind="Items"></qp-grid>
+    
+    <qp-panel id="FilterSelectAddedMobileSiteMap" caption="Update Existing Screen" auto-repaint="true">
+        <qp-template id="form-FilterSelectAddedMobileSiteMap" name="1">
+            <qp-fieldset id="fs-FilterSelectAddedMobileSiteMap" wg-container="FilterSelectAddedMobileSiteMap_PXFormView1" view.bind="FilterSelectAddedMobileSiteMap" slot="A" >
+                <field name="ScreenID" ></field>
+            </qp-fieldset>
+        </qp-template> 
+        <footer>
+            <qp-button id="buttonOK-FilterSelectAddedMobileSiteMap" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-FilterSelectAddedMobileSiteMap" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+    
+    <qp-panel id="FilterSelectAddedMobileSiteMapForRemove" caption="Remove Existing Screen" auto-repaint="true">
+        <qp-template id="form-FilterSelectAddedMobileSiteMapForRemove" name="1"> 
+            <qp-fieldset id="fs-FilterSelectAddedMobileSiteMapForRemove" wg-container="FilterSelectAddedMobileSiteMap_PXFormView3" view.bind="FilterSelectAddedMobileSiteMap" slot="A" >
+                <field name="ScreenID" ></field>
+            </qp-fieldset>
+        </qp-template> 
+        <footer>
+            <qp-button id="buttonOK-FilterSelectAddedMobileSiteMapForRemove" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-FilterSelectAddedMobileSiteMapForRemove" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+    
+    <qp-panel id="FilterSelectExistingScreenExceptAdded" caption="Add New Screen" auto-repaint="true">
+        <qp-template id="form-FilterSelectExistingScreenExceptAdded" name="1"> 
+            <qp-fieldset id="fs-FilterSelectExistingScreenExceptAdded" wg-container="FilterSelectExistingScreenExceptAdded_PXFormView2" view.bind="FilterSelectExistingScreenExceptAdded" slot="A" >
+                <field name="ScreenID"></field>
+            </qp-fieldset>
+        </qp-template>
+        <footer>
+            <qp-button id="buttonOK-FilterSelectExistingScreenExceptAdded" caption="Add" wg-name="OK" class="major-button" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-FilterSelectExistingScreenExceptAdded" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+</template>

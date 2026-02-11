@@ -1,0 +1,11 @@
+<template>
+	<qp-panel id="BlanketSplits" caption="Add Blanket Sales Order Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="grid-AddBlanketOrderLine" view.bind="BlanketSplits" wg-container="BlanketSplits_gridBlanketSplits"></qp-grid>
+
+		<footer id="footer-AddBlanketOrderLine">
+			<qp-button id="buttonAdd-AddBlanketOrderLine" state.bind="AddBlanketLineOK"></qp-button>
+			<qp-button id="buttonAddClose-AddBlanketOrderLine" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddBlanketOrderLine" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

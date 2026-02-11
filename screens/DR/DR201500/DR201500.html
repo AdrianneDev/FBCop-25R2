@@ -1,0 +1,68 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template name="7-10-7" id="formSchedule" class="equal-height" wg-container="Schedule_form" qp-collapsible>
+
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Schedule">
+			<field name="ScheduleNbr" pinned></field>
+			<field name="DocDate" pinned></field>
+			<field name="FinPeriodID" pinned="false"></field>
+			<field name="DocumentType" pinned="false"></field>
+			<field name="RefNbr" pinned="false"></field>
+			<field name="LineNbr" pinned="false"></field>
+		</qp-fieldset>
+
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Schedule">
+			<field name="Status" class="colored" pinned></field>
+			<field name="BAccountID" pinned></field>
+			<field name="BAccountLocID" pinned="false"></field>
+			<field name="ProjectID" pinned="false"></field>
+			<field name="TaskID" pinned="false"></field>
+			<field name="IsOverridden" pinned="false"></field>
+		</qp-fieldset>
+
+		<qp-fieldset slot="C" id="columnThird" view.bind="Schedule" class="highlights-section">
+			<field name="TermStartDate" pinned></field>
+			<field name="TermEndDate" pinned></field>
+			<field name="CuryID" class="control-size-sm"></field>
+			<field name="CuryNetTranPrice" pinned="false"></field>
+			<field name="BaseCuryIDASC606" class="control-size-sm" pinned="false"></field>
+			<field name="BaseCuryID" class="control-size-sm"></field>
+			<field name="ComponentsTotal" pinned></field>
+			<field name="DefTotal" pinned></field>
+			<field name="OrigLineAmt" pinned="false"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-tabbar id="tabsMain">
+
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-resizer id="resizer-gridComponents" initial-size="270px" min-size="270px">
+				<qp-grid id="gridComponents"
+					wg-container="Components_componentGrid"
+					view.bind="Components"
+					caption="Components">
+				</qp-grid>
+			</qp-resizer>
+			<qp-grid id="gridTransactions"
+				wg-container="Transactions_grid"
+				view.bind="Transactions"
+				caption="Transactions">
+			</qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabReallocationPool" caption="Reallocation pool" if.bind="Schedule.IsPoolVisible.value == true">
+			<qp-grid id="gridReallocationPool" view.bind="ReallocationPool" caption="Components">
+			</qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabSchedules" caption="Original Schedules" if.bind="Schedule.IsCustom.value == false">
+			<qp-grid id="gridSchedules" view.bind="Associated">
+			</qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+</template>

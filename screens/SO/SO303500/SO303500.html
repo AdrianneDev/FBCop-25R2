@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="formPlugin" wg-container="Brokers_form" name="1-1">
+		<div slot="A">
+			<qp-fieldset id="first" view.bind="Brokers">
+				<field name="ContactID"></field>
+				<field name="Status" config-allow-null.bind="true"></field>
+			</qp-fieldset>
+			<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+				fs-id="formBroker"
+				contact-view="BrokerCurrent"
+				fs-wg-container="BrokerCurrent_formBroker"
+				fs-caption="Contact">
+			</qp-include>
+		</div>
+		<div slot="B">
+			<qp-include url="src/screens/common/form-address/form-address.html"
+				fs-id="formA"
+				fs-wg-container="AddressCurrent_formA"
+				address-view="AddressCurrent"
+				fs-caption="Address"
+				override-fieldname>
+			</qp-include>
+		</div>
+	</qp-template>
+</template>

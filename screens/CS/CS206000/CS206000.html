@@ -1,0 +1,185 @@
+<template>
+	<require from="../common/arm/arm.scss"></require>
+	<qp-template id="formReport" name="1-1" class="label-size-m arm-pane" wg-container="Report_form">
+		<div slot="A">
+			<qp-fieldset id="groupReportDefinition" view.bind="Report" caption="Report Definition">
+				<field name="ReportCode"></field>
+				<field name="Description"></field>
+				<field name="Type"></field>
+				<field name="RowSetCode" config-allow-edit.bind="true"></field>
+				<field name="ColumnSetCode" config-allow-edit.bind="true"></field>
+				<field name="UnitSetCode" config-allow-edit.bind="true"></field>
+				<field name="StartUnitCode"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupDataSource" view.bind="CurrentDataSource" caption="Default Data Source Settings">
+				<field name="StartAccountGroup">
+					<qp-field id="fieldRequestStartAccountGroup"
+						control-state.bind="Report.RequestStartAccountGroup"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndAccountGroup">
+					<qp-field id="fieldRequestEndAccountGroup"
+						control-state.bind="Report.RequestEndAccountGroup"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="StartProject">
+					<qp-field id="fieldRequestStartProject"
+						control-state.bind="Report.RequestStartProject"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndProject">
+					<qp-field id="fieldRequestEndProject"
+						control-state.bind="Report.RequestEndProject"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="StartProjectTask">
+					<qp-field id="fieldRequestStartProjectTask"
+						control-state.bind="Report.RequestStartProjectTask"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndProjectTask">
+					<qp-field id="fieldRequestEndProjectTask"
+						control-state.bind="Report.RequestEndProjectTask"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="StartInventory">
+					<qp-field id="fieldRequestStartInventory"
+						control-state.bind="Report.RequestStartInventory"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndInventory">
+					<qp-field id="fieldRequestEndInventory"
+						control-state.bind="Report.RequestEndInventory"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+
+
+				<field name="OrganizationID">
+					<qp-field id="fieldRequestOrganizationID"
+						control-state.bind="Report.RequestOrganizationID"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="LedgerID">
+					<qp-field id="fieldRequestLedgerID"
+						control-state.bind="Report.RequestLedgerID"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="StartAccount">
+					<qp-field id="fieldRequestStartAccount"
+						control-state.bind="Report.RequestStartAccount"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndAccount">
+					<qp-field id="fieldRequestEndAccount"
+						control-state.bind="Report.RequestEndAccount"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="StartSub">
+					<qp-field id="fieldRequestStartSub"
+						control-state.bind="Report.RequestStartSub"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndSub">
+					<qp-field id="fieldRequestEndSub"
+						control-state.bind="Report.RequestEndSub"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="StartBranch">
+					<qp-field id="fieldRequestStartBranch"
+						control-state.bind="Report.RequestStartBranch"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndBranch">
+					<qp-field id="fieldRequestEndBranch"
+						control-state.bind="Report.RequestEndBranch"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="StartPeriod">
+					<qp-field id="fieldRequestStartPeriod"
+						control-state.bind="Report.RequestStartPeriod"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="EndPeriod">
+					<qp-field id="fieldRequestEndPeriod"
+						control-state.bind="Report.RequestEndPeriod"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="AccountClassID">
+					<qp-field id="fieldRequestAccountClassID"
+						control-state.bind="Report.RequestAccountClassID"
+						class="col-sm-6 col-md-6 col-lg-4"></qp-field>
+				</field>
+				<field name="AmountType">
+					<div class="col-sm-6 col-md-6 col-lg-4"></div>
+				</field>
+				<field name="Report.ApplyRestrictionGroups"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="groupSiteMap" view.bind="Report" caption="Site Map">
+				<field name="SitemapTitle"></field>
+				<field name="WorkspaceID"></field>
+				<field name="SubcategoryID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupPageSettings" view.bind="Report" caption="Page Settings">
+				<field name="PaperKind" caption="Paper Size"></field>
+				<field name="Landscape"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupMargins" view.bind="Report" caption="Margins">
+				<field name="MarginTop" class="arm-typed-value">
+					<qp-field id="fieldMarginTopType"
+						control-state.bind="Report.MarginTopType"></qp-field>
+				</field>
+				<field name="MarginBottom" class="arm-typed-value">
+					<qp-field id="fieldMarginBottomType"
+						control-state.bind="Report.MarginBottomType"></qp-field>
+				</field>
+				<field name="MarginLeft" class="arm-typed-value">
+					<qp-field id="fieldMarginLeftType"
+						control-state.bind="Report.MarginLeftType"></qp-field>
+				</field>
+				<field name="MarginRight" class="arm-typed-value">
+					<qp-field id="fieldMarginRightType"
+						control-state.bind="Report.MarginRightType"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="groupPrintArea" view.bind="Report" caption="Print Area">
+				<field name="Width" class="arm-typed-value">
+					<qp-field id="fieldWidthType"
+						control-state.bind="Report.WidthType"></qp-field>
+				</field>
+				<field name="Height" class="arm-typed-value">
+					<qp-field id="fieldHeightType"
+						control-state.bind="Report.HeightType"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="groupFontStyle" view.bind="CurrentStyle" caption="Default Font Style">
+				<field name="TextAlign" caption="Text Alignment"></field>
+				<field name="ColorRGB" control-type="qp-color-picker"></field>
+				<field name="BackColorRGB" control-type="qp-color-picker"></field>
+				<field name="FontName"></field>
+				<field name="FontSize" class="arm-typed-value">
+					<qp-field id="fieldFontSizeType" control-state.bind="CurrentStyle.FontSizeType"></qp-field>
+				</field>
+				<field name="Bold"></field>
+				<field name="Italic"></field>
+				<field name="Strikeout"></field>
+				<field name="Underline"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+
+	<qp-panel id="Parameter" caption="Copy Column Set" auto-repaint="true" close-button-locator="#pbCancel">
+		<qp-template id="copyReportSetPanelDataId" wg-container name="1">
+			<qp-fieldset slot="A" id="copyreportSetPanelDataId1" view.bind="Parameter">
+				<field name="NewReportCode"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="pbClose" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-include url="src/screens/common/panel-publish-to-ui/panel-publish-to-ui.html"></qp-include>
+</template>

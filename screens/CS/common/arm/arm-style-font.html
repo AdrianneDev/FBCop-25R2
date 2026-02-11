@@ -1,0 +1,16 @@
+<template>
+	<qp-include-parameters view.required></qp-include-parameters>
+
+	<qp-fieldset id="groupFont" view.bind="{{view}}" caption="Text" class="arm-simple-fields label-size-sm">
+		<field name="FontName"></field>
+		<field name="FontSize">
+			<qp-field id="fieldFontSizeType" control-state.bind="{{view}}.FontSizeType"></qp-field>
+		</field>
+		<field name="Bold"></field>
+		<field name="Italic"></field>
+		<field name="Strikeout" caption="Strikethrough"></field>
+		<field name="Underline"></field>
+		<field name="ColorRGB" control-type="qp-color-picker"></field>
+		<field name="TextAlign" caption="Text Alignment"></field>
+	</qp-fieldset>
+</template>

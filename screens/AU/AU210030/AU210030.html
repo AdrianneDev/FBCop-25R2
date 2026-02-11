@@ -1,0 +1,20 @@
+<template>
+    <qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+    <qp-panel
+         id="ViewSelectOAuthClient"
+         wg-container="ViewSelectOAuthClient_ViewSelectOAuthClient"
+         caption="Add Connected Application"
+         auto-repaint="true"
+         width="50vw"
+         height="60vh">
+      <qp-grid id="ViewSelectOAuthClient_gridAddOAuthClient"
+            wg-container
+            batchUpdate="True"
+            view.bind="ViewSelectOAuthClient">
+      </qp-grid>
+      <footer>
+         <qp-button id="PXButton1" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="PXButton2" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

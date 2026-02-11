@@ -1,0 +1,10 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="formPrinters" wg-container="Printers_form">
+		<qp-fieldset slot="A" id="headerColumn1" view.bind="Printers">
+			<field name="PrinterID"></field>
+			<field name="DeviceHubID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Groups" r></qp-grid>
+</template>

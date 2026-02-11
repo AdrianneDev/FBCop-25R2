@@ -1,0 +1,138 @@
+<template>
+
+	<qp-tabbar id="MainTabControl">
+		<qp-tab id="MainTabControl_0" caption="Running Processes">
+			<qp-template id="RunningProcessesForm_0_0" name="1" wg-container="Filter_RunningProcessesForm">
+				<qp-fieldset id="RunningProcessesForm_0" view.bind="Filter" class="no-label transparent-section" slot="A">
+					<field name="ShowAllUsers"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="gridProcesses" view.bind="Items" wg-container="Items_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_1" caption="Active Users">
+			<qp-template id="ActiveUsersForm_0_0" name="1-1" wg-container="Filter_ActiveUsersForm" class="label-size-m">
+				<qp-fieldset id="ActiveUsersForm_0" view.bind="Filter" slot="A">
+					<field name="LoginType" class="col-auto"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="ActiveUsersGrid" view.bind="ActiveUsers" wg-container="ActiveUsers_ActiveUsersGrid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_2" caption="System Events" load-on-demand="true">
+			<qp-template id="Filter_SystemEventsForm" name="1-1" wg-container="Filter_SystemEventsForm" class="label-size-m">
+				<qp-fieldset id="SystemEventsForm_0" view.bind="Filter" slot="A">
+					<field name="Source"></field>
+					<field name="Level"></field>
+				</qp-fieldset>
+				<qp-fieldset id="SystemEventsForm_1" view.bind="Filter" slot="B">
+					<field name="FromDate"></field>
+					<field name="ToDate"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-splitter id="sp1" split="height" initial-split="75%" state="normal">
+				<split-pane>
+					<qp-grid id="gridSystemEvents" view.bind="SystemEvents"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<div id="CurrentSystemEvent_EventDetailsFormView" class="stretch" wg-container>
+						<qp-text-editor wg-name="FormattedProperties" slot="A" config.bind="{type: 1, id: 'edCurrentSystemEvent-FormattedProperties'}" class="stretch" fixed-height fixed-width state.bind="CurrentSystemEvent.FormattedProperties"></qp-text-editor>
+					</div>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_3" caption="Requests In Progress">
+			<qp-grid id="gridProfiler" view.bind="Samples"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_4" caption="Resource Usage">
+			<qp-template id="ResourceUsageForm_0" name="1-1" wg-container="Filter_ResourceUsageForm" class="equal-height label-size-m">
+				<qp-fieldset id="Column0_0" view.bind="Filter" caption="Memory Usage" slot="A">
+					<field name="GCTotalMemory"></field>
+					<field name="WorkingSet"></field>
+					<field name="GCCollection"></field>
+					<field name="ResourceButtons" replace-content unbound>
+						<qp-button id="buttonRefresh" caption="Refresh" state.bind="ActionUpdateData"></qp-button>
+						<qp-button id="buttonGC" wg-name="COLLECTMEMORY" state.bind="ActionGC"></qp-button>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset id="Column1_0" view.bind="Filter" caption="CPU Usage" slot="B">
+					<field name="CurrentUtilization"></field>
+					<field name="UpTime"></field>
+					<field name="ActiveRequests"></field>
+					<field name="RequestsSumLastMinute"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+	</qp-tabbar>
+	<qp-panel id="CurrentThreadsPanel" auto-repaint="true" caption="Active Threads" width="lg" height="85vh">
+		<div id="CurrentThreadsPanel_frmCurrentThreads" class="stretch" wg-container>
+			<qp-text-editor wg-name="CurrentThreads" config.bind="{type: 1, id: 'edCurrentThreadsPanel-CurrentThreads'}" class="stretch" fixed-height fixed-width state.bind="CurrentThreadsPanel.CurrentThreads">
+			</qp-text-editor>
+		</div>
+		<footer>
+			<qp-button id="btnCurrentThreadsCancel" caption="Ok" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="Sql" caption="View SQL" auto-repaint="true" width="lg" height="90vh">
+		<qp-splitter id="sp_sql" split="height" initial-split="50%" state="normal">
+			<split-pane>
+				<qp-grid id="GridSqlProfiler" view.bind="Sql"></qp-grid>
+			</split-pane>
+			<split-pane>
+				<div id="sql_div" class="stretch" wg-container>
+					<qp-text-editor id="sql_trace" wg-name="SqlTrace" slot="A" config.bind="{readOnly: true, type: 1}" class="stretch" fixed-height fixed-width state.bind="SqlSummaryRowsPreview.SQLWithStackTrace"></qp-text-editor>
+				</div>
+			</split-pane>
+		</qp-splitter>
+	</qp-panel>
+	<qp-panel id="TraceExceptions" caption="Exception Profiler" auto-repaint="true" width="lg" height="90vh">
+		<qp-splitter id="sp_exceptions" split="height" initial-split="50%" state="normal">
+			<split-pane>
+				<qp-grid id="ExceptionsGrid" view.bind="TraceExceptions" wg-container="TraceExceptions_ExceptionsGrid"></qp-grid>
+			</split-pane>
+			<split-pane>
+				<div id="exception_div" class="stretch" wg-container>
+					<qp-text-editor id="exception_trace" wg-name="ExceptionTrace" slot="A" config.bind="{readOnly: true, type: 1}" class="stretch" fixed-height fixed-width state.bind="TraceEventWithMessage.MessageWithStackTrace"></qp-text-editor>
+				</div>
+			</split-pane>
+		</qp-splitter>
+	</qp-panel>
+	<qp-panel id="TraceEvents" caption="View Event Log" auto-repaint="true" width="lg" height="90vh">
+		<qp-splitter id="sp_events" split="height" initial-split="50%" state="normal">
+			<split-pane>
+				<qp-grid id="TraceEventsGrid" view.bind="TraceEvents" wg-container="TraceEvents_TraceEventsGrid"></qp-grid>
+			</split-pane>
+			<split-pane>
+				<div id="event_div" class="stretch" wg-container>
+					<qp-text-editor id="event_trace" wg-name="EventTrace" slot="A" config.bind="{readOnly: true, type: 1}" class="stretch" fixed-height fixed-width state.bind="TraceEventWithMessage.MessageWithStackTrace"></qp-text-editor>
+				</div>
+			</split-pane>
+		</qp-splitter>
+	</qp-panel>
+	<qp-panel id="ViewMemoryDumpOptions" caption="Create Memory Dump" auto-repaint="true" width="md">
+		<qp-template id="ViewMemoryDumpOptions_0_0" name="1" wg-container="ViewMemoryDumpOptions_ViewMemoryDumpOptions">
+			<qp-fieldset id="ViewMemoryDumpOptions_0" view.bind="ViewMemoryDumpOptions" slot="A" class="no-label">
+				<field name="DumpContentType" control-type="qp-radio"
+					config-class.bind="'vertical'"
+					config-options.bind="[{ value: '0', text: MemoryDumpMode.MiniDump }, { value: '1', text: MemoryDumpMode.FullDump }]">
+				</field>
+				<field name="InformationMessage" replace-content>
+					<qp-info-box caption="${ViewMemoryDumpOptions.InformationMessage.value}" id="edViewMemoryDumpOptions-InformationMessage" type="info"></qp-info-box>
+				</field>
+				<field name="WarningMessage" replace-content>
+					<qp-info-box caption="${ViewMemoryDumpOptions.WarningMessage.value}" id="edViewMemoryDumpOptions-WarningMessage" wg-name="WarningMessage" type="warning"></qp-info-box>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButtonCreateMemoryDumpCreate" caption="Create" dialog-result="Yes"></qp-button>
+			<qp-button id="PXButtonCreateMemoryDumpCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,33 @@
+<template>
+    <div replace="#daily-field-reports-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenDailyFieldReports'}" value.two-way="captions.DailyFieldReports" class="caption-with-link"></qp-text-editor>
+        <qp-grid id="daily-field-reports-grid" view.bind="DailyFieldReports" class="grid-with-caption"></qp-grid>
+    </div>
+    <div replace="#rfi-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenRequestsForInformation'}" value.two-way="captions.RequestsForInformation" class="caption-with-link"></qp-text-editor>
+        <qp-grid id="rfi-grid" view.bind="RequestsForInformation" class="grid-with-caption"></qp-grid>
+    </div>
+    <div replace="#project-issues-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenProjectIssues'}" value.two-way="captions.ProjectIssues" class="caption-with-link"></qp-text-editor>
+        <qp-grid id="project-issues-grid" view.bind="ProjectIssues" class="grid-with-caption"></qp-grid>
+    </div>
+    <div replace="#drawing-logs-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenDrawingLogs'}" value.two-way="captions.DrawingLogs" class="caption-with-link"></qp-text-editor>
+        <qp-grid id="drawing-logs-grid" view.bind="DrawingLogs" class="grid-with-caption"></qp-grid>
+    </div>
+    <div replace="#photo-logs-section">
+        <qp-splitter id="photo-logs-splitter" split="width" class="equal-height">
+            <split-pane>
+                <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenPhotoLogs'}" value.two-way="captions.PhotoLogs" class="caption-with-link"></qp-text-editor>
+                <qp-grid id="photo-logs-grid" view.bind="PhotoLogs" class="grid-with-caption"></qp-grid>
+            </split-pane>
+            <split-pane>
+                <qp-image-view state.bind="CurrentPhoto.ImageUrl" value.two-way="CurrentPhoto.ImageUrl.value" aspect-ratio="auto 4/3.6" object-fit="contain"></qp-image-view>
+            </split-pane>
+        </qp-splitter>
+    </div>
+    <div replace="#submittals-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenSubmittals'}" value.two-way="captions.Submittals" class="caption-with-link"></qp-text-editor>
+        <qp-grid id="submittals-grid" view.bind="Submittals" class="grid-with-caption"></qp-grid>
+    </div>
+</template>

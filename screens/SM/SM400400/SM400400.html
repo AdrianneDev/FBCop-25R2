@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="form-Header" name="17-17-14" wg-container="Header_form">
+		<qp-fieldset id="fsColumnA-Header" slot="A" view.bind="Header">
+			<field name="StartDate">
+				<qp-label slot="label" caption="Execution Date Range"></qp-label>
+				<qp-field control-state.bind="Header.EndDate"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="splitter-Details" split="width" initial-split="50%">
+		<split-pane id="splitPaneA-Details">
+			<qp-grid id="gridExecutions-Details" view.bind="ArchivingExecutions" caption="Executions" class="framed-section" wg-container="ArchivingExecutions_grid1"></qp-grid>
+		</split-pane>
+		<split-pane id="splitPaneB-Details">
+			<qp-grid id="gridDates-Details" view.bind="ArchivedDates" caption="Execution Details" class="framed-section" wg-container="ArchivedDates_grid2"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

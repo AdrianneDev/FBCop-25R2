@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="Items_grid" view.bind="Items"></qp-grid>
+   <qp-panel id="SystemImportScenarios"
+            wg-container="SystemImportScenarios_SystemImportScenarios"
+            caption="Add Import or Export Scenario"
+            auto-repaint="true"
+            width="50vw"
+            height="60vh">
+      <qp-grid id="SystemImportScenarios_gridAddFile" view.bind="SystemImportScenarios"></qp-grid>
+      <footer>
+         <qp-button id="buttonOK-SystemImportScenarios" caption="Save" wg-name="OK" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="buttonCancel-SystemImportScenarios" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

@@ -1,0 +1,30 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+			<field name="StartDate"></field>
+			<field name="OrgBAccountID"></field>
+			<field name="CashAccountID"></field>
+			<field name="AllCashAccounts"></field>
+		</qp-fieldset>
+
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Filter">
+			<field name="IncludeUnassignedDocs"></field>
+			<field name="DefaultAccountID"></field>
+			<field name="CuryID"></field>
+			<field name="CuryRateTypeID"></field>
+		</qp-fieldset>
+
+		<qp-fieldset slot="C" class="no-label" id="columnThird" view.bind="Filter">
+			<field name="IncludeUnreleased"></field>
+			<field name="IncludeUnapplied"></field>
+			<field name="IncludeScheduled"></field>
+			<field name="SummaryOnly"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="CashFlow"></qp-grid>
+
+</template>

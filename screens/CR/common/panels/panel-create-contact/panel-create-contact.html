@@ -1,0 +1,34 @@
+<template>
+	<qp-panel id="ContactInfo" caption="Create Contact" auto-repaint="true" close-button-locator="#CreateContactBtnCancel">
+		<qp-tabbar id="panel_CreateContact_mainTabBar" wg-container="ContactInfo_tabCreateContact">
+			<qp-tab id="panel_CreateContact_tabMain" caption="Main">
+				<qp-fieldset id="formCreateContact" view.bind="ContactInfo" caption="Contact" wg-container="ContactInfo_formCreateContact">
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="FullName"></field>
+					<field name="Salutation"></field>
+					<field name="Phone1">
+						<qp-field slot="label" control-state.bind="ContactInfo.Phone1Type" class="no-label"></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field slot="label" control-state.bind="ContactInfo.Phone2Type" class="no-label"></qp-field>
+					</field>
+					<field name="Email"></field>
+					<field name="ContactClass"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateContact_tabAttributes" caption="Attributes" style="min-height: 386px;">
+				<qp-grid id="grdContactInfoAttributes" view.bind="ContactInfoAttributes" class="framed-section" wg-container="ContactInfoAttributes_grdContactInfoAttributes"></qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateContactAll_tabUDFS" caption="User-Defined Fields" style="min-height: 386px;">
+				<qp-grid id="grdContactInfoUDF" view.bind="ContactInfoUDF" class="framed-section"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="CreateContactBtnBack" config.bind="{ text: 'Back', validateInput: true, dialogResult: 72 }" hidden.bind="LinkAccount.IsWizardOpen == null || LinkAccount.IsWizardOpen.value === false"></qp-button>
+			<qp-button id="CreateContactBtnReview" dialog-result="Yes" state.bind="CreateContactFinishRedirect" caption="Create & Review" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="CreateContactBtnConvert" dialog-result="OK" state.bind="CreateContactFinish" caption="Create" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="CreateContactBtnCancel" dialog-result="Abort" wg-name="CreateContactCancel" caption="Cancel" config.bind="{ validateInput: true }"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

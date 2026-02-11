@@ -1,0 +1,42 @@
+.startedLine {
+	font-weight: bold !important;
+}
+
+.completedLine {
+	color: var(--qp-success-color) !important;
+}
+
+.excessedLine {
+	color: var(--qp-warning-color) !important;
+}
+
+.errorLog {
+	font-weight: bold !important;
+	color: var(--qp-error-color) !important;
+}
+
+.warningLog {
+	font-weight: bold !important;
+	color: var(--qp-warning-color) !important;
+}
+
+.success {
+	.info-box-holder--theme-custom {
+		background-color: rgba(71, 168, 63, 0.12);
+		background-color: color-mix(in srgb, var(--qp-success-color) 12%, transparent);
+
+		.info-box-holder__icon {
+			color: var(--qp-success-color);
+		}
+	}
+}
+
+.motivation {
+	.info-box-holder--theme-custom {
+		background-color: rgba(111, 66, 193, 0.12);
+
+		.info-box-holder__icon {
+			color: rgba(111, 66, 193, 1);
+		}
+	}
+}

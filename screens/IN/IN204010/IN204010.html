@@ -1,0 +1,26 @@
+<template>
+	<qp-template id="form-Building" name="1-1" class="label-size-m" wg-container="Buildings_form">
+		<qp-fieldset id="fsColumnA-Building" slot="A" view.bind="Buildings">
+			<field name="BuildingCD"></field>
+			<field name="BranchID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-template id="form-Details" name="1-1" class="label-size-m">
+		<div id="columnA_Addrress" slot="A">
+			<qp-include url="src/screens/common/form-address/form-address.html"
+				fs-id="fsColumnA-Details"
+				fs-wg-container="Address_addrForm"
+				address-view="Address"
+				override-fieldname="false"
+				view-on-map-action-name="ViewOnMap"
+			></qp-include>
+		</div>
+
+			<field name="IsValidated"></field>
+		</qp-fieldset>
+
+		<qp-grid id="grid-Details" slot="B" view.bind="Sites" caption="Warehouses" class="framed-section" wg-container="Sites_grid"></qp-grid>
+	</qp-template>
+</template>

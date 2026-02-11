@@ -1,0 +1,18 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="SiteID"></field>
+			<field name="ItemClassID"></field>
+			<field name="InventoryID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="SelectBy"></field>
+			<field name="InStockDays"></field>
+			<field name="InStockSince"></field>
+			<field name="NoSalesDays"></field>
+			<field name="NoSalesSince"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Result"></qp-grid>
+</template>

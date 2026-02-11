@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="settings_filter" wg-container name="17-17-14" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="settings1" view.bind="settings">
+			<field name="SnglMlti"></field>
+			<field name="ProcessAction" pinned></field>
+			<field name="ItemClassID" config-allow-edit.bind="true"></field>
+			<field name="SiteId" config-allow-edit.bind="true"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="settings2" view.bind="settings">
+			<field name="SubItemID"></field>
+			<field name="BOMID" config-allow-edit.bind="true"></field>
+			<field name="RevisionID"></field>
+			<field name="EffectiveDate"></field>
+			<field name="UpdateMaterial" pinned></field>
+			<field name="IncFixed"></field>
+			<field name="IncMatScrp"></field>
+			<field name="UsePending"></field>
+			<field name="IgnoreMinMaxLotSizeValues"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="BomCostRecs"></qp-grid>
+</template>

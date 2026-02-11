@@ -1,0 +1,88 @@
+<template>
+	<qp-grid id="gridProjects" wg-container="Projects_grid" view.bind="Projects">
+	</qp-grid>
+
+	<qp-panel id="ViewCompanyList" wg-container="ViewPublishOptions_ViewPublishOptions" caption="Publish to Multiple Tenants" auto-repaint="true" width="md">
+		<qp-grid id="gridViewCompanyList" view.bind="ViewCompanyList" wg-container="ViewCompanyList_GridCompanyList">
+		</qp-grid>
+		<qp-fieldset id="formViewPublishOptions" view.bind="ViewPublishOptions">
+			<field name="PublishOnlyDB" class="no-label"></field>
+			<field name="DisableOptimization" class="no-label"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK-ViewCompanyList" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-ViewCompanyList" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ViewValidateExtensions" caption="Validation Results" wg-container="ViewValidateExtensions_PXFormView4" width="md" height="80vh">
+		<qp-rich-text-editor
+			class="stretch"
+			id="formViewValidateExtensions"
+			state.bind="ViewValidateExtensions.Messages"
+			read-only="true"
+			value-format="fragment"
+		></qp-rich-text-editor>
+		<footer>
+			<qp-button  id="btnOK-ViewValidateExtensions"
+						dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ProjectsChooser"
+				caption="Choose projects"
+				auto-repaint="true"
+				wg-container="PanelChooseProjects"
+				width="md"
+				height="60vh">
+		<qp-grid id="gridProjectsChooser" view.bind="ProjectsChooser" wg-container="ProjectsChooser_gridChooser">
+		</qp-grid>
+		<footer>
+			<!-- Igor T. For some reason binded actions are not executed if dialog-result = OK, so kept Cancel for all.
+				We need dialog-result to hide the dialog after click -->
+			<qp-button 	id="PXPanelChooseProjectsOK"
+						dialog-result="Cancel"
+						state.bind="ActionPanelChooseProjects"
+						wg-name="VALIDATE">
+			</qp-button>
+			<qp-button 	id="PXPanelChooseProjectsAllMessagesOK"
+						dialog-result="Cancel"
+						state.bind="ActionPanelChooseProjectsAllMessages"
+						wg-name="VALIDATEANDSHOWALLMESSAGES">
+			</qp-button>
+			<qp-button 	id="PXPanelChooseProjectsCancel"
+						dialog-result="Cancel"
+						state.bind="ActionPanelChooseProjectsCancel"
+						wg-name="CANCEL">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CustomizedScreens"
+				caption="Screens with Custom Workflow"
+				auto-repaint="true"
+				width="md"
+				height="60vh">
+		<qp-info-box id="CustomizedScreensInfoBox" caption="The following table lists screens whose workflow has been created or edited by using Workflow UI." type="info"></qp-info-box>
+		<qp-grid id="CustomizedScreensGrid" view.bind="CustomizedScreens" wg-container="CustomizedScreens_CustomizedScreensGrid">
+		</qp-grid>
+		<footer>
+			<qp-button 	id="CustomizedScreensCancel" caption="Close"
+						dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="PanelCompiler" width="lg" height="80vh" caption="Customization Publishing">
+		<iframe src.bind="compilationPanelFrameUrl" width="100%" height="100%" style="border: none; box-shadow: none;"></iframe>
+	</qp-panel>
+
+	<qp-upload-dialog
+		id="UploadPackageDlg"
+		key="UploadPackagePanel"
+		session-key="ProjectList_UploadPackage"
+		caption="Open Package"
+		allowed-types=".zip">
+	</qp-upload-dialog>
+</template>

@@ -1,0 +1,112 @@
+<template>
+	<qp-template id="formLocation" name="1-1" class="equal-height label-size-m" wg-container="Location_frmHeader">
+		<qp-fieldset slot="A" id="columnFirst-formLocation" view.bind="Location">
+			<field name="BAccountID"></field>
+			<field name="LocationCD"></field>
+			<using wg-container="LocationCurrent_tab" view="LocationCurrent">
+				<field name="Descr"></field>
+			</using>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-formLocation" view.bind="Location">
+			<field name="Status"></field>
+			<field name="IsDefault"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="formGeneral" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupLocationAddress"
+						address-view="Address"
+						fs-caption="Location Address"
+						fs-wg-container="Address_Address"
+						with-coordinates="true"
+						override-fieldname="LocationCurrent.OverrideAddress"
+						override-wg-container="LocationCurrent_tab"
+						view-on-map-action-name="ViewOnMap"
+					>
+						<field modify="#groupLocationAddress [name='CountryID']" after="#groupLocationAddress [name='PostalCode']"></field>
+					</qp-include>
+				</div>
+				<div slot="B">
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupAdditionalLocationInfo"
+						contact-view="Contact"
+						fs-caption="Additional Location Info"
+						fs-wg-container="Contact_Contact"
+						override-fieldname="LocationCurrent.OverrideContact"
+						override-wg-container="LocationCurrent_tab">
+					</qp-include>
+					<qp-fieldset id="groupOtherSettings" view.bind="LocationCurrent" caption="Other Settings" wg-container="LocationCurrent_tab">
+						<field name="CBranchID"></field>
+						<field name="CPriceClassID"></field>
+						<field name="CDefProjectID"></field>
+						<field name="ExtRefNbr"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabShipping" caption="Shipping">
+			<qp-template id="formShipping" name="1-1" wg-container="LocationCurrent_tab" class="label-size-m">
+				<qp-fieldset slot="A" id="groupShippingInstructions" view.bind="LocationCurrent" caption="Shipping Instructions">
+					<field name="CSiteID"></field>
+					<field name="CCarrierID"></field>
+					<field name="CShipTermsID"></field>
+					<field name="CShipZoneID"></field>
+					<field name="CFOBPointID"></field>
+					<field name="CResedential"></field>
+					<field name="CSaturdayDelivery"></field>
+					<field name="CInsurance"></field>
+					<field name="CAdditionalHandling"></field>
+					<field name="CGroundCollect"></field>
+					<field name="CShipComplete"></field>
+					<field name="COrderPriority"></field>
+					<field name="CLeadTime"></field>
+					<field name="CCalendarID"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="A" id="tabLTLFTL_ShippingInstructions" caption="LTL/FTL Settings" view.bind="LocationCurrent">
+					<field name="CLiftGate"></field>
+					<field name="CInsideDelivery"></field>
+					<field name="CLimitedAccess"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="groupTaxSettings" view.bind="LocationCurrent" caption="Tax Settings">
+					<field name="TaxRegistrationID"></field>
+					<field name="CTaxZoneID"></field>
+					<field name="CTaxCalcMode"></field>
+					<field name="CAvalaraExemptionNumber"></field>
+					<field name="CAvalaraCustomerUsageType"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template id="formGLAccounts" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="panelAccountSubaccont" view.bind="ARAccountSubLocation"
+								 wg-container="ARAccountSubLocation_ARAccountSubLocation">
+						<using wg-container="LocationCurrent_tab" view="LocationCurrent">
+							<field name="IsARAccountSameAsMain"></field>
+						</using>
+						<field name="CARAccountID"></field>
+						<field name="CARSubID"></field>
+						<using wg-container="LocationCurrent_tab" view="LocationCurrent">
+							<field name="CSalesAcctID"></field>
+							<field name="CSalesSubID"></field>
+							<field name="CDiscountAcctID"></field>
+							<field name="CDiscountSubID"></field>
+							<field name="CFreightAcctID"></field>
+							<field name="CFreightSubID"></field>
+						</using>
+						<using wg-container="ARAccountSubLocation_ARAccountSubLocation1">
+							<field name="CRetainageAcctID"></field>
+							<field name="CRetainageSubID"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabContacts" caption="Contacts">
+			<qp-grid id="gridRoleAssignments" view.bind="RoleAssignments" wg-container="RoleAssignments_roleAssignmentsGrid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

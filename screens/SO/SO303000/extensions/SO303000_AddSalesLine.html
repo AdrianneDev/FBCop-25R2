@@ -1,0 +1,11 @@
+<template>
+	<qp-panel id="soLineList" caption="Add SO Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="grid-AddSalesLine" view.bind="soLineList" wg-container="soLineList_gridSOLineList"></qp-grid>
+
+		<footer id="footer-AddSalesLine">
+			<qp-button id="buttonAdd-AddSalesLine" state.bind="AddSOLine"></qp-button>
+			<qp-button id="buttonAddClose-AddSalesLine" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddSalesLine" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

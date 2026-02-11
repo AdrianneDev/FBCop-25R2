@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field Name="SiteID"></field>
+			<field Name="AssigneeID"></field>
+			<field Name="WorksheetType"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field Name="CustomerID"></field>
+			<field Name="CarrierPluginID"></field>
+			<field Name="ShipVia"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Pick" caption="Pick" visible.bind="Filter.ShowPick.value == true" load-on-demand="true">
+			<qp-grid id="grid-Pick" view.bind="PickingJobs" wg-container="PickingJobs_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Pack" caption="Pack" visible.bind="Filter.ShowPack.value == true" load-on-demand="true">
+			<qp-grid id="grid-Pack" view.bind="PackingJobs" wg-container="PackingJobs_gridPackingJobs"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

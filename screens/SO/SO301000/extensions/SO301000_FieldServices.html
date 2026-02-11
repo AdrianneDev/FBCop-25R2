@@ -1,0 +1,18 @@
+<template>
+	<qp-panel id="CreateServiceOrderFilter" caption="Create Service Order" auto-repaint="true">
+		<qp-template id="form-CreateServiceOrder" name="1">
+			<qp-fieldset id="fsColumnA-CreateServiceOrder" slot="A" view.bind="CreateServiceOrderFilter" wg-container="CreateServiceOrderFilter_formCreateServiceOrder">
+				<field name="SrvOrdType"></field>
+				<field name="AssignedEmpID"></field>
+				<field name="SLAETA_Date">
+					<qp-field control-state.bind="CreateServiceOrderFilter.SLAETA_Time"></qp-field>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-CreateServiceOrder">
+			<qp-button id="buttonOK-CreateServiceOrder" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-CreateServiceOrder" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

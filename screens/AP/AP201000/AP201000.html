@@ -1,0 +1,94 @@
+<template>
+	<qp-template name="1-1" id="formHeader" class="label-size-m" wg-container="VendorClassRecord_form">
+		<qp-fieldset slot="A" id="panelHeader" view.bind="VendorClassRecord">
+			<field name="VendorClassID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template name="1-1" id="formGeneral" class="label-size-m" wg-container="CurVendorClassRecord_tab">
+				<div slot="A">
+					<qp-fieldset id="groupGeneral" caption="Default General Settings" view.bind="CurVendorClassRecord">
+						<field name="CountryID"></field>
+						<field name="OrgBAccountID"></field>
+						<field name="TaxZoneID"></field>
+						<field name="RequireTaxZone"></field>
+						<field name="TaxCalcMode"></field>
+						<field name="DefaultLocationCDFromBranch"></field>
+						<field name="VendorClassRecord.LocaleName"></field>
+						<field name="GroupMask"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPurcase" caption="Default Purchase Settings" view.bind="CurVendorClassRecord">
+						<field name="ShipTermsID"></field>
+						<field name="RcptQtyAction"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="groupFinancial" caption="Default Financial Settings" view.bind="CurVendorClassRecord">
+						<field name="TermsID"></field>
+						<field name="PaymentMethodID"></field>
+						<field name="CashAcctID"></field>
+						<field name="PaymentByType"></field>
+						<field name="CuryID">
+							<qp-field control-state.bind="CurVendorClassRecord.AllowOverrideCury" class="no-label col-8"></qp-field>
+						</field>
+						<field name="CuryRateTypeID">
+							<qp-field control-state.bind="CurVendorClassRecord.AllowOverrideRate" class="no-label col-8"></qp-field>
+						</field>
+						<field name="PaymentsByLinesAllowed"></field>
+						<field name="RetainageApply"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPrintEmailSettings" caption="Default Print and Email Settings" view.bind="CurVendorClassRecord">
+						<field name="PrintPO"></field>
+						<field name="EmailPO"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupLienWaiverSettings" caption="Default Lien Waiver Settings" view.bind="CurVendorClassRecord">
+						<field name="ShouldGenerateLienWaivers"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template name="1-1" id="formGLAccounts" class="label-size-m" wg-container="CurVendorClassRecord_tab">
+				<qp-fieldset slot="A" id="columnFirstGLAccounts" view.bind="CurVendorClassRecord">
+					<field name="APAcctID"></field>
+					<field name="APSubID"></field>
+					<field name="ExpenseAcctID"></field>
+					<field name="ExpenseSubID"></field>
+					<field name="DiscountAcctID"></field>
+					<field name="DiscountSubID"></field>
+					<field name="DiscTakenAcctID"></field>
+					<field name="DiscTakenSubID"></field>
+					<field name="PrepaymentAcctID"></field>
+					<field name="PrepaymentSubID"></field>
+					<field name="PrebookAcctID"></field>
+					<field name="PrebookSubID"></field>
+					<field name="POAccrualAcctID"></field>
+					<field name="POAccrualSubID"></field>
+					<field name="UnrealizedGainAcctID"></field>
+					<field name="UnrealizedGainSubID"></field>
+					<field name="UnrealizedLossAcctID"></field>
+					<field name="UnrealizedLossSubID"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="columnSecondGLAccounts" view.bind="CurVendorClassRecord">
+					<field name="RetainageAcctID"></field>
+					<field name="RetainageSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="gridMapping" view.bind="Mapping" wg-container="Mapping_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing" ref="tabMailingPrinting_Content"></qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="LienWaiverRecipientProjects" caption="Add Vendor Class to Project" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="gridLienWaiverRecipientProjects" view.bind="LienWaiverRecipientProjects" wg-container="LienWaiverRecipientProjects_PXGridProjects"></qp-grid>
+		<footer>
+			<qp-button id="buttonOK" caption="Add" dialog-result="OK" state.bind="Save" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="buttonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,31 @@
+<template>
+	<qp-template id="form-Header" name="17-31" class="equal-height" wg-container="Header_form">
+		<qp-fieldset id="fsColumnA-Header" slot="A" view.bind="Header">
+			<field name="TemplateItemID" config-allow-edit.bind="true"></field>
+			<field name="ColAttributeID"></field>
+			<field name="RowAttributeID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="LocationID"></field>
+			<field name="DisplayPlanType"></field>
+		</qp-fieldset>
+		<qp-grid id="gridAttributes"
+			view.bind="AdditionalAttributes"
+			slot="B"
+			caption="Additional Attributes"
+			class="framed-section"
+			on-filter-columns.call="onFilterColumnsAdditionalAttributes(col)"
+			wg-container="AdditionalAttributes_MatrixAttributes">
+		</qp-grid>
+	</qp-template>
+
+	<qp-resizer id="resizer-gridMatrix" initial-size="400px">
+		<qp-grid id="gridMatrix"
+				view.bind="Matrix"
+				caption="Main Attributes"
+				on-filter-columns.call="onFilterColumnsMatrix(col)"
+				on-initialize-columns.call="onColumnsGenerated(columns)"
+				on-active-cell-changed.call="onMatrixCellChanged(args)"
+				wg-container="Matrix_MatrixMatrix">
+		</qp-grid>
+	</qp-resizer>
+</template>

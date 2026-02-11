@@ -1,0 +1,43 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP401010.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack sp-documents sp-wide-screen">
+		<qp-text-light-scope>
+			<qp-data-feed
+				id="dfCases"
+				class="sp-colors--cases"
+				view.bind="Cases"
+				auto-resize="true"
+				allow-filter="true"
+				show-filter-bar="always"
+				show-filter-picker="false"
+				allow-stored-filters="false"
+				show-stored-filters="true">
+				<template width="100%">
+					<div class="sp-documents-document no-animation">
+						<qp-template id="dfCase" wg-container name="record-1-2">
+							<qp-fieldset slot="A1" id="fsCaseA1" view.bind="{{$viewName}}">
+								<field name="CaseCD"></field>
+								<field name="Status" class="colored"></field>
+								<field name="CreatedDateTime" class="field--secondary"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="AX" id="fsCaseA2" view.bind="{{$viewName}}" class="fieldset--condensed">
+								<field name="Subject" class="field--bold" no-label.bind="true"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="BX" id="fsCaseB" view.bind="{{$viewName}}" class="fieldset--condensed">
+								<field name="OwnerID"></field>
+								<field name="Priority"></field>
+							</qp-fieldset>
+						</qp-template>
+					</div>
+				</template>
+				<toolbar>
+					<action name="NewCase" icon="svg:main@plus"></action>
+				</toolbar>
+			</qp-data-feed>
+		</qp-text-light-scope>
+	</div>
+</template>

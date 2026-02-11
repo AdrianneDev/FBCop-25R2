@@ -1,0 +1,93 @@
+<template>
+	<qp-tabbar id="tabs" wg-container="Setup_tab">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="formGeneral" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="groupNumberingSettings" caption="Numbering Settings" view.bind="Setup">
+						<field name="BatchNumberingID"></field>
+						<field name="InvoiceNumberingID"></field>
+						<field name="DebitAdjNumberingID"></field>
+						<field name="CreditAdjNumberingID"></field>
+						<field name="CheckNumberingID"></field>
+						<field name="PrepaymentInvoiceNumberingID"></field>
+						<field name="PriceWSNumberingID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPostingSettings" caption="Posting Settings" view.bind="Setup">
+						<field name="AutoPost"></field>
+						<field name="SummaryPost"></field>
+						<field name="MigrationMode"></field>
+						<field name="ReclassifyInvoices"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupAgingSettings" caption="Aging Settings" view.bind="Setup">
+						<field name="PastDue00">
+							<qp-label caption="Days"></qp-label>
+						</field>
+						<field name="PastDue01">
+							<qp-label caption="Days"></qp-label>
+						</field>
+						<field name="PastDue02">
+							<qp-label caption="Days"></qp-label>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="groupDataEntrySettings" caption="Data Entry Settings" view.bind="Setup">
+						<field name="DfltVendorClassID"></field>
+						<field name="ExpenseSubMask"></field>
+						<field name="IntercompanyExpenseAccountDefault"></field>
+						<field name="InvoiceRounding"></field>
+						<field name="InvoicePrecision"></field>
+						<field name="PaymentLeadTime">
+							<qp-label caption="Days"></qp-label>
+						</field>
+						<field name="HoldEntry"></field>
+						<field name="RequireApprovePayments"></field>
+						<field name="EarlyChecks"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="RequireControlTaxTotal"></field>
+						<field name="SuggestPaymentAmount"></field>
+						<field name="RequireVendorRef"></field>
+						<field name="RaiseErrorOnDoubleInvoiceNbr"></field>
+						<field name="TermsInDebitAdjustments"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRetainageSettings" caption="Retainage Settings" view.bind="Setup">
+						<field name="RetainTaxes"></field>
+						<field name="RetainageBillsAutoRelease"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupVATRecalculationSettings" caption="VAT Recalculation Settings" view.bind="Setup">
+						<field name="PPDDebitAdjustmentDescr"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPricing" caption="Pricing">
+			<qp-template name="1-1" id="formPricing" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="groupPriceMaintencance" caption="Price Maintenance" view.bind="Setup">
+						<field name="VendorPriceUpdate"></field>
+						<field name="LoadVendorsPricesUsingAlternateID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPriceRetention" caption="Price Retention" view.bind="Setup">
+						<field name="RetentionType"></field>
+						<field name="NumberOfMonths"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDiscountApplication" caption="Discount Application" view.bind="Setup">
+						<field name="ApplyQuantityDiscountBy"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval">
+			<qp-grid id="gridApproval" view.bind="SetupApproval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab1099" caption="1099 Settings">
+			<qp-template name="1-1" id="form1099Settings" class="label-size-xm">
+				<qp-fieldset slot="A" id="panel1099" view.bind="Setup" class="transparent-section" wg-container="Setup_DiscountParameters">
+					<field name="PrintDirectSalesOn"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridBoxes1099" view.bind="Boxes1099" wg-container="Boxes1099_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailingPrintingPreferences" caption="Mailing & Printing" ref="tabMailingPrintingPreferences_Content"></qp-tab>
+	</qp-tabbar>
+</template>

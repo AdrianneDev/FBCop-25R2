@@ -1,0 +1,27 @@
+<template>
+	<qp-panel id="AMSOLineRecords" caption="Production Orders" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="grid-CreateProduction" view.bind="AMSOLineRecords" wg-container="AMSOLineRecords_CreateProdgrid"></qp-grid>
+
+		<footer id="footer-CreateProduction">
+			<qp-button id="buttonOK-CreateProduction" dialog-result="OK" caption="Create" wg-name="Ok"></qp-button>
+			<qp-button id="buttonCancel-CreateProduction" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="AMSOLineLinkRecords" caption="Production Details" auto-repaint="true" width="lg" height="85vh" close-button-locator="#buttonCancel-LinkProduction">
+		<qp-template id="form-LinkProduction" name="17-17-14" class="equal-height" wg-container="LinkProdOrderSelectFilter_formLinkFilter">
+			<qp-fieldset id="fsColumnA-LinkProduction" slot="A" view.bind="linkProdOrderSelectFilter">
+				<field name="OrderType"></field>
+				<field name="ProdOrdID"></field>
+				<field name="StatusID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-LinkProduction" view.bind="AMSOLineLinkRecords" wg-container="AMSOLineLinkRecords_LinkProdGrid"></qp-grid>
+
+		<footer id="footer-LinkProduction">
+			<qp-button id="buttonOK-LinkProduction" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="buttonCancel-LinkProduction" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

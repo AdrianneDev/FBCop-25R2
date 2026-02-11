@@ -1,0 +1,34 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-PIHeader" name="7-10-7" class="equal-height" wg-container="PIHeader_form">
+		<qp-fieldset id="fsColumnA-Header" slot="A" view.bind="PIHeader">
+			<field name="PIID"></field>
+			<field name="Status" class="colored"></field>
+			<field name="CountDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Header" slot="B" view.bind="PIHeader">
+			<field name="SiteID"></field>
+			<field name="Descr" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Header" slot="C" view.bind="PIHeaderInfo" class="highlights-section" wg-container="PIHeaderInfo_formDetail">
+			<field name="TotalPhysicalQty"></field>
+			<field name="TotalVarQty"></field>
+			<field name="TotalVarCost"></field>
+			<field name="BaseCuryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Physical Inventory Details">
+			<qp-grid id="grid-Details" view.bind="PIDetail" syncPosition="True" wg-container="PIDetail_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Adjustment" caption="Adjustment Info">
+			<qp-template id="form-Adjustment" name="17-17-14" wg-container="PIHeaderInfo_form2">
+				<qp-fieldset id="fsColumnA-Adjustment" slot="A" view.bind="PIHeaderInfo">
+					<field name="PIAdjRefNbr" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

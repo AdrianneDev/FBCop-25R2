@@ -1,0 +1,15 @@
+<template>
+	<qp-panel id="ImportExternalTran" caption="Import CC Payment" auto-repaint="true">
+		<qp-template id="form-ImportPayment" name="1" wg-container="ImportExternalTran_ImportPaymentFormView">
+			<qp-fieldset id="fsColumnA-ImportPayment" slot="A" view.bind="ImportExternalTran">
+				<field name="TranNumber"></field>
+				<field name="ProcessingCenterID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-ImportPayment">
+			<qp-button id="buttonCreate-ImportPayment" dialog-result="OK" state.bind="ImportDocumentPaymentCreate"></qp-button>
+			<qp-button id="buttonCancel-ImportPayment" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

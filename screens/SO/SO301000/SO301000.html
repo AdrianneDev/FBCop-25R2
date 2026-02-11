@@ -1,0 +1,275 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-Order" name="7-10-7" class="equal-height" qp-collapsible wg-container="document_form">
+		<qp-fieldset id="fsColumnA-Order" slot="A" view.bind="Document">
+			<field name="OrderType"></field>
+			<field name="OrderNbr"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="OrderDate"></field>
+			<field name="RequestDate" pinned="false"></field>
+			<field name="ExpireDate"></field>
+			<field name="CustomerOrderNbr"></field>
+			<field name="CustomerRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Order" slot="B" view.bind="Document">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID" config-allow-edit.bind="true"></field>
+			<field name="ContactID" config-allow-edit.bind="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_SOOrder_CurrencyInfo_" pinned="true"></field>
+			<field name="DestinationSiteID"></field>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="OrderDesc" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Order" slot="C" view.bind="Document" class="highlights-section" label-size="col-lg-6">
+			<field name="OrderQty" pinned="true"></field>
+			<field name="CuryDetailExtPriceTotal"></field>
+			<field name="CuryLineDiscTotal"></field>
+			<field name="CuryDiscTot"></field>
+			<field name="CuryFreightTot"></field>
+			<field name="CuryTaxTotal" pinned="true"></field>
+			<field name="CuryOrderTotal" pinned="true"></field>
+			<field name="CuryControlTotal" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Details">
+			<qp-grid id="grid-Details" view.bind="Transactions" wg-container="Transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Taxes" caption="Taxes" load-on-demand="true" visible.bind="Document.OrderType.value.id != 'TR'">
+			<qp-template id="form-Taxes" name="17-7">
+				<div id="columnFirst-Taxes" slot="A">
+					<qp-grid id="grid-Taxes" view.bind="Taxes" class="framed-section" wg-container="Taxes_grid1"></qp-grid>
+				</div>
+				<div id="fsColumnB-Taxes" slot="B">
+					<qp-fieldset id="fsTaxInfo-Taxes" caption="Tax Info" view.bind="CurrentDocument"
+						wg-container="CurrentDocument_formFinancialInformation">
+						<field name="DisableAutomaticTaxCalculation" class="no-label"></field>
+						<field name="OverrideTaxZone" class="no-label"></field>
+						<field name="TaxZoneID"></field>
+						<field name="TaxCalcMode"></field>
+						<field name="ExternalTaxExemptionNumber"></field>
+						<field name="AvalaraCustomerUsageType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsTaxTotals-Taxes" class="highlights-section" caption="Tax Totals"
+						view.bind="CurrentDocument">
+						<using wg-container="CurrentDocument_formVATTotals">
+							<field name="CuryVatExemptTotal" config-enabled.bind="false"></field>
+							<field name="CuryVatTaxableTotal" config-enabled.bind="false"></field>
+						</using>
+						<using wg-container="CurrentDocument_formOrderTotals">
+							<field name="CuryTaxTotal" config-enabled.bind="false"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Commissions" caption="Commissions" visible.bind="Document.OrderType.value.id != 'TR'">
+			<qp-template name="17-7" id="form-Comissions" wg-container="CurrentDocument_Commission">
+				<div id="fsColumnA-Commissions" slot="A">
+					<qp-grid id="grid-Commissions" view.bind="SalesPerTran" wg-container="SalesPerTran_gridSalesPerTran" class="framed-section">
+					</qp-grid>
+				</div>
+				<div id="fsColumnB-Commissions" slot="B">
+					<qp-fieldset id="form-ComissionInfo" view.bind="CurrentDocument" caption="Commission Info">
+						<field name="SalesPersonID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Financial" caption="Financial">
+			<qp-template id="form-Financial" name="17-17-14">
+				<div id="divColumAB-Financial" slot="A">
+					<qp-fieldset id="fsColumnA-Financial" view.bind="CurrentDocument" caption="Financial Information" wg-container="CurrentDocument_formFinancialInformation">
+						<field name="BranchID"></field>
+						<field name="BranchBaseCuryID"></field>
+						<field name="BillSeparately"></field>
+						<field name="InvoiceNbr"></field>
+						<field name="InvoiceDate"></field>
+						<field name="TermsID"></field>
+						<field name="DueDate"></field>
+						<field name="DiscDate"></field>
+						<field name="FinPeriodID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsOwnership-Financial" view.bind="CurrentDocument" caption="Ownership" wg-container="CurrentDocument_formPaymentInformation">
+						<field name="WorkgroupID"></field>
+						<field name="OwnerID"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-Financial" slot="B" wg-container="CurrentDocument_formPaymentInformation">
+					<qp-fieldset id="fsPaymentInfo-Financial" view.bind="CurrentDocument" caption="Payment Information">
+						<field name="OverridePrepayment"></field>
+						<field name="PrepaymentReqPct"></field>
+						<field name="CuryPrepaymentReqAmt"></field>
+						<field name="PrepaymentReqSatisfied"></field>
+						<field name="PaymentMethodID"></field>
+						<field name="PMInstanceID"></field>
+						<field name="CashAccountID"></field>
+						<field name="ExtRefNbr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsOther-Financial" view.bind="CurrentDocument" caption="Other Information">
+						<field name="OrigOrderType" config-enabled.bind="false"></field>
+						<field name="OrigOrderNbr" config-allow-edit.bind="true" config-enabled.bind="false"></field>
+						<field name="Emailed" config-enabled.bind="false"></field>
+						<field name="Printed" config-enabled.bind="false"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Shipping" caption="Shipping" visible.bind="Document.ShowShipmentsTab.value == true">
+			<qp-template id="form-Shipping" name="17-17-14">
+				<div id="divColumnA-Shipping" slot="A">
+					<qp-fieldset id="fsDeliverySettings-Shipping" view.bind="CurrentDocument" caption="Delivery Settings" wg-container="CurrentDocument_formDeliverySettings">
+						<field name="ShipVia"></field>
+						<field name="WillCall"></field>
+						<field name="DeliveryConfirmation"></field>
+						<field name="EndorsementService"></field>
+						<field name="FreightClass"></field>
+						<field name="FOBPoint"></field>
+						<field name="Priority"></field>
+						<field name="ShipTermsID"></field>
+						<field name="ShipZoneID"></field>
+						<field name="Resedential"></field>
+						<field name="SaturdayDelivery"></field>
+						<field name="Insurance"></field>
+						<field name="UseCustomerAccount"></field>
+						<field name="GroundCollect"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-Shipping" slot="B">
+					<qp-fieldset id="fsIntercompanyPurchase-Shipping" view.bind="CurrentDocument" caption="Intercompany Purchase" wg-container="CurrentDocument_formI">
+						<field name="IntercompanyPOType"></field>
+						<field name="IntercompanyPONbr" config-allow-edit.bind="true" config-enabled.bind="false"></field>
+						<field name="IntercompanyPOReturnNbr" config-allow-edit.bind="true" config-enabled.bind="false"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsOrderSettings-Shipping" view.bind="CurrentDocument" caption="Order Shipping Settings" wg-container="CurrentDocument_formShippingSettings">
+						<field name="ShipDate"></field>
+						<field name="ShipSeparately"></field>
+						<field name="ShipComplete"></field>
+						<field name="CancelDate">
+							<qp-field control-state.bind="CurrentDocument.Cancelled" config-enabled.bind="false"></qp-field>
+						</field>
+						<field name="DefaultSiteID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsFreightSettings" view.bind="CurrentDocument" caption="Freight Settings" wg-container="CurrentDocument_formFreightInfo">
+						<field name="CuryFreightCost">
+							<qp-button id="buttonCheckFreightRate" state.bind="CalculateFreight" class="col-12" wg-name="RefreshFreightCost"></qp-button>
+						</field>
+						<field name="OverrideFreightAmount"></field>
+						<field name="FreightAmountSource"></field>
+						<field name="CuryFreightAmt"></field>
+						<field name="CuryPremiumFreightAmt"></field>
+						<field name="FreightTaxCategoryID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsSOOrderOrderOrchestration" view.bind="CurrentDocument" caption="Order Orchestration" wg-container="CurrentDocument_formShippingSettings">
+						<field name="OrchestrationStatus"></field>
+						<field name="OrchestrationStrategy"></field>
+						<field name="LimitWarehouse"></field>
+						<field name="NumberOfWarehouses"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnC-FreightTotals" slot="C">
+					<qp-fieldset id="fsFreightTotals-Dimensions" view.bind="CurrentDocument" caption="Dimensions" class="highlights-section" wg-container="CurrentDocument_formFreightInfo">
+						<field name="OrderWeight" config-enabled.bind="false"></field>
+						<field name="OrderVolume" config-enabled.bind="false"></field>
+						<field name="PackageWeight" config-enabled.bind="false"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Addresses" caption="Addresses" visible.bind="Document.ShowShipmentsTab.value == true">
+			<qp-template id="form-Addresses" name="17-17-14">
+				<div id="divColumnA-Addresses" slot="A">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="fsShipToContact-Addresses"
+						contact-view="Shipping_Contact"
+						fs-wg-container="Shipping_Contact_formD"
+						fs-caption="Ship-To Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="fsShipToAddress-Addresses"
+						fs-wg-container="Shipping_Address_formB"
+						address-view="Shipping_Address"
+						fs-caption="Ship-to Address"
+						with-coordinates="true">
+					</qp-include>
+				</div>
+				<div id="divColumnB-Addresses" slot="B">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="fsBillToContact-Addresses"
+						contact-view="Billing_Contact"
+						fs-wg-container="Billing_Contact_formC"
+						fs-caption="Bill-To Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="fsBillToAddress-Addresses"
+						fs-wg-container="Billing_Address_formA"
+						address-view="Billing_Address"
+						fs-caption="Bill-To Address">
+					</qp-include>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Shipments" caption="Shipments" visible.bind="Document.ShowShipmentsTab.value == true">
+			<qp-grid id="grid-Shipments" view.bind="ShipmentList" wg-container="shipmentlist_grid5"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-ChildOrders" caption="Child Orders" visible.bind="Document.ShowOrdersTab.value == true">
+			<qp-grid id="grid-ChildOrders" view.bind="BlanketOrderChildrenDisplayList" wg-container="BlanketOrderChildrenDisplayList_ordersGrid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Payments" caption="Payments">
+			<qp-template id="form-Payments" name="17-7" class="full-width">
+				<qp-grid id="grid-Payments" slot="A" view.bind="Adjustments" class="framed-section" wg-container="Adjustments_detgrid"></qp-grid>
+				<qp-fieldset id="fsPaymentsSummary-Payments" slot="B" view.bind="CurrentDocument" caption="Payment Summary" class="highlights-section" wg-container="CurrentDocument_formPT">
+					<field name="CuryUnreleasedPaymentAmt" config-enabled.bind="false"></field>
+					<field name="CuryCCAuthorizedAmt" config-enabled.bind="false"></field>
+					<field name="CuryPaidAmt" config-enabled.bind="false"></field>
+					<field name="CuryPaymentTotal" config-enabled.bind="false"></field>
+					<field name="CuryBilledPaymentTotal" config-enabled.bind="false"></field>
+					<field name="CuryTransferredToChildrenPaymentTotal" config-enabled.bind="false"></field>
+					<field name="CuryUnpaidBalance" config-enabled.bind="false"></field>
+					<field name="CuryUnrefundedBalance" config-enabled.bind="false"></field>
+					<field name="CuryUnbilledOrderTotal" config-enabled.bind="false"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabRelations" caption="Relations" ref="tabRelations_Content"></qp-tab>
+
+		<qp-tab id="tab-Totals" caption="Totals">
+			<qp-template id="form-Totals" name="17-17-14">
+				<div id="divColumnB-Totals" slot="A">
+					<qp-fieldset id="fsCalculatedAmounts-Totals" view.bind="CurrentDocument" caption="Shipment and Invoice Info" wg-container="CurrentDocument_formCalculatedAmounts" class="highlights-section">
+						<field name="BlanketOpenQty" config-enabled.bind="false"></field>
+						<field name="OpenOrderQty" config-enabled.bind="false"></field>
+						<field name="CuryOpenOrderTotal" config-enabled.bind="false"></field>
+						<field name="UnbilledOrderQty" config-enabled.bind="false"></field>
+						<field name="CuryUnbilledOrderTotal" config-enabled.bind="false"></field>
+						<field name="CuryPaymentTotal" config-enabled.bind="false"></field>
+						<field name="CuryUnpaidBalance" config-enabled.bind="false"></field>
+						<field name="CuryUnrefundedBalance" config-enabled.bind="false"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnA-Totals" slot="B">
+					<qp-fieldset id="fsOrderTotals-Totals" view.bind="CurrentDocument" caption="Order Totals" wg-container="CurrentDocument_formOrderTotals" class="highlights-section">
+						<field name="CuryGoodsExtPriceTotal" config-enabled.bind="false"></field>
+						<field name="CuryMiscExtPriceTotal" config-enabled.bind="false"></field>
+						<field name="CuryLineDiscTotal" config-enabled.bind="false"></field>
+						<field name="CuryDiscTot" config-enabled.bind="false"></field>
+						<field name="MarginPct" config-enabled.bind="false"></field>
+						<field name="CuryMarginAmt" config-enabled.bind="false"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

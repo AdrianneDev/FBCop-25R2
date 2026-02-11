@@ -1,0 +1,28 @@
+<template>
+	<qp-panel id="AddMembersToNewListFilterView"
+		caption="Add Members to a New Marketing List"
+		auto-repaint="true"
+		wg-container="AddMembersToNewListFilterView_tabAddMembersMain"
+		close-button-locator="#btnAddMembersToNewListCancel"
+	>
+		<qp-tabbar id="AddMembersToNewList_tabAddMembersMain">
+			<qp-tab id="tabAddMembersMain" caption="Main">
+				<qp-template id="AddMembersToList_form" name="1-1-1">
+					<qp-fieldset slot="A" id="AddMembersToNewListFilterView_form" view.bind="AddMembersToNewListFilterView" wg-container="AddMembersToNewListFilterView_tabAddMembersMain">
+						<field name="MailListCode"></field>
+						<field name="Name"></field>
+						<field name="OwnerID"></field>
+					</qp-fieldset>
+				</qp-template>
+			</qp-tab>
+			<qp-tab id="AddMembrsUdf" caption="User-Defined Fields">
+				<qp-grid id="grdAddMembersToNewListUdf" view.bind="AddMembersToNewListFilterUdfView"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="btnAddMembersToNewListCreateAndReview" dialog-result="Yes" caption="Create & Review" wg-name="CreateReview" wg-container="AddMembersToNewListFilterView_tabAddMembersMain" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnAddMembersToNewListCreate" dialog-result="OK" caption="Create" wg-name="Create" wg-container="AddMembersToNewListFilterView_tabAddMembersMain" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnAddMembersToNewListCancel" dialog-result="Abort" caption="Cancel" wg-name="Cancel" wg-container="AddMembersToNewListFilterView_tabAddMembersMain"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

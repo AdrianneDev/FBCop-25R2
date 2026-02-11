@@ -1,0 +1,15 @@
+<template>
+	<qp-panel id="duplicatefilter" caption="Specify Reference Number" auto-repaint="true">
+		<qp-info-box id="panelMessage" caption.bind="duplicatefilter.Label.value" type="warning"></qp-info-box>
+		<qp-template id="form-DuplicateReference" name="1">
+			<qp-fieldset id="fsColumnA-DuplicateReference" slot="A" view.bind="duplicatefilter" wg-container="duplicatefilter_PXFormViewPanelDuplicate">
+				<field name="RefNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-DuplicateReference">
+			<qp-button id="buttonOK-DuplicateReference" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-DuplicateReference" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

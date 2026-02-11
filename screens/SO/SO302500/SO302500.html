@@ -1,0 +1,35 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-Worksheet" name="17-17-14" class="equal-height" qp-collapsible wg-container="worksheet_form">
+		<qp-fieldset id="fsColumnA-Worksheet" slot="A" view.bind="worksheet">
+			<field name="WorksheetNbr" pinned="true"></field>
+			<field name="WorksheetType" pinned="true"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="PickDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Worksheet" slot="B" view.bind="worksheet">
+			<field name="SiteID"></field>
+			<field name="PickStartDate" config-time-mode.bind="true" pinned="true"></field>
+			<field name="PickCompleteDate" config-time-mode.bind="true" pinned="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Worksheet" slot="C" view.bind="worksheet" class="highlights-section">
+			<field name="Qty" pinned="true"></field>
+			<field name="ShipmentWeight" pinned="true"></field>
+			<field name="ShipmentVolume" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Details">
+			<qp-grid id="grid-Details" view.bind="worksheetLines" wg-container="worksheetLines_gridWorksheetLines"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Shipments" caption="Shipments">
+			<qp-grid id="grid-Shipments" view.bind="shipmentLinks" wg-container="shipmentLinks_gridShipments"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Pickers" caption="Pickers">
+			<qp-grid id="grid-Pickers" view.bind="pickers" wg-container="pickers_gridPickers"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

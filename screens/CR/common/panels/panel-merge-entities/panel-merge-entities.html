@@ -1,0 +1,14 @@
+<template>
+	<qp-panel id="Merge_Filter" caption="Merge Conflicts" auto-repaint="true" width="sm" close-button-locator="#btnCancelMergeEntities" >
+		<qp-fieldset id="frmMergeEntities" view.bind="Merge_Filter">
+			<field name="TargetRecord"></field>
+		</qp-fieldset>
+
+		<qp-grid id="grdMergeEntities" view.bind="Merge_VisibleComparisonRows" caption="Select the field values that you want to keep in the target record." style="max-height: 370px;"></qp-grid>
+
+		<footer>
+			<qp-button id="btnProcessMergeEntities" dialog-result="Yes" caption="Resolve"></qp-button>
+			<qp-button id="btnCancelMergeEntities" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

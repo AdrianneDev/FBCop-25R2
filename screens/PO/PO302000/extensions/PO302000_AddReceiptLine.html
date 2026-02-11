@@ -1,0 +1,39 @@
+<template>
+	<qp-panel id="addReceipt" caption="Add Receipt Line" auto-repaint="true" width="lg">
+		<qp-template id="form-AddReceiptLine" name="1-1" class="equal-height" wg-container="AddReceipt_frmReceipt">
+			<qp-fieldset id="fsColumnA-AddReceiptLine" slot="A" view.bind="addReceipt">
+				<field name="BarCode"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItemID"></field>
+				<field name="LotSerialNbr"></field>
+				<field name="SiteID"></field>
+				<field name="LocationID"></field>
+				<field name="ExpireDate"></field>
+				<field name="ReceiptQty"></field>
+				<field name="UOM"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddReceiptLine" slot="B" view.bind="addReceipt">
+				<field name="VendorID"></field>
+				<field name="VendorLocationID"></field>
+				<field name="POType"></field>
+				<field name="PONbr"></field>
+				<field name="POLineNbr"></field>
+				<field name="ShipFromSiteID"></field>
+				<field name="SOOrderType"></field>
+				<field name="SOOrderNbr"></field>
+				<field name="SOOrderLineNbr"></field>
+				<field name="SOShipmentNbr"></field>
+				<field name="UnitCost"></field>
+				<field name="ByOne"></field>
+				<field name="AutoAddLine"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-AddReceiptLine">
+			<qp-button id="buttonAdd-AddReceiptLine" state.bind="AddPOReceiptLine2"></qp-button>
+			<qp-button id="buttonAddClose-AddReceiptLine" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddReceiptLine" dialog-result="No" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

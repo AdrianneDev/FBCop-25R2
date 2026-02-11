@@ -1,0 +1,46 @@
+<template>
+	<require from="src/screens/IN/common/status-styles.scss"></require>
+	<qp-template id="form-KitAssembly" name="14-17-17" class="equal-height" qp-collapsible wg-container="Document_form">
+		<qp-fieldset id="fsColumnA-KitAssembly" slot="A" view.bind="Document">
+			<field name="DocType" tabindex="-1"></field>
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored"></field>
+			<field name="TranDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-KitAssembly" slot="B" view.bind="Document">
+			<field name="KitInventoryID"></field>
+			<field name="KitRevisionID"></field>
+			<field name="SubItemID"></field>
+			<field name="ReasonCode"></field>
+			<field name="KitRequestDate"></field>
+			<field name="TranTranDesc" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-KitAssembly" slot="C" view.bind="Document">
+			<field name="SiteID"></field>
+			<field name="LocationID"></field>
+			<field name="UOM"></field>
+			<field name="Qty"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Components" caption="Stock Components">
+			<qp-grid id="grid-StockComponents" view.bind="Components" wg-container="Components_componentsGrid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-NonStockComponents" caption="Non-Stock Components">
+			<qp-grid id="grid-NonStockComponents" view.bind="Overhead" wg-container="Overhead_overheadGrid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Financial" caption="Financial">
+			<qp-template id="form-Financial" name="17-17-14" wg-container="DocumentProperties_tab">
+				<qp-fieldset id="fsColumnA-Financial" slot="A" view.bind="DocumentProperties">
+					<field name="BatchNbr" config-enabled.bind="false" config-allow-edit.bind="true"></field>
+					<field name="BranchID" config-allow-edit.bind="false"></field>
+					<field name="BranchBaseCuryID" config-allow-edit.bind="false"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

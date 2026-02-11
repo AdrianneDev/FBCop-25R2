@@ -1,0 +1,23 @@
+<template>
+	<qp-panel id="UserSetupView" caption="Settings" auto-repaint="true" wg-container="UserSetupView_frmSettings">
+		<qp-fieldset id="fsGeneral-UserSetup" view.bind="UserSetupView" caption="General">
+			<field name="DefaultLocationFromShipment"></field>
+			<field name="DefaultLotSerialFromShipment"></field>
+			<field name="EnterSizeForPackages"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsPrinting-UserSetup" view.bind="UserSetupView" caption="Printing">
+			<field name="PrintShipmentConfirmation"></field>
+			<field name="PrintShipmentLabels"></field>
+			<field name="PrintCommercialInvoices"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsScale-UserSetup" view.bind="UserSetupView" caption="Scale">
+			<field name="UseScale"></field>
+			<field name="ScaleDeviceID"></field>
+		</qp-fieldset>
+
+		<footer id="footer-UserSetup">
+			<qp-button id="buttonSave-UserSetup" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="buttonCancel-UserSetup" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

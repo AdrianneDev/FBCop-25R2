@@ -1,0 +1,26 @@
+<template>
+
+	<qp-include-parameters view.required></qp-include-parameters>
+	<qp-fieldset id="fsShipmentA1" slot="A1" view.bind="{{view}}" class="sp-data-feed-fieldset sp-colors--shipment">
+		<field name="ShipmentList.ShipmentNbr"></field>
+		<field name="ShipmentList.SOShipment__StatusIsNull" class="colored"></field>
+		<field name="ShipmentList.ShipDate" class="sp-shipments-date"></field>
+	</qp-fieldset>
+
+	<qp-fieldset if.bind="!!ShipmentList.InvoiceNbr.value" slot="AX" id="fsShipmentAX" view.bind="{{view}}"
+		class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg no-dotted">
+
+		<field name="ShipmentList.InvoiceNbr" caption="Invoice">
+		</field>
+	</qp-fieldset>
+	<qp-fieldset id="fsShipmentBX" slot="BX" view.bind="{{view}}" class="sp-data-feed-fieldset">
+
+		<field name="ShipmentList.ShipmentQty"></field>
+	</qp-fieldset>
+	<qp-fieldset id="fsShipmentCX" slot="CX" view.bind="{{view}}" class="sp-data-feed-fieldset">
+		<field name="ShipmentList.SOShipment__PackageCount"></field>
+	</qp-fieldset>
+	<div id="fsShipmentDX" slot="DX" class="no-padding-y button-col">
+		<qp-button id="btnTackPackages" config.bind="{ action: 'viewPackages' }" caption="Track Packages"></qp-button>
+	</div>
+</template>

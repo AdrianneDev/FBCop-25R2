@@ -1,0 +1,71 @@
+<template>
+	<qp-splitter id="FormSplitter" split="width" disable="true" invisible="true" initial-split="40%" state="normal">
+		<split-pane>
+			<qp-template id="Activities_template" name="1" wg-container="Activities_form">
+				<qp-fieldset slot="A" id="Activities_form" view.bind="Activities">
+					<field name="Subject"></field>
+					<field name="UIStatus"></field>
+					<field name="TimeActivity.ApprovalStatus"></field>
+					<field name="IsPrivate"></field>
+					<field name="ProvidesCaseSolution"></field>
+					<field name="TimeActivity.TrackTime"></field>
+					<field name="StartDate_Date">
+						<qp-field control-state.bind="Activities.StartDate_Time"></qp-field>
+					</field>
+					<field name="CompletedDate_Date">
+						<qp-field control-state.bind="Activities.CompletedDate_Time"></qp-field>
+					</field>
+					<using view="TimeActivity">
+						<field name="ProjectID">
+							<qp-field control-state.bind="TimeActivity.CertifiedJob"></qp-field>
+						</field>
+						<field name="ProjectTaskID"></field>
+						<field name="CostCodeID"></field>
+						<field name="LabourItemID"></field>
+						<field name="UnionID"></field>
+						<field name="ApproverID"></field>
+						<field name="EarningTypeID"></field>
+						<field name="WorkCodeID"></field>
+						<field name="ShiftID"></field>
+						<field name="TimeSpent"></field>
+						<field name="OvertimeSpent"></field>
+						<field name="IsBillable"></field>
+						<field name="Released"></field>
+						<field name="TimeBillable"></field>
+						<field name="OvertimeBillable"></field>
+						<field name="ARRefNbr"></field>
+					</using>
+				</qp-fieldset>
+			</qp-template>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="Activities_tabMain">
+				<qp-tab id="Description_tab" caption="Description" class="stretch">
+					<div wg-container="CurrentActivity_PXFormView2">
+						<qp-rich-text-editor
+							id="CurrentActivity"
+							state.bind="CurrentActivity.Body"
+							wg-field
+							config.bind="{ expandToContent: true }">
+						</qp-rich-text-editor>
+					</div>
+				</qp-tab>
+				<qp-tab id="Activities_tab" caption="Details">
+					<qp-template id="Details_template" name="1" class="label-size-xm" wg-container="Activities_form">
+						<qp-fieldset id="Details_formLeft" view.bind="CurrentActivity" slot="A" caption="Activity Details">
+							<field name="OwnerID"></field>
+							<field name="WorkgroupID"></field>
+							<field name="RefNoteIDType"></field>
+							<field name="RefNoteID"></field>
+							<field name="BAccountID"></field>
+							<field name="ContactID"></field>
+							<field name="ResponseDueDateTime"></field>
+							<field name="ResponseActivityNoteID"></field>
+							<field name="ParentNoteID"></field>
+						</qp-fieldset>
+					</qp-template>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

@@ -1,0 +1,10 @@
+<template>
+	<qp-multi-upload id="controlUploader" config.bind="uploaderConfig"><span i18n>Drag files here or click to upload.</span></qp-multi-upload>
+	<qp-grid id="grid" view.bind="Records" class="dropFiles1"></qp-grid>
+	<qp-panel id="ErrorHistory" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="errorListGrid" view.bind="ErrorHistory" wg-container="ErrorHistory_ErrorHistoryList"></qp-grid>
+		<footer>
+			<qp-button id="btnCancel" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

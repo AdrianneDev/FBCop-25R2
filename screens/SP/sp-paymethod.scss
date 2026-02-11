@@ -1,0 +1,18 @@
+.sp-paymethod {
+	display: flex;
+	column-gap: 10px;
+	text-transform: capitalize;
+	justify-content: inherit;
+
+	svg {
+		vertical-align: middle;
+		width: 32px;
+		height: 20px;
+		fill: white;
+		margin-bottom: 2px;
+	}
+}
+
+.sp-radio:has(.sp-paymethod) input[type="radio"] {
+	align-self: center !important;
+}

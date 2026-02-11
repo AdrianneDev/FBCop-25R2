@@ -1,0 +1,19 @@
+<template>
+	<qp-panel id="intranSelection" caption="Add Transfer Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddTransferLine" name="1-1-1" class="equal-height" wg-container="Filter_frmTransferFilter">
+			<qp-fieldset id="fsColumnA-AddTransferLine" slot="A" view.bind="filter">
+				<field name="ShipFromSiteID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddTransferLine" slot="B" view.bind="filter">
+				<field name="SOOrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddTransferLine" view.bind="intranSelection" wg-container="intranSelection_PXGrid1"></qp-grid>
+
+		<footer id="footer-AddTransferLine">
+			<qp-button id="buttonAdd-AddTransferLine" dialog-result="OK" state.bind="SetAddLineFilterToSource" wg-name="AddClose"></qp-button>
+			<qp-button id="buttonCancel-AddTransferLine" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

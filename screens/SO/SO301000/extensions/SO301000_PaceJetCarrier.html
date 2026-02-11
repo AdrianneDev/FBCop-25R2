@@ -1,0 +1,10 @@
+<template>
+	<qp-fieldset id="fsDeliverySettingsAdditional-PaceJet" after="#fsDeliverySettings-Shipping" view.bind="CarrierData" if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['CarrierIntegration']"  wg-container="CarrierData_formCarrierData">
+		<field name="AdditionalHandling"></field>
+	</qp-fieldset>
+	<qp-fieldset id="fsDeliverySettings-PaceJet" after="#fsDeliverySettingsAdditional-PaceJet" view.bind="CarrierData" if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['CarrierIntegration']" caption="LTL/FTL Settings"  wg-container="CarrierData_formPacejet">
+		<field name="LiftGate"></field>
+		<field name="InsideDelivery"></field>
+		<field name="LimitedAccess"></field>
+	</qp-fieldset>
+</template>

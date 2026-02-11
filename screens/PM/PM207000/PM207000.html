@@ -1,0 +1,79 @@
+<template>
+	<qp-template id="Billing_form" name="1" wg-container>
+		<qp-splitter id="Splitter" slot="A" initial-split="33%">
+			<split-pane class="v-stack">
+				<qp-fieldset id="form" view.bind="Billing">
+					<field name="BillingID"></field>
+					<field name="Description"></field>
+					<field name="IsActive"></field>
+				</qp-fieldset>
+				<qp-grid id="grid" view.bind="BillingRules" caption="Billing Steps" class="framed-section"></qp-grid>
+			</split-pane>
+			<split-pane>
+				<qp-tabbar id="BillingRule_formRules" wg-container>
+					<qp-tab id="tabCalculationRules" caption="Calculation Rules">
+						<qp-template id="RulesTypeForm" name="1" class="label-size-m equal-height">
+							<qp-fieldset id="formRulesType" slot="A" view.bind="BillingRule">
+								<field name="Type"></field>
+							</qp-fieldset>
+						</qp-template>
+						<qp-template id="RulesAccountGroupIDForm" name="1" class="label-size-m equal-height">
+							<qp-fieldset id="formRulesAccountGroupID"
+								slot="A"
+								view.bind="BillingRule"
+								caption="Transaction Selection Criteria">
+								<field name="AccountGroupID"></field>
+							</qp-fieldset>
+						</qp-template>
+						<qp-template id="FormulasForm" name="1" class="label-size-m">
+							<qp-fieldset id="formRulesFormulas" slot="A" view.bind="BillingRule" caption="Invoice Settings">
+								<field name="RateTypeID"></field>
+								<field name="NoRateOption"></field>
+								<field name="InvoiceFormula" control-type="qp-formula-editor"></field>
+								<field name="QtyFormula" control-type="qp-formula-editor"></field>
+								<field name="AmountFormula" control-type="qp-formula-editor"></field>
+								<field name="DescriptionFormula" control-type="qp-formula-editor"></field>
+								<field name="BranchSource"></field>
+								<field name="BranchSourceBudget"></field>
+								<field name="TargetBranchID"></field>
+								<field name="AccountSource" control-type="qp-drop-down"></field>
+								<field name="AccountID"></field>
+								<field name="SubMask"></field>
+								<field name="SubMaskBudget"></field>
+								<field name="SubID"></field>
+							</qp-fieldset>
+						</qp-template>
+					</qp-tab>
+					<qp-tab id="tabBillingSettings" caption="Billing Settings">
+						<qp-template id="BillingOptionsForm" name="1-1" class="no-label equal-height">
+							<qp-fieldset id="formRulesBillingOptions" slot="A" view.bind="BillingRule" caption="Billing Options">
+								<field name="CopyNotes"></field>
+								<field name="IncludeZeroAmountAndQty"></field>
+								<field name="IncludeNonBillable"></field>
+								<field name="IncludeZeroAmount"></field>
+							</qp-fieldset>
+							<qp-fieldset id="formRulesAggregateTransactionsBy"
+								slot="B"
+								view.bind="BillingRule"
+								caption="Aggregate Transactions By">
+								<field name="GroupByDate"></field>
+								<field name="GroupByEmployee"></field>
+								<field name="GroupByVendor"></field>
+								<field name="GroupByItem"></field>
+							</qp-fieldset>
+						</qp-template>
+						<qp-template id="InvoiceGroupForm" name="1-1">
+							<qp-fieldset id="formRulesSourceInvoiceSettings"
+								slot="A"
+								view.bind="BillingRule"
+								caption="Invoice Grouping"
+								class="label-size-m">
+								<field name="InvoiceGroup"></field>
+							</qp-fieldset>
+						</qp-template>
+					</qp-tab>
+				</qp-tabbar>
+			</split-pane>
+		</qp-splitter>
+	</qp-template>
+</template>

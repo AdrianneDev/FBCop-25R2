@@ -1,0 +1,271 @@
+<template>
+	<require from="./sp-common.scss"></require>
+	<require from="./data-feed.scss"></require>
+	<require from="./tool-bar.scss"></require>
+
+	<qp-template id="filterForm"
+			name="1-1-1"
+			class="label-size-sm"
+			qp-collapsible
+			show.bind="FeedFilter.IsHeaderShown.value">
+		<qp-fieldset id="filterSlotA" slot="A" view.bind="Filter">
+			<field name="ProjectID" pinned="false"></field>
+			<field name="Project.Status" pinned="false"></field>
+		</qp-fieldset>
+		<qp-fieldset id="filterSlotB" slot="B" view.bind="Filter">
+			<field name="Project.OwnerID" pinned="false"></field>
+			<field name="Project.StartDate" pinned="false"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="treeSplitterByTag" initial-split="16%">
+		<split-pane>
+			<qp-tree id="tagTree" view.bind="ProjectTags" caption="Tags"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-splitter id="previewSplitterByTag"
+					initial-split="61%"
+					view-model.ref="previewSplitterByTag"
+					initial-state="collapsed-second">
+				<split-pane>
+					<div class="h-stack section-caption">
+						<qp-caption caption="${ProjectTags.activeRow.TagCD.value}"></qp-caption>
+						<div
+								class="feed-search-div ${FeedFilter.IsShown.value ? 'filter-used' : ''}"
+								click.delegate="toggleFeedFilter()">
+							<qp-hyper-icon class="feed-search" images.bind="{ normal: 'svg:main@filter' }"></qp-hyper-icon>
+						</div>
+					</div>
+					<div class="custom-feed-filter" show.bind="FeedFilter.IsShown.value">
+						<qp-field control-state.bind="FeedFilter.LinkType" class="no-label"></qp-field>
+						<qp-field control-state.bind="FeedFilter.LinkedDocumentNoteID" class="no-label entity-filter"></qp-field>
+						<qp-field
+								control-state.bind="FeedFilter.FileName"
+								class="no-label custom-search-field file-name-filter"></qp-field>
+						<qp-field control-state.bind="FeedFilter.Tag" class="no-label tag-filter"></qp-field>
+						<qp-field control-state.bind="FeedFilter.ShowMyFilesOnly" class="no-label"></qp-field>
+					</div>
+					<div class="actions-with-multi-upload">
+						<qp-button id="btnDownloadAll" state.bind="DownloadAllFiles"></qp-button>
+						<qp-button id="btnDownloadCheckedFiles" state.bind="DownloadCheckedFiles"></qp-button>
+						<qp-button id="btnDeleteCheckedFiles" state.bind="DeleteCheckedFiles"></qp-button>
+						<qp-multi-upload
+								show.bind="UploadLinkedFilesByTag && UploadLinkedFilesByTag.enabled"
+								config.bind="multiUploadConfig"></qp-multi-upload>
+					</div>
+					<qp-text-light-scope>
+						<qp-data-feed id="fileListFeedByTag"
+								view.bind="LinkedFilesByTag"
+								class="no-toolbar sp-invoices-feed compact-feed"
+								auto-resize="true">
+							<template width="100%">
+								<div
+										class="record-item-compound sp-invoices-invoice no-animation centered-menu clickable-row feed-row ${LinkedFilesByTag.FileID.value === Filter.ActiveFileIDByTag.value ? 'active-row' : ''}">
+									<div class="col-lg-5">
+										<qp-template id="fileFormByTag1" name="record-1" wg-container>
+											<div slot="Prefix" class="prefix-checkbox-with-image">
+												<qp-fieldset id="slIsChecked" view.bind="LinkedFilesByTag">
+													<field name="IsChecked"></field>
+												</qp-fieldset>
+
+												<qp-image-view
+														state.bind="LinkedFilesByTag.ImageUrl"
+														object-fit="cover"
+														height="48px"
+														width="48px"
+														if.bind="LinkedFilesByTag.ImageUrl.value"></qp-image-view>
+
+												<qp-hyper-icon
+														else
+														class="file-type-icon"
+														width="48px"
+														images.bind="LinkedFilesByTag.fileTypeIcon"></qp-hyper-icon>
+											</div>
+
+											<qp-fieldset id="slShortNameT"
+													slot="A1"
+													view.bind="LinkedFilesByTag"
+													click.delegate="setActiveFileByTag(LinkedFilesByTag, $event)">
+												<field name="ShortName" class="custom-link text-ellipsis field--bold"></field>
+											</qp-fieldset>
+
+											<qp-fieldset id="slVersionT"
+													slot="A2"
+													view.bind="LinkedFilesByTag"
+													click.delegate="setActiveFileByTag(LinkedFilesByTag, $event)">
+												<field name="Version" class="secondary-text"></field>
+												<field
+														name="UploadFileRevisionNoData__ReadableSize"
+														class="text-ellipsis secondary-text"></field>
+											</qp-fieldset>
+										</qp-template>
+									</div>
+
+									<div class="col-lg-3" click.delegate="setActiveFileByTag(LinkedFilesByTag, $event)">
+										<qp-template id="fileFormByTag2" name="record-1" wg-container>
+											<qp-fieldset id="slCreatedByT" slot="A1" view.bind="LinkedFilesByTag">
+												<field
+														name="UploadFileRevisionNoData__CreatedByID_Creator_DisplayName"
+														class="text-ellipsis"></field>
+											</qp-fieldset>
+
+											<qp-fieldset id="slCreatedAtT" slot="A2" view.bind="LinkedFilesByTag">
+												<field name="CreationDate" class="text-ellipsis secondary-text"></field>
+											</qp-fieldset>
+										</qp-template>
+									</div>
+
+									<div class="col-lg-4" click.delegate="setActiveFileByTag(LinkedFilesByTag, $event)">
+										<qp-template id="fileFormByTag3" name="record-1" wg-container>
+											<div id="slTagsT" slot="A1" class="tag-list">
+												<qp-hyper-icon
+														show.bind="LinkedFilesByTag.Tags.value && LinkedFilesByTag.Tags.value.text"
+														images.bind="{ normal: 'svg:tags@tag' }"></qp-hyper-icon>
+												<qp-field control-state.bind="LinkedFilesByTag.Tags" class="no-label"></qp-field>
+											</div>
+
+											<qp-menu
+													slot="Postfix"
+													class="save-menu"
+													config.bind="getFileMenuByTag({{$viewName}})"
+													menuselected.delegate="handleFileMenuCommandByTag(LinkedFilesByTag, $event)"></qp-menu>
+										</qp-template>
+									</div>
+								</div>
+							</template>
+						</qp-data-feed>
+					</qp-text-light-scope>
+				</split-pane>
+				<split-pane class="v-stack">
+					<div class="v-stack" show.bind="ActiveLinkedFileByTag.Initialized.value">
+						<div show.bind="ActiveLinkedFileByTag.ShortName.value">
+							<qp-caption caption="File Details"></qp-caption>
+						</div>
+						<qp-tool-bar
+								class="file-action-tool-bar"
+								view-model.ref="detailsToolBarByTag"
+								config.bind="detailsToolBarConfigByTag"></qp-tool-bar>
+						<div id="imagePreviewByTag" show.bind="ActiveLinkedFileByTag.ImageUrl.value" style="margin-bottom: 10px">
+							<qp-image-view
+									state.bind="ActiveLinkedFileByTag.ImageUrl"
+									object-fit="contain"
+									aspect-ratio="auto 4/2.8"></qp-image-view>
+						</div>
+						<div id="pdfPreviewDiv" style="margin-bottom: 10px">
+							<iframe id="pdfPreviewFrame"></iframe>
+						</div>
+						<qp-tabbar id="tabPreviewByTag" show.bind="ActiveLinkedFileByTag.ShortName.value">
+							<qp-tab id="fileSummary" caption="Summary">
+								<qp-fieldset id="tagsPreviewByTag" view.bind="ActiveLinkedFileByTag">
+									<field name="ShortName"></field>
+									<field name="Tags"></field>
+									<field name="CheckedOutBy"></field>
+									<field name="CheckedOutComment"></field>
+								</qp-fieldset>
+							</qp-tab>
+							<qp-tab id="fileVersionsByTag" caption="Versions">
+								<qp-text-light-scope>
+									<qp-data-feed id="fileVersionFeedByTag"
+											view.bind="ActiveFileVersionsByTag"
+											class="no-toolbar sp-invoices-feed compact-feed"
+											auto-resize="true">
+										<template width="100%">
+											<div
+													class="sp-invoices-invoice no-animation ${ActiveFileVersionsByTag.FileRevisionID.value === Filter.ActiveFileVersionByTag.value ? 'active-row' : ''}">
+												<qp-template id="fileVersionFormByTag" name="record-1" wg-container>
+													<qp-fieldset id="slA1VT"
+															slot="A1"
+															view.bind="ActiveFileVersionsByTag"
+															click.delegate="setActiveVersionByTag(ActiveFileVersionsByTag, $event)">
+														<field name="FullVersion" class="custom-link"></field>
+														<field name="CreatedByID" config-display-mode.bind="'text'"></field>
+													</qp-fieldset>
+
+													<qp-fieldset id="slA2VT" slot="A2" view.bind="ActiveFileVersionsByTag" class="secondary-text">
+														<field name="CreationDate"></field>
+														<field name="ReadableSize"></field>
+													</qp-fieldset>
+												</qp-template>
+											</div>
+										</template>
+									</qp-data-feed>
+								</qp-text-light-scope>
+							</qp-tab>
+							<qp-tab id="fileEntitiesByTag" caption="Entities">
+								<qp-text-light-scope>
+									<qp-data-feed id="fileEntitiesFeedByTag"
+											view.bind="ActiveFileLinkedEntitiesByTag"
+											class="no-toolbar sp-invoices-feed compact-feed"
+											auto-resize="true">
+										<template width="100%">
+											<div class="sp-invoices-invoice no-animation">
+												<qp-template id="fileEntitiesFormByTag" name="record-1" wg-container>
+													<qp-fieldset id="slA1FET"
+															slot="A1"
+															view.bind="ActiveFileLinkedEntitiesByTag"
+															click.delegate="navigateToEntityByTag(ActiveFileLinkedEntitiesByTag, $event)">
+														<field name="LinkedDocumentType"></field>
+														<field name="LinkedDocumentNumber" class="custom-link"></field>
+													</qp-fieldset>
+												</qp-template>
+											</div>
+										</template>
+									</qp-data-feed>
+								</qp-text-light-scope>
+							</qp-tab>
+							<qp-tab id="fileNoteByTag" caption="Note">
+								<qp-text-editor id="fileNoteEditorByTag"
+										state.bind="ActiveLinkedFileByTag.NoteText"
+										class="col-12"
+										fixed-height></qp-text-editor>
+							</qp-tab>
+						</qp-tabbar>
+					</div>
+				</split-pane>
+			</qp-splitter>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-upload-dialog id="uploadFilePanel"
+			caption="File Upload"
+			key="UploadLinkedFilePanel"
+			session-key="ProjectFilesEntry_UploadLinkedFilePanel"></qp-upload-dialog>
+
+	<qp-panel id="EntityToLinkFilter" caption="Link File to Document" auto-repaint="true" width="xs" height="400px">
+		<qp-fieldset id="entityToLinkFilterForm" view.bind="EntityToLinkFilter" class="no-label">
+			<field name="LinkType"></field>
+		</qp-fieldset>
+		<qp-grid id="entitiesToLinkGrid" view.bind="EntitiesToLink"></qp-grid>
+		<footer>
+			<qp-button id="linkButton" dialog-result="OK" caption="Link"></qp-button>
+			<qp-button id="cancelButton" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CreateNewTagInPlaceFilter"
+			caption="Add Tag"
+			class="no-close-panel"
+			auto-repaint="true"
+			width="sm"
+			height="250px">
+		<qp-fieldset id="createNewTagInPlaceForm" view.bind="CreateNewTagInPlaceFilter" class="label-size-m">
+			<field name="TagName"></field>
+			<field name="ParentTagID"></field>
+			<field name="AccessTagID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="okButton" dialog-result="Yes" state.bind="CreateNewTagInPlace" caption="Add"></qp-button>
+			<qp-button id="cancelButton" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CheckoutComment" caption="Check Out File">
+		<qp-fieldset id="formCheckOutComment" view.bind="CheckoutComment">
+			<field name="Comment"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

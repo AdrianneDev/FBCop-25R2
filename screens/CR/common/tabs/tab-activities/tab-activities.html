@@ -1,0 +1,9 @@
+<template>
+	<qp-resizer id="Activities_resizer" initial-size="270px" min-size="270px">
+		<qp-grid id="Activities_grid" view.bind="Activities" wg-container="Activities_Activities_grid"></qp-grid>
+	</qp-resizer>
+	<qp-caption caption="${Activities.activeRow.Subject.value.text}"></qp-caption>
+	<div id="Activities_Preview_Activities_form" class="stretch" wg-container>
+		<qp-rich-text-editor id="edActivityBody" state.bind="Activities.activeRow.Body" wg-field config.bind="{readOnly: true, expandToContent: true}" wg-name="Body"></qp-rich-text-editor>
+	</div>
+</template>

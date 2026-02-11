@@ -1,0 +1,30 @@
+<template>
+	<qp-template id="form-LSClass" name="1-1" class="equal-height label-size-m" wg-container="lotserclass_form">
+		<qp-fieldset id="fsColumnA-LSClass" slot="A" view.bind="lotserclass">
+			<field name="LotSerClassID"></field>
+			<field name="Descr"></field>
+			<field name="LotSerTrack"></field>
+			<field name="LotSerTrackExpiration"></field>
+			<field name="RequiredForDropship"></field>
+			<field name="LotSerAssign"></field>
+			<field name="LotSerIssueMethod"></field>
+			<field name="LotSerNumShared"></field>
+			<field name="LotSerNumVal"></field>
+			<field name="AutoNextNbr"></field>
+			<field name="AutoSerialMaxCount"></field>
+		</qp-fieldset>
+
+		<qp-grid id="grid-LSClass" slot="B" view.bind="lotsersegments" caption="Numbering Settings" class="framed-section" wg-container="lotsersegments_grid"></qp-grid>
+	</qp-template>
+	<qp-template id="form-Attributes" name="1" class="stretch">
+		<div slot="A" class="framed-section">
+			<qp-fieldset id="fsLotSerialAttributes-AttributeSettings"
+						 view.bind="CurrentLotSerClass"
+						 class="transparent-section no-label"
+						 caption="Attributes">
+				<field name="UseLotSerSpecificDetails" pinned="true" wg-container="CurrentLotSerClass_LotSerialAttributesForm" class="col-6"></field>
+			</qp-fieldset>
+			<qp-grid id="gridLotSerialAttributes-Attributes" view.bind="Attributes" wg-container="Attributes_LotSerialAttributesGrid"></qp-grid>
+		</div>
+	</qp-template>
+</template>

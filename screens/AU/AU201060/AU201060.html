@@ -1,0 +1,30 @@
+<template>
+	<qp-include url="../common/au-panel-view-changes.html"></qp-include>
+
+	<qp-grid id="ViewFields_gridStateProperties" wg-container view.bind="ViewFields"></qp-grid>
+	<qp-panel id="Combos" wg-container="Combos_Combos" caption="Combo Box Values" auto-repaint="true" height="70vh">
+		<qp-grid id="Combos_grids" wg-container="Combos_gridCombos" view.bind="Combos"></qp-grid>
+		<footer>
+			<qp-button id="PXButton5" dialog-result="OK" wg-name="OK" caption="Save" config.bind="{ validateInput: true }" class="major-button"></qp-button>
+			<qp-button id="PXButton6" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="FilterNewField" caption="Add Field" auto-repaint="true" width="lg" height="85vh" close-button-locator="#PXButtonCancel">
+		<qp-template id="FormFilterNewField" name="1-1">
+			<qp-fieldset id="FormFilterNewField_0" wg-container="FilterNewField_FormFilterNewField" view.bind="FilterNewField" slot="A">
+				<field name="Container"></field>
+				<field name="ObjectName"></field>
+			</qp-fieldset>
+			<qp-fieldset id="FormFilterNewField_1" wg-container="FilterNewField_FormFilterNewField" view.bind="FilterNewField" slot="B">
+				<field name="FieldName"></field>
+				<field name="DisplayName"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="NewFields_PXGridNewFields" wg-container view.bind="NewFields"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" caption="Add" state.bind="AddFields" wg-name="Add"></qp-button>
+			<qp-button id="PXButtonOK" caption="Add & Close" dialog-result="OK" state.bind="AddFieldsAndClose" wg-name="AddClose"></qp-button>
+			<qp-button id="PXButtonCancel" dialog-result="Cancel" state.bind="CloseAddPanel" wg-name="Close"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,67 @@
+<template>
+	<qp-template id="Results_form" wg-container name="1-1-1">
+		<qp-fieldset slot="A" id="Results1" view.bind="Results">
+			<field name="ConfigResultsIDContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.ConfigResultsID.text"></qp-label>
+				<qp-text-editor id="edResults-ConfigResultsID" state.bind="Results.ConfigResultsID" value.bind="Results.ConfigResultsID.value.id" wg-name="ConfigResultsID" class="col-12"></qp-text-editor>
+			</field>
+			<field name="InventoryIDContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.InventoryID.text"></qp-label>
+				<qp-text-editor id="edResults-InventoryID" state.bind="Results.InventoryID" value.bind="Results.InventoryID.value.id" wg-name="InventoryID" class="col-12"></qp-text-editor>
+			</field>
+			<field name="ConfigurationIDContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.ConfigurationID.text"></qp-label>
+				<qp-text-editor id="edResults-ConfigurationID" state.bind="Results.ConfigurationID" value.bind="Results.ConfigurationID.value.id" wg-name="ConfigurationID" class="col-12"></qp-text-editor>
+			</field>
+			<field name="RevisionContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.Revision.text"></qp-label>
+				<qp-text-editor id="edResults-Revision" state.bind="Results.Revision" value.bind="Results.Revision.value.id" wg-name="Revision" class="col-12"></qp-text-editor>
+			</field>
+			<field name="SiteIDContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.SiteID.text"></qp-label>
+				<qp-text-editor id="edResults-SiteID" state.bind="Results.SiteID" value.bind="Results.SiteID.value.id" wg-name="SiteID" class="col-12"></qp-text-editor>
+			</field>
+			<field name="Completed"></field>
+			<field name="IsConfigurationTesting"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Results2" view.bind="Results">
+			<field name="OrdTypeRef"></field>
+			<field name="OrdNbrRefContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.OrdNbrRef.text"></qp-label>
+				<qp-text-editor id="edOrdNbrRef" state.bind="Results.OrdNbrRef" value.bind="Results.OrdNbrRef.value.id" class="col-12"></qp-text-editor>
+			</field>
+			<field name="OrdLineRef"></field>
+			<field name="OpportunityQuoteID"></field>
+			<field name="OpportunityLineNbr"></field>
+			<field name="ProdOrderType"></field>
+			<field name="ProdOrderNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Results3" view.bind="Results">
+			<field name="CuryID" control-type="qp-currency" view.bind="_AMConfigurationResults_CurrencyInfo_"></field>
+			<field name="DisplayPrice"></field>
+			<field name="CustomerIDContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.CustomerID.text"></qp-label>
+				<qp-text-editor id="edCustomerID" state.bind="Results.CustomerID" value.bind="Results.CustomerID.value.id" class="col-12"></qp-text-editor>
+			</field>
+			<field name="CustomerLocationIDContainer" unbound>
+				<qp-label slot="label" caption.bind="Results.CustomerLocationID.text"></qp-label>
+				<qp-text-editor id="edCustomerLocation" state.bind="Results.CustomerLocationID" value.bind="Results.CustomerLocationID.value.id" class="col-12"></qp-text-editor>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="sp1" split="height">
+		<split-pane>
+			<qp-tabbar id="mainTab">
+				<qp-tab id="tabFeatures" caption="Features">
+					<qp-grid id="FeaturesGrid" view.bind="CurrentFeatures"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabAttributes" caption="Attributes">
+					<qp-grid id="AttributesGrid" view.bind="Attributes"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="SelectedOptionsGrid" view.bind="Options"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

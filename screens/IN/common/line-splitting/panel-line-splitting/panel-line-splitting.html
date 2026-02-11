@@ -1,0 +1,26 @@
+<template>
+	<qp-include-parameters
+		extension-name="LineSplittingExtension"
+		splits-view="splits">
+	</qp-include-parameters>
+
+	<qp-panel id="{{extension-name}}_lsselect" caption="Line Details" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-LineSplitting" name="17-17-14" class="equal-height" wg-container="{{extension-name}}_LotSerOptions_optform">
+			<qp-fieldset id="fsColumnA-LineSplitting" slot="A" view.bind="{{extension-name}}_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-LineSplitting" slot="B" view.bind="{{extension-name}}_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="buttonGenerate-LineSplitting" state.bind="{{extension-name}}_GenerateNumbers" class="col-12" wg-name="Generate"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-LineSplitting" view.bind="{{splits-view}}" wg-container="{{splits-view}}_grid2"></qp-grid>
+
+		<footer id="footer-LineSplitting">
+			<qp-button id="buttonOK-LineSplitting" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

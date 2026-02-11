@@ -1,0 +1,50 @@
+<template>
+	<qp-panel id="PublishToUIDialog" caption="Publish to the UI">
+		<qp-template id="PublishToUIDialog_formPublishToUI" name="1" wg-container>
+			<div slot="A">
+				<qp-fieldset
+					id="uiSettings"
+					view.bind="PublishToUIDialog"
+					class="label-size-m"
+				>
+					<field name="Title"></field>
+					<field name="Workspace"></field>
+					<field name="Category"></field>
+					<field name="ScreenID"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="accessRights"
+					caption="Access Rights"
+					view.bind="PublishToUIDialog"
+					class="label-size-m"
+				>
+					<field name="CopyFromScreenID" replace-content>
+						<qp-field
+							control-type="qp-radio"
+							control-state.bind="PublishToUIDialog.AccessRights"
+							config-name.bind="'CopyFromScreenID'"
+							config-class.bind="'vertical'"
+							class="no-label no-row-gap">
+							<span class="col-6"></span>
+							<qp-radio-item name="CopyFromScreenID" value="C" class="col-6"></qp-radio-item>
+
+							<qp-field control-state.bind="PublishToUIDialog.CopyFromScreenID" class="col-6"></qp-field>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button
+				id="btnOK"
+				caption="Publish"
+				config.bind="{validateInput: true, dialogResult: 'OK'}"
+			></qp-button>
+			<qp-button
+				id="btnCancel"
+				caption="Cancel"
+				dialog-result="Abort"
+			></qp-button>
+		</footer>
+	</qp-panel>
+</template>

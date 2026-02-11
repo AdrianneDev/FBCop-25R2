@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="form-RequisitionFilter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-RequisitionFilter" slot="A" view.bind="Filter">
+			<field name="Action"></field>
+			<field name="OwnerID">
+				<qp-field control-state.bind="Filter.MyOwner" class="col-4"></qp-field>
+			</field>
+			<field name="WorkGroupID">
+				<qp-field control-state.bind="Filter.MyWorkGroup" class="col-4"></qp-field>
+			</field>
+			<field name="MyEscalated"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-RequisitionFilter" slot="B" view.bind="Filter">
+			<field name="SelectedPriority"></field>
+			<field name="EmployeeID"></field>
+			<field name="VendorID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Records"></qp-grid>
+</template>

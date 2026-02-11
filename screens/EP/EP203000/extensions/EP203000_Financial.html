@@ -1,0 +1,46 @@
+<template>
+	<template id="tabFinancial_Content">
+		<qp-template id="Financial-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset id="tabFinancial_GLAccounts" view.bind="DefLocation" caption="GL Accounts" wg-container="DefLocation_frmPmtDefLocation">
+					<field name="VAPAccountID"></field>
+					<field name="VAPSubID"></field>
+					<using view="CurrentEmployee" wg-container="CurrentEmployee_tab">
+						<field name="PrepaymentAcctID"></field>
+						<field name="PrepaymentSubID"></field>
+						<field name="ExpenseAcctID"></field>
+						<field name="ExpenseSubID"></field>
+						<field name="SalesAcctID"></field>
+						<field name="SalesSubID"></field>
+					</using>
+				</qp-fieldset>
+
+				<qp-fieldset id="tabFinancial_FinancialSettings" view.bind="DefLocation" caption="Financial Settings" wg-container="DefLocation_PXFormView1">
+					<field name="VTaxZoneID"></field>
+					<using view="CurrentEmployee" wg-container="CurrentEmployee_tab">
+						<field name="TermsID"></field>
+					</using>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset id="tabFinancial_PaymentSettings" view.bind="DefLocation" caption="Payment Settings" wg-container="DefLocation_PXFormView3">
+					<field name="VPaymentMethodID"></field>
+					<field name="VCashAccountID"></field>
+					<using view="CurrentEmployee" wg-container="CurrentEmployee_tab">
+						<field name="CuryID">
+							<qp-field control-state.bind="CurrentEmployee.AllowOverrideCury"></qp-field>
+						</field>
+						<field name="CuryRateTypeID">
+							<qp-field control-state.bind="CurrentEmployee.AllowOverrideRate"></qp-field>
+						</field>
+						<field name="BaseCuryID" control-type="qp-text-editor" config-enabled.bind="false"></field>
+						<field name="ShiftID"></field>
+						<field name="UnionID"></field>
+					</using>
+				</qp-fieldset>
+
+				<qp-grid id="gridFinancial_PaymentDetails" view.bind="PaymentDetails" caption="Payment Instructions" class="framed-section" wg-container="PaymentDetails_PXGrid1"></qp-grid>
+			</div>
+		</qp-template>
+	</template>
+</template>

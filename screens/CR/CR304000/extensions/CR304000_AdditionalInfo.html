@@ -1,0 +1,67 @@
+<template>
+	<template id="tabAdditionalInfo_Content">
+		<qp-template id="CRMInfo-form" name="17-17-14">
+			<div slot="A">
+				<qp-fieldset id="CRMInfo_CRM" view.bind="OpportunityCurrent" caption="Details">
+					<field name="Resolution"></field>
+					<field name="WorkgroupID"></field>
+					<field name="OverrideSalesTerritory"></field>
+					<field name="SalesTerritoryID"></field>
+					<field name="ParentBAccountID"></field>
+					<field name="LanguageID"></field>
+					<field name="IsActive"></field>
+					<using wg-container="OpportunityCurrent_formE">
+						<field name="ProjectID"></field>
+						<field name="ExternalRef"></field>
+					</using>
+				</qp-fieldset>
+				<qp-fieldset id="groupFinancialInfo" view.bind="OpportunityCurrent" caption="Financial Info" wg-container="OpportunityCurrent_formD">
+					<field name="BranchID"></field>
+					<field name="TermsID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CRMInfo_Source" view.bind="OpportunityCurrent" caption="Source">
+					<field name="Source"></field>
+					<field name="CampaignSourceID"></field>
+					<field name="LeadID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CRMInfo_Activities" view.bind="ActivityStatistics" caption="Activities">
+					<field name="LastIncomingActivityDate"></field>
+					<field name="LastOutgoingActivityDate"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset id="CRMInfo_Forecasting" view.bind="ProbabilityCurrent" caption="Forecasting" wg-container="OpportunityCurrent_tab">
+					<field name="Probability" wg-container="ProbabilityCurrent_panelfordatamember"></field>
+					<field name="OpportunityCurrent.CuryWgtAmount"></field>
+					<field name="OpportunityCurrent.ClosingDate"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupTaxSettings" view.bind="OpportunityCurrent" caption="Tax Settings">
+					<field name="TaxRegistrationID"></field>
+					<field name="TaxZoneID"></field>
+					<field name="TaxCalcMode"></field>
+					<field name="ExternalTaxExemptionNumber"></field>
+					<field name="AvalaraCustomerUsageType"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupShippingInstructions" view.bind="OpportunityCurrent" caption="Shipping Settings">
+					<field name="SiteID"></field>
+					<field name="CarrierID"></field>
+					<field name="ShipTermsID"></field>
+					<field name="ShipZoneID"></field>
+					<field name="FOBPointID"></field>
+					<field name="Resedential"></field>
+					<field name="SaturdayDelivery"></field>
+					<field name="Insurance"></field>
+					<using view="CarrierData" wg-container="CarrierData_formCarrierData">
+						<field name="AdditionalHandling"></field>
+					</using>
+					<field name="ShipComplete"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupShippingOptions" view.bind="CarrierData" wg-container="CarrierData_formCarrierData1" caption="LTL/FTL Settings">
+					<field name="LiftGate"></field>
+					<field name="InsideDelivery"></field>
+					<field name="LimitedAccess"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

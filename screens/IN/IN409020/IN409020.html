@@ -1,0 +1,11 @@
+<template>
+	<qp-include url="../../common/barcode-processing/barcode-processing-screen.html">
+
+		<field append="#fsColumnA-Header" name="SiteID"></field>
+		<field append="#fsColumnA-Header" name="StorageID"></field>
+
+		<qp-tab id="tab-Storage" before="#tab-Logs" caption="Storage">
+			<qp-grid id="grid" view.bind="storages"></qp-grid>
+		</qp-tab>
+	</qp-include>
+</template>

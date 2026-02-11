@@ -1,0 +1,6 @@
+<template>
+    <div replace="#project-inventory-section">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenProjectInventory'}" value.two-way="captions.ProjectInventory" class="caption-with-link"></qp-text-editor>
+        <qp-grid id="project-inventory-grid" view.bind="ProjectInventory" class="grid-with-caption"></qp-grid>
+    </div>
+</template>

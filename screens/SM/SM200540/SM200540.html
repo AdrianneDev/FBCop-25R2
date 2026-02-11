@@ -1,0 +1,58 @@
+<template>
+
+	<qp-template id="form-LanguageFilter" name="17-17-14" qp-collapsible class="equal-height" wg-container="LanguageFilter_form">
+		<qp-fieldset id="fsColumnA-LanguageFilter" view.bind="LanguageFilter" slot="A">
+			<field name="Language" pinned></field>
+			<field name="ShowLocalized"></field>
+			<field name="ShowExcluded"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-LanguageFilter" view.bind="LanguageFilter" slot="B">
+			<field name="ScreenID" pinned></field>
+			<field name="ShowUnboundOnly"></field>
+			<field name="ShowType"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-LanguageFilter" view.bind="LanguageFilter" slot="C">
+			<field name="CreatedDateTime" pinned></field>
+			<field name="LastModifiedDateTime"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+
+		<qp-tab id="tab-Collected" caption="Collected">
+			<qp-splitter id="splitter-Collected" split="height">
+				<split-pane id="splitPaneA-Collected">
+					<qp-grid id="grid-CollectedDefault" view.bind="DeltaResourcesDistinct" caption="Default Values" on-filter-columns.call="onFilterColumns(col)" 
+						wg-container="DeltaResourcesDistinct_gridValue"></qp-grid>
+				</split-pane>
+				<split-pane id="splitPaneB-Collected">
+					<qp-grid id="grid-CollectedKey" view.bind="ExceptionalResources" caption="Key-Specific Values" on-filter-columns.call="onFilterColumns(col)" 
+						wg-container="ExceptionalResources_gridValueExceptional"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+
+		<qp-tab id="tab-Obsolete" caption="Obsolete">
+			<qp-splitter id="splitter-Obsolete" split="height">
+				<split-pane id="splitPaneA-Obsolete">
+					<qp-grid id="grid-ObsoleteDefault" view.bind="DeltaResourcesDistinctObsolete" caption="Default Values"  on-filter-columns.call="onFilterColumns(col)" 
+						wg-container="DeltaResourcesDistinctObsolete_gridValueObsolete"></qp-grid>
+				</split-pane>
+				<split-pane id="splitPaneB-Obsolete">
+					<qp-grid id="grid-ObsoletedKey" view.bind="ExceptionalResourcesObsolete" caption="Key-Specific Values"  on-filter-columns.call="onFilterColumns(col)" 
+						wg-container="ExceptionalResourcesObsolete_gridValueExceptionalObsolete"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+
+	</qp-tabbar>
+
+	<qp-panel id="UsageDetails" caption="Usage Details" auto-repaint="true" width="md" height="60vh">
+		<qp-grid id="grid-UsageDetails" view.bind="UsageDetails" wg-container="UsageDetails_edUsageGrid"></qp-grid>
+		<footer>
+			<qp-button id="buttonOK-UsageDetails" caption="Open UI Element" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-UsageDetails" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

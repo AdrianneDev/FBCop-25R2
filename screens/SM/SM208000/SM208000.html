@@ -1,0 +1,438 @@
+<template>
+	<qp-template id="main_form" name="1-1-1" class="equal-height" wg-container="Designs_form">
+		<qp-fieldset id="Designs_form" slot="A" view.bind="Designs">
+			<field name="Name"></field>
+			<field name="Mode" wg-field unbound caption="Mode">
+				<qp-radio value.two-way="Mode"
+					class="col-12"
+					config.bind="{
+						id: 'edCurrentDesign-DesignerMode',
+						options: [{
+							text: DesignerModeCaption.LowCode,
+							value: 'L'
+						}, {
+							text: DesignerModeCaption.Advanced,
+							value: 'A'
+						}]
+					}">
+				</qp-radio>
+			</field>
+		</qp-fieldset>
+
+		<qp-fieldset id="Designs_sitemap" slot="B" view.bind="Designs">
+			<field name="SitemapTitle"></field>
+			<field name="SitemapScreenID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="TablesTab" caption="Data Sources" load-on-demand="true" visible.bind="Mode !== 'A'">
+			<qp-grid id="Tables_grdTables" view.bind="Tables" wg-container></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="QueryTab" caption="Query" visible.bind="Mode === 'A'">
+			<div class="splash loading" if.bind="loading"></div>
+			<qp-wait-cursor></qp-wait-cursor>
+
+			<table width="100%" if.bind="CurrentDesign.IsDraft">
+				<tr>
+					<td width="100%">
+						<qp-info-box id="edCurrentDesign-IsDraft" if.bind="CurrentDesign.IsDraft.value"
+							caption="The generic inquiry configuration has been updated since your last draft. Your query draft may not include the latest changes."
+							type="warning">
+						</qp-info-box>
+					</td>
+					<td>
+						<qp-button id="buttonRevert" if.bind="CurrentDesign.IsDraft.value" state.bind="revertDraft"></qp-button>
+					</td>
+				</tr>
+			</table>
+
+			<div class="stretch v-stack">
+				<qp-code-editor class="v-stack" style="min-height: 125px" visible.bind="Mode === 'A'" view-model.ref="queryCodeEditor"
+					config.bind="{ id: 'edCurrentDesign-Query', language: 'giql' }" state.bind="CurrentDesign.Query">
+				</qp-code-editor>
+			</div>
+
+			<qp-fieldset id="noSortWarning" view.bind="CurrentDesign">
+				<field name="DefaultSortOrder"></field>
+			</qp-fieldset>
+		</qp-tab>
+
+		<qp-tab id="RelationsTab" caption="Relations" load-on-demand="true" visible.bind="Mode !== 'A'">
+			<qp-grid id="Relations_grdJoins" view.bind="Relations" caption="Table Relations" wg-container></qp-grid>
+			<qp-grid id="JoinConditions_grdOns" view.bind="JoinConditions" caption="Data Field Links For Active Relation" wg-container></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="ParametersTab" caption="Parameters" visible.bind="Mode !== 'A'">
+			<qp-template id="parameters_colCountTemplate" name="1-1-1" wg-container="CurrentDesign_tab">
+				<qp-fieldset id="parameters_colCount" slot="A" view.bind="Designs">
+					<field name="FilterColCount">
+						<qp-label id="lblColumns" caption="Columns"></qp-label>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="Parameters_grdFilter" view.bind="Parameters" view-model.ref="parametersGrid" wg-container></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="ConditionsTab" caption="Conditions" load-on-demand="true" visible.bind="Mode !== 'A'">
+			<qp-grid id="Wheres_grdWheres" view.bind="Wheres" wg-container></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="GroupingTab" caption="Grouping" load-on-demand="true" visible.bind="Mode !== 'A'">
+			<qp-grid id="GroupBy_grdGroupBy" view.bind="GroupBy" wg-container></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="SortingTab" caption="Sort Order" visible.bind="Mode !== 'A'">
+			<qp-grid id="Sortings_grdSorts" view.bind="Sortings" wg-container></qp-grid>
+
+			<qp-fieldset id="frmSorts" view.bind="CurrentDesign" wg-container="CurrentDesign_frmSorts">
+				<field name="DefaultSortOrder"></field>
+			</qp-fieldset>
+		</qp-tab>
+
+		<qp-tab id="ResultsGridTab" caption="Results Grid" load-on-demand="true" visible.bind="Mode !== 'A'">
+			<qp-template id="form_rowstyle" name="1-1-1" wg-container>
+				<qp-fieldset id="CurrentDesign_frmRowStyle" slot="A" view.bind="CurrentDesign" wg-container>
+					<field name="RowStyleFormula" control-type="qp-formula-combo"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="Results_grdResults" view.bind="Results" wg-container></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="InterfaceOptionsTab" caption="Interface Options" load-on-demand="true">
+			<qp-template id="interfaceOptions" name="1-1-1" class="equal-height" wg-container="Designs_form">
+				<qp-fieldset id="Designs_records_settings" slot="A" view.bind="Designs">
+					<field name="SelectTop">
+						<qp-label id="lblRecords" caption="Records"></qp-label>
+					</field>
+					<field name="PageSize">
+						<qp-label id="lblPgSize" caption=""></qp-label>
+					</field>
+					<field name="ExportTop">
+						<qp-label id="lblExportTop" caption="Records"></qp-label>
+					</field>
+					<field name="NotesAndFilesTable"></field>
+					<field name="ShowDeletedRecords"></field>
+					<field name="ShowArchivedRecords"></field>
+				</qp-fieldset>
+
+				<qp-fieldset id="Designs_checkboxes" slot="B" view.bind="Designs" class="no-label">
+					<field name="ExposeViaOData"></field>
+					<field name="ExposeViaMobile"></field>
+					<field name="MLDetectionEnabled"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="EntryPointTab" caption="Entry Point" load-on-demand="true">
+			<qp-template id="EntryPointTemplate" name="1-1">
+				<qp-fieldset id="EntryPoint"
+					slot="A"
+					view.bind="CurrentDesign"
+					caption="Entry Screen Settings"
+					wg-container="CurrentDesign_tab">
+					<field name="PrimaryScreenID"></field>
+					<field name="ReplacePrimaryScreen"></field>
+				</qp-fieldset>
+
+				<qp-fieldset id="EntryPointCheckboxes"
+					slot="A"
+					view.bind="CurrentDesign"
+					caption="Operations with records"
+					class="no-label"
+					wg-container="CurrentDesign_tab">
+					<field name="MassActionsOnRecordsEnabled"></field>
+					<field name="MassDeleteEnabled"></field>
+					<field name="AutoConfirmDelete"></field>
+					<field name="MassRecordsUpdateEnabled"></field>
+					<field name="NewRecordCreationEnabled"></field>
+				</qp-fieldset>
+
+				<qp-grid id="RecordDefaults_grdRecordDefaults"
+					slot="B"
+					view.bind="RecordDefaults"
+					caption="New Record Defaults"
+					class="framed-section"
+					wg-container></qp-grid>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="NavigationTab" caption="Navigation" load-on-demand="true">
+			<qp-splitter id="NavigationSplitter" split="width" initial-split="37%">
+				<split-pane>
+					<qp-grid id="NavigationScreens_grdNavScreens" view.bind="NavigationScreens" wg-container></qp-grid>
+				</split-pane>
+
+				<split-pane>
+					<qp-template id="frmNavSidePanelTemplate" name="1-1">
+						<qp-fieldset id="frmNavSidePanel"
+							slot="A"
+							view.bind="CurrentNavigationScreen"
+							caption="Side Panel Settings"
+							wg-container="SidePanelSettings_frmNavWindowMode">
+							<field name="Icon"></field>
+							<field name="CustomTitle"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-tabbar id="CurrentDesign_tabNavigationDetails" load-on-demand.bind="false">
+						<qp-tab id="tabNavigationParameters" caption="Navigation Parameters">
+							<qp-grid id="NavigationParameters_grdNavParams" view.bind="NavigationParameters" wg-container></qp-grid>
+						</qp-tab>
+						<qp-tab id="tabNavigationVisibilityConditions" caption="Visibility Conditions">
+							<qp-grid id="NavigationConditions_grdNavigationConditions"
+								view.bind="NavigationConditions"
+								wg-container></qp-grid>
+						</qp-tab>
+					</qp-tabbar>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+
+		<qp-tab id="AnomaliesTab"
+			caption="Anomaly Detection"
+			if.bind="Designs.MLDetectionEnabled.value==true"
+			load-on-demand="true">
+			<qp-template id="AnomaliesTemplate" name="1-1">
+				<qp-fieldset id="MainSettingsFieldSet" slot="A" view.bind="CurrentDesign" wg-container="CurrentDesign_tab">
+					<field name="MLTargetColumn"></field>
+					<field name="MLTimeAxis"></field>
+				</qp-fieldset>
+				<qp-fieldset id="GroupSettingsFieldSet" slot="A" wg-container="CurrentDesign_tab" caption="Grouping">
+					<field name="CurrentDesign.SkipEmptyGroups" unbound replace-content>
+						<div slot="label" class="no-label col-12">
+							<qp-field control-state.bind="CurrentDesign.SkipEmptyGroups">
+							</qp-field>
+						</div>
+					</field>
+					<field name="MLGroups" unbound replace-content>
+						<qp-grid id="MLGroups_grdMLGroups" wg-container="MLGroups_grdMLGroups" view.bind="MLGroups" class="col-12"></qp-grid>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset id="ScheduleSettingsFieldSet" slot="A" view.bind="CurrentDesign" wg-container="CurrentDesign_tab" caption="Update Frequency">
+					<field name="MLReCalcIntervalType"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="MassUpdateTab"
+			caption="Mass Update Fields"
+			if.bind="CurrentDesign.MassRecordsUpdateEnabled.value==true"
+			load-on-demand="true">
+			<qp-grid id="MassUpdateFields_grdMassUpdFields" view.bind="MassUpdateFields" wg-container></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="MassActionsTab"
+			caption="Mass Actions"
+			if.bind="CurrentDesign.MassActionsOnRecordsEnabled.value==true"
+			load-on-demand="true">
+			<qp-grid id="MassActions_grdMassActions" view.bind="MassActions" wg-container></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="ValuesLabels" caption="Combo Box Values" auto-repaint="true">
+		<qp-grid id="ValuesLabels_grdValuesLabels" view.bind="ValuesLabels" wg-container="ValuesLabels_gridCombos"></qp-grid>
+		<footer>
+			<qp-button id="btnCombos" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="RelatedTables" caption="Related Tables" auto-repaint="true" width="md" height="85vh"
+		wg-container="RelatedTables_formRelations">
+		<qp-template id="formRelations" name="1-1">
+			<qp-fieldset id="formRelationsParent" slot="A" view.bind="RelatedTables">
+				<field name="ParentTable"></field>
+				<field name="ParentAlias"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="formRelationsChild" slot="B" view.bind="RelatedTables">
+				<field name="ChildTable"></field>
+				<field name="ChildAlias"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-template id="formRelationsOtherTemplate" name="1">
+			<qp-fieldset id="formRelationsOther" slot="A" view.bind="RelatedTables">
+				<field name="IncludeHidden"></field>
+				<field name="Relation" config-enabled.bind="false" config-type.bind="1" config-rows.bind="2"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="TablesInformation_gridTables" view.bind="TablesInformation" wg-container></qp-grid>
+
+		<footer>
+			<qp-button id="btnAddRelTbl" dialog-result="OK" caption="Add"></qp-button>
+			<qp-button id="btnClosePnl" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ChangeIDDialog" caption="Change Inquiry Title" auto-repaint="true">
+		<qp-fieldset id="ChangeIDDialog_rlAcctCD" view.bind="ChangeIDDialog" wg-container="ChangeIDDialog_formChangeID">
+			<field name="CD"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnChangeTitle" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancelChangeTitle" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CreateCopyOrOverwriteGIDialog" caption="Copy Generic Inquiry" auto-repaint="true">
+		<qp-fieldset id="CreateCopyOrOverwriteGIDialog_lrMessage"
+			view.bind="CreateCopyOrOverwriteGIDialog"
+			class="transparent-pane"
+			wg-container="CreateCopyOrOverwriteGIDialog_formCreateCopy">
+			<field name="CreateCopyOrOverwriteMessage" unbound replace-content>
+				<qp-info-box id="edCreateCopyOrOverwriteGIDialog-Message"
+					caption.bind="CreateCopyOrOverwriteGIDialog.Message.value"
+					type="warning">
+				</qp-info-box>
+			</field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnCopy" dialog-result="Yes" caption="Copy"></qp-button>
+			<qp-button id="btnOverwrite" dialog-result="No" caption="Overwrite"></qp-button>
+			<qp-button id="btnCancelCopying" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="DeleteUsedGIDialog" caption="Delete Generic Inquiry" auto-repaint="true">
+		<qp-fieldset id="DeleteUsedGIDialog_lrMessage"
+			view.bind="DeleteUsedGIDialog"
+			class="transparent-pane"
+			wg-container="DeleteUsedGIDialog_formDeleteUsedGI">
+			<field name="DeleteUsedGIMessage" unbound replace-content>
+				<qp-info-box id="edDeleteUsedGIDialog-Message"
+					caption.bind="DeleteUsedGIDialog.Message.value"
+					type="warning">
+				</qp-info-box>
+			</field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnDeleteGI" dialog-result="OK" caption="Delete"></qp-button>
+			<qp-button id="btnCancelGiDeletion" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="DeleteUsedFieldDialog" caption="Remove Field" auto-repaint="true">
+		<qp-fieldset id="DeleteUsedFieldDialog_lrMessage"
+			view.bind="DeleteUsedFieldDialog"
+			class="transparent-pane"
+			wg-container="DeleteUsedFieldDialog_formDeleteUsedField">
+			<field name="DeleteUsedFieldMessage" unbound replace-content>
+				<qp-info-box id="edDeleteUsedFieldDialog-Message"
+					caption.bind="DeleteUsedFieldDialog.Message.value"
+					type="warning">
+				</qp-info-box>
+			</field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnDelete" dialog-result="OK" caption="Remove"></qp-button>
+			<qp-button id="btnCancelFieldDeletion" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="OverwriteExistingOnImportDialog" auto-repaint="true">
+		<qp-fieldset id="OverwriteExistingOnImportDialog_lrMessage"
+			view.bind="OverwriteExistingOnImportDialog"
+			wg-container="OverwriteExistingOnImportDialog_formOverwriteExistingOnImportDialog">
+			<field name="Message"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnOverwriteExistingOnImportDialogYes" dialog-result="Yes" caption="Import"></qp-button>
+			<qp-button id="btnOverwriteExistingOnImportDialogNo" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ExitAdvancedModeDialog" caption="Exit Advanced Mode">
+		<qp-fieldset id="ExitAdvancedMode_Message"
+			view.bind="ExitAdvancedModeDialog"
+			class="transparent-pane">
+			<field name="StaticText" wg-field unbound replace-content>
+				<div i18n>
+					Your current query is invalid and will not affect the generic inquiry configuration until it is corrected or completed.
+					If you exit Advanced Mode now, the query will be saved as a draft and can be finalized later. Do you wish to proceed with exiting Advanced Mode?
+				</div>
+			</field>
+			<field name="ExitAdvancedModeMessage" unbound replace-content>
+				<qp-info-box id="edExitAdvancedModeDialog-Message"
+					caption.bind="ExitAdvancedModeDialog.Message.value"
+					type="warning">
+				</qp-info-box>
+			</field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnExit" dialog-result="OK" caption="Exit Advanced Mode" class="major-button"></qp-button>
+			<qp-button id="btnStay" dialog-result="Cancel" caption="Stay in Advanced Mode" class="major-button"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SaveDraftDialog" caption="Save Generic Inquiry">
+		<qp-fieldset id="SaveDraftDialog_Message"
+			view.bind="SaveDraftDialog"
+			class="transparent-pane">
+			<field name="StaticText" wg-field unbound replace-content>
+				<div i18n>
+					Your current query is invalid and will not affect the generic inquiry configuration until it is corrected or completed.
+					If you save now, the query will be saved as a draft and can be finalized later. Do you wish to proceed with saving the generic inquiry?
+				</div>
+			</field>
+			<field name="SaveDraftMessage" unbound replace-content>
+				<qp-info-box id="edSaveDraftMessage"
+					caption="Your current query is invalid and will not affect the generic inquiry configuration until it is corrected or completed. If you save now, the query will be saved as a draft and can be finalized later. Do you wish to proceed with saving the generic inquiry?">
+				</qp-info-box>
+			</field>
+			<field name="SaveDraftDetails" unbound replace-content>
+				<qp-info-box id="edSaveDraftDialog-Message"
+					caption.bind="SaveDraftDialog.Message.value"
+					type="warning">
+				</qp-info-box>
+			</field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="btnCancelSavingDraft" dialog-result="Cancel" caption="Cancel" class="major-button"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ApplyChangesDialog" caption="Override Draft with Current Configuration">
+		<qp-fieldset id="ApplyChangesDialog_Message" view.bind="ApplyChangesDialog">
+			<field name="StaticText" wg-field unbound replace-content>
+				<div i18n>
+					The generic inquiry configuration has been modified since the last saved query draft.
+					Do you want to override the draft with the current configuration or continue working with the previously saved draft?
+				</div>
+			</field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnApply" dialog-result="OK" caption="Override Draft" class="major-button"></qp-button>
+			<qp-button id="btnCancelApplyingChanges" dialog-result="Cancel" caption="Continue with Draft" class="major-button"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="RevertConfigurationDialog" caption="Revert to Current Configuration">
+		<qp-fieldset id="RevertConfigurationDialog_Message" view.bind="RevertConfigurationDialog">
+			<field name="StaticText" wg-field unbound replace-content>
+				<div i18n>
+					This action will replace your current query draft with the latest generic inquiry configuration.
+					Any unsaved changes in your draft will be lost permanently. Do you wish to proceed?
+				</div>
+			</field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnRevert" dialog-result="OK" caption="Revert" class="major-button"></qp-button>
+			<qp-button id="btnCancelRevertingConfiguration" dialog-result="Cancel" caption="Cancel" class="major-button"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-include url="src/screens/common/panel-publish-to-ui/panel-publish-to-ui.html"></qp-include>
+</template>

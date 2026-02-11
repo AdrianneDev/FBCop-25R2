@@ -1,0 +1,60 @@
+<template>
+	<require from="../common/arm/arm.scss"></require>
+	<qp-fieldset id="rowSetFieldset" class="hidden">
+		<!-- TODO: this block is a workaround for a bug in platform -->
+		<field name="UnitSet.UnitSetCode"></field>
+		<field name="UnitSet.Type"></field>
+		<field name="UnitSet.Description"></field>
+	</qp-fieldset>
+	<qp-splitter id="splitterMain" initial-split="60%" split="width">
+		<split-pane>
+			<div class="arm-pane">
+				<qp-tree id="tree" caption="Units" view.bind="ItemsWORoot"></qp-tree>
+			</div>
+		</split-pane>
+		<split-pane>
+			<div class="arm-pane">
+				<qp-fieldset id="groupColumValue" view.bind="CurrentUnit" caption="" class="label-size-sm">
+					<field name="UnitCode"></field>
+					<field name="Description"></field>
+					<field name="Formula" caption="Calculation Formula" control-type="qp-formula-editor"></field>
+				</qp-fieldset>
+
+				<qp-include show.bind="!CurrentHeader.isRealHeader"
+					url="../common/arm/arm-data-source.html"
+					view="CurrentDataSource"></qp-include>
+
+				<qp-fieldset id="groupViewCondition" view.bind="CurrentUnit" caption="View Condition" class="label-size-sm">
+					<field name="GroupID"></field>
+				</qp-fieldset>
+			</div>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="NewUnitSetPanel" caption="New Unit Set" auto-repaint="true" close-button-locator="#pbCancel">
+		<qp-template id="newUnitSetPanelDataId" wg-container name="1">
+			<qp-fieldset slot="A" id="newUnitSetPanelDataId1" view.bind="NewUnitSetPanel">
+				<field name="UnitSetCode"></field>
+				<field name="Type"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="pbClose" dialog-result="OK" caption="Save" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="Parameter" caption="Copy Unit Set" auto-repaint="true" close-button-locator="#pbCancel">
+		<qp-template id="copyUnitSetPanelDataId" wg-container name="1">
+			<qp-fieldset slot="A" id="copyUnitSetPanelDataId1" view.bind="Parameter">
+				<field name="NewUnitSetCode"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="pbClose" dialog-result="OK" caption="Save" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

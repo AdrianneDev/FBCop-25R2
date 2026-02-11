@@ -1,0 +1,37 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" wg-container="Filter_form" class="equal-height">
+			<qp-fieldset id="fs-Dates" view.bind="Filter" slot="A">
+				<field name="OwnerID"></field>
+				<field name="FromWeek" config-display-mode.bind="text"></field>
+				<field name="TillWeek" config-display-mode.bind="text"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-Projects" view.bind="Filter" slot="B">
+				<field name="ProjectID"></field>
+				<field name="ProjectTaskID"></field>
+				<field name="IncludeReject"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-Total" view.bind="Filter" caption="Total" class="highlights-section" slot="C">
+				<field name="RegularTotal" caption="Time Spent"></field>
+				<field name="BillableTotal" caption="Billable"></field>
+			</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Grid" caption="Details">
+			<qp-grid id="grid-Activity" view.bind="Activity" wg-container="activity_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab-Time" caption="Totals">
+			<div id="div-Time" class="v-stack col-lg-7_24">
+				<qp-fieldset id="fs-Time" wg-container="Filter_form" view.bind="Filter" caption="Regular" class="highlights-section">
+					<field name="RegularTime" caption="Time Spent"></field>
+					<field name="BillableTime" caption="Billable"></field>
+				</qp-fieldset>
+
+				<qp-fieldset id="fs-Overtime" wg-container="Filter_form" view.bind="Filter" caption="Overtime" class="highlights-section">
+					<field name="RegularOvertime" caption="Time Spent"></field>
+					<field name="BillableOvertime" caption="Billable"></field>
+				</qp-fieldset>
+			</div>
+		</qp-tab>
+	</qp-tabbar>
+</template>

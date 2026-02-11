@@ -1,0 +1,12 @@
+<template>
+	<qp-panel id="GILinesProcessedDetails" caption="Anomaly Detection Usage Statistics" auto-repaint="true" height="50vh">
+		<qp-info-box type="info" text.bind="GILinesProcessedFilter.InfoMessage.value"></qp-info-box>
+		<qp-fieldset slot="A" id="GILinesProcessedFilter" view.bind="GILinesProcessedFilter">
+			<field name="Date"></field>
+		</qp-fieldset>
+		<qp-grid slot="A" id="gridGILinesProcessedDetails" caption="Breakdown by Generic Inquiry" view.bind="GILinesProcessedDetails"></qp-grid>
+		<footer>
+			<qp-button id="gridGILinesButtonOK" dialog-result="OK" caption="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,62 @@
+<template>
+	<require from="./style.scss"></require>
+	<qp-template name="7-10-7" id="DocumentFormMain">
+		<qp-fieldset slot="A" id="form1" wg-container="Document_form" view.bind="Document">
+			<field name="TimeCardCD"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="OrigTimecardCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Document_PXLayoutRule4" wg-container="Document_form" view.bind="Document">
+			<field name="WeekID"></field>
+			<field name="EmployeeID"></field>
+			<field name="TimecardType"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form4" wg-container="Document_form" caption="Total" class="highlights-section" view.bind="Document">
+			<field name="TotalSpentCalc" caption="Time Spent"></field>
+			<field name="TotalBillableCalc" caption="Billable"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tab_0" caption="Summary">
+			<qp-grid id="Summary_gridDetails" wg-container view.bind="Summary" on-data-ready.call="onSummaryGridDataReadyHandler(grid, args)"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_1" caption="Details" load-on-demand.bind="false">
+			<qp-grid id="Activities_gridActivities" wg-container view.bind="Activities"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabTimeLogs" caption="Time Log">
+			<qp-grid id="TimeLogs_gridItems" wg-container view.bind="TimeLogs"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_2" caption="Materials">
+			<qp-grid id="Items_gridItems" wg-container view.bind="Items"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+
+		<qp-tab id="tab_4" caption="Totals">
+			<qp-template name="7-17" id="DocumentFormTotals">
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="form2" wg-container="Document_form" caption="Regular" class="highlights-section" view.bind="Document">
+						<field name="TimeSpentCalc" caption="Time Spent"></field>
+						<field name="TimeBillableCalc" caption="Billable"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="form3" wg-container="Document_form" caption="Overtime" class="highlights-section" view.bind="Document">
+						<field name="OvertimeSpentCalc" caption="Time Spent"></field>
+						<field name="OvertimeBillableCalc" caption="Billable"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="Tasks" wg-container="Tasks_Tasks" caption="Preload from Tasks" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="Tasks_gridAddTasks" wg-container view.bind="Tasks"></qp-grid>
+		<footer>
+			<qp-button id="PXButton2" caption="Preload From Tasks" state.bind="PreloadFromTasks" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton3" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,28 @@
+<template>
+	<div class="sp-feed-item no-animation ${(FilteredItems.SiteQtyAvail.value >= 1) ? '' : 'sp-item-out-of-stock'}">
+		<qp-fieldset id="fsCatalog" view.bind="FilteredItems">
+			<field name="unboundImage" unbound replace-content>
+				<div class="sp-image">
+					<div if.bind="FilteredItems.Data.value !== ''" class="sp-image-blob"
+						style="background-image: url(data:image/png;base64,${FilteredItems.Data.value})"></div>
+					<div if.bind="FilteredItems.Data.value === ''" class="sp-image-empty">
+						<qp-hyper-icon images.bind="{ normal: 'svg:sp@photo' }"></qp-hyper-icon>
+					</div>
+				</div>
+			</field>
+			<field name="Descr" replace-content>
+				<div control-id="edFilteredItems-Descr" class="sp-item-descr">${FilteredItems.Descr.value}</div>
+			</field>
+			<field name="CuryUnitPriceWithSymbol" no-label="true" class="sp-item-price"></field>
+			<field name="IAStatus" no-label="true" class="sp-item-stock"></field>
+			<field name="unboundViewDetails" unbound replace-content>
+				<qp-button class="sp-view-details" state.bind="ViewDetails"></qp-button>
+			</field>
+		</qp-fieldset>
+		<div>
+			<qp-button class="sp-add-to-cart" state.bind="AddToCart"
+				config.bind="{ displayIconAndText: true, images: { normal: 'svg:main@plus' }, views: ['BaseInfo'] }">
+			</qp-button>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="Prefs_template" name="1-1" class="label-size-xm" wg-container="Prefs_form">
+		<div id="Prefs_form" slot="A" class="v-stack">
+			<qp-fieldset id="Prefs_General" view.bind="Prefs" caption="General">
+				<field name="DefaultEMailAccountID"></field>
+				<field name="RepeatOnErrorSending"></field>
+				<field name="SuspendEmailProcessing"></field>
+				<field name="SendUserEmailsImmediately"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Prefs_Tracking" view.bind="Prefs" caption="Tracking">
+				<field name="EmailTagPrefix"></field>
+				<field name="EmailTagSuffix"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Prefs_Notifications" view.bind="Prefs" caption="Notifications">
+				<field name="NotificationSiteUrl"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Prefs_Logging" view.bind="Prefs" caption="Logging">
+				<field name="EmailProcessingLogging"></field>
+				<field name="EmailProcessingLoggingRetentionPeriod"></field>
+				<field name="ArchiveEmailsOlderThan"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

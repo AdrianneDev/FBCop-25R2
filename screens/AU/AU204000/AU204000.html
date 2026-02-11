@@ -1,0 +1,21 @@
+<template>
+	<qp-grid id="grid-Items" wg-container="Items_grid" view.bind="Items"></qp-grid>
+	<qp-panel id="FilterNewFile"
+			  caption="Create Code File"
+			  auto-repaint="true"
+			  width="40vw">
+		<qp-template id="form-NewFile" wg-container="FilterNewFile_FormNewFile" name="1">
+			<qp-fieldset id="fs-FilterNewFile" view.bind="FilterNewFile" slot="A">
+				<field name="FileTemplateName"></field>
+				<field name="BaseDac"></field>
+				<field name="BaseGraph"></field>
+				<field name="FileClassName"></field>
+				<field name="GenerateDacMembers"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK-FilterNewFile" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-FilterNewFile" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

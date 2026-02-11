@@ -1,0 +1,12 @@
+<template>
+	<qp-tab after="#tabMailingPrintingPreferences" id="tabCanadianTaxReporting" caption="Canadian Tax Reporting">
+		<qp-template name="1-1" id="formT5018" class="label-size-xm">
+			<qp-fieldset id="groupT5018" slot="A" caption="T5018 Settings" view.bind="Setup" wg-container="Setup_CanadianTaxReporting">
+				<field name="T5018ThresholdAmount"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupT4A" slot="A" caption="T4A Settings" view.bind="Setup" wg-container="Setup_CanadianTaxReporting">
+				<field name="T4AThresholdAmount"></field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-tab>
+</template>

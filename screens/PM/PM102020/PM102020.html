@@ -1,0 +1,13 @@
+<template>
+	<qp-template
+		name="1-1"
+		class="equal-height label-size-m"
+		id="ProjectGroup_form"
+		wg-container>
+		<qp-fieldset slot="A" id="form" view.bind="ProjectGroup">
+			<field name="ProjectGroupID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Groups"></qp-grid>
+</template>

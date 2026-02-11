@@ -1,0 +1,25 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="../catalog/catalog.scss"></require>
+	<require from="./SP504001.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="sp-catalog sp-wide-screen sp-wide-feed-container" tabindex="0">
+		<qp-data-feed
+			id="dfItems"
+			class="no-toolbar sp-catalog-feed"
+			view.bind="FilteredItems"
+			page-size.bind="20"
+			auto-resize="true"
+			allow-filter="true"
+			show-filter-bar="always"
+			show-filter-picker="false"
+			allow-stored-filters="false"
+			show-stored-filters="true">
+			<template>
+				<qp-include url="../catalog/catalog.html"></qp-include>
+			</template>
+		</qp-data-feed>
+	</div>
+</template>

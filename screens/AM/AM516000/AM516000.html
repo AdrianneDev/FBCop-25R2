@@ -1,0 +1,10 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="EmployeeID" config-allow-edit.bind="true"></field>
+			<field name="OrderType"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="UnapprovedTrans"></qp-grid>
+</template>

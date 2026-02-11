@@ -1,0 +1,151 @@
+<template>
+	<require from="../common/pm-status-colors-common.scss"></require>
+	<qp-template name="7-10-7"
+				 class="equal-height label-size-sm"
+				 id="Document_form"
+				 wg-container
+				 qp-collapsible>
+		<qp-fieldset slot="A" id="form01" view.bind="Document">
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="InvoiceDate"></field>
+			<field name="FinPeriodID"></field>
+			<field name="InvoiceNbr" pinned></field>
+			<field name="ProjectNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Document">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="LocationID" pinned="false"></field>
+			<field name="CuryID"
+				   control-type="qp-currency"
+				   view.bind="CurrencyInfo"
+				   pinned="false">
+			</field>
+			<using view="Project" wg-container="Project_form"></using>
+			<field name="ProjectCuryDummy"
+				   unbound
+				   replace-content>
+				<qp-field wg-container="Project_form"
+						  control-state.bind="Project.CuryID"
+						  pinned="false">
+				</qp-field>
+			</field>
+			<field name="Description" config-rows.bind="3" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C"
+					 id="form03"
+					 view.bind="Document"
+					 class="highlights-section">
+			<field name="CuryProgressiveTotal" pinned></field>
+			<field name="CuryTransactionalTotal" pinned></field>
+			<field name="CuryTaxTotalWithRetainage" pinned></field>
+			<field name="CuryDocTotal" pinned></field>
+			<field name="Overflow.CuryOverflowTotal"></field>
+			<field name="CuryRetainageTotal"></field>
+			<field name="CuryAmountDue"></field>
+			<field name="RetainagePct"></field>
+			<field name="CuryAllocatedRetainedTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="DocumentSettings_tab" wg-container>
+		<qp-tab id="ProgressBillingTab" caption="Progress Billing">
+			<qp-grid id="ProgressiveLines_ProgressiveLinesGrid" view.bind="ProgressiveLines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="TimeAndMaterialTab" caption="Time and Material">
+			<qp-grid id="TransactionLines_TransactionLinesGrid" view.bind="TransactionLines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-template name="17-7" id="TaxesForm">
+				<div slot="A">
+					<qp-grid id="TaxDetailsGrid" view.bind="Taxes" class="framed-section"></qp-grid>
+				</div>
+				<div slot="B">
+					<qp-fieldset
+						id="DocumentSettingsForm02"
+						view.bind="DocumentSettings"
+						caption="Tax Info"
+						class="label-size-sm">
+						<field name="TaxZoneID"></field>
+						<field name="ExternalTaxExemptionNumber"></field>
+						<field name="AvalaraCustomerUsageType"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="FinancialTab" caption="Financial">
+			<qp-template name="1-2" id="FinancialForm">
+				<div slot="A">
+					<qp-fieldset id="DocumentSettingsForm01"
+						view.bind="DocumentSettings"
+						caption="AR Invoice Info">
+						<field name="ARInvoiceDocType"></field>
+						<field name="ARInvoiceRefNbr"></field>
+						<field name="ARInvoiceRefName" config-link-command.bind="'ViewARDocument'"></field>
+						<field name="ARInvoiceRefStatus"></field>
+						<field name="BranchID" pinned="false"></field>
+						<field name="TermsID"></field>
+						<field name="DueDate"></field>
+						<field name="DiscDate"></field>
+					</qp-fieldset>
+					<qp-fieldset id="DocumentSettingsForm03"
+								 view.bind="DocumentSettings"
+								 caption="Other Info"
+								 class="label-size-sm">
+						<field name="IsMigratedRecord"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid
+						id="gridRevisions"
+						view.bind="Revisions"
+						caption="Previous Revisions"
+						class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+		<qp-tab id="AddressesTab" caption="Addresses">
+			<qp-template name="17-17-14" id="AddressForm">
+				<div slot="A">
+					<qp-include url="src/screens/common/form-contact-document/form-contact-document.html"
+								fs-id="Billing_Contact"
+								contact-view="Billing_Contact"
+								fs-wg-container="Billing_Contact_Billing_Contact"
+								fs-caption="Bill-To Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+								fs-id="Billing_Address_Billing_Address"
+								fs-wg-container
+								address-view="Billing_Address"
+								fs-caption="Bill-To Address"></qp-include>
+				</div>
+				<div slot="B">
+					<qp-include url="src/screens/common/form-contact-document/form-contact-document.html"
+								fs-id="Shipping_Contact"
+								contact-view="Shipping_Contact"
+								fs-wg-container="Shipping_Contact_Shipping_Contact"
+								fs-caption="Ship-To Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+								fs-id="Shipping_Address_Shipping_Address"
+								fs-wg-container
+								address-view="Shipping_Address"
+								fs-caption="Ship-To Address"></qp-include>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="Details" caption="Transaction Details" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="Details_DetailsGrid" view.bind="Details"></qp-grid>
+	</qp-panel>
+	<qp-panel id="Unbilled" caption="Upload Unbilled Transactions" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="Unbilled_UnbilledGrid" view.bind="Unbilled"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" state.bind="AppendSelected"></qp-button>
+			<qp-button id="PXButtonAddClose" caption="Upload & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButtonClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

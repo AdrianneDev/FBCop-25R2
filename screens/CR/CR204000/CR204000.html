@@ -1,0 +1,29 @@
+<template>
+	<qp-template id="MailLists_template" name="1-1" class="equal-height" qp-collapsible wg-container="MailLists_form">
+		<qp-fieldset id="MailLists_formLeft" slot="A" view.bind="MailLists">
+			<field name="MailListCode"></field>
+			<field name="Name"></field>
+			<field name="Type"></field>
+			<field name="GIDesignID"></field>
+			<field name="SharedGIFilter"></field>
+		</qp-fieldset>
+		<qp-fieldset id="MailLists_formRight" slot="B" view.bind="MailLists">
+			<field name="Status"></field>
+			<field name="OwnerID"></field>
+			<field name="WorkgroupID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="MailListsCurrent_tab" wg-container>
+		<qp-tab id="ListMembers_tab" caption="List Members">
+			<qp-grid id="grdSubscribers" view.bind="ListMembers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="MarketingCampaigns_tab" caption="Used in Campaigns">
+			<qp-grid id="grdCampaigns" view.bind="MarketingCampaigns"></qp-grid>
+		</qp-tab>
+		<qp-tab id="Activities_tab" caption="Activities" ref="tabActivities_Content" class="fit-to-content" if.bind="false"></qp-tab>
+		<qp-tab id="HubSpotSyncRecs_tab" caption="HubSpot" ref="tabHubSpot_Content"></qp-tab>
+		<qp-tab id="ProcessingGrid_tab" caption="Processing" if.bind="false">
+			<qp-grid id="grdImportMembers" view.bind="ImportMembers"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

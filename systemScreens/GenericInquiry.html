@@ -1,0 +1,35 @@
+<template>
+	<require from="./GenericInquiry.scss"></require>
+
+	<qp-template id="for_form" name="17-17-14" class="equal-height gi-filter">
+		<qp-fieldset-layout repeat.for="item of layout" layout.bind="item" slot="${layoutTemplateSlots[$index]}">
+		</qp-fieldset-layout>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Results" view-model.ref="gridVM" class="stretch gi-grid">
+	</qp-grid>
+
+	<!-- TODO: It is clone of the template from gi-anomalies-extension.html. Delete it after AC-324091 being completed -->
+	<qp-panel id="GIMLProcessingInfo" caption="Anomaly Settings" width="sm" auto-repaint="true">
+		<qp-info-box type="info" text.bind="GIMLProcessingInfo.GIMLProcessing__anomalySettings.value"></qp-info-box>
+		<qp-fieldset id="fsAnomaly-Settings" view.bind="GIMLProcessingInfo">
+			<field name="mlTargetColumn"></field>
+			<field name="mlTimeAxis"></field>
+			<field name="groupFields"></field>
+			<field name="mlReCalcIntervalType"></field>
+			<field name="GIMLProcessing__importDate"></field>
+			<field name="GIMLProcessing__nextRun"></field>
+		</qp-fieldset>
+	</qp-panel>
+
+	<qp-panel id="Fields" caption="Values for Update" width="sm" height="60vh" auto-repaint="true" close-button-locator="#btnCancelMassUpdates">
+		<qp-info-box type="info" id="selectInfo" caption="Please select the fields you want to update">
+		</qp-info-box>
+		<qp-grid id="grdFields" view.bind="Fields" class="stretch"></qp-grid>
+
+		<footer id="footer-Fields">
+			<qp-button id="btnCancelMassUpdates" dialog-result="Cancel" state.bind="actions.get('actionCloseProcessing')"></qp-button>
+			<qp-button id="btnFinishMassUpdates" dialog-result="OK" caption="Finish" class="major-button"></qp-button>
+		</footer>
+
+	</qp-panel>
+</template>

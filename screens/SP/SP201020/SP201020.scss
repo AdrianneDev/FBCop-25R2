@@ -1,0 +1,23 @@
+#AllowedRolesGrid .grid-top-bar, #AllowedRolesGrid .grid-header {
+	display: none;
+}
+
+#AllowedRolesGrid .grid-content .grid-content-table,
+#AllowedRolesGrid .grid-content .grid-content-wrap,
+#AllowedRolesGrid .grid-content-table > tbody > tr > td {
+	background-color: transparent;
+	border: 0;
+	padding-inline: 0 5px;
+	padding-block: 0;
+    width: auto;
+}
+
+
+#AllowedRolesGrid .grid-content-table td.row-selector {
+	display: none;
+}
+
+.showhidepassword > button.qp-button {
+	min-width: unset;
+	cursor: pointer;
+}

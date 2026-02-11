@@ -1,0 +1,94 @@
+<template>
+	<qp-template id="form" name="1-1" class="equal-height" wg-container="Wikis_form">
+		<div slot="A">
+			<qp-fieldset id="LayoutNode_phF_form_PXLayoutRule#0_virtualGroup"
+				view.bind="Wikis"
+			>
+				<field name="Name"></field>
+				<field name="WikiTitle"></field>
+				<field name="CurrentWiki.WikiDescription" config-rows.bind="5">
+					<qp-label slot="label" caption="Dashboard Description"></qp-label>
+				</field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="phF_form_PXLayoutRule#0_1_virtualGroup"
+				view.bind="Wikis"
+			>
+				<field name="CreatedByID"></field>
+				<field name="CreatedDateTime"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="phG_tab_Items#0" caption="Wiki settings">
+			<qp-template id="phG_tab_Items#0-template" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="phF_form_PXLayoutRule#5"
+						view.bind="Wikis"
+						caption="Approval"
+					>
+						<field name="HoldEntry"></field>
+						<field name="RequestApproval"></field>
+						<field name="ApprovalGroupID"></field>
+						<field name="ApprovalUserID"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="LayoutNode_phG_tab_Items#0_PXLayoutRule#0_virtualGroup"
+						view.bind="CurrentWiki"
+						caption="Look and Feel"
+					>
+						<field name="CssID"></field>
+						<field name="CssPrintID"></field>
+						<field name="SPWikiArticleType"></field>
+						<field name="RootPageID"></field>
+						<field name="RootPrintPageID"></field>
+						<field name="HeaderPageID"></field>
+						<field name="FooterPageID"></field>
+					</qp-fieldset>
+
+					
+				</div>
+
+				<div slot="B">
+					<qp-fieldset id="LayoutNode_phF_form_PXLayoutRule#10_virtualGroup"
+						view.bind="Wikis"
+						caption="Help Dashboard"
+						wg-container="Wikis_form"
+					>
+						<field name="IsActive"></field>
+						<field name="Category"></field>
+						<field name="Position"></field>
+						<field name="DefaultUrl"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="phF_form_PXLayoutRule#15"
+						view.bind="Wikis"
+						caption="Site Map"
+						wg-container="Wikis_form"
+					>
+						<field name="SitemapParent"></field>
+						<field name="SitemapTitle"></field>
+					</qp-fieldset>
+					<qp-fieldset id="phG_tab_Items#0_PXLayoutRule#8"
+						view.bind="CurrentWiki"
+						caption="Miscellaneous"
+					>
+						<field name="SiteMapTagID"></field>
+						<field name="PubVirtualPath"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="phG_tab_Items#1" caption="Access Rights">
+			<qp-grid id="gridAccessRights" view.bind="EntityRoles"></qp-grid>
+		</qp-tab>
+		<qp-tab id="phG_tab_Items#2" caption="Tags">
+			<qp-grid id="gridTags" view.bind="Tags"></qp-grid>
+		</qp-tab>
+		<qp-tab id="phG_tab_Items#3" caption="Locales">
+			<qp-grid id="grdLocales" view.bind="ReadLangs"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

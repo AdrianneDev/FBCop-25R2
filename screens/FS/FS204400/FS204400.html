@@ -1,0 +1,34 @@
+<template>
+	<qp-template id="ManufacturerTemplate" name="1-1" class="label-size-m">
+		<div slot="A">
+			<qp-fieldset id="ManufacturerRecords_form" view.bind="ManufacturerRecords">
+				<field name="ManufacturerCD"></field>
+				<field name="Descr"></field>
+				<field name="ContactID" config-allow-edit.bind="true"></field>
+				<using wg-container="CurrentManufacturer_edManufacturerCurrent" view="CurrentManufacturer">
+					<field name="AllowOverrideContactAddress"></field>
+				</using>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-template id="GeneralTemplate" name="1-1" class="label-size-m">
+		<div slot="A">
+			<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+				fs-id="Manufacturer_Contact_edManufacturer_Contact"
+				contact-view="Manufacturer_Contact"
+				fs-caption="Main Contact"
+				fs-wg-container="Manufacturer_Contact_edManufacturer_Contact">
+			</qp-include>
+		</div>
+		<div slot="B">
+			<qp-include url="src/screens/common/form-address/form-address.html"
+				fs-id="Manufacturer_Address_edManufacturer_Address"
+				address-view="Manufacturer_Address"
+				fs-caption="Main Address"
+				with-validation="false"
+				override-fieldname
+				view-on-map-action-name="ViewonMap"
+			></qp-include>
+		</div>
+	</qp-template>
+</template>

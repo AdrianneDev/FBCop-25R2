@@ -1,0 +1,30 @@
+<template>
+	<qp-include url="../common/au-panel-view-changes.html"></qp-include>
+
+	<qp-grid id="ViewHandlers_gridHandlers" wg-container view.bind="ViewHandlers"></qp-grid>
+	<qp-panel id="FilterHandlerEdit" caption="Event Handler Properties" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="FormHandlerEdit" wg-container="FilterHandlerEdit_FormHandlerEdit" name="1-1" class="equal-height">
+			<qp-fieldset id="FormHandlerEdit_0" view.bind="FilterHandlerEdit" slot="A">
+				<field name="HandlerName"></field>
+				<field name="DisplayName"></field>
+				<field name="EventType"></field>
+				<field name="EventContainerName"></field>
+				<field name="EventName"></field>
+				<field name="TriggeredByChangeOfFieldNames"></field>
+			</qp-fieldset>
+			<qp-fieldset id="FormHandlerEdit_1" view.bind="FilterHandlerEdit" caption="Entity to apply workflow" class="no-label" slot="B">
+				<field name="UseTargetAsPrimarySource"></field>
+				<field name="UseParameterAsPrimarySource"></field>
+				<field name="ViewAsPrimarySource" unbound>
+					<qp-field control-state.bind="FilterHandlerEdit.UseViewAsPrimarySource" class="col-4"></qp-field>
+					<qp-field control-state.bind="FilterHandlerEdit.AllowMultipleSelect" class="col-4"></qp-field>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="HandlerFieldsPerHandler_gridStatehandlersFields" wg-container view.bind="HandlerFieldsPerHandler" caption="Field Update"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonOK" wg-name="Ok1" dialog-result="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="PXButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

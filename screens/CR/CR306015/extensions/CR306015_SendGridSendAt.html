@@ -1,0 +1,18 @@
+<template>
+	<qp-panel id="SendAtInfo"
+		auto-repaint="true"
+		caption="Send At"
+		close-button-locator="#SendAtBtnCancel"
+	>
+		<qp-fieldset id="formSendAt" view.bind="SendAtInfo" class="label-size-s">
+			<field name="SendAt_Date">
+				<qp-field class="col-6" control-state.bind="SendAtInfo.SendAt_Time">
+				</qp-field>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="SendAtBtnOk" dialog-result="OK"> </qp-button>
+			<qp-button id="SendAtBtnCancel" dialog-result="Abort" caption="Cancel"> </qp-button>
+		</footer>
+	</qp-panel>
+</template>

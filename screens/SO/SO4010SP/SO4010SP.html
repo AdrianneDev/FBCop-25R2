@@ -1,0 +1,28 @@
+<template>
+	<qp-template id="form-Filter" name="17-14-17" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="OrderType"></field>
+			<field name="OrderNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter" class="highlights-section">
+			<field name="ShippedQty"></field>
+			<field name="ReturnedQty"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template id="grid-ReturnDocuments" name="1" class="stretch">
+		<div id="divColumnA-ReturnDocuments" slot="A">
+			<qp-grid id="gridRelatedDocuments"
+					view.bind="RelatedReturnDocuments"
+					caption="Related Return Documents"
+					class="framed-section"
+					wg-container="RelatedReturnDocuments_grid">
+			</qp-grid>
+			<qp-grid id="gridReturnsByLine"
+					view.bind="ReturnsByLine"
+					caption="Return Documents by Line"
+					class="framed-section"
+					wg-container="ReturnsByLine_grid2">
+			</qp-grid>
+		</div>
+	</qp-template>
+</template>

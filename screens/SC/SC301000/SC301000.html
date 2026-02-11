@@ -1,0 +1,197 @@
+<template>
+	<require from="./sc301000-status-colors.scss"></require>
+	<qp-template name="7-10-7" class="equal-height" id="Document_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="form01" view.bind="Document">
+			<field name="OrderNbr"></field>
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="Behavior"></field>
+			<field name="RequestApproval"></field>
+			<field name="OrderDate"></field>
+			<field name="ExpectedDate"></field>
+			<field name="ExpirationDate"></field>
+			<field name="VendorRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="OwnerID"></field>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="OrderDesc" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form03" view.bind="Document" class="highlights-section">
+			<field name="CuryDetailExtCostTotal" pinned="true"></field>
+			<field name="CuryLineDiscTotal"></field>
+			<field name="CuryDiscTot"></field>
+			<field name="CuryTaxTotal" pinned="true"></field>
+			<field name="CuryOrderTotal" pinned="true"></field>
+			<field name="CuryControlTotal"></field>
+			<field name="CuryRetainageTotal" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentDocument_tab" wg-container>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-grid id="grid" view.bind="Transactions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-template name="17-7" id="TaxesForm">
+				<div slot="A">
+					<qp-grid id="gridTaxes" view.bind="Taxes" class="framed-section"></qp-grid>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="TaxesInfo" view.bind="CurrentDocument" caption="Tax Info">
+						<field name="TaxZoneID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="TaxesTotals" view.bind="CurrentDocument" caption="Tax Totals" class="highlights-section">
+						<field name="CuryVatExemptTotal"></field>
+						<field name="CuryVatTaxableTotal"></field>
+						<field name="CuryTaxTotal"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="AddressesTab" caption="Addresses">
+			<qp-template name="17-17-14" id="AddressesForm">
+				<div slot="A">
+					<qp-include url="src/screens/common/form-contact-document/form-contact-document.html"
+								fs-id="formVC"
+								contact-view="Remit_Contact"
+								fs-caption="Vendor Contact"></qp-include>
+				</div>
+				<div slot="B">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+								fs-id="formVA"
+								address-view="Remit_Address"
+								fs-caption="Vendor Address"></qp-include>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" if.bind="Document.RequestApproval.value == true">
+		</qp-tab>
+		<qp-tab id="DiscountsTab" caption="Discounts">
+			<qp-grid id="formDiscountDetail" view.bind="DiscountDetails"></qp-grid>
+		</qp-tab>
+		<qp-tab id="BillingTab" caption="Billing">
+			<qp-grid id="formAPDocs" view.bind="APDocs"></qp-grid>
+		</qp-tab>
+		<qp-tab id="PrepaymentsTab" caption="Prepayments">
+			<qp-grid id="PrepaymentGrid" view.bind="PrepaymentDocuments"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ChangeOrdersTab" caption="Change Orders">
+			<qp-grid id="ChangeOrders_ChangeOrdersGrid" view.bind="ChangeOrderDetails"></qp-grid>
+		</qp-tab>
+		<qp-tab id="FinancialTab" caption="Financial">
+			<qp-template name="17-17-14" id="FinancialForm">
+				<div slot="A">
+					<qp-fieldset id="formSlotA01" view.bind="CurrentDocument" caption="Subcontract Info">
+						<field name="BranchID"></field>
+						<field name="TermsID"></field>
+						<field name="ExternalTaxExemptionNumber"></field>
+						<field name="EntityUsageType"></field>
+						<field name="PayToVendorID" config-allow-edit.bind="true"></field>
+						<field name="OwnerWorkgroupID"></field>
+						<field name="PrintingAndEmailingSettingsRow01" unbound>
+							<qp-field control-state.bind="CurrentDocument.DontPrint"
+									  class="col-6">
+							</qp-field>
+							<qp-field control-state.bind="CurrentDocument.Printed"
+									  class="col-6">
+							</qp-field>
+						</field>
+						<field name="PrintingAndEmailingSettingsRow02" unbound>
+							<qp-field control-state.bind="CurrentDocument.DontEmail"
+									  class="col-6">
+							</qp-field>
+							<qp-field control-state.bind="CurrentDocument.Emailed"
+									  class="col-6">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="formSlotA02" view.bind="CurrentDocument" caption="Retainage Settings">
+						<field name="RetainageApply"></field>
+						<field name="DefRetainagePct"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSlotB01" view.bind="CurrentDocument" caption="Discount Totals">
+						<field name="CuryLineDiscTotal"></field>
+						<field name="CuryDiscTot"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSlotB02" view.bind="CurrentDocument" caption="Billing Info">
+						<field name="UnbilledOrderQty"></field>
+						<field name="CuryUnbilledOrderTotal"></field>
+						<field name="CuryPrepaidTotal"></field>
+						<field name="CuryUnprepaidTotal"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="poLinesSelection" caption="Add Purchase Order Line" auto-repaint="true">
+		<qp-fieldset id="frmPOFilter" view.bind="filter" caption="PO Selection">
+			<field name="OrderNbr"></field>
+		</qp-fieldset>
+		<qp-grid id="gridOL" view.bind="poLinesSelection">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton1" caption="Save" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="openOrders" caption="Add Purchase Order" auto-repaint="true">
+		<qp-grid id="grdOpenOrders" view.bind="openOrders"></qp-grid>
+		<footer>
+			<qp-button id="PXButton3" caption="Save" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton4" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="FixedDemand" caption="Demand" auto-repaint="true">
+		<qp-grid id="gridFixedDemand" view.bind="FixedDemand"></qp-grid>
+		<footer>
+			<qp-button id="PXButton5" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReplenishmentLines" caption="Demand" auto-repaint="true">
+		<qp-grid id="gridReplenishmentLines" view.bind="ReplenishmentLines"></qp-grid>
+		<footer>
+			<qp-button id="PXButton9" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="recalcdiscountsfilter" caption="Recalculate Prices" auto-repaint="true">
+		<qp-fieldset id="formRecalcDiscounts" view.bind="recalcdiscountsfilter">
+			<field name="RecalcTarget"></field>
+			<field name="RecalcUnitPrices"></field>
+			<field name="OverrideManualPrices"></field>
+			<field name="RecalcDiscounts"></field>
+			<field name="OverrideManualDiscounts"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton10" state.bind="RecalcOk" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AvailableProjectItems" caption="Add Project Items" auto-repaint="true" width="lg" height="85vh">
+		<qp-template name="17-17-14" id="AvailableProjectItemsForm">
+			<qp-fieldset slot="A" id="formProjectItemFilter" view.bind="ProjectItemFilter" class="transparent-section">
+				<field name="ProjectID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="AvailableProjectItems_AvailableProjectItemsGrid"
+				 view.bind="AvailableProjectItems">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" state.bind="AppendSelectedProjectItems"></qp-button>
+			<qp-button id="PXButtonAddClose" caption="Add Lines & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButtonClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReversingChangeOrders"
+			  caption="Reversing Change Orders"
+			  auto-repaint="true"
+			  width="lg"
+			  height="85vh">
+		<qp-grid id="ReversingChangeOrdersGrid" view.bind="ReversingChangeOrders" wg-container="ReversingChangeOrders_ReversingChangeOrdersGrid"></qp-grid>
+	</qp-panel>
+</template>

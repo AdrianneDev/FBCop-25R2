@@ -1,0 +1,243 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP314010.scss"></require>
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack sp-documents sp-wide-screen" tabindex="0">		
+		<qp-tabbar class="sp-screen-container" active-tab-id="OpenDocuments" id="mainTab" wg-container>
+			<qp-tab id="OpenDocuments" load-on-demand="true" caption="Open Documents">
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfDocuments"
+						class="no-toolbar sp-screen-container sp-documents-feed"
+						view.bind="OpenDocuments"
+						page-size.bind="20"
+						auto-resize="true"
+						allow-filter="true"
+						show-filter-bar="always"
+						show-filter-picker="false"
+						allow-stored-filters="false"
+						show-stored-filters="true">
+						<template width="100%">
+							<div class="${ {{$viewName}}.getClass(SummaryFilter) }">
+								<qp-template id="dfOpenInvoice" wg-container name="record-3-2-2-2">
+									<qp-include url="../ar-document/ar-document.html" view="{{$viewName}}"></qp-include>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</qp-tab>
+			<qp-tab id="AllInvoices" load-on-demand="true" caption="All Invoices">
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfAllInvoices"
+						class="no-toolbar sp-screen-container sp-documents-feed"
+						view.bind="AllInvoices"
+						auto-resize="true"
+						allow-filter="true"
+						show-filter-bar="always"
+						show-filter-picker="false"
+						allow-stored-filters="false"
+						show-stored-filters="true">
+						<template width="100%">
+							<div class="${ {{$viewName}}.getClass(SummaryFilter) }">
+								<qp-template id="dfAnInvoice" wg-container name="record-3-2-2-2">
+									<qp-include url="../ar-document/ar-document.html" view="{{$viewName}}"></qp-include>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</qp-tab>
+			<qp-tab id="AllPayments" load-on-demand="true" caption="All Payments">
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfAllPayments"
+						class="no-toolbar sp-screen-container sp-documents-feed"
+						view.bind="AllPayments"
+						page-size.bind="20"
+						auto-resize="true"
+						allow-filter="true"
+						show-filter-bar="always"
+						show-filter-picker="false"
+						allow-stored-filters="false"
+						show-stored-filters="true">
+						<template width="100%">
+							<div class="sp-documents-document no-animation">
+								<qp-template id="dfPayment" wg-container name="record-3-2-2-2">
+									<qp-fieldset slot="A1" id="fsPaymentA1" view.bind="{{$viewName}}">
+										<field name="RefNbr"></field>
+										<field name="Status" class="colored"></field>
+										<field name="AdjDate"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="A2" id="fsPaymentA2" view.bind="{{$viewName}}">
+										<field name="CustomerID_Customer_acctName"></field>
+										<field name="DocType"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="AX" id="fsPaymentAX" view.bind="{{$viewName}}"
+										class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg">
+										<field name="ExtRefNbr"></field>
+										<field name="DocDesc" replace-content>
+											<div class="wrapper field--text">${AllPayments.DocDesc.value}</div>
+										</field>
+									</qp-fieldset>
+									<qp-fieldset slot="BX" id="fsPaymentBX" view.bind="{{$viewName}}">
+										<field name="PaymentMethodID" replace-content>
+											<div class="wrapper">
+												<span class="label-wrapper">
+													<div class="label-container">
+														<label>${msg.PaymentMethod}</label>
+														<div class="label-container__dotted-space"></div>
+													</div>
+												</span>
+												<qp-include url="../sp-paymethod.html"
+													view="{{$viewName}}"></qp-include>
+											</div>
+										</field>
+									</qp-fieldset>
+									<qp-fieldset slot="CX" id="fsPaymentCX" view.bind="{{$viewName}}">
+										<field name="CuryUnappliedBal_Text" class="grayed-zero"></field>
+										<field name="CuryDiscTaken_Text" class="hidden-zero"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="DX" id="fsPaymentDX" view.bind="{{$viewName}}">
+										<field name="CuryOrigDocAmt_Text" class="sp-documents-balance"></field>
+									</qp-fieldset>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</qp-tab>
+		</qp-tabbar>
+
+		<div class="sp-sticky-summary">
+			<div class="sp-documents-summary-fixed sp-documents-totals">
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfDocumentTotals"
+						class="no-toolbar sp-documents-total"
+						view.bind="DocumentTotal"
+						auto-resize="true"
+						empty-message-mode="0">
+						<template width="100%">
+							<qp-fieldset id="fsInvoicesTotal" view.bind="{{$viewName}}"
+								class="sp-data-feed-fieldset-noborder sp-sticky-hidden"
+								caption.bind="DocumentTotal.totalsInLabel">
+								<field name="OverdueTotal_Text"></field>
+								<field name="UnappliedPayment_Text"></field>
+								<field name="OutstandingTotal_Text"></field>
+								<field name="CustomerBalance_Text"></field>
+								<field name="ProceedToPaymentField" unbound replace-content>
+									<qp-button id="proceedToPayAllBtn" class="${isPaymentTab ? 'hidden' : ''}"
+										caption.bind="DocumentTotal.payAllLabel"
+										config.bind="{ action: 'payAllDocuments' }">
+									</qp-button>
+								</field>
+							</qp-fieldset>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+
+				<qp-fieldset id="fsSummary"
+					class="sp-fieldset-summary sp-wide-only ${isPaymentTab || SummaryFilter.DocumentsSelected.value === 0 ? 'hidden' : ''}"
+					view.bind="SummaryFilter">
+					<field name="DocumentsSelected"></field>
+					<field name="SelectedTotal_Text"></field>
+					<field name="ProceedToPaymentField" unbound replace-content>
+						<qp-button id="proceedToPaymentBtn" class="major-button"
+							caption.bind="msg.ProceedToPayment"
+							config.bind="{ action: 'paySelectedInvoice' }">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</div>
+
+
+
+
+
+		<qp-swipe-menu class="sp-mobile-only">
+			<div slot="collapsed">
+
+				<qp-data-feed
+					id="dfDocumentTotals"
+					if.bind="SummaryFilter.DocumentsSelected.value === 0"
+					class="no-toolbar sp-documents-total"
+					view.bind="DocumentTotal"
+					page-size.bind="5"
+					auto-resize="true"
+					empty-message-mode="0">
+					<footer></footer>
+					<template width="100%">
+						<qp-fieldset id="fsInvoicesTotal" view.bind="{{$viewName}}"
+							class="sp-data-feed-fieldset-noborder" caption.bind="DocumentTotal.totalsInLabel">
+							<field name="OverdueTotal_Text"></field>
+							<field name="UnappliedPayment_Text"></field>
+							<field name="OutstandingTotal_Text"></field>
+							<field name="CustomerBalance_Text"></field>
+							<field name="ProceedToPaymentField" unbound replace-content>
+								<qp-button id="proceedToPayAllBtn" class="${isPaymentTab ? 'hidden' : ''}"
+									caption.bind="DocumentTotal.payAllLabel"
+									config.bind="{ action: 'payAllDocuments' }">
+								</qp-button>
+							</field>
+						</qp-fieldset>
+					</template>
+				</qp-data-feed>
+
+				<qp-fieldset id="fsSummaryMobile" if.bind="!isPaymentTab && SummaryFilter.DocumentsSelected.value > 0"
+					class="sp-fieldset-summary" view.bind="SummaryFilter">
+					<field name="DocumentsSelected"></field>
+					<field name="SelectedTotal_Text"></field>
+					<field name="ProceedToPaymentField" unbound replace-content>
+						<qp-button id="proceedToPaymentBtnMobile" class="major-button"
+							caption.bind="msg.ProceedToPayment"
+							config.bind="{action: 'paySelectedInvoice' }">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+
+			</div>
+			<div slot="expanded">
+				<qp-data-feed
+					id="dfDocumentTotals"
+					class="no-toolbar sp-documents-total"
+					view.bind="DocumentTotal" page-size.bind="5" auto-resize="true"
+					empty-message-mode="0">
+					<footer></footer>
+					<template width="100%">
+						<qp-fieldset id="fsInvoicesTotal" view.bind="{{$viewName}}"
+							class="sp-data-feed-fieldset-noborder" caption.bind="DocumentTotal.totalsInLabel">
+							<field name="OverdueTotal_Text"></field>
+							<field name="UnappliedPayment_Text"></field>
+							<field name="OutstandingTotal_Text"></field>
+							<field name="CustomerBalance_Text"></field>
+							<field name="ProceedToPaymentField" unbound replace-content>
+								<qp-button id="proceedToPayAllBtn" class="${isPaymentTab ? 'hidden' : ''}"
+								caption.bind="DocumentTotal.payAllLabel"
+									config.bind="{ action: 'payAllDocuments' }">
+								</qp-button>
+							</field>
+						</qp-fieldset>
+					</template>
+
+				</qp-data-feed>
+
+				<qp-fieldset id="fsSummarySwipe" if.bind="!isPaymentTab && SummaryFilter.DocumentsSelected.value > 0"
+					class="sp-fieldset-summary" view.bind="SummaryFilter">
+					<field name="DocumentsSelected"></field>
+					<field name="SelectedTotal_Text"></field>
+					<field name="ProceedToPaymentField" unbound replace-content>
+						<qp-button id="proceedToPaymentBtnSwipe" class="major-button"
+						caption.bind="msg.ProceedToPayment"
+							config.bind="{ action: 'paySelectedInvoice' }">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-swipe-menu>
+
+	</div>
+</template>

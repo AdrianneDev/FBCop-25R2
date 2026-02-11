@@ -1,0 +1,317 @@
+<template>
+	<require from="../AM215555/schedulerpro.stockholm.css"></require>
+	<require from="../AM215555/AM215555.scss"></require>
+	<require from="../AM215555/qp-scheduler-splitter.scss"></require>
+	<require from="../AM215555/qp-scheduler-events.scss"></require>
+	<require from="./qp-scheduler-events.scss"></require>
+	<require from="../AM215555/popup.scss"></require>
+	<require from="./AM215580.scss"></require>
+
+	<qp-fieldset id="Filter2" view.bind="SelectionFilter" class="hidden"></qp-fieldset>
+	<div class="qp-sch-grid-container qp-sch-calendar-container">
+		<div class="qp-sch-grid-container-inner">
+			<div class="qp-sch-hide-grid" wg-container>
+				<qp-grid view-model.ref="prodOrdersSelectedGrid" view.bind="ProdOrdersSelected" id="prodOrdersSelectedGridId"
+					on-filter-changed.call="onOrdersFilterChanged(args)"></qp-grid>
+			</div>
+			<div class="qp-sch-hide-grid" wg-container>
+				<qp-grid view.bind="SchedulerResources" id="schedulerResourcesId"></qp-grid>
+			</div>
+			<div class="qp-sch-hide-grid" wg-container>
+				<qp-grid view.bind="SchedulerEvents" id="schedulerEventsId"></qp-grid>
+			</div>
+			<qp-splitter class="vertical-splitter" id="ordersSplitterId" config.bind="ordersSplitterConfig"
+				on-splitter-state-changed.call="onSplitterChanged(args)" view-model.ref="ordersSplitter">
+				<split-pane>
+					<div class="qp-sch-events-container stretch" ref="orderContainer">
+						<div class="qp-sch-config-form">
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-left" id="ordersTextBrickLeftID"
+									view.bind="OrderTemplate"
+									view-model.ref="renderer.ordersTextBrickLeft"
+									config.bind="renderer.ordersTextBrickLeftGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="ordersIconsBrickLeftID"
+									view.bind="OrderTemplate"
+									view-model.ref="renderer.ordersIconsBrickLeft"
+									config.bind="renderer.ordersIconsBrickLeftGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="ordersTextBrickRightID"
+									view.bind="OrderTemplate"
+									view-model.ref="renderer.ordersTextBrickRight"
+									config.bind="renderer.ordersTextBrickRightGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="ordersIconsBrickRightID"
+									view.bind="OrderTemplate"
+									view-model.ref="renderer.ordersIconsBrickRight"
+									config.bind="renderer.ordersIconsBrickRightGridConfig">
+								</qp-grid>
+							</div>
+						</div>
+						<div class="qp-sch-config-form">
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-left" id="operationsBrickRow1TextLeftID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow1TextLeft"
+									config.bind="renderer.operationsBrickRow1TextLeftGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="operationsBrickRow1IconsLeftID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow1IconsLeft"
+									config.bind="renderer.operationsBrickRow1IconsLeftGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-left" id="operationsBrickRow1TextRightID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow1TextRight"
+									config.bind="renderer.operationsBrickRow1TextRightGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="operationsBrickRow1IconsRightID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow1IconsRight"
+									config.bind="renderer.operationsBrickRow1IconsRightGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-left" id="operationsBrickRow2TextLeftID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow2TextLeft"
+									config.bind="renderer.operationsBrickRow2TextLeftGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="operationsBrickRow2IconsLeftID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow2IconsLeft"
+									config.bind="renderer.operationsBrickRow2IconsLeftGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-left" id="operationsBrickRow2TextRightID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow2TextRight"
+									config.bind="renderer.operationsBrickRow2TextRightGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="operationsBrickRow2IconsRightID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.operationsBrickRow2IconsRight"
+									config.bind="renderer.operationsBrickRow2IconsRightGridConfig">
+								</qp-grid>
+							</div>
+						</div>
+						<div class="qp-sch-config-form">
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-left" id="materialsBrickCol1IconsID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.materialsBrickCol1Icons"
+									config.bind="renderer.materialsBrickCol1IconsGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-left" id="materialsBrickCol2Row1TextLeftID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.materialsBrickCol2Row1TextLeft"
+									config.bind="renderer.materialsBrickCol2Row1TextLeftGridConfig">
+								</qp-grid>
+							</div>
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid class="qp-sch-config-right" id="materialsBrickCol2Row2TextLeftID"
+									view.bind="ProdOpersMatls"
+									view-model.ref="renderer.materialsBrickCol2Row2TextLeft"
+									config.bind="renderer.materialsBrickCol2Row2TextLeftGridConfig">
+								</qp-grid>
+							</div>
+						</div>
+					</div>
+				</split-pane>
+				<split-pane>
+					<qp-grid id="grid" view.bind="ProdOpersMatls" view-model.ref="prodOperMatlsGrid"
+						on-data-ready.call="opersMatlsDataReadyHandler(grid, args)"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</div>
+	</div>
+	<li id="prodOrdersSelectedGridId_displayMatlRemaining" class="qp-tool-bar-item" portal="target: #prodOrdersSelectedGridId_topBarrefresh; position: afterend;">
+		<qp-check-box change.trigger="displayRemainingMaterialsChanged($event)" config.bind="displayMatlRemainingChkBoxConfig" value.bind="SelectionFilter.displayMatlRemaining"></qp-check-box>
+	</li>
+	<li id="prodOrdersSelectedGridId_orderFilterBtn" class="qp-tool-bar-item" portal="target: #prodOrdersSelectedGridId_topBarrefresh; position: afterend;">
+		<qp-button view-model.ref="orderFilterBtn" config.bind="orderFilterBtnConfig"></qp-button>
+	</li>
+	<qp-tool-bar id="rightToolBarConfigID" config.bind="rightToolBarConfig" portal="target.bind: storedFilterBar; position: afterbegin;">
+	</qp-tool-bar>
+	<qp-panel id="SelectionFilter" view.bind="SelectionFilter" caption="Production Orders">
+		<qp-template name="14-17-17" id="selectionFilterFormId">
+			<qp-fieldset slot="A" id="Filter1" view.bind="SelectionFilter">
+				<field name="OrderType"></field>
+				<field name="ProdOrdID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer id="footer-filter-SelectOrder">
+			<qp-button id="buttonOK-SelectOrder" dialog-result="OK" caption="Select"></qp-button>
+			<qp-button id="buttonCancel-SelectOrder" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ProdItemPopup" view.bind="ProdItemPopup" view-model.ref="orderPopup" caption="Production Order" auto-repaint="true">
+		<qp-tool-bar view-model.ref="orderPopupToolBar"></qp-tool-bar>
+		<qp-template name="1" id="orderPopup_form" wg-container>
+			<qp-fieldset slot="A" view.bind="ProdItemPopup" id="groupProdItemID">
+				<field name="ConstDate" config-allow-edit.bind="true"></field>
+				<field name="SchedulingMethod" config-allow-edit.bind="true"></field>
+				<field name="SchPriority" config-allow-edit.bind="true"></field>
+				<field name="StatusID"></field>
+				<field name="ScheduleStatus"></field>
+				<field name="Descr" config-allow-edit.bind="true"></field>
+				<field name="OrderType" pinned></field>
+				<field name="ProdOrdID" pinned config-allow-edit.bind="true"></field>
+				<field name="InventoryID" pinned config-allow-edit.bind="true"></field>
+				<field name="OrdNbr" config-allow-edit.bind="true"></field>
+				<field name="CustomerID" config-allow-edit.bind="true"></field>
+				<field name="ProjectID" pinned="false" config-allow-edit.bind="true"></field>
+				<field name="TaskID" config-allow-edit.bind="true"></field>
+				<field name="LocationID" config-allow-edit.bind="true"></field>
+				<field name="SiteID" config-allow-edit.bind="true"></field>
+				<field name="StartDate"></field>
+				<field name="EndDate"></field>
+				<field name="DueDate"></field>
+				<field name="QtytoProd" pinned></field>
+				<field name="QtyRemaining" pinned></field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-panel>
+	<qp-panel id="OperationTemplate" view-model.ref="operPopup" caption="Operation Details" auto-repaint="true">
+		<qp-template name="1-1" id="operPopup_form" wg-container class="v-stack">
+			<qp-fieldset slot="A" view.bind="OperationTemplate" id="groupProdOperID1">
+				<field name="OperationCD"></field>
+				<field name="Descr"></field>
+				<field name="StatusID"></field>
+				<field id="WcIDFieldID" name="WcID" config-allow-edit.bind="true"></field>
+				<field name="StartDate" caption="Scheduled Start"></field>
+				<field name="EndDate" caption="Scheduled End"></field>
+				<field name="ActualLaborTime"></field>
+				<field name="PlanLaborTime"></field>
+				<field class="control-size-s" name="QtytoProd">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="QtyComplete">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="QtyScrapped">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="QtyRemaining">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" view.bind="OperationTemplate" if.bind="OperationTemplate.OutsideProcess.value" id="groupProdOperID2" caption="Outside Process">
+				<field name="POOrderNbr"></field>
+				<field name="VendorID"></field>
+				<field name="POPromiseDate"></field>
+				<field class="control-size-s" name="ShippedQuantity">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="ShipRemainingQty">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="AtVendorQuantity">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="QtyComplete">
+					<qp-label caption.bind="OperationTemplate.OperUOM.value"></qp-label>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+
+	</qp-panel>
+	<qp-panel id="MaterialTemplate" view-model.ref="matlPopup" caption="Material Details" auto-repaint="true">
+		<qp-template name="1-1" id="matlPopup_form" wg-container class="v-stack">
+			<qp-fieldset slot="A" view.bind="MaterialTemplate" id="groupProdMatlID">
+				<field name="MaterialID"></field>
+				<field name="MatlDescr"></field>
+				<field name="MaterialScheduledStart"></field>
+				<field name="MaterialScheduledEnd"></field>
+				<field name="MaterialSiteID"></field>
+				<field name="MaterialLocationID"></field>
+				<field class="control-size-s" name="RequiredMaterialQty">
+					<qp-label caption.bind="MaterialTemplate.MaterialUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="IssuedMaterialQty">
+					<qp-label caption.bind="MaterialTemplate.MaterialUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="RemainingMaterialQty">
+					<qp-label caption.bind="MaterialTemplate.MaterialUOM.value"></qp-label>
+				</field>
+				<field name="MaterialType"></field>
+				<field name="MatlSubcontractSource"></field>
+				<field name="MaterialMarkFor"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" view.bind="MaterialTemplate" if.bind="MaterialTemplate.IsMatlPOLinked.value && MaterialTemplate.MatlPOOrderNbr.value" id="groupProdOperID" caption="Purchase Order">
+				<field name="MatlPOOrderNbr" config-allow-edit.bind="true"></field>
+				<field name="MatlPOVendorID"></field>
+				<field name="MatlPOPromiseDate"></field>
+				<field class="control-size-s" name="MatlPOOrderQty">
+					<qp-label caption.bind="MaterialTemplate.MatlPOUOM.value"></qp-label>
+				</field>
+				<field class="control-size-s" name="MatlPOOpenQty">
+					<qp-label caption.bind="MaterialTemplate.MatlPOUOM.value"></qp-label>
+				</field>
+				<field name="MatlPOLineDescr"></field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-panel>
+
+	<div class="hidden">
+		<qp-hyper-icon view-model.ref="renderer.iconPriorityHigh"
+			images.bind="{ normal: 'svg:am@priorityHigh' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconPriorityMedium"
+			images.bind="{ normal: 'svg:am@priorityMedium' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconPriorityLow"
+			images.bind="{ normal: 'svg:am@priorityLow' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconSelected"
+			images.bind="{ normal: 'svg:main@checkmark' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconLackOfMaterials"
+			images.bind="{ normal: 'svg:am@bolt' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconFirmLock"
+			images.bind="{ normal: 'svg:am@firmLock' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconLate"
+			images.bind="{ normal: 'svg:am@amErrorExclamation' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconEarly"
+			images.bind="{ normal: 'svg:am@amInfoCircle' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconOnTime"
+			images.bind="{ normal: 'svg:am@amWarningExclamation' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconMatlWBom"
+			images.bind="{ normal: 'svg:manufacturing@matlstockbomregular' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconMatlWOBom"
+			images.bind="{ normal: 'svg:manufacturing@matlstockregular' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconMatlSubCWBomMFG"
+			images.bind="{ normal: 'svg:manufacturing@matlstockbomsubcontract' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconMatlSubCWOBomMFG"
+			images.bind="{ normal: 'svg:manufacturing@matlstocksubcontract' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconMatlRegularNS"
+			images.bind="{ normal: 'svg:manufacturing@matlnonstockregular' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconMatlSubCNS"
+			images.bind="{ normal: 'svg:manufacturing@matlnonstocksubcontract' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconProdOrder"
+			images.bind="{ normal: 'svg:manufacturing@prodorder' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconRegularOper"
+			images.bind="{ normal: 'svg:manufacturing@opinternal' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconOutsideOper"
+			images.bind="{ normal: 'svg:manufacturing@opexternal' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconCollapse"
+			images.bind="{ normal: 'svg:qp_tree@CollapseL' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconExpand"
+			images.bind="{ normal: 'svg:qp_tree@ExpandL' }"></qp-hyper-icon>
+	</div>
+</template>

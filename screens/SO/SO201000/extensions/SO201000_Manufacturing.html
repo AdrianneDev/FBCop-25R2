@@ -1,0 +1,13 @@
+<template>
+	<qp-fieldset after="#fsChildOrder-General" id="fsInventoryPlanning-General" view.bind="currentordertype" caption="Inventory Planning Settings">
+		<field name="AMIncludeSupplyPlan"></field>
+	</qp-fieldset>
+	<qp-fieldset after="#fsInventoryPlanning-General" id="fsManufacturing-General" view.bind="currentordertype" caption="Manufacturing Settings">
+		<field name="AMEstimateEntry"></field>
+		<field name="AMConfigurationEntry"></field>
+		<field name="AMMTOOrder"></field>
+		<field name="AMEnableWarehouseLinkedProduction"></field>
+		<field name="AMEnableLinkingProdOrders"></field>
+		<field name="AMLinkableSOStatuses"></field>
+	</qp-fieldset>
+</template>

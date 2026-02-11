@@ -1,0 +1,35 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template id="General-form" name="1-1">
+			<div slot="A">
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="Address"
+					address-view="Address"
+					fs-caption="Location Address"
+					override-fieldname="LocationCurrent.OverrideAddress"
+					override-wg-container="LocationCurrent_tab"
+					with-coordinates="true"
+					view-on-map-action-name="ViewOnMap"
+					fs-wg-container="Address_Address"
+				>
+					<field modify="#Address [name='CountryID']" after="#Address [name='PostalCode']"></field>
+				</qp-include>
+			</div>
+			<div slot="B">
+				<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+					fs-id="Contact"
+					contact-view="Contact"
+					fs-caption="Additional Location Info"
+					fs-wg-container="Contact_Contact"
+					override-fieldname="LocationCurrent.OverrideContact"
+					override-wg-container="LocationCurrent_tab">
+				</qp-include>
+				<qp-fieldset id="tabGeneral_OtherSettings" view.bind="LocationCurrent" caption="Other Settings">
+					<field name="CBranchID"></field>
+					<field name="CPriceClassID"></field>
+					<field name="CDefProjectID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

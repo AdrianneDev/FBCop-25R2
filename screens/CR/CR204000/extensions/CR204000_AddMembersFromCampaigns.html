@@ -1,0 +1,13 @@
+<template>
+	<qp-panel id="AddMembersFromCampaignsFilterView"
+		caption="Add Members from Campaigns"
+		auto-repaint="true"
+		close-button-locator="#btnAddMembersFromCampaignsCancel"
+	>
+		<qp-grid id="grdAddMembersFromCampaigns" view.bind="AddMembersFromCampaignsFilterView"></qp-grid>
+		<footer>
+			<qp-button id="btnAddMembersFromCampaignsOK" dialog-result="OK" caption="Add"></qp-button>
+			<qp-button id="btnAddMembersFromCampaignsCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

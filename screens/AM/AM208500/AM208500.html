@@ -1,0 +1,20 @@
+﻿<template>
+	<qp-template id="Documents_form" wg-container name="7-10-7"  qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="Documents1" view.bind="Documents">
+			<field name="BOMID" config-allow-edit.bind="true"></field>
+			<field name="RevisionID" config-allow-edit.bind="true"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Documents2" view.bind="Documents">
+			<field name="Descr" pinned></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Documents3" view.bind="Documents">
+			<field name="EffStartDate"></field>
+			<field name="EffEndDate" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="AttributesGrid" view.bind="BomAttributes"></qp-grid>
+</template>

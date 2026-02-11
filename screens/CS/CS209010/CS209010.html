@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="formFilterSettings" name="1-1" class="label-size-m" wg-container="Filter_frmHeader">
+		<qp-fieldset id="columnFirstFilterSettings"  view.bind="Filter" slot="A">
+			<field name="FilterID">
+				<qp-field control-state.bind="Filter.IsDefault"></qp-field>
+				<qp-field control-state.bind="Filter.IsSystem"></qp-field>
+			</field>
+			<field name="FilterName"></field>
+			<field name="ScreenID"></field>
+			<field name="ViewName"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="FilterDetails"></qp-grid>
+</template>

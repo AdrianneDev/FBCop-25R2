@@ -1,0 +1,23 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="formLedger" wg-container="LedgerRecords_Ledger">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="LedgerRecords">
+			<field name="LedgerCD"></field>
+			<field name="Descr"></field>
+			<field name="BalanceType"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="LedgerRecords">
+			<field name="BaseCuryID"></field>
+			<field name="ConsolAllowed"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabsMain">
+		<qp-tab id="tabCompanies" caption="Companies">
+			<qp-grid id="gridOrganizaionLinks" wg-container="OrganizationLedgerLinkWithOrganizationSelect_grdOrganizaionLinks" view.bind="OrganizationLedgerLinkWithOrganizationSelect">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBranches" caption="Branches">
+			<qp-grid id="gridBranches" wg-container="BranchesView_grdBranches" view.bind="BranchesView">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,26 @@
+<template>
+	<qp-template id="form-Group" name="1-1" class="equal-height label-size-m" wg-container="Group_formGroup">
+		<qp-fieldset id="fsColumnA-Group" slot="A" view.bind="Group">
+			<field name="GroupName"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Group" slot="B" view.bind="Group">
+			<field name="GroupType"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Users" caption="Users">
+			<qp-grid id="grid-Users" view.bind="Users" wg-container="Users_gridUsers"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-ItemClasses" caption="Item Classes">
+			<qp-grid id="grid-ItemClasses" view.bind="Class" wg-container="Class_gridClass"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-InventoryItems" caption="Inventory Items">
+			<qp-grid id="grid-InventoryItems" view.bind="Item" wg-container="Item_gridInventory"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

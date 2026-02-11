@@ -1,0 +1,14 @@
+<template>
+	<qp-template name="7-10-7" id="headerForm" wg-container="Document_headerForm">
+		<qp-fieldset id="headerForm_0" view.bind="Document" slot="A">
+			<field name="Type"></field>
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset id="headerForm_0" view.bind="Document" slot="B">
+			<field name="Date"></field>
+			<field name="Description" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="PTOAdjustmentDetails_gridPTOAdjustmentDetails" wg-container view.bind="PTOAdjustmentDetails"></qp-grid>
+</template>

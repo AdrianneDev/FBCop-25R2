@@ -1,0 +1,47 @@
+<template>
+	<qp-template id="FilterTemplate" name="1-1" class="label-size-m">
+		<qp-fieldset id="form_0" slot="A" view.bind="Filter" wg-container="Filter_form">
+			<field name="ProjectID"></field>
+			<field name="RefNbr"></field>
+			<field name="LineNbr"></field>
+		<field name="Module"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="Transactions_grid" view.bind="Transactions" wg-container></qp-grid>
+	<qp-panel id="AvailableTransactions" caption="Add Transactions" auto-repaint="true" width="lg">
+		<qp-template id="AvailableTransactionsForm" name="1-1-1">
+			<qp-fieldset id="AvailableTransactionsFilter_PXLayoutRule1"
+					slot="A"
+					view.bind="AvailableTransactionsFilter"
+					wg-container="AvailableTransactionsFilter_AvailableTransactionsForm">
+				<field name="ProjectID"></field>
+				<field name="ProjectTaskID"></field>
+				<field name="CostCodeID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="AvailableTransactionsFilter_PXLayoutRule2"
+					slot="B"
+					view.bind="AvailableTransactionsFilter"
+					wg-container="AvailableTransactionsFilter_AvailableTransactionsForm">
+				<field name="DateFrom"></field>
+				<field name="DateTo"></field>
+			</qp-fieldset>
+			<qp-fieldset id="AvailableTransactionsFilter_PXLayoutRule10"
+					slot="C"
+					view.bind="AvailableTransactionsFilter"
+					wg-container="AvailableTransactionsFilter_AvailableTransactionsForm">
+				<field name="VendorID"></field>
+				<field name="Module"></field>
+				<field name="OrigDocType"></field>
+				<field name="OrigRefNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="AvailableTransactions_AvailableTransactionsGrid"
+				view.bind="AvailableTransactions"
+				wg-container></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" state.bind="AppendTransactions" caption="Add"></qp-button>
+			<qp-button id="PXButtonAddClose" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="PXButtonClose" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

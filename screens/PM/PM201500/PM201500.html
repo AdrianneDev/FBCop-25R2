@@ -1,0 +1,20 @@
+<template>
+	<require from="./tweaks.scss"></require>
+
+	<qp-splitter id="sp1" initial-split="20%">
+		<split-pane>
+			<qp-tree id="Folders_tree" view.bind="Folders" caption="Tags" wg-container></qp-tree>
+		</split-pane>
+		<split-pane class="v-stack">
+			<qp-template id="form_0" name="1-1" class="label-size-s">
+				<qp-fieldset id="CurrentTag_PXLayoutRule1" slot="A" view.bind="CurrentTag" wg-container="CurrentTag_form">
+					<field name="TagCD"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CurrentTag_PXLayoutRule2" slot="B" view.bind="CurrentTag" wg-container="CurrentTag_form">
+					<field name="ParentTagID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="Members_gridMembers" view.bind="Members" caption="Access Rights"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

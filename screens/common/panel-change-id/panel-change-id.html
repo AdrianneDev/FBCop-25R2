@@ -1,0 +1,14 @@
+<template>
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-template id="form-ChangeID" name="1">
+			<qp-fieldset id="fsColumnA-ChangeID" slot="A" view.bind="ChangeIDDialog" wg-container="ChangeIDDialog_formChangeID">
+				<field name="CD"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-ChangeID">
+			<qp-button id="buttonOK-ChangeID" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="buttonCancel-ChangeID" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

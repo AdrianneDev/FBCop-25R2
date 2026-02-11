@@ -1,0 +1,22 @@
+<template>
+	<template id="tabUser_Content">
+		<qp-template id="User-form" name="1-1" class="stretch">
+			<div slot="A">
+				<qp-fieldset id="tabUser_Left" view.bind="User" wg-container="User_frmLogin">
+					<field name="State">
+						<qp-button id="btnDisableLogin" state.bind="DisableLogin" wg-name="BtnDisableLogin" class="col-4"></qp-button>
+					</field>
+					<field name="User.LoginTypeID"></field>
+					<field name="Username"></field>
+					<field name="GeneratePassword"></field>
+					<field name="Password"></field>
+					<field name="LoginBtns" class="no-label" unbound>
+						<qp-button id="btnActivateLogin" state.bind="ActivateLogin" wg-name="BtnActivateLogin" class="col-4"></qp-button>
+						<qp-button id="btnEnableLogin" state.bind="EnableLogin" wg-name="BtnEnableLogin" class="col-4"></qp-button>
+						<qp-button id="btnUnlockLogin" state.bind="UnlockLogin" class="col-4"></qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

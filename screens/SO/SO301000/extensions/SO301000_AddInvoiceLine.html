@@ -1,0 +1,29 @@
+<template>
+	<qp-panel id="invoiceSplits" caption="Add Invoice Details" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddInvoiceLine" name="17-17-14" class="equal-height" wg-container="addinvoicefilter_form4">
+			<qp-fieldset id="fsColumnA-AddInvoiceLine" slot="A" view.bind="AddInvoiceFilter">
+				<field name="ARDocType"></field>
+				<field name="ARRefNbr"></field>
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddInvoiceLine" slot="B" view.bind="AddInvoiceFilter">
+				<field name="InventoryID"></field>
+				<field name="LotSerialNbr"></field>
+				<field name="StartDate">
+					<qp-label slot="label" caption="Date Range"></qp-label>
+					<qp-field control-state.bind="AddInvoiceFilter.EndDate"></qp-field>
+				</field>
+				<field name="Expand" class="no-label"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddInvoiceLine" view.bind="invoiceSplits" wg-container="Invoicesplits_grid4"></qp-grid>
+
+		<footer id="footer-AddInvoiceLine">
+			<qp-button id="buttonAdd-AddInvoiceLine" state.bind="AddInvoiceOK"></qp-button>
+			<qp-button id="buttonAddClose-AddInvoiceLine" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddInvoiceLine" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

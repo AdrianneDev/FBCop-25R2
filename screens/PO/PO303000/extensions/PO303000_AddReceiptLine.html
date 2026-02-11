@@ -1,0 +1,22 @@
+<template>
+	<qp-panel id="poReceiptLinesSelection" caption="Add Receipt Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddReceiptLine" name="1-1-1" class="equal-height" wg-container="Filter_PXFormView1">
+			<qp-fieldset id="fsColumnA-AddReceiptLine" slot="A" view.bind="filter">
+				<field name="ReceiptType"></field>
+				<field name="ReceiptNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddReceiptLine" slot="B" view.bind="filter">
+				<field name="VendorID"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddReceiptLine" view.bind="poReceiptLinesSelection" wg-container="poReceiptLinesSelection_PXGrid1"></qp-grid>
+
+		<footer id="footer-AddReceiptLine">
+			<qp-button id="buttonAdd-AddReceiptLine" state.bind="AddPOReceiptLine2"></qp-button>
+			<qp-button id="buttonAddClose-AddReceiptLine" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddReceiptLine" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,45 @@
+<template>
+	<qp-panel id="SelectedEstimateRecord"
+		caption="Quick Estimate"
+		auto-repaint="true"
+		close-button-locator="#QuickEst-Cancel"
+	>
+		<qp-fieldset id="QuickEstimateForm" view.bind="SelectedEstimateRecord">
+			<field name="EstimateID"></field>
+			<field name="RevisionID"></field>
+			<field name="InventoryCD"></field>
+			<field name="IsNonInventory"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID"></field>
+			<field name="ItemDesc"></field>
+			<field name="EstimateClassID"></field>
+			<field name="FixedLaborCost"></field>
+			<field name="FixedLaborOverride"></field>
+			<field name="VariableLaborCost"></field>
+			<field name="VariableLaborOverride"></field>
+			<field name="MachineCost"></field>
+			<field name="MachineOverride"></field>
+			<field name="MaterialCost"></field>
+			<field name="MaterialOverride"></field>
+			<field name="ToolCost"></field>
+			<field name="ToolOverride"></field>
+			<field name="FixedOverheadCost"></field>
+			<field name="FixedOverheadOverride"></field>
+			<field name="VariableOverheadCost"></field>
+			<field name="VariableOverheadOverride"></field>
+			<field name="ExtCostDisplay"></field>
+			<field name="OrderQty"></field>
+			<field name="HasPriceBreak"></field>
+			<field name="UOM"></field>
+			<field name="CuryUnitCost"></field>
+			<field name="MarkupPct"></field>
+			<field name="CuryUnitPrice"></field>
+			<field name="PriceOverride"></field>
+			<field name="CuryExtPrice"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="QuickEst-Ok" dialog-result="OK"></qp-button>
+			<qp-button id="QuickEst-Cancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

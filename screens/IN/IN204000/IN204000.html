@@ -1,0 +1,93 @@
+<template>
+	<qp-template id="form-Site" name="1-1" class="label-size-m equal-height" wg-container="site_form">
+		<qp-fieldset id="fsColumnA-Site" slot="A" view.bind="site">
+			<field name="SiteCD"></field>
+			<field name="BranchID"></field>
+			<field name="Descr"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Site" slot="B" view.bind="site">
+			<field name="ReplenishmentClassID"></field>
+			<field name="LocationValid"></field>
+			<field name="AvgDefaultCost"></field>
+			<field name="FIFODefaultCost"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Locations" caption="Locations">
+			<qp-grid id="grid-Locations" view.bind="location" wg-container="location_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-DefaultLocations" caption="Default Locations">
+			<qp-template id="form-DefaultLocations" name="1-1" class="label-size-m" wg-container="siteaccounts_tab">
+				<qp-fieldset id="fsColumnA-DefaultLocations" slot="A" view.bind="siteaccounts" caption="Inventory Locations">
+					<field name="ReceiptLocationID"></field>
+					<field name="ShipLocationID"></field>
+					<field name="ReturnLocationID"></field>
+					<field name="DropShipLocationID"></field>
+					<field name="NonStockPickingLocationID"></field>
+					<field name="UseItemDefaultLocationForPicking"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-GLAccounts" caption="GL Accounts">
+			<qp-template id="form-GLAccounts" name="1-1" class="label-size-xm">
+				<qp-fieldset id="fsColumnA-GLAccounts" slot="A" view.bind="siteaccounts" wg-container="siteaccounts_tab">
+					<field name="OverrideInvtAccSub"></field>
+					<field name="InvtAcctID"></field>
+					<field name="InvtSubID"></field>
+					<field name="ReasonCodeSubID"></field>
+					<field name="SalesAcctID"></field>
+					<field name="SalesSubID"></field>
+					<field name="COGSAcctID"></field>
+					<field name="COGSSubID"></field>
+					<field name="StdCstVarAcctID"></field>
+					<field name="StdCstVarSubID"></field>
+					<field name="StdCstRevAcctID"></field>
+					<field name="StdCstRevSubID"></field>
+					<field name="POAccrualAcctID"></field>
+					<field name="POAccrualSubID"></field>
+					<field name="PPVAcctID"></field>
+					<field name="PPVSubID"></field>
+					<field name="LCVarianceAcctID"></field>
+					<field name="LCVarianceSubID"></field>
+					<field name="AMWIPAcctID"></field>
+					<field name="AMWIPSubID"></field>
+					<field name="AMWIPVarianceAcctID"></field>
+					<field name="AMWIPVarianceSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Address" caption="Address">
+			<qp-template id="form-Address" name="1-1" class="label-size-m">
+				<div id="divColumnA-Address" slot="A" class="v-stack">
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="fsContact-Address"
+						contact-view="Contact"
+						fs-caption="Contact"
+						fs-wg-container="Contact_colForm">
+					</qp-include>
+					<qp-fieldset id="fsBuilding-Address" view.bind="siteaccounts" caption="Building" wg-container="siteaccounts_buildForm">
+						<field name="BuildingID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="fsColumnB-Address"
+						fs-wg-container="Address_addrForm"
+						address-view="Address"
+						fs-caption="Address"
+						view-on-map-action-name="ViewOnMap"
+						override-fieldname
+					>
+						<field after="#fsColumnB-Address [name='PostalCode']" name="siteaccounts.CarrierFacility" wg-container="Siteaccounts_formCarrierFacility"></field>
+					</qp-include>
+				</div>
+
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

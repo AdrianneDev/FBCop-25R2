@@ -1,0 +1,21 @@
+<template>
+	<qp-template name="1-1" class="" id="formDocument" wg-container>
+		<div slot="A" class="label-size-m">
+			<qp-fieldset id="fsDocumentA" view.bind="Document">
+				<field name="ConnectionID" config-display-mode.bind="'id'"></field>
+				<field name="Name"></field>
+				<field name="ProviderID">
+					<qp-button id="btnRefreshProviders" state.bind="RefreshProviders" caption="Refresh" class="col-auto"></qp-button>
+				</field>
+			</qp-fieldset>
+	    </div>
+		<div slot="B" class="label-size-m">
+			<qp-fieldset id="fsDocumentB" view.bind="Document">
+				<field name="Status"></field>
+			</qp-fieldset>
+			<qp-info-box id="infoStatusMessage" wg-name="StatusMessage" type="error" caption.bind="Document.StatusMessage.value" if.bind="Document.StatusMessage.value"></qp-info-box>
+		</div>
+	</qp-template>
+	<qp-caption caption="Connection Parameters"></qp-caption>
+	<qp-grid id="gridParameters" view.bind="Parameters" class="framed-section"></qp-grid>
+</template>

@@ -1,0 +1,22 @@
+<template>
+
+	<qp-panel id="StartRealTimePanel"
+			  caption="Start Real-Time Sync"
+			  auto-repaint="true">
+		<qp-template name="1" id="form-StartRealTimePanelTemplate" class="label-size-m">
+			<qp-info-box id="info-StartRealTimePanel01"
+				caption="This webhook URL will be used to receive push notifications from the external system. Make sure that the URL is correct and click Proceed."
+				type="info">
+			</qp-info-box>
+			<qp-fieldset slot="A" id="PXFormView5" view.bind="StartRealTimePanel" wg-container>
+				<field name="RealTimeURL"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="buttonProceed-StartRealTimePanel" caption="Proceed" dialog-result="Yes" class="major-button"></qp-button>
+			<qp-button id="buttonCancel-StartRealTimePanel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

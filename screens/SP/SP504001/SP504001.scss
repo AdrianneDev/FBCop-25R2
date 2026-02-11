@@ -1,0 +1,13 @@
+.top-bar-cont .qp-tool-bar-no-menu {
+	display: none;
+}
+
+.custom-filter-panel .qp-fieldset {
+	@media (width >= 600px) {
+		margin-bottom: 16px;
+	}
+}
+
+.qp-button:focus {
+	box-shadow: none !important;
+}

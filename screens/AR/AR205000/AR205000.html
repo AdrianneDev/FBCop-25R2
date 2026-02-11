@@ -1,0 +1,23 @@
+<template>
+
+	<qp-template id="formSalesperson" name="1-1" wg-container="Salesperson_frmHeader" class="label-size-m equal-height">
+		<qp-fieldset id="columnFirstSalesperson" view.bind="Salesperson" slot="A">
+			<field name="SalesPersonCD"></field>
+			<field name="Descr"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondSalesperson" view.bind="Salesperson" slot="B">
+			<field name="CommnPct"></field>
+			<field name="SalesSubID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabCustomers" caption="Customers">
+			<qp-grid id="gridCustomers" view.bind="SPCustomers" wg-container="SPCustomers_grdSPCustomers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabComissionHistory" caption=" Commission History">
+			<qp-grid id="gridComissionHistory" view.bind="CommissionsHistory" wg-container="CommissionsHistory_grid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

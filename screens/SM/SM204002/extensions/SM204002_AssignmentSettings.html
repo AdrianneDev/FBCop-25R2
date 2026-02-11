@@ -1,0 +1,15 @@
+<template>
+	<template id="tabAssignmentSettings_Content">
+		<qp-template id="tabSenderName_template" name="1-1">
+			<qp-fieldset id="CurrentEMailAccounts_ServerInformation2" slot="A" view.bind="EMailAccounts" caption="Sender Name">
+				<field name="SenderDisplayNameSource"></field>
+				<field name="AccountDisplayName"></field>
+			</qp-fieldset>
+			<qp-fieldset id="CurrentEMailAccounts_AssignmentSettings" slot="B" view.bind="EMailAccounts" caption="Automatic Assignment of Emails">
+				<field name="DefaultEmailAssignmentMapID"></field>
+				<field name="DefaultWorkgroupID"></field>
+				<field name="DefaultOwnerID"></field>
+			</qp-fieldset>
+		</qp-template>
+	</template>
+</template>

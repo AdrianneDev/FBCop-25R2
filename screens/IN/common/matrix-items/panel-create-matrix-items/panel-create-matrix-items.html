@@ -1,0 +1,40 @@
+<template>
+	<qp-include-parameters
+		wg-container.required>
+	</qp-include-parameters>
+
+	<qp-template id="form-CreateMatrixItems" name="17-31" class="equal-height" wg-container="{{wg-container}}">
+		<qp-fieldset id="fsHeader-CreateMatrixItems" slot="A" view.bind="Header">
+			<field name="ColAttributeID"></field>
+			<field name="RowAttributeID"></field>
+		</qp-fieldset>
+		<qp-grid id="gridAdditionalAttributes-CreateMatrixItems"
+			slot="B"
+			view.bind="AdditionalAttributes"
+			caption="Additional Attributes"
+			class="framed-section"
+			on-filter-columns.call="onFilterColumns(col)"
+			wg-container="AdditionalAttributes_MatrixAttributes">
+		</qp-grid>
+	</qp-template>
+
+	<qp-resizer id="mainAttributesResizer-CreateMatrixItems" initial-size="400px">
+		<qp-grid id="gridMatrixElements-CreateMatrixItems"
+				view.bind="Matrix"
+				caption="Main Attributes"
+				on-filter-columns.call="onFilterColumns(col)"
+				wg-container="Matrix_MatrixMatrix">
+		</qp-grid>
+	</qp-resizer>
+
+	<qp-panel id="MatrixItemsForCreation" caption="Create Matrix Items" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="gridItemsForCreation-CreateMatrixItems"
+				view.bind="MatrixItemsForCreation"
+				on-filter-columns.call="matrixItemsForCreationOnFilterColumns(col)"
+				wg-container="MatrixItemsForCreation_grdCreate">
+		</qp-grid>
+		<footer id="footer-CreateMatrixItems">
+			<qp-button id="buttonConfirmation-CreateMatrixItems" dialog-result="OK" caption="Confirm" class="major-button"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

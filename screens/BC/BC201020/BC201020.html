@@ -1,0 +1,145 @@
+﻿<template>
+	<qp-template name="1-1" id="Bindings_form" wg-container class="label-size-m">
+		<qp-fieldset id="summaryFirstColumn" view.bind="Bindings" slot="A">
+			<field name="ConnectorType"></field>
+			<field name="BindingName"></field>
+		</qp-fieldset>
+		<qp-fieldset id="summarySecondColumn" view.bind="Bindings" slot="B" class="no-label">
+			<field name="IsActive"></field>
+			<field name="IsDefault"></field>
+		</qp-fieldset>
+	</qp-template>
+	<!-- Tabs -->
+	<qp-tabbar active-tab-id="tabConnectionSettings" id="CurrentStore_tab" class="label-size-m" wg-container>
+
+		<qp-tab id="tabConnectionSettings" caption="General">
+			<qp-template name="1-1" id="tabConnectionSettingsTemplate">
+				<div slot="A">
+					<qp-fieldset id="CurrentBindingAmazon_frmCurrentBindingAmazon"
+								 view.bind="CurrentBindingAmazon"
+								 caption="Connection"
+								 wg-container>
+						<field name="Region"></field>
+						<field name="Marketplace"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBinding_PXFormView1" view.bind="CurrentBinding" caption="Miscellaneous" wg-container>
+						<field name="LocaleName"></field>
+						<field name="CurrentBinding.BindingAdministrator"></field>
+					</qp-fieldset>
+				</div>
+
+				<div slot="B" id="CurrentBinding_frmOther" class="label-size-m" wg-container>
+					<qp-fieldset id="groupLicenseRestrictions" view.bind="CurrentBinding" caption="License Restrictions">
+						<field name="AllowedStores"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<!--Entity Settings Tab-->
+		<qp-tab id="tabEntitySettings" caption="Entities">
+			<qp-grid id="CstPXGrid60" view.bind="Entities"></qp-grid>
+		</qp-tab>
+
+		<!--Inventory Settings Tab-->
+		<qp-tab id="tabInventorySettings" caption="Inventory">
+			<qp-template name="1-1" id="frmInventorySettings">
+				<div slot="A">
+					<qp-fieldset id="groupInventorySettings" view.bind="CurrentStore" caption="Inventory Settings">
+						<field name="AvailabilityCalcRule"></field>
+						<field name="WarehouseMode"></field>
+					</qp-fieldset>
+					<qp-grid id="gridExportLocations"
+							 class="framed-section"
+							 view.bind="ExportLocations"
+							 caption="Warehouse Mapping for Inventory Export"></qp-grid>
+				</div>
+				<div slot="B" id="frmInventorySettingsSecondColumn">
+					<qp-fieldset id="repleinshmentGeneralSettings" view.bind="CurrentBindingAmazon" caption="Marketplace Transfer Orders" wg-container="CurrentBindingAmazon_CurrentBindingAmazon11">
+						<field name="TransferOrderType" config-allow-edit.bind="true"></field>
+						<field name="EarliestShipmentDate"></field>
+						<field name="SourceWarehouse" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="replenishmentShipmentSettingsForCarrier" view.bind="CurrentBindingAmazon" caption="Substitution Lists" wg-container="CurrentBindingAmazon_CurrentBindingAmazon11">
+						<field name="CarriersToShipViaCodes" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabOrderSettings" caption="Orders">
+			<qp-template name="1-1" id="frmOrderSettings">
+				<div slot="A" id="frmOrderSettingsFirstColumn">
+					<qp-fieldset id="CurrentBinding_frmCurrentBinding1" view.bind="CurrentBinding" caption="General" wg-container>
+						<field name="BranchID" config-allow-edit.bind="true"></field>
+						<using wg-container="CurrentStore_tab">
+							<field name="CurrentStore.GuestCustomerID" config-allow-edit.bind="true"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBindingAmazon_CurrentBindingAmazon4" view.bind="CurrentBindingAmazon" caption="Order" wg-container>
+						<field name="SellerFulfilledOrderType" config-allow-edit.bind="true"></field>
+						<field name="AmazonFulfilledOrderType" config-allow-edit.bind="true"></field>
+						<using view="CurrentStore" wg-container="CurrentStore_tab">
+							<field name="OrderTimeZone"></field>
+							<field name="PostDiscounts"></field>
+							<field name="SyncOrdersFrom"></field>
+							<field name="GiftWrappingItemID" config-allow-edit.bind="true"></field>
+						</using>
+						<using wg-container="CurrentBindingAmazon_CurrentBindingAmazon5">
+							<field name="ShippingPriceItem" config-allow-edit.bind="true"></field>
+						</using>
+					</qp-fieldset>
+
+					<qp-fieldset id="CurrentBindingAmazon_CurrentBindingAmazon1" view.bind="CurrentBindingAmazon" caption="Marketplace-Fulfilled Order" wg-container>
+						<field name="ReleaseInvoices"></field>
+						<field name="Warehouse" config-allow-edit.bind="true"></field>
+						<field name="LocationID" config-allow-edit.bind="true"></field>
+						<field name="ShippingAccount" config-allow-edit.bind="true"></field>
+						<field name="ShippingSubAccount"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="frmOrderSettingsSecondColumn" class="label-size-xm">
+					<qp-fieldset id="returnSettings" view.bind="CurrentBindingAmazon" caption="Returns" wg-container>
+						<field name="SellerReturnOrderType" config-allow-edit.bind="true"></field>
+						<field name="AmazonReturnOrderType" config-allow-edit.bind="true"></field>
+						<field name="ReturnChargeItem" config-allow-edit.bind="true"></field>
+						<using view="CurrentStore" wg-container="CurrentStore_tab">
+							<field name="ReasonCode"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBindingAmazon_CurrentBindingAmazon2" view.bind="CurrentBindingAmazon" caption="Substitution Lists" wg-container>
+						<field name="ShipViaCodesToCarriers" config-allow-edit.bind="true"></field>
+						<field name="ShipViaCodesToCarrierServices" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsSettlementReportSettings-Orders" view.bind="CurrentBindingAmazon" caption="Settlement Report" wg-container="CurrentBindingAmazon_SettlementReportSettings" >
+						<field name="SettlementReportStartDate" config-allow-edit.bind="true"></field>
+					</qp-fieldset>				
+					<qp-fieldset id="CstPXLayoutRule117" view.bind="CurrentStore" caption="Taxes">
+						<field name="TaxSynchronization"></field>
+						<field name="gridTaxMappingContainer" unbound replace-content>
+							<div class="transparent-section col-12">
+								<qp-grid id="gridTaxMapping" view.bind="TaxMappings"></qp-grid>
+							</div>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabPaymentSettings" caption="Payments">
+			<qp-resizer id="resizer-gridFields" min-size="250px">
+				<qp-grid id="PaymentsMethods"
+						 view.bind="PaymentMethods"></qp-grid>
+			</qp-resizer>
+			<qp-grid id="FeeMappings"
+					view.bind="FeeMappings"
+					caption="Payment Fees"
+					wg-container="FeeMappings_FeeMappings"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabShippingSettings" caption="Shipping">
+			<qp-grid id="PXGrid1"
+					 view.bind="ShippingMappings"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

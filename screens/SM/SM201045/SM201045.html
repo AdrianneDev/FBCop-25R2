@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="template" name="17-17-14" class="label-size-m">
+		<qp-fieldset id="form" slot="A" view.bind="TraceFilter">
+			<field name="Username"></field>
+			<field name="Operation"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formDates" slot="B" view.bind="TraceFilter" class="control-size-m" wg-container="TraceFilter_form">
+			<field name="DateFrom"></field>
+			<field name="DateTo"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="LoginTraces">
+	</qp-grid>
+</template>

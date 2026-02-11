@@ -1,0 +1,23 @@
+<template>
+	<qp-include url="../../../IN/common/panel-site-status-lookup/panel-site-status-lookup.html">
+
+		<!-- fsColumnA-SiteStatusLookup fieldset changes -->
+		<field before="#fsColumnA-SiteStatusLookup [name='ItemClass']" name="SiteID"></field>
+		<!-- <field name="ItemClass"></field> -->
+		<field after="#fsColumnA-SiteStatusLookup [name='ItemClass']" name="SubItem"></field>
+
+		<!-- fsColumnB-SiteStatusLookup fieldset changes -->
+		<template remove="#fsColumnB-SiteStatusLookup [name='SiteID']"></template>
+		<template remove="#fsColumnB-SiteStatusLookup [name='SubItem']"></template>
+		<field before="#fsColumnB-SiteStatusLookup [name='OnlyAvailable']" name="Mode" control-type="qp-radio"></field>
+		<field before="#fsColumnB-SiteStatusLookup [name='OnlyAvailable']" name="HistoryDate"></field>
+		<!-- <field name="OnlyAvailable"></field> -->
+		<field after="#fsColumnB-SiteStatusLookup [name='OnlyAvailable']" name="DropShipSales"></field>
+
+		<qp-fieldset id="columnThird-SiteStatusLookup" after="#fsColumnB-SiteStatusLookup" slot="C" view.bind="ItemFilter">
+			<field name="CustomerLocationID"></field>
+		</qp-fieldset>
+
+		<template modify="#grid-SiteStatusLookup" wg-container="ItemInfo_PanelAddSiteStatus_gripSiteStatus"></template>
+	</qp-include>
+</template>

@@ -1,0 +1,18 @@
+<template>
+	<qp-splitter id="splitter-ItemCategory" split="width" initial-split="20%" class="stretch">
+		<split-pane id="splitPaneA-ItemCategory" class="v-stack">
+			<qp-tree id="tree-ItemCategory" view.bind="Folders" caption="Categories"></qp-tree>
+		</split-pane>
+		<split-pane id="splitPaneB-ItemCategory" class="v-stack">
+			<qp-template id="form-ItemCategory" name="1-1" class="label-size-sm equal-height" wg-container="CurrentCategory_form">
+				<qp-fieldset id="fsColumnA-ItemCategory" slot="A" view.bind="CurrentCategory">
+					<field Name="Description"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsColumnB-ItemCategory" slot="B" view.bind="CurrentCategory">
+					<field name="ParentID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="grid-ItemCategory" view.bind="Members" caption="Category Members" wg-container="Members_gridMembers"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

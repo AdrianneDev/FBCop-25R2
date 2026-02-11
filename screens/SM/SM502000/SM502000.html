@@ -1,0 +1,14 @@
+<template>
+
+	<qp-grid id="grid" view.bind="FailedToSend"></qp-grid>
+
+	<qp-panel id="PopupDefinition" caption="Notification Event" auto-repaint="true" width="md">
+		<qp-fieldset id="frmViewNotification" view.bind="PopupDefinition">
+			<field name="NotificationBody" config-rows.bind="30"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-PopupDefinition" caption="Close" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

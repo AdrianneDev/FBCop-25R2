@@ -1,0 +1,11 @@
+<template>
+	<qp-splitter id="splitter-ShiftCodes" split="width" initial-split="30%">
+		<split-pane>
+			<qp-grid id="grid-Summary" view.bind="Codes" wg-container="Codes_gridSummary" caption="Shift Codes"></qp-grid>
+		</split-pane>
+
+		<split-pane>
+			<qp-grid id="grid-Details" view.bind="Rates" wg-container="Rates_gridDetails" caption="Rates"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

@@ -1,0 +1,50 @@
+<template>
+	<qp-template
+		name="1-1"
+		id="ProjectManagementClasses_form"
+		class="equal-height label-size-m"
+		wg-container>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="ProjectManagementClasses">
+			<field name="ProjectManagementClassId" config-display-mode.bind="'id'"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset
+			slot="B"
+			id="formSlotB01"
+			view.bind="ProjectManagementClasses"
+			class="no-label"
+			caption="Use For">
+			<field name="UseForProjectIssue"></field>
+			<field name="UseForRequestForInformation"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="ProjectManagementClassesCurrent_tab" wg-container>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-template
+				name="1-1"
+				id="ProjectManagementClassesCurrentForm"
+				class="label-size-m">
+				<div slot="A">
+					<qp-fieldset
+						id="ProjectManagementClassesCurrent01"
+						view.bind="ProjectManagementClassesCurrent"
+						caption="Request for Information Settings">
+						<field name="RequestForInformationResponseTimeFrame"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="ProjectManagementClassesCurrent02"
+						view.bind="ProjectManagementClassesCurrent"
+						caption="Project Issue Settings">
+						<field name="ProjectIssueResponseTimeFrame"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="Attributes_AttributesGrid" view.bind="Attributes" wg-container></qp-grid>
+		</qp-tab>
+		<qp-tab id="PrioritiesTab" caption="Priorities">
+			<qp-grid id="PXGrid1" view.bind="ProjectManagementClassPriority"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

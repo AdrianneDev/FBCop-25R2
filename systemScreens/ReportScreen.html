@@ -1,0 +1,102 @@
+<template>
+	<require from="./ReportScreen.scss"></require>
+
+	<qp-custom-toolbar-item toolbar-id="ScreenToolbar" action-id="cust1" index.bind="templateMenuIndex" tooltip="Select Template">
+		<div class="control-container size-default  template-selector">
+			<qp-filter-combo id="selectTemplate_fc" filter-id.one-way="selectedTemplateId" filters.bind="ReportTemplates"
+				on-active-filter-changed.call="onTemplateChanged(filterID)" on-favorite-changed.call="onTemplateFavoriteChanged(filterID, isFavorite)"
+				hide-list-separator.bind="!selectedTemplateId"
+				placeholder="${msg.Template}">
+			</qp-filter-combo>
+		</div>
+	</qp-custom-toolbar-item>
+
+	<div id="for_form" class="stretch">
+		<qp-info-box id="lblErrorPdfSign" caption.bind="WarningMessages.WarningPdfSign"
+			if.bind="Report.ShowPdfSignWarning.value" type="warning"></qp-info-box>
+		<qp-tabbar id="tabbar">
+			<qp-tab id="tab-Parameters" caption="Parameters" always-show="true">
+				<qp-fieldset-layout id="paramsLayout" layout.bind="paramsLayout" wg-container="_pForm">
+				</qp-fieldset-layout>
+			</qp-tab>
+			<qp-tab id="tab-Filters" caption="Sorting & Filtering">
+				<qp-template id="filters-sorting" name="1-1">
+					<div id="div-sorting" slot="A">
+						<div class="section-container">
+							<div class="qp-caption section-title">${msg.Sorting_Caption}</div>
+							<qp-grid id="grid-sorting" view.bind="Sorting" class="no-stretch" wg-container="_gridS">
+							</qp-grid>
+						</div>
+					</div>
+					<div id="div-filters" slot="B">
+						<div class="section-container">
+							<div class="qp-caption section-title">${msg.Filtering_Caption}</div>
+							<qp-filter-editor filter-rows.bind="conditionsRows" columns.bind="conditionsColumns"
+								on-filter-rows-changed.call="onConditionFilterChanged()"
+								on-filter-changed.call="onConditionFilterChanged()" view-model.ref="conditionsEditorVM"
+								id="grid-filters_filter_editor_body">
+							</qp-filter-editor>
+							<div show.bind="false">
+								<qp-grid id="grid-filters" view.bind="Conditions" view-model.ref="conditionsGridVM"
+									wg-container="_gridF"></qp-grid>
+							</div>
+						</div>
+					</div>
+				</qp-template>
+			</qp-tab>
+
+			<qp-tab id="tab-MailSettings" caption="Mailing & Printing" wg-container="PrintAndEmailSettings">
+				<qp-template id="mail-Settings" name="1-1">
+					<div id="divColumnA-mail-settings" slot="A">
+						<qp-fieldset id="mail-settings" view.bind="Report"
+							caption.bind="msg.Mailing_Caption">
+							<field name="Format"></field>
+							<field name="Email"></field>
+							<field name="Cc"></field>
+							<field name="Bcc"></field>
+							<field name="Subject"></field>
+						</qp-fieldset>
+						<qp-fieldset id="regional-settings" view.bind="Report"
+							caption.bind="msg.Regional_Caption">
+							<field name="Locale"></field>
+							<field name="Localization"></field>
+						</qp-fieldset>
+					</div>
+					<qp-fieldset id="printing-settings" slot="B" view.bind="Report"
+						caption.bind="msg.Printing_Caption">
+						<field name="DeletedRecords"></field>
+						<field name="ArchivedRecords"></field>
+						<field name="PrintAllPages"></field>
+						<field name="ViewPdf"></field>
+						<field name="PdfCompressed"></field>
+						<field name="PdfFontEmbedded"></field>
+						<field name="AlternativeEngine"></field>
+					</qp-fieldset>
+				</qp-template>
+			</qp-tab>
+
+			<qp-tab id="tab-Versions" caption="Versions">
+				<qp-grid id="grid-versions" view.bind="ReportVersion" wg-container="ViewReports_gridV" view-model.ref="versionsGridVM">
+				</qp-grid>
+			</qp-tab>
+
+			<qp-tab id="tab-Notifications" caption="Email Notifications">
+				<qp-grid id="grid-notifications" view.bind="ReportNotifications" wg-container="ReportNotifications_enGrdId" view-model.ref="notificationsGridVM">
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+	</div>
+	<qp-panel id="EditTemplateDialog" auto-repaint="true" caption.bind="createNewTemplate ? msg.SaveTemplate : msg.EditTemplate">
+		<qp-fieldset id="template-settings">
+			<field name="EditTemplateDialog.Template"></field>
+			<field name="EditTemplateDialog.IsDefault"></field>
+			<field name="EditTemplateDialog.Shared"></field>
+		</qp-fieldset>
+
+		<footer id="footer-Template">
+			<qp-button id="buttonOk-Template" dialog-result="OK" caption="Save"
+				enabled.bind="!!EditTemplateDialog.Template.value"></qp-button>
+			<qp-button id="buttonCancel-Template" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

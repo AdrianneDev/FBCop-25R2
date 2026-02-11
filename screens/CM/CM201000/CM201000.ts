@@ -1,0 +1,19 @@
+import { createCollection, PXScreen, graphInfo, PXView, PXFieldState, PXFieldOptions, gridConfig, GridPreset } from "client-controls";
+
+@graphInfo({ graphType: "PX.Objects.CM.CurrencyRateTypeMaint", primaryView: "CuryRateTypeRecords" })
+export class CM201000 extends PXScreen {
+
+	CuryRateTypeRecords = createCollection(CurrencyRateType);
+
+}
+
+@gridConfig({
+	preset: GridPreset.Primary
+})
+export class CurrencyRateType extends PXView {
+	CuryRateTypeID: PXFieldState;
+	Descr: PXFieldState;
+	RateEffDays: PXFieldState;
+	RefreshOnline: PXFieldState<PXFieldOptions.CommitChanges>;
+	OnlineRateAdjustment: PXFieldState;
+}

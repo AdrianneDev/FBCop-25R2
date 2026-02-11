@@ -1,0 +1,6 @@
+// TODO: temp fix for [.qp-rte-control .qp-rte-toolbar > *] rule
+//       to be fixed when we move the button into a custom toolbar
+.qp-rte-control .qp-rte-toolbar .ml-rte-button {
+	overflow: initial;
+	max-width: fit-content;
+}

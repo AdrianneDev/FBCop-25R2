@@ -1,0 +1,44 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="formFilter" wg-container="Filter_form" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+			<field name="OrgBAccountID" pinned="false"></field>
+			<field name="LedgerID" pinned></field>
+			<field name="StartPeriodID" caption="Period Range" pinned>
+				<qp-field control-state.bind="Filter.EndPeriodID"></qp-field>
+			</field>
+			<field name="AccountID" pinned></field>
+			<field name="SubID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Filter">
+			<field name="PeriodStartDateUI" caption="Inquiry Period Duration" pinned>
+				<qp-field control-state.bind="Filter.PeriodEndDateUI"></qp-field>
+			</field>
+			<field name="StartDateUI" caption="Date Range" pinned>
+				<qp-field control-state.bind="Filter.EndDateUI"></qp-field>
+			</field>
+
+			<field name="fieldLine01" unbound replace-content pinned>
+				<qp-field class="no-label col-6" control-state.bind="Filter.IncludeReclassified"></qp-field>
+				<qp-field class="no-label col-6" control-state.bind="Filter.ShowSummary"></qp-field>
+			</field>
+
+			<field name="fieldLine02" unbound replace-content>
+				<qp-field class="no-label col-6" control-state.bind="Filter.IncludeUnposted"></qp-field>
+				<qp-field class="no-label col-6" control-state.bind="Filter.ShowCuryDetail"></qp-field>
+			</field>
+
+			<field name="fieldLine03" unbound replace-content>
+				<qp-field class="no-label col-6" control-state.bind="Filter.IncludeUnreleased"></qp-field>
+				<qp-field class="no-label col-6" control-state.bind="Filter.UseMasterCalendar"></qp-field>
+			</field>
+
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird" view.bind="Filter" class="highlights-section">
+			<field name="BegBal" pinned></field>
+			<field name="TurnOver" pinned></field>
+			<field name="EndBal" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridGLTranEnq" view.bind="GLTranEnq" wg-container="GLTranEnq_grid" on-filter-changed.call="onFilterChanged(args)">
+	</qp-grid>
+</template>

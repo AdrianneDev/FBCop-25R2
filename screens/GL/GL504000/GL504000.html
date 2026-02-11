@@ -1,0 +1,17 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter" class="label-size-m">
+			<field name="ExecutionDate"></field>
+
+			<field name="LimitTypeSel" show.bind="false"></field>
+			<field name="radioButtonOption0" unbound>
+				<qp-radio-item slot="label" name="LimitTypeSelRB" value="D"></qp-radio-item>
+			</field>
+			<field name="RunLimit">
+				<qp-radio-item slot="label" name="LimitTypeSelRB" value="M"></qp-radio-item>
+			</field>
+
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Schedule_List"></qp-grid>
+</template>

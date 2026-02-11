@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="form-Settings" name="17-17-14" class="equal-height" wg-container="UpdateSettings_form">
+		<qp-fieldset id="fsColumnA-Settings" slot="A" view.bind="UpdateSettings">
+			<field name="Action"></field>
+			<field name="SiteID"></field>
+			<field name="EndFinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Settings" slot="B" view.bind="UpdateSettings">
+			<field name="ItemClassID"></field>
+			<field name="InventoryID">
+				<qp-button id="btnItemList" class="col-auto" state.bind="SelectItems">
+				</qp-button>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="ResultPreview"></qp-grid>
+
+	<qp-panel id="SelectedItems" caption="Inventory Item List" auto-repaint="true" height="85vh">
+		<qp-grid id="gridItemList" view.bind="SelectedItems"></qp-grid>
+	</qp-panel>
+</template>

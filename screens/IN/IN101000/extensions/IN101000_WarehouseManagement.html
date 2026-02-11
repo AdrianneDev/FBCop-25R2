@@ -1,0 +1,41 @@
+<template>
+	<template id="content_WarehouseManagement">
+		<qp-template id="form-WarehouseManagementMessage" name="1">
+			<div id="divColumnA-WarehouseManagementMessage" slot="A">
+				<field name="infoMessage" replace-content unbound>
+					<qp-info-box caption="These settings are specific to the current branch." type="info"></qp-info-box>
+				</field>
+			</div>
+		</qp-template>
+		<qp-template id="form-WarehouseManagement" name="1-1" wg-container="ScanSetup_formScanSetup">
+			<div id="divColumnA-WarehouseManagement" slot="A">
+				<qp-fieldset id="fsGeneral-WarehouseManagement" view.bind="ScanSetup" caption="General">
+					<field name="ExplicitLineConfirmation"></field>
+					<field name="DefaultWarehouse"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsReceipt-WarehouseManagement" view.bind="ScanSetup" caption="Receipt Settings">
+					<field name="UseDefaultQtyInReceipt"></field>
+					<field name="UseDefaultReasonCodeInReceipt"></field>
+					<field name="RequestLocationForEachItemInReceipt"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsIssue-WarehouseManagement" view.bind="ScanSetup" caption="Issue Settings">
+					<field name="UseDefaultQtyInIssue"></field>
+					<field name="UseDefaultReasonCodeInIssue"></field>
+					<field name="RequestLocationForEachItemInIssue"></field>
+				</qp-fieldset>
+			</div>
+			<div id="divColumnB-WarehouseManagement" slot="B">
+				<qp-fieldset id="fsFulfillmentWorkflow-WarehouseManagement" view.bind="ScanSetup" caption="Transfer Settings">
+					<field name="UseDefaultQtyInTransfer"></field>
+					<field name="UseDefaultReasonCodeInTransfer"></field>
+					<field name="UseDefaultLotSerialNbrInTransfer"></field>
+					<field name="RequestLocationForEachItemInTransfer"></field>
+					<field name="UseCartsForTransfers"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsPICountSettings-WarehouseManagement" view.bind="ScanSetup" caption="PI Count Settings">
+					<field name="UseDefaultQtyInCount"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

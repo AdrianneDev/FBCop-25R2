@@ -1,0 +1,26 @@
+<template>
+	<require from="screens/SP/sp-base.scss"></require>
+	<!-- <input type="checkbox" autofocus class="sp-hidden-focus"> -->
+
+	<ul class="hidden">
+		<li class="sp-cart-source">
+			<button id="btnOpenCart" class="cart-open-btn" onclick="window.baseOpenCart()"></button>
+			<qp-fieldset id="fsShoppingCart3" view.bind="BaseInfo">
+				<field name="CartItemsQty" class="hidden"></field>
+				<field name="CartItemsTotal" class="hidden"></field>
+				<field name="CartItemsTotal_Text" class="hidden"></field>
+				<field name="unboundShoppingCart" unbound replace-content>
+					<!-- <qp-button id="btnOpenCart" class="cart-open-btn" state.bind="OpenCart"></qp-button> -->
+					<div class="cart-wrapper">
+						<qp-hyper-icon images.bind="{ normal: BaseInfo.CartItemsTotal.value === 0 ? 'svg:sp@emptyCart' : 'svg:sp@cart' }"></qp-hyper-icon>
+						<div class="cart-items-qty" if.bind="BaseInfo.CartItemsTotal.value > 0">${BaseInfo.cartItemsQtyLabel}</div>
+						<div class="cart-info">
+							<div class="cart-header">${Labels.Cart}</div>
+							<div class="cart-items-total">${BaseInfo.cartItemsTotalLabel}</div>
+						</div>
+					</div>
+				</field>
+			</qp-fieldset>
+		</li>
+	</ul>
+</template>

@@ -1,0 +1,18 @@
+﻿<template>
+    <qp-template name="1-1" class="equal-height" id="formOrchestrationPlan" wg-container="OrchestrationPlan_formOP">
+        <qp-fieldset id="fsColumnA-OrchestrationPlan" slot="A" view.bind="OrchestrationPlan">
+            <field name="PlanID"></field>
+            <field name="IsActive"></field>
+            <field name="PlanDescription"></field>
+        </qp-fieldset>
+        <qp-fieldset id="fsColumnB-OrchestrationPlan" slot="B" view.bind="OrchestrationPlan">
+            <field name="Strategy"></field>
+            <field name="ShippingZoneID"></field>
+            <field name="SourceSiteID">
+                <qp-field control-state.bind="OrchestrationPlan.IncludeSourceWarehouse"></qp-field>
+            </field>
+        </qp-fieldset>
+    </qp-template>
+
+    <qp-grid view.bind="OrchestrationPlanLines" class="stretch" wg-container="OrchestrationPlanLines_gridPL"></qp-grid>
+</template>

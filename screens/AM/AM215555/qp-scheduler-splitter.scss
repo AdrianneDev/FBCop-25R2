@@ -1,0 +1,185 @@
+:root {
+	--qp-sch-top-offset: 38px; // TODO: use a Platform variable when available (height of .qp-tabbar .qp-tabbar-wrapper (34) + margin of .qp-tabbar .qp-tabbar-header (5) - border (1))
+}
+
+.qp-sch-calendar-container .b-grid-splitter-buttons {
+	// display: flex !important;
+	display: none !important;
+}
+
+.qp-sch-grid-container .b-gridbase.b-split {
+	&:nth-child(2) .b-grid-splitter.b-grid-splitter-collapsed .b-grid-splitter-buttons {
+		top: 50% !important;
+	}
+
+	.b-grid-splitter {
+		flex-basis: 1px !important;
+		background-color: #c3c6ca !important;
+
+		&-inner {
+			width: 1px !important;
+			background-color: rgba(0,0,0,0) !important;
+			padding-inline-end: 8px;
+			padding-inline-start: 8px;
+			margin-inline-start: -8px;
+			inset-inline-start: 0 !important;
+		}
+
+		&-button-icon {
+			height: 8px;
+			width: 5px;
+		}
+
+		&.b-grid-splitter-collapsed{
+			background: none !important;
+			flex-basis: 24px !important;
+
+			.b-grid-splitter-inner {
+				width: 24px !important;
+				margin: 0px;
+			}
+			.b-grid-splitter-buttons {
+				width: 24px;
+				height: 100%;
+			}
+
+			&:not(.b-disabled) {
+				border-inline-end: 1px solid #E8E8E8;
+			}
+
+			&:not(.b-grid-splitter-allow-collapse) {
+				.b-grid-splitter-button-expand {
+					background-color: #eff7ff; /* cant't use a transparent color due to overlapped items */
+					border: none;
+
+					body:not(.b-draghelper-active) &:hover {
+						background-color: var(--qp-highlight-hover-color);
+					}
+				}
+
+				.b-grid-splitter-button-collapse {
+					display: none;
+				}
+			}
+		}
+
+		&:not(.b-grid-splitter-collapsed) {
+			.b-grid-splitter-button-expand {
+				display: none;
+			}
+			.b-draghelper-active & > div > .b-grid-splitter-buttons {
+				opacity: 0% !important;
+			}
+			.b-hover > div > .b-grid-splitter-buttons {
+				opacity: 100%;
+			}
+			&:not(.b-hover) > div > .b-grid-splitter-buttons {
+				opacity: 0%;
+				animation: 0.5s linear 0s fadeOut;
+			}
+		}
+
+		.b-grid-splitter-buttons {
+			flex-direction: column-reverse;
+			width: 26px;
+			height: 54px;
+		}
+		.b-grid-splitter-button-expand,
+		.b-grid-splitter-button-collapse {
+			border-radius: 0px;
+			justify-content: center;
+			background-color: white;
+			border-inline-start: 1px solid var(--qp-sch-splitter-line);
+			border-inline-end: 1px solid var(--qp-sch-splitter-line);
+		}
+
+		&:not(.b-grid-splitter-expanded) .b-grid-splitter-button-collapse {
+			border-radius: 7px;
+			border: 1px solid var(--qp-sch-splitter-line);
+		}
+	}
+
+	.b-virtual-scrollers .b-grid-splitter.b-grid-splitter-collapsed {
+		background: var(--qp-highlight-color) !important;
+	}
+}
+
+// Fixing minor issues with qp-splitter and adapting it to Calendar layout:
+// 1. making it wider (and adapting it to the change of the width)
+// 2. removing of flickering when hovering over the splitter
+// 3. use of screen colors
+
+.qp-splitter-width > .qp-splitter-bar {
+	flex-basis: 20px;
+
+	& > .qp-splitter-line {
+		margin-inline-start: 10px;
+	}
+
+	& > .qp-splitter-buttons {
+		align-items: center;
+
+		& > *:is(.qp-splitter-button-first, .qp-splitter-button-second) {
+			display: flex !important;
+		}
+	}
+
+	&:not(.qp-splitter-collapsed) {
+		& > .qp-splitter-line {
+			background-color: #C8C8C8;
+		}
+
+		.b-draghelper-active & > .qp-splitter-buttons,
+		.b-draghelper-active & > .qp-splitter-line {
+			opacity: 0% !important;
+		}
+	}
+
+	&.qp-splitter-collapsed {
+		& > .qp-splitter-buttons > .qp-splitter-button {
+			background-color: var(--qp-highlight-color);
+			& > qp-icon > svg {
+				color: var(--primary-color) !important;
+			}
+		}
+
+		.b-draghelper-active & {
+			& > .qp-splitter-buttons > .qp-splitter-button:hover {
+				background-color: var(--qp-highlight-color) !important;
+			}
+			// & .b-grid-splitter-button-icon {
+			// 	display: block !important;
+			// }
+		}
+	}
+}
+
+
+.horizontal-splitter > .qp-splitter > .qp-splitter-bar {
+	margin-top: var(--qp-sch-top-offset);
+}
+
+// Fix for a bug in splitter::after:
+.qp-splitter-height > .qp-splitter-bar.qp-splitter-collapsed > .qp-splitter-buttons > .qp-splitter-button {
+	justify-content: space-between;
+	height: 32px;
+}
+
+
+// TODO: this should be done via splitter config when available
+.qp-splitter-first > .qp-fieldset-caption {
+	display: none;
+}
+
+#eventsSplitterId,
+#ordersSplitterId {
+	.qp-caption {
+		color: #4f5964;
+	}
+	.qp-fieldset-caption {
+		padding-bottom: 10px !important;
+		padding-inline-start: 0px !important;
+	}
+}
+
+

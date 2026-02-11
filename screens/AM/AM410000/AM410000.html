@@ -1,0 +1,44 @@
+<template>
+	<qp-splitter id="sp1" split="height">
+		<split-pane>
+			<qp-splitter id="sp2" split="width">
+				<split-pane>
+					<qp-fieldset id="Filter1" view.bind="Filter" wg-container="Filter_form" caption="First BOM Structure">
+						<field name="IDType1"></field>
+						<field name="BOMID1"></field>
+						<field name="RevisionID1" config-allow-edit.bind="true"></field>
+						<field name="ECRID1"></field>
+						<field name="ECOID1"></field>
+					</qp-fieldset>
+					<qp-tree id="edTree1" view.bind="Tree1" wg-container="FeaturesLeft"></qp-tree>
+				</split-pane>
+				<split-pane>
+					<qp-fieldset id="Filter2" view.bind="Filter" wg-container="Filter_form" caption="Second BOM Structure">
+						<field name="IDType2"></field>
+						<field name="BOMID2"></field>
+						<field name="RevisionID2" config-allow-edit.bind="true"></field>
+						<field name="ECRID2"></field>
+						<field name="ECOID2"></field>
+					</qp-fieldset>
+					<qp-tree id="edTree2" view.bind="Tree2" wg-container="FeaturesRight"></qp-tree>
+				</split-pane>
+			</qp-splitter>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="mainTab" active-tab-id="tabMaterials">
+				<qp-tab id="tabMaterials" caption="Materials">
+					<qp-grid id="gridMatl" view.bind="BomMatlRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabSteps" caption="Steps">
+					<qp-grid id="gridStep" view.bind="BomStepRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTools" caption="Tools">
+					<qp-grid id="gridTool" view.bind="BomToolRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOverhead" caption="Overhead">
+					<qp-grid id="gridOvhd" view.bind="BomOvhdRecords"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

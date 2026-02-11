@@ -1,0 +1,115 @@
+<template>
+	<qp-template name="1-1" id="Prefs_form" class="label-size-xm" wg-container>
+		<div slot="A">
+			<qp-fieldset
+				id="generalDefaults"
+				view.bind="Prefs"
+				caption="General Defaults"
+			>
+				<field
+					control-type="qp-selector"
+					name="HomePage"
+					config.bind="{displayMode:'text'}"
+				></field>
+				<field name="HelpPage"></field>
+				<field name="UseMLSearch"></field>
+				<field
+					name="AddressLookupPluginID"
+					config-allow-edit.bind="true"
+				></field>
+				<field name="MapViewer"></field>
+				<field name="TimeZone"></field>
+				<field name="Theme"></field>
+				<field name="PrimaryColor">
+					<qp-button id="btnResetColors" state.bind="ResetColors" wg-name="Resettodefaultcolors"></qp-button>
+				</field>
+				<field name="BackgroundColor"></field>
+				<field name="GetLinkTemplate"></field>
+				<field name="PortalExternalAccessLink"></field>
+				<field name="PersonNameFormat"></field>
+				<field name="DefaultUI"></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="tableSettings"
+				view.bind="Prefs"
+				caption="Table Settings"
+			>
+				<field name="GridFastFilterCondition"></field>
+				<field name="GridFastFilterMaxLength"></field>
+				<field name="GridActionsText"></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="editorSettings"
+				view.bind="Prefs"
+				caption="Editor Settings"
+			>
+				<field name="SpellCheck" class="no-label"></field>
+			</qp-fieldset>
+		</div>
+
+		<div slot="B">
+			<qp-fieldset
+				id="menuUsageHistory"
+				view.bind="Prefs"
+				caption="Usage History for Search Optimization"
+			>
+				<field name="DeletingMLEventsMode" replace-content class="no-label">
+					<qp-field
+						control-state.bind="Prefs.DeletingMLEventsMode"
+						control-type.bind="'qp-radio'"
+						show.bind="false"
+						config-name.bind="'DeletingMLEventsModeRB'"
+						control-type="qp-radio">
+					</qp-field>
+
+					<qp-radio-item name="DeletingMLEventsModeRB" value="0" class="col-6"></qp-radio-item>
+					<qp-field control-state.bind="Prefs.MLEventsRetentionAge" class="col-6 no-label"></qp-field>
+					<qp-radio-item name="DeletingMLEventsModeRB" value="1" class="col-6"></qp-radio-item>
+				</field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="diagnosticsUsage"
+				view.bind="PrefsGlobal"
+				caption="Diagnostics & Usage"
+			>
+				<field name="PrefsGlobal.EnableTelemetry" class="no-label"></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="exportToExcel"
+				view.bind="Prefs"
+				caption="Export to Excel"
+			>
+				<field name="BorderColor">
+					<qp-field
+						slot="label"
+						control-state.bind="Prefs.Border"
+						config-enabled.bind="false"
+						class="no-label"
+					></qp-field>
+				</field>
+				<field name="HiddenSkip" class="no-label"></field>
+				<field name="ApplyToEmptyCells" class="no-label"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="header" view.bind="Prefs" caption="Header">
+				<field name="HeaderFont"></field>
+				<field name="HeaderFontSize"></field>
+				<field name="HeaderFontColor"></field>
+				<field name="HeaderFontType"></field>
+				<field name="HeaderFillColor"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="body" view.bind="Prefs" caption="Body">
+				<field name="BodyFont"></field>
+				<field name="BodyFontSize"></field>
+				<field name="BodyFontColor"></field>
+				<field name="BodyFontType"></field>
+				<field name="BodyFillColor"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

@@ -1,0 +1,11 @@
+<template>
+	<template id="tabSalesforce_Content">
+		<qp-template id="owner_template" name="17-17-14" if.bind="false">
+			<qp-fieldset id="owner_form" slot="A" view.bind="OwnerUser">
+				<field name="PKID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-include url="src/screens/SF/common/tabs/tab-salesforce/tab-salesforce.html"></qp-include>
+	</template>
+</template>

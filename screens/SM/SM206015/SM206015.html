@@ -1,0 +1,49 @@
+<template>
+	<qp-template name="1-1" class="equal-height" id="Providers_form" wg-container>
+		<qp-fieldset id="formProviders" view.bind="Providers" slot="A" class="label-size-m">
+			<field name="Name"></field>
+			<field name="ProviderType"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabParameters" caption="Parameters">
+			<qp-grid id="Parameters_grid" wg-container view.bind="Parameters"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSchema" caption="Schema">
+			<qp-splitter id="Providers_sp1" initial-split="450" split="width">
+				<split-pane>
+					<qp-grid id="Objects_gridObjects" Caption="Source Objects" wg-container view.bind="Objects"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-grid id="Fields_gridFields" Caption="Source Fields" wg-container view.bind="Fields"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="GetFileLinkFilter" caption="Attached File Link" auto-repaint="true">
+		<qp-fieldset id="formLinkGetFileLinkFilter" wg-container="GetFileLinkFilter_frmGetLink" view.bind="GetFileLinkFilter">
+			<field name="WikiLink"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnCancel" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CurrentObject" caption="Object Command Editor" auto-repaint="true">
+		<qp-fieldset id="formCurrentObject" wg-container="CurrentObject_frmEditObjectCommand" view.bind="CurrentObject">
+			<field name="Command" config-type.bind="1" config-rows.bind="10"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnCancel" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CurrentField" caption="Field Command Editor" auto-repaint="true">
+		<qp-fieldset id="formCurrentField" wg-container="CurrentField_frmEditFieldCommand" view.bind="CurrentField">
+			<field name="Command" config-type.bind="1" config-rows.bind="10"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnCancel" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

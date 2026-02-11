@@ -1,0 +1,92 @@
+<template>
+	<qp-tab id="tab-Estimates" after="#tab-Details" caption="Estimates" load-on-demand.bind="false">
+		<qp-grid id="grid-Estimates" view.bind="OrderEstimateRecords" wg-container="OrderEstimateRecords_gridEstimates"></qp-grid>
+	</qp-tab>
+
+	<field before="#fsOrderTotals-Totals [name='CuryGoodsExtPriceTotal']" name="AMCuryEstimateTotal" config-enabled.bind="false"></field>
+	<field before="#fsCalculatedAmounts-Totals [name='BlanketOpenQty']" name="AMEstimateQty" config-enabled.bind="false"></field>
+
+	<qp-panel id="OrderEstimateItemFilter" caption="Add Estimate" auto-repaint="true">
+		<qp-template id="form-AddEstimate" name="1">
+			<qp-fieldset id="fsColumnA-AddEstimate" slot="A" view.bind="OrderEstimateItemFilter" wg-container="OrderEstimateItemFilter_estimateAddForm">
+				<field name="EstimateID">
+					<qp-field control-state.bind="OrderEstimateItemFilter.AddExisting" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="RevisionID"></field>
+				<field name="InventoryCD">
+					<qp-field control-state.bind="OrderEstimateItemFilter.IsNonInventory" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="SubItemID"></field>
+				<field name="SiteID"></field>
+				<field name="ItemDesc"></field>
+				<field name="EstimateClassID"></field>
+				<field name="ItemClassID"></field>
+				<field name="UOM"></field>
+				<field name="BranchID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-AddEstimate">
+			<qp-button id="buttonOK-AddEstimate" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-AddEstimate" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SelectedEstimateRecord" caption="Quick Estimate" auto-repaint="true">
+		<qp-template id="form-QuickEstimate" name="1">
+			<qp-fieldset id="fsColumnA-QuickEstimate" slot="A" view.bind="SelectedEstimateRecord" wg-container="SelectedEstimateRecord_QuickEstimateForm">
+				<field name="EstimateID"></field>
+				<field name="RevisionID"></field>
+				<field name="InventoryCD">
+					<qp-field control-state.bind="SelectedEstimateRecord.IsNonInventory" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="SubItemID"></field>
+				<field name="SiteID"></field>
+				<field name="ItemDesc"></field>
+				<field name="EstimateClassID"></field>
+				<field name="FixedLaborCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.FixedLaborOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="VariableLaborCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.VariableLaborOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="MachineCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.MachineOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="MaterialCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.MaterialOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="ToolCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.ToolOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="FixedOverheadCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.FixedOverheadOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="VariableOverheadCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.VariableOverheadOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="SubcontractCost">
+					<qp-field control-state.bind="SelectedEstimateRecord.SubcontractOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="ExtCostDisplay"></field>
+				<field name="ReferenceMaterialCost"></field>
+				<field name="OrderQty">
+					<qp-field control-state.bind="SelectedEstimateRecord.HasPriceBreak">
+					</qp-field>
+				</field>
+				<field name="UOM"></field>
+				<field name="CuryUnitCost"></field>
+				<field name="MarkupPct"></field>
+				<field name="CuryUnitPrice">
+					<qp-field control-state.bind="SelectedEstimateRecord.PriceOverride" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="CuryExtPrice"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-QuickEstimate">
+			<qp-button id="buttonOK-QuickEstimate" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-QuickEstimate" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

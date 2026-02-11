@@ -1,0 +1,67 @@
+<template>
+	<template id="tabCalendar_Content">
+		<qp-template id="Calendar" name="1-1" class="equal-height">
+			<qp-fieldset id="CalendarDetails" slot="A" view.bind="CalendarDetails" class="no-label" caption="Weekdays" wg-container="CalendarDetails_tab">
+				<field name="Headers" unbound replace-content>
+					<qp-label caption="Day of Week" class="col-2"></qp-label>
+					<qp-label caption="Start Time" class="col-3"></qp-label>
+					<qp-label caption="End Time" class="col-3"></qp-label>
+					<qp-label caption="Hours Worked" class="col-2"></qp-label>
+					<qp-label caption="Break Duration" class="col-2"></qp-label>
+				</field>
+				<field name="Sunday" unbound replace-content>
+					<qp-field control-state.bind="CalendarDetails.SunWorkDay" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SunStartTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SunEndTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SunWorkTime" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SunUnpaidTime" class="col-2"></qp-field>
+				</field>
+				<field name="Monday" unbound replace-content>
+					<qp-field control-state.bind="CalendarDetails.MonWorkDay" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.MonStartTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.MonEndTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.MonWorkTime" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.MonUnpaidTime" class="col-2"></qp-field>
+				</field>
+				<field name="Tuesday" unbound replace-content>
+					<qp-field control-state.bind="CalendarDetails.TueWorkDay" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.TueStartTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.TueEndTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.TueWorkTime" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.TueUnpaidTime" class="col-2"></qp-field>
+				</field>
+				<field name="Wednesday" unbound replace-content>
+					<qp-field control-state.bind="CalendarDetails.WedWorkDay" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.WedStartTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.WedEndTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.WedWorkTime" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.WedUnpaidTime" class="col-2"></qp-field>
+				</field>
+				<field name="Thursday" unbound replace-content>
+					<qp-field control-state.bind="CalendarDetails.ThuWorkDay" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.ThuStartTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.ThuEndTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.ThuWorkTime" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.ThuUnpaidTime" class="col-2"></qp-field>
+				</field>
+				<field name="Friday" unbound replace-content>
+					<qp-field control-state.bind="CalendarDetails.FriWorkDay" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.FriStartTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.FriEndTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.FriWorkTime" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.FriUnpaidTime" class="col-2"></qp-field>
+				</field>
+				<field name="Saturday" unbound replace-content>
+					<qp-field control-state.bind="CalendarDetails.SatWorkDay" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SatStartTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SatEndTime" class="col-3"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SatWorkTime" class="col-2"></qp-field>
+					<qp-field control-state.bind="CalendarDetails.SatUnpaidTime" class="col-2"></qp-field>
+				</field>
+			</qp-fieldset>
+			<div id="columnSecondBreakTimes" slot="B">
+				<qp-grid id="gridBreakTimes" view.bind="CalendarBreakTimes" class="framed-section stretch" caption="Break Times"></qp-grid>
+			</div>
+		</qp-template>
+	</template>
+</template>

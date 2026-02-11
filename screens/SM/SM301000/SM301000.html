@@ -1,0 +1,25 @@
+<template>
+        <qp-template name="1-1" class="equal-height label-size-m" id="Applications_form" wg-container qp-collapsible>
+            <qp-fieldset slot="A" id="col1" view.bind="Applications">
+                <field name="ApplicationID" pinned="true"></field>
+                <field name="Type" pinned="true"></field>
+                <field name="ApplicationName" pinned="true"></field>
+                <field name="ClientID" pinned="false"></field>
+                <field name="ClientSecret" pinned="false"></field>
+            </qp-fieldset>
+        </qp-template>
+        <qp-tabbar id="tabbar">
+            <qp-tab id="tab-Tokens" caption="Tokens">
+                <qp-grid id="grid-Tokens" view.bind="Tokens" wg-container="Tokens_gridTokens"></qp-grid>
+            </qp-tab>
+        </qp-tabbar>
+        <qp-panel id="StaticInfo" caption="Redirect URI" auto-repaint="true" width="sm">
+            <qp-template id="rlRedirectURI_0" name="1" wg-container="StaticInfo_formRedirectURI">
+                <qp-fieldset id="rlRedirectURI" view.bind="StaticInfo" slot="A" class="label-size-s">
+                    <field name="RedirectURI">
+                        <qp-button id="btnCpy" caption="Copy" class="col-auto" click.delegate="onCopyRedirectURIClick()"></qp-button>
+                    </field>
+                </qp-fieldset>
+            </qp-template>
+        </qp-panel>
+</template>

@@ -1,0 +1,101 @@
+<template>
+	<require from="./documentRecognition/pdfViewer/pdfViewer.css"></require>
+	<require from="./documentRecognition/recognition/recognition.css"></require>
+	<require from="./documentRecognition/linesHint/lines-hint"></require>
+	<qp-splitter id="verticalSplitter" split="height">
+		<split-pane>
+			<qp-splitter id="mainSplitter" initial-split="50%" split="width"
+				on-splitter-state-changed.call="onSplitterStateChanged($event)">
+				<split-pane>
+					<qp-fieldset id="formDocument" wg-container="Document_edDocument" view.bind="Document">
+						<field name="RecognizedRecordRefNbr"></field>
+						<field name="RecognitionStatus"></field>
+						<field name="DocType"></field>
+						<field class="recognize-value-bound" name="VendorID" config-allow-edit.bind="true"></field>
+						<field class="recognize-value-bound" name="VendorLocationID"></field>
+						<field class="recognize-value-bound" name="BranchId"></field>
+						<field class="recognize-value-bound" name="DocDate"></field>
+						<field class="recognize-value-bound" name="DueDate"></field>
+						<field class="recognize-value-bound" name="InvoiceNbr"></field>
+						<field class="recognize-value-bound" name="DocDesc"></field>
+						<field name="CuryLineTotal"></field>
+						<field class="recognize-value-bound" name="CuryOrigDocAmt"></field>
+						<field name="AllowFiles"></field>
+						<field name="AllowFilesMsg"></field>
+						<field name="AllowUploadFile"></field>
+						<field name="FileID"></field>
+						<field name="RecognizedDataJson"></field>
+						<field name="VendorTermIndex"></field>
+						<using view="RecognizedRecords" wg-container="RecognizedRecords_edRecognizedRecord">
+							<field name="RefNbr"></field>
+						</using>
+					</qp-fieldset>
+				</split-pane>
+				<split-pane>
+					<qp-multi-upload id="dragNdropContainer" show.bind="recognitionController.isUploadMode" config.bind="uploaderConfig" fileloaded.trigger="onFileUploaded($event)">
+						<qp-icon id="iconDragDrop" class="drag-drop-icon-container" imagesrc="svg:main@dragNdrop"></qp-icon>
+					</qp-multi-upload>
+					<div id="pdfRecognitionViewerContainer" show.bind="!recognitionController.isUploadMode">
+						<div class="pdf-toolbar">
+							<qp-button id="pdfPrevPageBtn" config.bind="{images: { normal: 'svg:main@arrowLeft' } }" click.delegate="recognitionController.pdfViewer.onPrevPage()"></qp-button>
+							<qp-button id="pdfNextPageBtn" config.bind="{images: { normal: 'svg:main@arrowRight' } }" click.delegate="recognitionController.pdfViewer.onNextPage()"></qp-button>
+							<span id="pdfCurrentPage">${recognitionController.pdfViewer.currentPageNum}</span> / <span id="pdfPagesCount">${recognitionController.pdfViewer.pagesCount}</span>
+							<qp-button id="pdfZoomOutBtn" config.bind="{images: { normal: 'svg:main@minus' } }" click.delegate="recognitionController.onZoomOut()"></qp-button>
+							<qp-button id="pdfZoomInBtn" config.bind="{images: { normal: 'svg:main@plus' } }" click.delegate="recognitionController.onZoomIn()"></qp-button>
+							${recognitionController.pdfViewer.scalePercent}
+						</div>
+						<div id="pdfViewer" class="pdf-viewer-container">
+						</div>
+						<lines-hint id="linesHint" onButtonClickCallback.bind="recognitionController.switchToColumnMode"></lines-hint>
+					</div>
+				</split-pane>
+			</qp-splitter>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="gridTransactions" wg-container="Transactions_edItems" view.bind="Transactions"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="linkLineFilter" caption="Link Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-template name="1" id="formLineFilter">
+			<qp-fieldset slot="A" id="panelLineFilter" wg-container="linkLineFilter_LinkLineFilterForm"
+				view.bind="linkLineFilter">
+				<field name="POOrderNbr"></field>
+				<field name="InventoryID"></field>
+				<field name="UOM"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="linkLineReceiptTran_LinkLineGrid" wg-container view.bind="linkLineReceiptTran"></qp-grid>
+		<qp-grid id="linkLineOrderTran_LinkLineOrderGrid" wg-container view.bind="linkLineOrderTran"></qp-grid>
+		<footer>
+			<qp-button id="buttonSave-linkLineFilter" caption="Save" dialog-result="Yes"></qp-button>
+			<qp-button id="buttonCancel-linkLineFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	
+	<qp-panel id="linkSubcontractLineFilter" caption="Link Subcontract Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-template name="1" id="formSubcontractFilter">
+			<qp-fieldset slot="A" id="PanelLinkSubcontract"
+								wg-container="LinkSubcontractLineFilter_LinkSubcontractLineFilterForm"
+						view.bind="linkSubcontractLineFilter">
+				<field name="POOrderNbr"></field>
+				<field name="InventoryID"></field>
+				<field name="UOM"></field>
+			</qp-fieldset>
+		</qp-template>
+		
+		<qp-grid id="linkSubcontractTran_LinkSubcontractGrid" wg-container view.bind="linkSubcontractTran"></qp-grid>
+		<footer>
+			<qp-button id="buttonSave-PanelLinkSubcontract" caption="Save" dialog-result="Yes"></qp-button>
+			<qp-button id="buttonCancel-PanelLinkSubcontract" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ErrorHistory" caption="History" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="gridErrorHistory" wg-container="ErrorHistory_ErrorHistoryList" view.bind="ErrorHistory"></qp-grid>
+
+		<footer>
+			<qp-button id="buttonClose-ErrorHistory" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

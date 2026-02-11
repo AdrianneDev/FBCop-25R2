@@ -1,0 +1,109 @@
+<template>
+	<qp-template id="VersionRecord_form" name="1-1" class="label-size-m" wg-container>
+		<qp-fieldset id="currentVersion" view.bind="VersionRecord" slot="A">
+			<field name="PatchVersion"></field>
+			<field name="Date"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab" class="label-size-m">
+		<qp-tab id="updates" caption="Updates">
+			<qp-upload-dialog
+				id="dlgUploadFile"
+				key="AvailableVersions"
+				session-key="UploadFileSessionKey"
+				allowed-types=".zip"
+				ignore-size.bind="true">
+			</qp-upload-dialog>
+
+			<qp-template id="restrictionKey" name="1-1">
+				<qp-fieldset
+					id="VersionFilterRecord_frmPrimaryPage"
+					view.bind="VersionFilterRecord"
+					slot="A"
+					wg-container
+				>
+					<field name="Key"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid
+				id="AvailableVersions_gridAvailableVersions"
+				view.bind="AvailableVersions"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+		<qp-tab id="updateHistory" caption="Update History">
+			<qp-splitter id="update_sp"
+				split="height"
+				initial-split="300"
+				first-pane-min-size="150"
+				last-pane-min-size="150">
+				<split-pane>
+					<qp-grid
+						id="UpdateHistoryFullRecords_gridUPHistory"
+						view.bind="UpdateHistoryFullRecords"
+						wg-container
+					></qp-grid>
+				</split-pane>
+
+				<split-pane>
+					<qp-grid
+						id="UpdateErrorRecords_gridUPErrors"
+						view.bind="UpdateErrorRecords"
+						caption="Errors"
+						wg-container
+					></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel
+		id="LockoutFilterRecord"
+		caption="Schedule Lockout"
+		auto-repaint="true"
+	>
+		<qp-fieldset
+			id="frmLockout"
+			view.bind="LockoutFilterRecord"
+			class="label-size-s"
+		>
+			<field name="DateTime_Date">
+				<qp-field
+					control-state.bind="LockoutFilterRecord.DateTime_Time"
+					config-time-mode.bind="true"
+					config-enabled.bind="false"
+				></qp-field>
+			</field>
+			<field name="Reason" config-type.bind="1" config-rows.bind="1"></field>
+			<field name="LockoutAll"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel
+		id="LogFileFilterRecord"
+		caption="Log"
+		auto-repaint="true"
+		width="50vw"
+	>
+		<qp-fieldset id="frmLockout" view.bind="LogFileFilterRecord">
+			<field
+				name="Text"
+				class="label-size-xxs adaptive-height"
+				config-type.bind="1"
+			></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button
+				id="btnCancel"
+				dialog-result="Cancel"
+				caption="Close"
+			></qp-button>
+		</footer>
+	</qp-panel>
+</template>

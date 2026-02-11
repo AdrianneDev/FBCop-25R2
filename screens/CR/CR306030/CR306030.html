@@ -1,0 +1,62 @@
+<template>
+	<qp-splitter id="FormSplitter" split="width" disable="true" invisible="true" initial-split="40%" state="normal">
+		<split-pane>
+			<qp-template name="1-1" id="form" class="equal-height" wg-container="Events_tab">
+				<qp-fieldset id="form_EventsLeft" view.bind="Events" slot="A">
+					<field name="Subject"></field>
+					<field name="Location"></field>
+					<field name="TimeZone"></field>
+					<field name="StartDate_Date">
+						<qp-field control-state.bind="Events.StartDate_Time" class="col-3"></qp-field>
+					</field>
+					<field name="EndDate_Date">
+						<qp-field control-state.bind="Events.EndDate_Time" class="col-3"></qp-field>
+					</field>
+					<field name="AllDay"></field>
+					<field name="ShowAsID"></field>
+					<field name="UIStatus"></field>
+					<field name="Priority"></field>
+					<field name="OwnerID"></field>
+					<field name="IsPrivate"></field>
+					<field name="Reminder.IsReminderOn"></field>
+					<field name="Reminder.RemindAt"></field>
+					<field name="ProvidesCaseSolution"></field>
+				</qp-fieldset>
+			</qp-template>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="Events_tabMain">
+				<qp-tab id="Description_tab" caption="Description" class="stretch">
+					<using wg-container="Events_tab" class="stretch">
+						<qp-rich-text-editor id="edEventsBody" class="stretch" state.bind="CurrentEvent.Body" wg-field>
+						</qp-rich-text-editor>
+					</using>
+				</qp-tab>
+				<qp-tab id="Events_tab" caption="Details" wg-container>
+					<qp-template id="Details_template" class="label-size-m" name="1-1">
+						<qp-fieldset id="Details_formLeft" view.bind="CurrentEvent" slot="A">
+							<field name="RefNoteIDType"></field>
+							<field name="RefNoteID"></field>
+							<field name="BAccountID"></field>
+							<field name="ContactID"></field>
+							<field name="ResponseDueDateTime"></field>
+							<field name="ResponseActivityNoteID"></field>
+							<field name="CategoryID"></field>
+						</qp-fieldset>
+						<qp-fieldset id="Details_formRight" view.bind="TimeActivity" slot="B">
+							<field name="TimeSpent"></field>
+							<field name="OvertimeSpent"></field>
+							<field name="TimeBillable"></field>
+							<field name="OvertimeBillable"></field>
+						</qp-fieldset>
+					</qp-template>
+				</qp-tab>
+				<qp-tab id="Attendees_tab" caption="Attendees">
+					<qp-grid id="grdAttendees" view.bind="Attendees"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content"
+					class="fit-to-content"></qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

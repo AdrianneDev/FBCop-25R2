@@ -1,0 +1,37 @@
+<template>
+	<template id="tabContact_Content">
+		<qp-template id="contactInfo-form" name="1" wg-container>
+			<div slot="A">
+				<qp-fieldset id="contactInfo_override" view.bind="OpportunityCurrent" class="transparent-section" wg-container="OpportunityCurrent_edOpportunityCurrent">
+					<field name="AllowOverrideContactAddress" class="no-label"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<qp-template id="Contact-form" name="17-17-14" wg-container>
+			<div slot="A">
+				<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+					fs-id="tabContact_Contact"
+					contact-view="Opportunity_Contact"
+					fs-wg-container="Opportunity_Contact_edOpportunity_Contact"
+					fs-caption="Contact">
+				</qp-include>
+				<qp-fieldset id="tabContact_PersonalDataPrivacy" view.bind="Opportunity_Contact" caption="Personal Data Privacy" wg-container="Opportunity_Contact_edOpportunity_Contact_GDPR">
+					<field name="ConsentAgreement"></field>
+					<field name="ConsentDate"></field>
+					<field name="ConsentExpirationDate"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="tabContact_AddressLookup"
+					address-view="Opportunity_Address"
+					fs-wg-container="Opportunity_Address_edOpportunity_Address"
+					override-fieldname
+					view-on-map-action-name="ViewMainOnMap"
+				>
+					<field modify="#tabContact_AddressLookup [name='CountryID']" after="#tabContact_AddressLookup [name='PostalCode']"></field>
+				</qp-include>
+			</div>
+		</qp-template>
+	</template>
+</template>

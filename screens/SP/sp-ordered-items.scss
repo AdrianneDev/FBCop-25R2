@@ -1,0 +1,145 @@
+.sp-items {
+	&-header {
+		margin-inline-start: 10px;
+		display: flex;
+		width: 100%;
+		column-gap: var(--qp-sections-column-gap);
+		padding-inline-start: 10px;
+		padding-inline-end: 10px;
+		border-bottom: 1px solid #e8e8e8;
+		border-top: 1px solid #e8e8e8;
+
+		@container qp-screen (width < 1140px) {
+			display: none;
+		}
+
+		& > div {
+			display: flex;
+			column-gap: calc(var(--qp-sections-column-gap) - 1px);
+		}
+
+		&-item,
+		&-price,
+		&-uom,
+		&-qty,
+		&-discount,
+		&-total {
+			font-size: 13px;
+			line-height: normal;
+			color: rgba(0, 0, 0, 0.5);
+			font-weight: 700;
+			padding-inline: 8px 0px;
+			padding-block: 8px;
+			overflow: hidden;
+			white-space: normal;
+			border-inline-start: 1px solid #e8e8e8;
+		}
+
+		&-item {
+			border-inline-start: 1px solid transparent;
+			padding-inline-start: 0px;
+		}
+
+		&-price,
+		&-qty,
+		&-discount,
+		&-total {
+			text-align: end;
+		}
+	}
+
+	&-price,
+	&-qty,
+	&-discount,
+	&-extprice,
+	&-total {
+		text-align: end;
+	}
+
+	&-totals-col {
+		@container qp-screen (width < 1140px) {
+			display: flex;
+			flex-flow: column-reverse;
+			min-width: fit-content;
+		}
+	}
+
+	&-desc {
+		color: #007acc !important;
+		padding-inline-start: 0px !important;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&-total {
+		@container qp-screen (width < 1140px) {
+			font-weight: 700;
+		}
+	}
+
+	&-price,
+	&-uom {
+		@container qp-screen (width < 1140px) {
+			color: #00000080 !important;
+		}
+	}
+
+	&-uom {
+		span {
+			@container qp-screen (width >= 1140px) {
+				display: none;
+			}
+		}
+	}
+
+	&-qty {
+		@container qp-screen (width < 1140px) {
+			text-align: start;
+		}
+
+		span {
+			color: #00000080;
+			padding-inline-end: 8px;
+
+			@container qp-screen (width >= 1140px) {
+				display: none;
+			}
+		}
+	}
+
+	&-discount {
+		@container qp-screen (width < 1140px) {
+			color: #ee4051 !important;
+		}
+
+		span {
+			@container qp-screen (width >= 1140px) {
+				display: none;
+			}
+		}
+	}
+
+	&-extprice {
+		color: rgba(0, 0, 0, 0.5) !important;
+		text-decoration: line-through;
+		font-size: 13px;
+	}
+
+	&-col-image {
+		position: relative; // to position the link button on top of it
+		width: 40px;
+	}
+	&-col-desc {
+		position: relative; // to position the link button on top of it
+		width: calc(9 * (100% + var(--qp-sections-column-gap)) / 12 - 2 * var(--qp-sections-column-gap) - 40px) !important;
+		min-width: 0px;
+		flex: 1;
+	}
+
+	.sp-image {
+		width: 36px;
+		height: 36px;
+	}
+}
+

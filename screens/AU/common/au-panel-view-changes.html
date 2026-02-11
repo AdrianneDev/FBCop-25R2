@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="Changes" caption="Changes" height="80vh" auto-repaint="true" wg-container="Changes_FormPanelViewChanges">
+		<qp-rich-text-editor
+			class="stretch"
+			id="FormPanelViewChanges"
+			state.bind="Changes.Messages"
+			read-only="true"
+			value-format="fragment"
+			wg-container>
+		</qp-rich-text-editor>
+		<footer>
+			<qp-button id="FormPanelViewChangesButtonRevert" caption="Reverse Changes"
+				state.bind="actionReset" wg-name="ActionReset"></qp-button>
+			<qp-button id="FormPanelViewChangesButtonCancel" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

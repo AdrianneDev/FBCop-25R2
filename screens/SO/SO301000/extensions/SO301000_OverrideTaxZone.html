@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="BlanketTaxZoneOverrideFilter" caption="Override Tax Zone" auto-repaint="true">
+		<qp-template id="form-OverrideTaxZone" name="1">
+			<qp-fieldset id="fsColumnA-OverrideTaxZone" slot="A" view.bind="BlanketTaxZoneOverrideFilter" class="transparent-section" wg-container="BlanketTaxZoneOverrideFilter_formOverrideTaxZone">
+				<field name="TaxZoneID"></field>
+				<field name="RecalcTaxesLabel" replace-content unbound>
+					<qp-info-box caption="Taxes will be recalculated based on the overridden tax zone. Do you want to continue?" type="info"></qp-info-box>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-OverrideTaxZone">
+			<qp-button id="buttonYes-OverrideTaxZone" dialog-result="Yes"></qp-button>
+			<qp-button id="buttonNo-OverrideTaxZone" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

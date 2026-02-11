@@ -1,0 +1,142 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP504003.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack sp-cart sp-wide-screen" if.bind="!CartDetails.ShowCartEmptyPanel.value" tabindex="0">
+		<div class="col-12 sp-wide-feed-container">
+			<qp-button class="sp-remove-from-cart"
+				id="sp-remove-from-cart"
+				config.bind="{ action: 'clearCart', images: { normal: 'svg:main@recycle' }}"
+				portal="target.bind: filterBar; position: beforeend">
+			</qp-button>
+
+			<qp-data-feed
+				id="dfItems"
+				class="no-toolbar sp-cart-feed"
+				view.bind="FilteredItems"
+				auto-resize="true"
+				allow-filter="true"
+				show-filter-bar="always"
+				show-filter-picker="false"
+				allow-stored-filters="false"
+				show-stored-filters="true">
+				<template width="100%">
+					<div
+						class="sp-item no-animation ${(FilteredItems.SiteQtyAvail.value > 0) ? '' : 'sp-item-out-of-stock'}">
+						<qp-fieldset id="fsItemsImage" view.bind="{{$viewName}}" class="sp-item-image">
+							<field name="unboundViewDetails" unbound replace-content>
+								<qp-button class="sp-view-details" state.bind="FilteredItems.ViewDetails"></qp-button>
+							</field>
+							<field name="unboundImage" unbound replace-content>
+								<div class="sp-image">
+									<div if.bind="FilteredItems.Data.value !== ''" class="sp-image-blob"
+										style="background-image: url(data:image/png;base64,${FilteredItems.Data.value})">
+									</div>
+									<div if.bind="FilteredItems.Data.value === ''" class="sp-image-empty">
+										<qp-hyper-icon images.bind="{ normal: 'svg:sp@photo' }"></qp-hyper-icon>
+									</div>
+								</div>
+							</field>
+						</qp-fieldset>
+
+						<div class="sp-item-main">
+							<div class="sp-item-full-desc">
+								<qp-fieldset id="fsItemsFullDesc" view.bind="{{$viewName}}">
+									<field name="Descr" replace-content>
+										<div class="sp-item-descr">${FilteredItems.Descr.value}</div>
+										<qp-button class="sp-view-details"
+											state.bind="FilteredItems.ViewDetails"></qp-button>
+										<qp-field control-state.bind="FilteredItems.IAStatus" no-label="true"
+											class="sp-item-stock">
+										</qp-field>
+									</field>
+									<field name="unboundRemoveButton" class="sp-hide-non-mobile" unbound
+										replace-content>
+										<qp-button class="sp-remove-from-cart" state.bind="FilteredItems.RemoveFromCart"
+											config.bind="{action: 'removeFromCart', images: { normal: 'svg:main@recycle' }}">
+										</qp-button>
+									</field>
+								</qp-fieldset>
+								<qp-fieldset id="fsItemsPrices" view.bind="{{$viewName}}"
+									class="sp-item-fs-prices sp-hide-wide">
+									<field name="CuryUnitPriceWithSymbol" no-label="true" class="sp-item-price-total"
+										replace-content>
+										<div>${FilteredItems.CuryUnitPriceWithSymbolTotal.cellText}</div>
+									</field>
+									<field name="CuryUnitPriceWithSymbolTotal" no-label="true"
+										class="sp-item-price-unit" replace-content>
+										<div>
+											${FilteredItems.CuryUnitPriceWithSymbol.cellText}/${FilteredItems.UOM.cellText.toLowerCase()}
+										</div>
+									</field>
+								</qp-fieldset>
+							</div>
+
+							<div class="sp-item-controls">
+								<div class="sp-item-site-qty">
+									<qp-fieldset id="fsItemsSite" view.bind="{{$viewName}}" class="sp-item-fs-site">
+										<field name="SiteIDList" no-label="true" class="sp-item-site"></field>
+									</qp-fieldset>
+									<qp-fieldset id="fsItemsQty" view.bind="{{$viewName}}" class="sp-item-fs-qty">
+										<field name="UOMList" no-label="true" class="sp-item-uom"></field>
+										<field name="Qty" no-label="true" class="sp-item-qty"></field>
+									</qp-fieldset>
+								</div>
+								<qp-fieldset id="fsItemsPrices" view.bind="{{$viewName}}"
+									class="sp-item-fs-prices sp-hide-narrow">
+									<field name="CuryUnitPriceWithSymbol" no-label="true" class="sp-item-price-total"
+										replace-content>
+										<div>${FilteredItems.CuryUnitPriceWithSymbolTotal.cellText}</div>
+									</field>
+									<field name="CuryUnitPriceWithSymbolTotal" no-label="true"
+										class="sp-item-price-unit" replace-content>
+										<div>
+											${FilteredItems.CuryUnitPriceWithSymbol.cellText}/${FilteredItems.UOM.cellText.toLowerCase()}
+										</div>
+									</field>
+								</qp-fieldset>
+							</div>
+						</div>
+						<qp-button class="sp-remove-from-cart sp-hide-mobile" state.bind="FilteredItems.RemoveFromCart"
+							config.bind="{ action: 'removeFromCart', images: { normal: 'svg:main@recycle' }}">
+						</qp-button>
+					</div>
+				</template>
+			</qp-data-feed>
+
+		</div>
+		<div class="sp-sticky-summary">
+			<div class="h-stack sp-documents-summary-fixed">
+				<qp-fieldset id="first" view.bind="CartDetails" caption="Order Summary" class="sp-fieldset-summary">
+					<!-- <field name="ItemTotal"></field> -->
+					<field name="Subtotal_Text"></field>
+					<field name="ProceedToCheckoutField" unbound replace-content>
+						<qp-button id="proceedToCheckoutBtn" class="proceed-to-checkout-btn major-button"
+							caption="Proceed To Checkout"
+							config.bind="{ action: 'proceedToCheckout' }">
+						</qp-button>
+					</field>
+					<field name="ContinueShoppingField" unbound replace-content>
+						<qp-button id="continueShoppingBtn" class="continue-shopping-btn"
+							caption.bind="msg.ContinueShopping"
+							config.bind="{ action: 'continueShopping' }">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</div>
+	</div>
+
+	<div class="sp-cart" if.bind="CartDetails.ShowCartEmptyPanel.value" tabindex="0">
+		<div class="sp-empty-shopping-cart">
+			<span class="shopping-cart-icon ac ac-icon-img"></span>
+			<div class="sp-empty-label">${msg.CartIsEmpty}</div>
+			<qp-button id="shopNowBtn" class="shop-now-btn major-button"
+				caption.bind="msg.ShopNow"
+				config.bind="{ action: 'shopNow' }">
+			</qp-button>
+		</div>
+	</div>
+</template>

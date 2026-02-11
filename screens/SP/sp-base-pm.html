@@ -1,0 +1,13 @@
+<template>
+	<qp-panel id="DeletePayMethod" caption.bind="PMbaseMessages.DeletePaymentMethod" auto-repaint="true" class="col-sm-12 col-md-6 col-lg-4 sp-panel">
+		<div class="h-stack">
+			<div class="info">
+				${PMbaseMessages.DeletePopUpMessage}
+			</div>
+		</div>
+		<footer>
+			<qp-button id="btnDeleteOK" caption="Delete" dialog-result="OK" config.bind="{ action: 'DeletePayMethodOK'}"> </qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel"> </qp-button>
+		</footer>
+	</qp-panel>
+</template>

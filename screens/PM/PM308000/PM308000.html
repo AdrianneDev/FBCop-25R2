@@ -1,0 +1,178 @@
+<template>
+	<require from="../common/pm-status-colors-common.scss"></require>
+	<qp-template
+		name="7-10-7"
+		class="equal-height"
+		id="Document_form"
+		wg-container
+		qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="Document">
+			<field name="RefNbr" config-display-mode.bind="'id'" pinned></field>
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="Date" pinned></field>
+			<field name="CompletionDate" pinned></field>
+			<field name="DelayDays" caption="Contract Change (Days)"></field>
+			<field name="ExtRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formSlotB01" slot="B" view.bind="Document">
+			<field name="ClassID" config-allow-edit.bind="true" pinned></field>
+			<field name="ProjectID" config-allow-edit.bind="true" pinned></field>
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="ProjectNbr"></field>
+			<field name="Description" config-rows.bind="3" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset id="formSlotC01" slot="C" view.bind="Document" class="highlights-section label-size-m">
+			<field name="ReversingRefNbr" config-link-command.bind="'ViewReversingChangeOrders'"></field>
+			<field name="OrigRefNbr" config-link-command.bind="'ViewOrigChangeOrder'"></field>
+			<field name="RevenueTotal" pinned></field>
+			<field name="CommitmentTotal"></field>
+			<field name="CostTotal" pinned></field>
+			<field name="GrossMarginAmount" pinned></field>
+			<field name="GrossMarginPct" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="DocumentSettings_tab" wg-container>
+		<qp-tab id="ChangeRequestsTab"
+			caption="Change Requests"
+			if.bind="VisibilitySettings.IsChangeRequestVisible.value == true">
+			<qp-template id="ChangeRequestForm" name="17-7" class="full-width">
+				<qp-grid id="gridChangeRequests" slot="A" view.bind="ChangeRequests" class="framed-section"></qp-grid>
+				<qp-fieldset id="DocumentSettingsForm"
+					slot="B"
+					view.bind="Document"
+					class="highlights-section label-size-m"
+					caption="Change Request Totals"
+					wg-container="DocumentSettings_DocumentSettingsForm">
+					<field name="ChangeRequestCostTotal"></field>
+					<field name="ChangeRequestLineTotal"></field>
+					<field name="ChangeRequestMarkupTotal"></field>
+					<field name="ChangeRequestPriceTotal"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="RevenueBudgetTab" caption="Revenue Budget" if.bind="VisibilitySettings.IsRevenueVisible.value == true">
+			<qp-grid id="RevenueBudgetGrid"
+				view.bind="RevenueBudget"
+				wg-container="RevenueBudget_RevenueBudgetGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="CostBudgetTab" caption="Cost Budget" if.bind="VisibilitySettings.IsCostVisible.value == true">
+			<qp-grid id="CostBudgetGrid" view.bind="CostBudget" wg-container="CostBudget_CostBudgetGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="CommitmentsTab" caption="Commitments" if.bind="VisibilitySettings.IsDetailsVisible.value == true">
+			<qp-grid id="DetailsGrid" view.bind="Details" wg-container="Details_DetailsGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="DetailedDescriptionTab" caption="Detailed Description">
+			<qp-rich-text-editor id="edDocumentSettingsText"
+				state.bind="DocumentSettings.Text"
+				class="stretch"
+				wg-field></qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+	<qp-panel
+		id="AvailableCostBudget"
+		caption="Add Budget Lines"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-grid id="AvailableCostBudgetGrid" view.bind="AvailableCostBudget" wg-container="AvailableCostBudget_AvailableCostBudgetGrid"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" state.bind="AppendSelectedCostBudget"></qp-button>
+			<qp-button id="PXButtonAddClose" dialog-result="OK" caption="Add Lines & Close"></qp-button>
+			<qp-button id="PXButtonClose" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel
+		id="AvailableRevenueBudget"
+		caption="Add Budget Lines"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-grid id="AvailableRevenueBudgetGrid" view.bind="AvailableRevenueBudget" wg-container="AvailableRevenueBudget_AvailableRevenueBudgetGrid"></qp-grid>
+		<footer>
+			<qp-button id="PXButton1" state.bind="AppendSelectedRevenueBudget"></qp-button>
+			<qp-button id="PXButton2" dialog-result="OK" caption="Add Lines & Close"></qp-button>
+			<qp-button id="PXButton3" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel
+		id="AvailablePOLines"
+		caption="Add Commitments"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-template
+			name="17-17-14"
+			class="equal-height"
+			id="AvailablePOLineFilter_AvailablePOLineFilter"
+			wg-container>
+			<qp-fieldset slot="A" id="AvailablePOLineFilter01" view.bind="AvailablePOLineFilter">
+				<field name="VendorID"></field>
+				<field name="CostCodeFrom"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="AvailablePOLineFilter02" slot="B" view.bind="AvailablePOLineFilter">
+				<field name="POOrderNbr"></field>
+				<field name="CostCodeTo"></field>
+				<field name="ProjectTaskID"></field>
+				<field name="IncludeNonOpen"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="AvailablePOLinesGrid"
+			view.bind="AvailablePOLines"
+			wg-container="AvailablePOLines_AvailablePOLinesGrid"></qp-grid>
+		<footer>
+			<qp-button id="PXButton4" state.bind="AppendSelectedPOLines"></qp-button>
+			<qp-button id="PXButton5" dialog-result="OK" caption="Add Lines & Close"></qp-button>
+			<qp-button id="PXButton6" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel
+		id="AvailableChangeRequests"
+		caption="Add Change Requests"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-grid id="AvailableChangeRequestGrid" view.bind="AvailableChangeRequests"></qp-grid>
+		<footer>
+			<qp-button id="PXButton7" state.bind="AppendSelectedChangeRequests"></qp-button>
+			<qp-button id="PXButton8" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton9" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel
+		id="ChangeRequestCostDetails"
+		caption="Change Request Details"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-grid id="ChangeRequestCostDetailsGrid" view.bind="ChangeRequestCostDetails" wg-container="ChangeRequestCostDetails_ChangeRequestCostDetailsGrid"></qp-grid>
+	</qp-panel>
+	<qp-panel
+		id="ChangeRequestRevenueDetails"
+		caption="Change Request Details"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-grid
+			id="ChangeRequestRevenueDetailsGrid"
+			view.bind="ChangeRequestRevenueDetails" wg-container="ChangeRequestRevenueDetails_ChangeRequestRevenueDetailsGrid">
+		</qp-grid>
+		<qp-grid
+			id="ChangeRequestMarkupDetailsGrid"
+			view.bind="ChangeRequestMarkupDetails"
+			caption="Markups" wg-container="ChangeRequestMarkupDetails_ChangeRequestMarkupDetailsGrid">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel
+		id="ReversingChangeOrders"
+		caption="Reversing Change Orders"
+		auto-repaint="true"
+		width="lg"
+		height="85vh">
+		<qp-grid id="ReversingChangeOrdersGrid" view.bind="ReversingChangeOrders"></qp-grid>
+	</qp-panel>
+</template>

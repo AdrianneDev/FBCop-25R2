@@ -1,0 +1,18 @@
+<template>
+	<qp-template id="template" name="1-1" class="label-size-m">
+		<qp-fieldset id="form" slot="A" view.bind="Attributes">
+			<field name="AttributeID"></field>
+			<field name="Description"></field>
+			<field name="ControlType"></field>
+			<field name="IsInternal"></field>
+			<field name="ContainsPersonalData"></field>
+			<field name="EntryMask"></field>
+			<field name="RegExp"></field>
+			<field name="Precision"></field>
+			<field name="ObjectName"></field>
+			<field name="FieldName"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="AttributeDetails"></qp-grid>
+</template>

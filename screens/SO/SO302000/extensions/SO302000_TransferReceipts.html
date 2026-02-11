@@ -1,0 +1,5 @@
+<template>
+	<qp-tab id="tab-TransferReceipts" after="#tab-Orders" caption="Receipts" visible.bind="Document.ShipmentType.value === 'T'">
+		<qp-grid id="grid-TransferReceipts" view.bind="RelatedTransferReceipts" wg-container="RelatedTransferReceipts_gridTransferReceipts"></qp-grid>
+	</qp-tab>
+</template>

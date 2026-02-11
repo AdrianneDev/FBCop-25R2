@@ -1,0 +1,251 @@
+<template>
+
+	<qp-splitter id="splitter" split="width" initial-split="50%">
+
+		<split-pane>
+			<div class="v-stack">
+				<qp-template id="formTranFilter" name="2-1">
+					<qp-fieldset id="panelTranFilter" view.bind="TranFilter" slot="A" class="label-size-sm transparent-section" wg-container="TranFilter_form">
+						<field name="CashAccountID"></field>
+						<field name="IsCorpCardCashAccount"></field>
+					</qp-fieldset>
+				</qp-template>
+				<qp-grid id="gridDetails" view.bind="Details" wg-container="Details_grid1"></qp-grid>
+			</div>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="tabs">
+				<qp-tab id="tabMatchToPayments" caption="Match to Payments">
+					<qp-template id="formDetailsForPaymentMatching" name="1-1" class="equal-height" wg-container="DetailsForPaymentMatching_frmMatchToPayments">
+						<qp-fieldset id="columnFirstDetailsForPaymentMatching" slot="A" view.bind="DetailsForPaymentMatching" class="no-label">
+							<field name="MultipleMatchingToPayments"></field>
+							<field name="MatchReceiptsAndDisbursements"></field>
+						</qp-fieldset>
+						<qp-fieldset id="columnSecondDetailsForPaymentMatching" slot="B" view.bind="DetailsForPaymentMatching" class="highlights-section">
+							<field name="CuryTotalAmtDisplay"></field>
+							<field name="CuryApplAmtMatchToPayment"></field>
+							<field name="CuryUnappliedBalMatchToPayment"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-grid id="gridDetailsMatchesCA" view.bind="DetailMatchesCA" wg-container="DetailMatchesCA_PXGrid1"></qp-grid>
+				</qp-tab>
+
+				<qp-tab id="tabMatchToInvoices" caption="Match to Invoices">
+					<qp-template id="formMatchToInvoices" name="1-1" class="equal-height" wg-container="DetailsForInvoiceApplication_frmCreateDocumentInv">
+						<qp-fieldset id="columnFirstMatchToInvoices" slot="A" view.bind="DetailsForInvoiceApplication">
+							<field name="MultipleMatching"></field>
+							<field name="PayeeBAccountIDCopy"></field>
+							<field name="PayeeLocationIDCopy"></field>
+							<field name="PaymentMethodIDCopy"></field>
+							<field name="PMInstanceIDCopy"></field>
+							<field name="ChargeTypeID"></field>
+						</qp-fieldset>
+						<qp-fieldset id="columnSecondMatchToInvoices" slot="B" view.bind="DetailsForInvoiceApplication" class="highlights-section">
+							<field name="CuryTotalAmtCopy"></field>
+							<field name="CuryApplAmtMatchToInvoice"></field>
+							<field name="CuryChargeAmt"></field>
+							<field name="CuryChargeTaxAmt"></field>
+							<field name="CuryUnappliedBalMatchToInvoice"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-grid id="gridMatchToInvoices" view.bind="detailMatchingInvoices" wg-container="detailMatchingInvoices_gridDetailMatches4"></qp-grid>
+				</qp-tab>
+
+				<qp-tab id="tabMatchToExpenseReceipts" caption="Match to Expense Receipts" if.bind="TranFilter.IsCorpCardCashAccount.value==true">
+					<qp-grid id="gridMatchToExpenses" view.bind="ExpenseReceiptDetailMatches" wg-container="ExpenseReceiptDetailMatches_gridExpenseReceiptDetailMatches"></qp-grid>
+				</qp-tab>
+
+				<qp-tab id="tabCreatePayment" caption="Create Payment">
+
+					<div class="h-stack separate-section" wg-container="DetailsForPaymentCreation_createPaymentButtons">
+						<qp-button id="buttonCreateRule" state.bind="CreateRule"></qp-button>
+						<qp-button id="buttonUnapplyRule" state.bind="UnapplyRule" wg-name="ClearRule"></qp-button>
+						<qp-files-button
+							id="buttonAttachFile"
+							wg-name="Attachfile"
+							caption="Attach File"
+							view="DetailsForPaymentCreation"
+							dialog-type="upload-file"
+							enabled.two-way="!!DetailsForPaymentCreation.CreateDocument.value"></qp-files-button>
+					</div>
+					<qp-template id="formCreatePayment" name="1-1" class="equal-height" wg-container="DetailsForPaymentCreation_frmCreateDocument">
+						<qp-fieldset id="columnFirstCreatePayment" slot="A" view.bind="DetailsForPaymentCreation">
+							<field name="CreateDocument"></field>
+							<field name="RuleID"></field>
+							<field name="OrigModule"></field>
+							<field name="MatchingPaymentDate"></field>
+							<field name="MatchingFinPeriodID"></field>
+							<field name="EntryTypeID"></field>
+							<field name="PayeeBAccountID"></field>
+							<field name="PayeeLocationID"></field>
+							<field name="PaymentMethodID"></field>
+							<field name="PMInstanceID"></field>
+							<field name="UserDesc"></field>
+						</qp-fieldset>
+						<qp-fieldset id="columnSecondCreatePayment" slot="B" view.bind="DetailsForPaymentCreation" class="highlights-section">
+							<field name="CuryDetailsWithTaxesTotal"></field>
+							<field name="CuryTotalAmt"></field>
+							<field name="CuryApplAmt"></field>
+							<field name="CuryUnappliedBal"></field>
+							<field name="CuryWOAmt"></field>
+							<field name="CuryApplAmtCA"></field>
+							<field name="CuryTaxTotal"></field>
+							<field name="CuryUnappliedBalCA"></field>
+							<field name="InvoiceInfo"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-grid id="gridAdjustments" view.bind="Adjustments"></qp-grid>
+					<qp-grid id="gridTranSplits" view.bind="TranSplit" wg-container="TranSplit_gridCASplits" view-model.ref="transSplitVM"></qp-grid>
+				</qp-tab>
+
+			</qp-tabbar>
+		</split-pane>
+
+	</qp-splitter>
+
+	<qp-panel id="cashAccount" caption="Transaction Matching Settings" auto-repaint="true">
+		<qp-tabbar id="tabsMatchSettings" wg-container="cashAccount_tabMatchSettings" class="label-size-m">
+
+			<qp-tab id="tabMatchingSettings" caption="Matching Settings">
+				<qp-template name="1" id="formMatchSettings">
+					<div slot="A">
+						<qp-fieldset view.bind="cashAccount" caption="Disbursement Matching" id="groupDisbursementMatching">
+							<field name="DisbursementTranDaysBefore" class="control-size-sm"></field>
+							<field name="DisbursementTranDaysAfter" class="control-size-sm"></field>
+							<field name="AllowMatchingCreditMemo"></field>
+						</qp-fieldset>
+						<qp-fieldset id="groupReceiptMatching" caption="Receipt Matching" view.bind="cashAccount">
+							<field name="ReceiptTranDaysBefore" class="control-size-sm"></field>
+							<field name="ReceiptTranDaysAfter" class="control-size-sm"></field>
+							<field name="AllowMatchingDebitAdjustment"></field>
+						</qp-fieldset>
+						<qp-fieldset id="groupInvoiceMatching" view.bind="cashAccount" caption="Invoice Matching">
+							<field name="InvoiceFilterByCashAccount"></field>
+							<field name="InvoiceFilterByDate"></field>
+							<field name="DaysBeforeInvoiceDiscountDate" class="control-size-sm"></field>
+							<field name="DaysBeforeInvoiceDueDate" class="control-size-sm"></field>
+							<field name="DaysAfterInvoiceDueDate" class="control-size-sm"></field>
+						</qp-fieldset>
+						<qp-fieldset id="groupOtherMatchingSettings" view.bind="cashAccount" caption="Other Matching Settings">
+							<field name="SkipVoided"></field>
+						</qp-fieldset>
+						<qp-fieldset id="groupAutoMatchThresholds" view.bind="cashAccount" caption="Auto-Match Thresholds">
+							<field name="MatchThreshold" class="control-size-sm"></field>
+							<field name="RelativeMatchThreshold" class="control-size-sm"></field>
+						</qp-fieldset>
+					</div>
+				</qp-template>
+			</qp-tab>
+			<qp-tab id="tabRelevanceCalculation" caption="Relevance Calculation">
+				<qp-template id="formRelevanceCalculation" name="1" class="control-size-sm">
+					<div slot="A">
+						<qp-fieldset id="groupPaymentExpenseReceiptRelevance" view.bind="cashAccount" caption="Payment and Expense Receipt Relevance">
+							<field name="RefNbrCompareWeight">
+								<qp-field control-state.bind="cashAccount.RefNbrComparePercent" class="col-4"></qp-field>
+								<qp-label caption="%" class="col-2"></qp-label>
+							</field>
+							<field name="EmptyRefNbrMatching" class="control-size-l"></field>
+							<field name="DateCompareWeight">
+								<qp-field control-state.bind="cashAccount.DateComparePercent" class="col-4"></qp-field>
+								<qp-label caption="%" class="col-2"></qp-label>
+							</field>
+							<field name="PayeeCompareWeight">
+								<qp-field control-state.bind="cashAccount.PayeeComparePercent" class="col-4"></qp-field>
+								<qp-label caption="%" class="col-2"></qp-label>
+							</field>
+							<field name="AmountWeight"></field>
+							<field name="CuryDiffThreshold"></field>
+							<field name="DateMeanOffset"></field>
+							<field name="DateSigma"></field>
+							<field name="RatioInRelevanceCalculationLabel"></field>
+						</qp-fieldset>
+						<qp-fieldset id="groupInvoiceRelevance" view.bind="cashAccount" caption="Invoice Relevance">
+							<field name="InvoiceRefNbrCompareWeight">
+								<qp-field control-state.bind="cashAccount.InvoiceRefNbrComparePercent" class="col-4"></qp-field>
+								<qp-label caption="%" class="col-2"></qp-label>
+							</field>
+							<field name="InvoiceDateCompareWeight">
+								<qp-field control-state.bind="cashAccount.InvoiceDateComparePercent" class="col-4"></qp-field>
+								<qp-label caption="%" class="col-2"></qp-label>
+							</field>
+							<field name="InvoicePayeeCompareWeight">
+								<qp-field control-state.bind="cashAccount.InvoicePayeeComparePercent" class="col-4"></qp-field>
+								<qp-label caption="%" class="col-2"></qp-label>
+							</field>
+							<field name="AveragePaymentDelay"></field>
+							<field name="InvoiceDateSigma"></field>
+						</qp-fieldset>
+					</div>
+				</qp-template>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="buttonReset-matchSettings" state.bind="ResetMatchSettingsToDefault" caption="Reset to Default"></qp-button>
+			<qp-button id="buttonOK-matchSettings" dialog-result="OK" caption="Save & Close"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="RuleCreation" caption="Create Rule" auto-repaint="true">
+		<qp-template name="1-1" id="formRuleCreation">
+			<qp-fieldset id="panelRuleCreation" view.bind="RuleCreation" slot="A" wg-container="RuleCreation_frmCreateRule">
+				<field name="RuleName"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-RuleCreation" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="buttonCancel-RuleCreation" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="TaxTrans" caption="Tax Details" auto-repaint="true">
+		<qp-template name="1" id="formCurrentTaxTran">
+			<qp-fieldset id="panelCurrentTaxTran" slot="A" view.bind="CurrentCABankTran" wg-container="CurrentCABankTran_PXTaxFormView1">
+				<field name="TaxZoneID"></field>
+				<field name="TaxCalcMode"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridTaxTrans" view.bind="TaxTrans" wg-container="TaxTrans_PXTaxGrid"></qp-grid>
+		<footer>
+			<qp-button id="buttonYes-TaxTrans" dialog-result="Yes" caption="Ok"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel caption="Load Options" id="loadOpts" auto-repaint="true">
+		<qp-template name="1" id="formLoadOpts" class="equal-height" wg-container="loadOpts_loform">
+			<qp-fieldset id="columnFirstLoadOpts" slot="A" view.bind="loadOpts">
+				<field name="OrgBAccountID"></field>
+
+				<field name="dateRange" unbound caption="Date Range">
+					<qp-field control-state.bind="loadOpts.FromDate" class="col-6"></qp-field>
+					<qp-field control-state.bind="loadOpts.TillDate" class="col-6"></qp-field>
+				</field>
+
+				<field name="refNbrRange" unbound caption="Ref. Nbr. Range">
+					<qp-field control-state.bind="loadOpts.StartRefNbr" class="col-6"></qp-field>
+					<qp-field control-state.bind="loadOpts.EndRefNbr" class="col-6"></qp-field>
+				</field>
+
+				<field name="MaxDocs"></field>
+				<field name="OrderBy" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonLoad-loadOpts" dialog-result="OK" caption="Load"></qp-button>
+			<qp-button id="buttonYes-loadOpts" dialog-result="Yes" caption="Reload"></qp-button>
+			<qp-button id="buttonCancel-loadOpts" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-upload-dialog id="pnlNewRev"
+		key="NewRevisionPanel"
+		session-key="ImportStatementProtoFile"
+		caption="Statement File Upload"
+		height="120px"
+		width="560px"
+		renderComment="true"
+		renderLink="true"
+		autoSaveFile="false"
+		renderCheckIn="false">
+	</qp-upload-dialog>
+
+</template>

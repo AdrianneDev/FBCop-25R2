@@ -1,0 +1,9 @@
+<template>
+	<qp-tab id="tab-Receive" before="#tab-Logs" caption="Receive" visible.bind="HeaderView.ShowReceive.value == true">
+		<qp-grid id="grid-Receive" view.bind="Received" wg-container="Received_gridReceived"></qp-grid>
+	</qp-tab>
+
+	<qp-tab id="tab-ReceivedNotZero" before="#tab-Logs" caption="Received Above Zero" visible.bind="false">
+		<qp-grid id="grid-ReceivedNotZero" view.bind="ReceivedNotZero" wg-container="ReceivedNotZero_gridReceivedNotZero"></qp-grid>
+	</qp-tab>
+</template>

@@ -1,0 +1,28 @@
+.caption-with-link a {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom-style: none !important;
+}
+
+.grid-with-caption {
+    height: calc(100% - 50px) !important;
+}
+
+#scorecards-main .grid-stack-item,
+#scorecards-main .grid-stack-item-content {
+    height: 100% !important
+}
+
+.email-button button {
+    background-color: transparent !important;
+    margin-inline-start: -50px;
+}
+
+@import '../common/pm-status-colors-common.scss';
+
+/* ����� overrides / additions ����� */
+@include colored-status('A', var(--status-green-color)); // Active
+@include colored-status('D', var(--status-blue-color)); // Planned
+@include colored-status('E', var(--status-orange-color)); // Suspended
+@include colored-status('I', var(--status-red-color)); // Pending Approval

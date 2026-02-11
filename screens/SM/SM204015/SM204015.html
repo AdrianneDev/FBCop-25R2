@@ -1,0 +1,53 @@
+<template>
+	<qp-template name="1-1" id="Servers_form_header" class="equal-height label-size-xm" wg-container="Servers_form">
+		<qp-fieldset slot="A" id="servers_form_left" view.bind="Servers">
+			<field name="AccountCD"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="servers_form_right" view.bind="Servers">
+			<field name="DefaultPolicyName"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab" class="label-size-xm">
+		<qp-tab id="tabSettings" caption="Configuration">
+			<qp-template name="1-1" id="Servers_form" wg-container="Servers_form">
+				<div slot="A">
+					<qp-fieldset
+						id="Authentication-Settings"
+						caption="Authentication Settings"
+						view.bind="Servers"
+					>
+						<field name="Address"></field>
+						<field name="AuthenticationMethod"></field>
+						<field name="AzureTenantID"></field>
+						<field name="OAuthApplicationID"></field>
+						<field name="Password"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="Server-Settings"
+						caption="Server"
+						view.bind="Servers"
+					>
+						<field name="ServerUrl"></field>
+						<field name="LoggingLevel"></field>
+						<field name="ConnectionMode"></field>
+						<field name="SyncAttachmentSize"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset
+					id="Performance-Settings"
+					caption="Performance"
+					view.bind="Servers"
+					slot="B"
+				>
+					<field name="SyncProcBatch"></field>
+					<field name="SyncSelectBatch"></field>
+					<field name="SyncUpdateBatch"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabUsers" caption="Mailboxes">
+			<qp-grid id="grid" view.bind="SyncAccounts"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

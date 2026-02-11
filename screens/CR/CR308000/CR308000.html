@@ -1,0 +1,58 @@
+<template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabSummary" caption="Summary" wg-container="MassMails_tab">
+			<qp-template id="summary_template" name="1-1" class="equal-height">
+				<qp-fieldset id="summary_form_left" slot="A" view.bind="MassMails">
+					<field name="MassMailCD"></field>
+					<field name="MailAccountID"></field>
+					<field name="MailSubject"></field>
+					<field name="MailTo"></field>
+					<field name="MailCc"></field>
+					<field name="MailBcc"></field>
+				</qp-fieldset>
+				<qp-fieldset id="summary_form_right" slot="B" view.bind="MassMails">
+					<field name="Source"></field>
+					<field name="PlannedDate"></field>
+					<field name="Status"></field>
+					<field name="SentDateTime"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-rich-text-editor
+				id="edBody"
+				class="stretch"
+				state.bind="MassMails.MailContent"
+				wg-field>
+				<insert-data-field
+					data-member="EntityItems"
+					text-field="Name"
+					value-field="Path"
+					icon-field="Icon"
+				></insert-data-field>
+				<data-field-preview
+					graph="PX.Objects.CR.ContactMaint"
+					view="Contact"
+				></data-field-preview>
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="tabLeadsContactsEmployees" caption="Leads/Contacts/Employees" if.bind="MassMails.Source.value == 2">
+			<qp-grid id="leads" view.bind="Leads"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCampaigns" caption="Campaigns" if.bind="MassMails.Source.value == 1">
+			<qp-grid
+				id="campaigns"
+				view.bind="Campaigns"
+				wg-container="Campaigns_campaigns"
+			>
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMarketingList" caption="Marketing List" if.bind="MassMails.Source.value == 0">
+			<qp-grid id="mailList" view.bind="MailLists"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMessages" caption="Messages">
+			<qp-grid id="mailHistory" view.bind="History"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabActivities" caption="Activities" class="fit-to-content">
+			<qp-grid id="activities" view.bind="Activities" wg-container="Activities_Activities_grid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

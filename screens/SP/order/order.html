@@ -1,0 +1,37 @@
+<template>
+	<qp-include-parameters view.required></qp-include-parameters>
+
+	<qp-fieldset slot="Prefix" id="fsOpenOrderCheckbox" view.bind="{{view}}">
+		<field name="Selected"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="A1" id="fsOpenOrderA1" view.bind="{{view}}">
+		<field name="OrderNbr"></field>
+		<field name="Status" class="colored"></field>
+		<field name="OrderDate"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="A2" id="fsOpenOrderA2" view.bind="{{view}}">
+		<field name="Customer__LegalName"></field>
+		<field name="Location__Descr"></field>
+
+	</qp-fieldset>
+	<qp-fieldset slot="AX" id="fsOpenOrderAX" view.bind="{{view}}"
+		class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg">
+		<field name="OrderDesc" no-label="true"></field>
+		<field name="CustomerOrderNbr"></field>
+		<field name="ShipDate"></field>
+		<field name="OrderQty"></field>
+		<field name="CuryOrderTotal_Text"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="BX" id="fsOpenOrderBX" view.bind="{{view}}">
+		<field name="CuryUnbilledOrderTotal_Text" class="grayed-zero"></field>
+		<field name="UnbilledOrderQty" class="grayed-zero"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="CX" id="fsOpenOrderCX" view.bind="{{view}}">
+		<field name="CuryOpenOrderTotal_Text" class="grayed-zero"></field>
+		<field name="OpenOrderQty" class="grayed-zero"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="DX" id="fsOpenOrderDX" view.bind="{{view}}">
+		<field name="CuryPaidAmt_Text" class="grayed-zero"></field>
+		<field name="CuryUnpaidBalance_Text" class="sp-documents-balance grayed-zero"></field>
+	</qp-fieldset>
+</template>

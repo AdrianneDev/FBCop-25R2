@@ -1,0 +1,17 @@
+<template>
+   <qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+   <qp-panel id="ViewSelectPushNotification"
+            wg-container="ViewSelectPushNotification_ViewSelectPushNotification"
+            caption="Add Push Notifications"
+            auto-repaint="true"
+            width="50vw"
+            height="60vh">
+      <qp-grid id="ViewSelectPushNotification_gridAddPushNotifications"
+               wg-container
+               view.bind="ViewSelectPushNotification"></qp-grid>
+      <footer>
+         <qp-button id="buttonOK-ViewSelectPushNotification" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="buttonCancel-ViewSelectPushNotification" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>
+</template>

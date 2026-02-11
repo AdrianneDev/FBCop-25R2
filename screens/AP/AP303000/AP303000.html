@@ -1,0 +1,310 @@
+<template>
+	<qp-template name="1-1" wg-container="BAccount_BAccount" id="formHeader" class="equal-height label-size-m">
+		<qp-fieldset id="columnFirstHeader" slot="A" view.bind="BAccount">
+			<field name="AcctCD"></field>
+			<using wg-container="CurrentVendor_tab" view="CurrentVendor">
+				<field name="AcctName"></field>
+			</using>
+			<field name="VStatus"></field>
+		</qp-fieldset>
+		<qp-fieldset id="panelAccountBalance" slot="B" view.bind="VendorBalance" wg-container="VendorBalance_VendorBalance" class="highlights-section">
+			<field name="Balance">
+				<qp-label slot="label" caption.bind="VendorBalance.Balance_Label.value"></qp-label>
+			</field>
+			<field name="DepositsBalance">
+				<qp-label slot="label" caption.bind="VendorBalance.DepositsBalance_Label.value"></qp-label>
+			</field>
+			<field name="RetainageBalance">
+				<qp-label slot="label" caption.bind="VendorBalance.RetainageBalance_Label.value"></qp-label>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs" wg-container="CurrentVendor_tab">
+
+		<qp-tab id="tabGeneral" caption="General">
+
+			<qp-template name="1-1" id="formGeneral" class="label-size-m">
+
+				<div id="columnFirstGeneral" slot="A">
+
+					<qp-fieldset id="groupAccountInformation" caption="Account Information" view.bind="DefContact">
+						<using view="CurrentVendor" wg-container="CurrentVendor_tab">
+							<field name="LegalName"></field>
+						</using>
+						<using  view="BAccount" wg-container="BAccount_BAccount">
+							<field name="VendorClassID"></field>
+							<field name="OwnerID"></field>
+						</using>
+						<using view="CurrentVendor" wg-container="CurrentVendor_CurrentVendor2">
+							<field name="AcctReferenceNbr"></field>
+							<field name="ParentBAccountID"></field>
+							<field name="LocaleName"></field>
+						</using>
+					</qp-fieldset>
+
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupAccountAddress"
+						address-view="DefAddress"
+						fs-caption="Account Address"
+						fs-wg-container="DefAddress_DefAddress"
+						override-fieldname
+						view-on-map-action-name="ViewMainOnMap"
+					>
+						<field modify="#groupAccountAddress [name='CountryID']" after="#groupAccountAddress [name='PostalCode']"></field>
+					</qp-include>
+
+				</div>
+				<div id="columnSecondGeneral" slot="B">
+
+					<qp-include url="src/screens/CR/common/forms/form-primary-contact/form-primary-contact.html" view-name="CurrentVendor" primary-wg-container="CurrentVendor_tab"></qp-include>
+
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+								fs-id="panelAccountContactInformation"
+								contact-view="DefContact"
+								fs-caption="Account Contact Information"
+								fs-wg-container="DefContact_DefContact1"
+								show-personal-fields="false">
+					</qp-include>
+
+					<qp-include url="src/screens/CR/common/forms/form-primary-contact/form-primary-contact-personal-data-privacy.html"></qp-include>
+
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabFinancial" caption="Financial" load-on-demand.bind="false">
+			<qp-template name="1-1" id="formFinancial" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="groupFinancialSettings" view.bind="CurrentVendor" caption="Financial Settings">
+						<field name="TermsID"></field>
+						<field name="VOrgBAccountID"></field>
+						<field name="CuryID">
+							<qp-field control-state.bind="CurrentVendor.AllowOverrideCury" class="col-8"></qp-field>
+						</field>
+						<field name="CuryRateTypeID">
+							<qp-field control-state.bind="CurrentVendor.AllowOverrideRate" class="col-8"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRetainageSettings" caption="Retainage Settings" view.bind="CurrentVendor">
+						<field name="RetainageApply"></field>
+						<field name="RetainagePct"></field>
+					</qp-fieldset>
+				</div>
+				<div id="columnSecondFinancial" slot="B">
+					<qp-fieldset id="groupVendorProperties" caption="Vendor Properties" view.bind="CurrentVendor">
+						<field name="LandedCostVendor"></field>
+						<field name="TaxAgency"></field>
+						<field name="Vendor1099"></field>
+						<field name="Box1099"></field>
+						<field name="ForeignEntity"></field>
+						<field name="FATCA"></field>
+						<field name="SDEnabled"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupLienWaiverSettings" caption="Lien Waiver Settings" view.bind="CurrentVendor">
+						<field name="ShouldGenerateLienWaivers"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabPayment" caption="Payment">
+
+			<qp-template name="1-1" id="formPayment" class="label-size-m">
+				<div slot="A" id="columnFirstPayment">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="panelRemitAddress"
+						address-view="RemitAddress"
+						fs-caption="Remit-To Address"
+						fs-wg-container="RemitAddress_RemitAddress"
+						override-fieldname="DefLocation.OverrideRemitAddress"
+						override-wg-container="DefLocation_DefLocationPayment"
+						view-on-map-action-name="ViewRemitOnMap"
+					>
+						<field modify="#panelRemitAddress [name='CountryID']" after="#panelRemitAddress [name='PostalCode']"></field>
+					</qp-include>
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupRemitInfo"
+						contact-view="RemitContact"
+						fs-caption="Remit-To Info"
+						fs-wg-container="RemitContact_RemitContact"
+						override-fieldname="DefLocation.OverrideRemitContact"
+						override-wg-container="DefLocation_DefLocationPayment">
+					</qp-include>
+				</div>
+				<div slot="B" id="columnSecondPayment">
+					<qp-fieldset id="groupPaymentSettings" view.bind="DefLocation" caption="Default Payment Settings" wg-container="DefLocation_DefLocationPayment">
+						<field name="VPaymentMethodID"></field>
+						<field name="VCashAccountID"></field>
+						<field name="VPaymentByType"></field>
+						<field name="VPaymentLeadTime"></field>
+						<field name="CurrentVendor.PayToVendorID"></field>
+						<field name="VSeparateCheck"></field>
+						<field name="CurrentVendor.PaymentsByLinesAllowed"></field>
+						<field name="VPrepaymentPct"></field>
+					</qp-fieldset>
+					<qp-grid caption="Payment Instructions" id="gridPaymentDetails" view.bind="PaymentDetails" wg-container="PaymentDetails_grdPaymentDetails" class="framed-section"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabPurchaseSettings" caption="Purchase Settings">
+
+			<qp-template id="formDefLocation" name="1-1" wg-container="DefLocation_DefLocation" class="label-size-m">
+				<div slot="A" id="columnFirstPurchaseSettings">
+
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupShipFromAddress"
+						address-view="DefLocationAddress"
+						fs-caption="Ship-From Address"
+						fs-wg-container="DefLocationAddress_DefLocationAddress"
+						override-fieldname="DefLocation.OverrideAddress"
+						override-wg-container="DefLocation_DefLocation"
+						view-on-map-action-name="ViewDefLocationAddressOnMap"
+					>
+						<field modify="#groupShipFromAddress [name='CountryID']" after="#groupShipFromAddress [name='PostalCode']"></field>
+					</qp-include>
+
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupShipToInfo"
+						contact-view="DefLocationContact"
+						fs-caption="Ship-From Info"
+						fs-wg-container="DefLocationContact_DefLocationContact"
+						override-fieldname="DefLocation.OverrideContact"
+						override-wg-container="DefLocation_DefLocation">
+					</qp-include>
+
+					<qp-fieldset id="groupOtherSettings" view.bind="DefLocation" caption="Other Settings">
+						<field name="VBranchID"></field>
+						<field name="VPrintOrder"></field>
+						<field name="VEmailOrder"></field>
+					</qp-fieldset>
+
+				</div>
+				<div slot="B" id="columnSecondPurchaseSettings">
+					<qp-fieldset id="groupTaxSettings" view.bind="DefLocation" caption="Tax Settings">
+						<field name="TaxRegistrationID"></field>
+						<using wg-container="CurrentVendor_PXFormView1" view="CurrentVendor">
+							<field name="TinType"></field>
+						</using>
+						<field name="VTaxZoneID"></field>
+						<field name="VTaxCalcMode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupShippingInstructions" view.bind="DefLocation" caption="Shipping Instructions">
+						<field name="VSiteID"></field>
+						<field name="DefLocationBranchSettings.VSiteID"></field>
+						<field name="VCarrierID"></field>
+						<field name="VShipTermsID"></field>
+						<field name="VFOBPointID"></field>
+						<field name="VLeadTime"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupReceiptActions" view.bind="DefLocation" caption="Receipt Actions">
+						<field name="VAllowAPBillBeforeReceipt"></field>
+						<field name="VRcptQtyMin"></field>
+						<field name="VRcptQtyMax"></field>
+						<field name="VRcptQtyThreshold"></field>
+						<field name="VRcptQtyAction"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupProjectDefaults" caption="Project Defaults" view.bind="CurrentVendor" wg-container="CurrentVendor_VendorDefaults">
+						<field name="VendorDefaultCostCodeId"></field>
+						<field name="VendorDefaultInventoryId"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+
+		</qp-tab>
+
+		<qp-tab id="tabBalances" caption="Balances">
+			<qp-grid id="gridVendorBalanceByBaseCurrency" view.bind="VendorBalanceByBaseCurrency" wg-container="VendorBalanceByBaseCurrency_PXGrid1"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="gridAnswers" view.bind="Answers" wg-container="Answers_PXGridAnswers"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabLocations" caption="Locations" ref="tabLocations_Content"></qp-tab>
+
+		<qp-tab id="tabContacts" caption="Contacts" ref="tabContacts_Content"></qp-tab>
+
+		<qp-tab id="Activities_tab" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+
+			<qp-template name="1-1" id="formGLAccounts" class="label-size-m">
+				<qp-fieldset slot="A" id="panelGLAccounts" view.bind="DefLocation" wg-container="DefLocation_DefLocationGLAccounts">
+					<field name="VAPAccountID"></field>
+					<field name="VAPSubID"></field>
+					<field name="VExpenseAcctID"></field>
+					<field name="VExpenseSubID"></field>
+					<field name="VDiscountAcctID"></field>
+					<field name="VDiscountSubID"></field>
+					<using view="CurrentVendor" wg-container="CurrentVendor_tab">
+						<field name="DiscTakenAcctID"></field>
+						<field name="DiscTakenSubID"></field>
+						<field name="PrepaymentAcctID"></field>
+						<field name="PrepaymentSubID"></field>
+						<field name="POAccrualAcctID"></field>
+						<field name="POAccrualSubID"></field>
+						<field name="PrebookAcctID"></field>
+						<field name="PrebookSubID"></field>
+					</using>
+					<using wg-container="DefLocation_formRetainage">
+						<field name="VRetainageAcctID"></field>
+						<field name="VRetainageSubID"></field>
+					</using>
+					</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabTaxAgency" load-on-demand.bind="false"
+				caption="Tax Agency"
+				class="label-size-m"
+				if.bind="CurrentVendor.TaxAgency.value == true">
+			<qp-template id="formTaxAgency" name="1-1" class="label-size-m">
+				<div id="columnFirstTaxAgency" slot="A">
+					<qp-fieldset id="groupDefaultTaxAccounts"
+								 caption="Default Tax Accounts"
+								 view.bind="CurrentVendor">
+						<field name="SalesTaxAcctID"></field>
+						<field name="SalesTaxSubID"></field>
+						<field name="PurchTaxAcctID"></field>
+						<field name="PurchTaxSubID"></field>
+						<field name="TaxExpenseAcctID"></field>
+						<field name="TaxExpenseSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPendingVATSettings"
+								 caption="Pending VAT Settings"
+								 view.bind="CurrentVendor">
+						<field name="SVATReversalMethod"></field>
+						<field name="SVATInputTaxEntryRefNbr"></field>
+						<field name="SVATOutputTaxEntryRefNbr"></field>
+						<field name="SVATTaxInvoiceNumberingID"></field>
+					</qp-fieldset>
+				</div>
+				<div id="columnSecondTaxAgency" slot="B">
+					<qp-fieldset id="groupTaxReportSettings"
+								 caption="Tax Report Settings"
+								 view.bind="CurrentVendor">
+						<field name="TaxPeriodType"></field>
+						<field name="TaxReportFinPeriod"></field>
+						<field name="UpdClosedTaxPeriods"></field>
+						<field name="AutoGenerateTaxBill"></field>
+						<field name="TaxReportRounding"></field>
+						<field name="TaxReportPrecision">
+							<qp-field control-state.bind="CurrentVendor.TaxUseVendorCurPrecision"
+									  class="col-8"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing" ref="tabMailingPrinting_Content"></qp-tab>
+
+		<qp-tab id="tabSuppliedByVendors" caption="Supplied-By Vendors">
+			<qp-grid id="gridSuppliedByVendors" view.bind="SuppliedByVendors" wg-container="SuppliedByVendors_PXGridSuppliedByVendors"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+</template>

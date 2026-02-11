@@ -1,0 +1,204 @@
+<template>
+	<require from="./pm208000-status-colors.scss"></require>
+	<qp-template name="1-1" class="equal-height label-size-m" id="Project_form" wg-container>
+		<qp-fieldset id="formSlotA" slot="A" view.bind="Project">
+			<field name="ContractCD" config-display-mode.bind="'id'"></field>
+			<field name="Description" config-rows.bind="1"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formSlotB" slot="B" view.bind="Project">
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="NonProject"></field>
+			<using wg-container="ProjectProperties_tab" view="ProjectProperties">
+				<field name="OwnerID" config-display-mode.bind="'both'"></field>
+				<field name="AssistantID"></field>
+			</using>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar active-tab-id="SummaryTab" id="ProjectProperties_tab" class="label-size-m" wg-container>
+		<qp-tab id="SummaryTab" caption="Summary">
+			<qp-template name="1-1" id="SummaryForm">
+				<div slot="A">
+					<qp-fieldset id="SummaryTabSlotA01" view.bind="ProjectProperties" caption="Project Properties">
+						<field name="BudgetLevel"></field>
+						<field name="CostBudgetLevel"></field>
+						<field name="ProjectGroupID" config-allow-edit.bind="true"></field>
+						<field name="ApproverID"></field>
+						<field name="CuryID"></field>
+						<field name="AccountingMode"></field>
+						<field name="AllowIssueFromFreeStock"></field>
+						<field name="ChangeOrderWorkflow"></field>
+						<field name="RestrictToEmployeeList"></field>
+						<field name="RestrictToResourceList"></field>
+						<field name="BudgetMetricsEnabled"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTabSlotA02" view.bind="ProjectProperties" caption="Billing and Allocation Settings">
+						<using wg-container="Billing_billingForm" view="Billing">
+							<field name="Billing.Type"></field>
+						</using>
+						<field name="TermsID" config-allow-edit.bind="true"></field>
+						<field name="AllocationID" config-allow-edit.bind="true"></field>
+						<field name="AutoAllocate"></field>
+						<field name="BillingID" config-allow-edit.bind="true"></field>
+						<field name="DefaultBranchID" config-allow-edit.bind="true"></field>
+						<field name="RateTableID" config-allow-edit.bind="true"></field>
+						<field name="CreateProforma"></field>
+						<field name="LimitsEnabled"></field>
+						<field name="PrepaymentEnabled"></field>
+						<field name="PrepaymentDefCode"></field>
+						<field name="AutomaticReleaseAR"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="SummaryTabSlotB03" view.bind="ProjectProperties" caption="Retainage">
+						<field name="RetainageMode"></field>
+						<field name="IncludeCO"></field>
+						<field name="SteppedRetainageOption" control-type="qp-radio" config-class.bind="'vertical'" class="no-label"></field>
+						<field name="RetainagePct"></field>
+						<field name="RetainageMaxPct"></field>
+						<field name="RetainageStepsGridField" replace-content unbound>
+							<qp-grid id="gridRetainageSteps" view.bind="RetainageSteps" class="col-12">
+							</qp-grid>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTabSlotB01" view.bind="ProjectProperties" caption="AIA">
+						<field name="AIALevel"></field>
+						<field name="LastProformaNumber"></field>
+						<field name="IncludeQtyInAIA"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTabSlotB02" view.bind="ProjectProperties" caption="Visibility Settings">
+						<field name="ProjectVisibilitySettingsRow01" unbound>
+							<qp-field control-state.bind="ProjectProperties.VisibleInGL" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInAP" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInAR" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInSO" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInPO" class="col-2">
+							</qp-field>
+						</field>
+						<field name="ProjectVisibilitySettingsRow02" unbound>
+							<qp-field control-state.bind="ProjectProperties.VisibleInIN" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInCA" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInCR" class="col-4">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInPROD" class="col-4">
+							</qp-field>
+						</field>
+						<field name="ProjectVisibilitySettingsRow03" unbound>
+							<qp-field control-state.bind="ProjectProperties.VisibleInTA" class="col-4">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInEA" class="col-4">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="TasksTab" caption="Tasks">
+			<qp-grid id="TaskGrid" view.bind="Tasks">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="RevenueBudgetTab" caption="Revenue Budget">
+			<qp-grid id="RevenueBudget_RevenueBudgetGrid" view.bind="RevenueBudget">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="CostBudgetTab" caption="Cost Budget">
+			<qp-grid id="CostBudget_CostBudgetGrid" view.bind="CostBudget">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="EmployeesTab" caption="Employees">
+			<qp-template name="1-1" id="EmployeesForm" class="stretch">
+				<qp-grid slot="A" id="gridEmployeeContract" view.bind="EmployeeContract" caption="Employees" class="framed-section">
+				</qp-grid>
+				<qp-grid slot="B" id="gridContractRates" view.bind="ContractRates" caption="Overrides" class="framed-section">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="EquipmentTab" caption="Equipment">
+			<qp-grid id="ProjectRatesGrid" view.bind="EquipmentRates">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="DefaultsTab" caption="Defaults">
+			<qp-template name="1-1" id="DefaultsForm" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="DefaultsTab01" view.bind="ProjectProperties" caption="GL Accounts">
+						<field name="DefaultSalesAccountID" config-allow-edit.bind="true"></field>
+						<field name="DefaultSalesSubID"></field>
+						<field name="DefaultExpenseAccountID" config-allow-edit.bind="true"></field>
+						<field name="DefaultExpenseSubID"></field>
+						<field name="DefaultAccrualAccountID" config-allow-edit.bind="true"></field>
+						<field name="DefaultAccrualSubID"></field>
+						<field name="DefaultOverbillingAccountID"></field>
+						<field name="DefaultOverbillingSubID"></field>
+						<field name="DefaultUnderbillingAccountID"></field>
+						<field name="DefaultUnderbillingSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="DefaultsTab02" view.bind="ProjectProperties" caption="Drop-Ship Purchases">
+						<field name="DropshipExpenseAccountSource"></field>
+						<field name="DropshipExpenseSubMask"></field>
+						<field name="DropshipReceiptProcessing"></field>
+						<field name="DropshipExpenseRecording"></field>
+					</qp-fieldset>
+					<qp-fieldset id="DefaultsTab03" view.bind="ProjectProperties" caption="GL Accounts for Payroll">
+						<field name="EarningsAcctID" config-allow-edit.bind="true"></field>
+						<field name="EarningsSubID"></field>
+						<field name="BenefitExpenseAcctID" config-allow-edit.bind="true"></field>
+						<field name="BenefitExpenseSubID"></field>
+						<field name="TaxExpenseAcctID" config-allow-edit.bind="true"></field>
+						<field name="TaxExpenseSubID"></field>
+						<field name="PTOExpenseAcctID" config-allow-edit.bind="true"></field>
+						<field name="PTOExpenseSubID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="AccountTaskGrid" view.bind="Accounts" caption="Default Task for GL Account" class="framed-section">
+					</qp-grid>
+					<qp-grid id="gridMarkups" view.bind="Markups" caption="Document Markups" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="LienWaiverSettingsTab" caption="Lien Waiver Settings" if.bind="ProjectProperties.ThroughDateSourceConditional.enabled || ProjectProperties.ThroughDateSourceUnconditional.enabled" load-on-demand="false">
+			<qp-template name="1-1" id="LienWaiverForm">
+				<div slot="A">
+					<qp-fieldset id="LienWaiverForm01" view.bind="ProjectProperties" caption="Conditional Lien Waivers">
+						<field name="ThroughDateSourceConditional"></field>
+						<field name="IsActive"></field>
+					</qp-fieldset>
+					<qp-fieldset id="LienWaiverForm02" view.bind="ProjectProperties" caption="Unconditional Lien Waivers">
+						<field name="ThroughDateSourceUnconditional"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="ComplianceSettingsGrid" view.bind="LienWaiverRecipients" class="framed-section" caption="Vendor Classes">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing" ref="tabMailingPrinting_Content"></qp-tab>
+		<qp-tab id="ContactsTab" caption="Contacts">
+			<qp-grid id="ProjectContactsGrid"
+					 view.bind="ProjectContacts"
+					 wg-container="ProjectContacts_ProjectContactsGrid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CopyDialog" caption="Copy Template" auto-repaint="true">
+		<qp-fieldset id="formCopyProject" view.bind="CopyDialog">
+			<field name="TemplateID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButtonOK" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,14 @@
+<template>
+	<qp-panel id="VendorItems" caption="Update Effective Vendor Prices" auto-repaint="true">
+		<qp-template id="form-VendorPrices" name="1" wg-container="formEffectiveDate">
+			<qp-fieldset id="fsColumnA-VendorPrices" slot="A" view.bind="VendorInventory$UpdatePrice">
+				<field name="PendingDate"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-VendorPrices">
+			<qp-button id="buttonOK-VendorPrices" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-VendorPrices" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

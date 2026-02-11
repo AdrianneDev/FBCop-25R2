@@ -1,0 +1,56 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template id="formBatchModule" name="7-10-7" class="equal-height" wg-container="BatchModule_form">
+		<qp-fieldset id="columnFirst-Header" view.bind="BatchModule" slot="A">
+			<field name="BatchNbr"></field>
+			<field name="Status" class="colored"></field>
+			<field name="DateEntered"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond-Header" view.bind="BatchModule" slot="B">
+			<field name="BranchID"></field>
+			<field name="LedgerID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_GLDocBatch_CurrencyInfo_"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThird-Header" view.bind="BatchModule" class="highlights-section" slot="C">
+			<field name="CuryDebitTotal"></field>
+			<field name="CuryCreditTotal"></field>
+			<field name="CuryControlTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabTransactions" caption="Transactions">
+			<qp-grid id="gridTransactions" view.bind="GLTranModuleBatNbr" wg-container="GLTranModuleBatNbr_grid">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAPPaymentApplications" caption="AP Payment Applications">
+			<qp-resizer id="resizer-gridAPPayments" min-size="240px">
+				<qp-grid id="gridAPPayments" view.bind="APPayments"></qp-grid>
+			</qp-resizer>
+			<qp-grid id="gridAPAppDocuments" caption="Documents to Apply" view.bind="APAdjustments"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabARPaymentApplications" caption="AR Payment Applications">
+			<qp-resizer id="resizer-gridARPayments" min-size="240px">
+				<qp-grid id="gridARPayments" view.bind="ARPayments"></qp-grid>
+			</qp-resizer>
+			<qp-grid id="gridARAppDocuments" caption="Documents to Apply" view.bind="ARAdjustments"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGLTransactions" caption="GL Transactions">
+			<qp-grid id="gridGLTrans" view.bind="GLTransactions">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="CurrentDocTaxes" caption="Document Taxes" auto-repaint="true" width="md">
+		<qp-grid id="gridDocumentTaxes" view.bind="CurrentDocTaxes" wg-container="CurrentDocTaxes_gridDetailTaxes1">
+		</qp-grid>
+		<footer>
+			<qp-button id="buttonOK-CurrentDocTaxes" wg-name="Ok" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

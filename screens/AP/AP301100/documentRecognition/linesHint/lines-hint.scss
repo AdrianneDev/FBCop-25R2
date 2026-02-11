@@ -1,0 +1,56 @@
+lines-hint {
+    position: sticky;
+    bottom: 10px;
+
+    .linesHintMainContainer {
+        width: fit-content;
+        position: sticky;
+        inset-inline-start: 5px;
+        bottom: 5px;
+        z-index: 1;
+        text-align: center;
+        background-color: #FFFFFF;
+        box-shadow: 1px 1px 6px #3F3F3F;
+        border-radius: 4px;
+        padding: 8px 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .linesHintTextContainerWithButton {
+        padding-inline-end: 10px;
+    }
+
+    .linesHintSelectPrefixLabel {
+        padding-inline-end: 5px;
+        display: inline-block;
+    }
+
+    .linesHintCounter {
+        display: inline-block;
+    }
+
+    .linesHintCounterLabel {
+        display: inline-block;
+        padding-inline-start: 5px;
+    }
+
+    .linesHintButton {
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 4px;
+        padding: 5px 6px;
+        text-transform: uppercase;
+        color: #FFFFFF;
+        background-color: #007ACC;
+        background-color: var(--primary-color, #007ACC);
+
+        :hover {
+            transform: scale(1.05);
+        }
+
+        :active {
+            background-color: #D2D4D7;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<template>
+	<qp-upload-dialog config.bind="{
+		id: 'uplDlg',
+		key: 'UploadPanel',
+		sessionKey: 'sessionKey_fileUploadProcess',
+		caption: 'Upload New Revision',
+		autoSave: false,
+		renderCheckIn: false,
+		renderComment: true,
+		renderLink: true,
+	}"></qp-upload-dialog>
+	<qp-template id="MappingsSingle_form" name="17-17-14" class="equal-height" wg-container>
+		<qp-fieldset id="formMappingsSingle_1" view.bind="MappingsSingle" slot="A">
+			<field name="Name"></field>
+			<field name="ScreenID"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formMappingsSingle_2" view.bind="MappingsSingle" slot="B">
+			<field name="NbrRecords"></field>
+			<field name="DiscardResult" class="no-label"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabPreparedData" caption="Prepared Data">
+			<qp-grid id="PreparedData_gridPreparedData" wg-container view.bind="PreparedData"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabHistory" caption="History">
+			<qp-grid id="History_grHistory" wg-container view.bind="History"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template id="MappingsSingleDetails_DetailsForm" name="1-1-1"  class="equal-height" wg-container>
+				<qp-fieldset id="formDetailsInfo" wg-container="MappingsSingleDetails_DetailsForm" view.bind="MappingsSingleDetails" caption="Info" slot="A">
+					<field name="ProviderID" config-allow-edit.bind="true"></field>
+					<field name="SyncType"></field>
+					<field name="PreparedOn"></field>
+					<field name="CompletedOn"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formDetailsOptions" wg-container="Operation_OperationForm" view.bind="Operation" caption="Options" slot="B">
+					<field name="SkipHeaders" class="no-label"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

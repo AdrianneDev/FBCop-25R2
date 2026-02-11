@@ -1,0 +1,14 @@
+<template>
+	<qp-panel id="NotificationInfo" caption="Select Template" auto-repaint="true">
+		<qp-template id="NotificationInfoTemplate" name="1">
+			<qp-fieldset id="formSelectNotificationTemplate" slot="A" view.bind="NotificationInfo">
+				<field name="NotificationName"></field>
+				<field name="InsertTemplateText" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="SelectNotificatonTemplateOK" dialog-result="OK" caption="Select" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="SelectNotificatonTemplateCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,18 @@
+<template>
+	<qp-panel id="CopyMembersFilterView"
+		caption="Copy Members"
+		auto-repaint="true"
+		close-button-locator="#btnCopyMembersCancel"
+	>
+		<qp-template id="CopyMembersTemplate" name="1-1-1">
+			<qp-label caption="Select an option to continue"></qp-label>
+			<qp-fieldset id="CopyMembersFilterView_frmCopyMembers" slot="A" view.bind="CopyMembersFilterView">
+				<field name="AddMembersOption" control-type="qp-radio" class="no-label"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnCopyMembersNext" dialog-result="OK" caption="Next"></qp-button>
+			<qp-button id="btnCopyMembersCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

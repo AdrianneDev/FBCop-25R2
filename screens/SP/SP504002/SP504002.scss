@@ -1,0 +1,170 @@
+.inline-screen-dialog .page-caption {
+	display: none;
+}
+
+:root {
+	--qp-page-host-padding: 12px !important;
+	--qp-page-host-margin: -4px !important;
+
+	@media screen and (width < 480px) {
+		--qp-page-host-margin: 0px !important;
+	}
+}
+
+.top-bar-cont {
+	display: none; // TODO: is it possible to do in some other way?
+}
+
+.pageHeader {
+	height: 34px;
+	@media screen and (width < 480px) {
+		height: 44px;
+	}
+}
+
+qp-screen-title {
+	visibility: hidden;
+}
+
+.sp-itemview {
+	// margin-top: var(--qp-page-host-padding);
+	height: 100%;
+
+	--qp-sections-column-gap: 16px !important;
+
+	.sp-image-view {
+		margin-bottom: 16px !important;
+
+		qp-uploader {
+			margin-top: 0px !important;
+		}
+	}
+	.sp-image{
+		height: 400px;
+	}
+
+	.sp-controls-view {
+		flex-direction: column;
+		width: 448px;
+
+		fieldset {
+			flex-direction: row;
+			flex-flow: wrap;
+		}
+	}
+
+	.sp-body {
+		width: 100%;
+		flex-grow: 2;
+
+		* {
+			padding: 0 !important;
+			margin: 0;
+			height: 100%;
+		}
+
+		qp-fieldset {
+			border: none;
+			background: none;
+		}
+	}
+
+	.sp-item-descr {
+		font-size: 20px;
+		line-height: 23px;
+		padding-inline: 10px 4px;
+		padding-block: 4px;
+	}
+
+	.sp-item-price .qp-text-editor {
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 27.6px;
+		color: #1b1b1b;
+		text-align: start;
+		border: none;
+		padding-inline-start: 0;
+	}
+
+	.sp-item-stock .qp-text-editor {
+		line-height: 16px;
+		font-size: 16px;
+		padding-bottom: 14px;
+		border: none;
+		padding-inline-start: 0;
+
+		color: var(--sp-in-stock);
+	}
+
+	.sp-item-out-of-stock .sp-item-stock .qp-text-editor {
+		color: var(--sp-out-of-stock);
+	}
+
+	.sp-item-uom {
+		@container qp-screen (width < 480px) {
+			width: 50%;
+		}
+	}
+
+	.sp-item-qty {
+		@container qp-screen (width < 480px) {
+			width: 50%;
+		}
+
+		input {
+			max-width: 100% !important;
+			text-align: left !important;
+		}
+	}
+
+	.sp-add-to-cart {
+		width: 100%;
+
+		qp-button {
+			background-color: var(--sp-primary-color);
+			color: white;
+			width: 100%;
+			border-radius: 6px;
+			margin-inline-start: 10px;
+
+			&:hover {
+				background-color: var(--sp-primary-color-hover);
+			}
+
+			button {
+				color: white;
+				qp-icon {
+					margin-inline-end: 2px;
+				}
+				svg {
+					fill: white;
+				}
+			}
+		}
+	}
+
+	.item-info-panel .item-descr div.qp-text-editor {
+		font-weight: bold;
+		font-size: 18px;
+		border: none;
+	}
+
+	.item-info-panel .item-body .qp-rte-toolbar {
+		display: none;
+	}
+
+	.item-info-panel .item-body .qp-rte-control iframe {
+		background-color: none;
+		height: 100%;
+	}
+
+	.image-pnl.qp-fieldset {
+		background-color: var(--qp-row-color);
+	}
+
+	@container qp-screen (width < 480px) {
+		.label-wrapper {
+			display: none !important;
+		}
+	}
+}

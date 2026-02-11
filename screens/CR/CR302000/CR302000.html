@@ -1,0 +1,45 @@
+<template>
+	<qp-template id="form" name="1-1" class="equal-height label-size-m" qp-collapsible wg-container="Contact_form">
+		<qp-fieldset id="form_ContactLeft" slot="A" view.bind="Contact">
+			<field name="ContactID" pinned>
+				<qp-include url="src/screens/CR/common/teams/form-teams/form-teams-contact.html"></qp-include>
+			</field>
+			<field name="Status"></field>
+			<field name="ClassID" wg-container="ContactCurrent_tab"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_ContactRight" slot="B" view.bind="Contact">
+			<field name="BAccountID" pinned></field>
+			<field name="OwnerID" >
+				<qp-include url="src/screens/CR/common/teams/form-teams/form-teams-owner.html"></qp-include>
+			</field>
+			<field name="DuplicateStatus"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="ContactCurrent_tab" class="label-size-m" wg-container>
+		<qp-tab id="tabGeneral" caption="General" ref="tabGeneral_Content"></qp-tab>
+		<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+		<qp-tab id="tabDuplicates" caption="Duplicates" ref="tabDuplicates_Content" visible.bind="Contact.DuplicateFound.value === true" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes" ref="tabAttributes_Content"></qp-tab>
+		<qp-tab id="tabRelations" caption="Relations" ref="tabRelations_Content"></qp-tab>
+		<qp-tab id="tabLeads" caption="Leads" load-on-demand="true">
+			<qp-grid id="grdLeads" view.bind="Leads" wg-container></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOpportunities" caption="Opportunities" load-on-demand="true">
+			<qp-grid id="gridOpportunities" view.bind="Opportunities"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCases" caption="Cases" load-on-demand="true">
+			<qp-grid id="gridCases" view.bind="Cases"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCampaigns" caption="Campaigns" ref="tabCampaigns_Content" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabMarketingLists" caption="Marketing Lists" ref="tabMarketingLists_Content"></qp-tab>
+		<qp-tab id="tabNotifications" caption="Notifications" load-on-demand="true">
+			<qp-grid id="gridNC" view.bind="NWatchers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabUserInfo" caption="Access to Portal" ref="tabUserInfo_Content" load-on-demand="true"></qp-tab>
+		<qp-tab id="tabLocations" caption="Locations">
+			<qp-grid id="roleAssignmentsGrid" view.bind="RoleAssignments" wg-container="RoleAssignments_roleAssignmentsGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSalesforce" caption="Salesforce" ref="tabSalesforce_Content"></qp-tab>
+		<qp-tab id="tabHubSpot" caption="HubSpot" ref="tabHubSpot_Content"></qp-tab>
+	</qp-tabbar>
+</template>

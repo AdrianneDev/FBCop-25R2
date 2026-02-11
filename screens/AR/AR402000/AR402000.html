@@ -1,0 +1,52 @@
+<template>
+	<qp-template name="10-7-7" id="formFilter" wg-container="Filter_form" class="equal-height" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter" class="label-size-m">
+			<field name="OrgBAccountID" pinned></field>
+			<field name="CustomerID"></field>
+			<field name="Period" pinned></field>
+			<field name="UseMasterCalendar"></field>
+			<field name="ARAcctID"></field>
+			<field name="SubCD"></field>
+			<field name="CuryID" class="control-size-sm" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Filter" class="highlights-section label-size-m">
+			<field name="BalanceSummary">
+				<qp-label slot="label" caption.bind="Filter.BalanceSummary_Label.value"></qp-label>
+			</field>
+			<field name="CustomerBalance" pinned>
+				<qp-label slot="label" caption.bind="Filter.CustomerBalance_Label.value"></qp-label>
+			</field>
+			<field name="CustomerDepositsBalance" pinned>
+				<qp-label slot="label" caption.bind="Filter.CustomerDepositsBalance_Label.value"></qp-label>
+			</field>
+			<field name="Difference" pinned>
+				<qp-label slot="label" caption.bind="Filter.Difference_Label.value"></qp-label>
+			</field>
+			<field name="CustomerRetainedBalance" pinned>
+				<qp-label slot="label" caption.bind="Filter.CustomerRetainedBalance_Label.value"></qp-label>
+			</field>
+			<field name="ShowAllDocs" class="no-label"></field>
+			<field name="IncludeUnreleased" class="no-label"></field>
+			<field name="IncludeChildAccounts" class="no-label"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird" view.bind="Filter" class="highlights-section label-size-m">
+			<field name="CuryBalanceSummary">
+				<qp-label slot="label" caption.bind="Filter.CuryBalanceSummary_Label.value"></qp-label>
+			</field>
+			<field name="CuryCustomerBalance" pinned>
+				<qp-label slot="label" caption.bind="Filter.CuryCustomerBalance_Label.value"></qp-label>
+			</field>
+			<field name="CuryCustomerDepositsBalance" pinned>
+				<qp-label slot="label" caption.bind="Filter.CuryCustomerDepositsBalance_Label.value"></qp-label>
+			</field>
+			<field name="CuryDifference" pinned>
+				<qp-label slot="label" caption.bind="Filter.CuryDifference_Label.value"></qp-label>
+			</field>
+			<field name="CuryCustomerRetainedBalance" pinned>
+				<qp-label slot="label" caption.bind="Filter.CuryCustomerRetainedBalance_Label.value"></qp-label>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Documents">
+	</qp-grid>
+</template>

@@ -1,0 +1,7 @@
+<template>
+    <qp-fieldset after="#col1" slot="B" id="col2" view.bind="Applications">
+        <field name="AuthorizationEndpoint"></field>
+        <field name="TokenEndpoint"></field>
+    </qp-fieldset>
+    <qp-grid after="#grid-Tokens" id="grid-OAuth2Authorizations" view.bind="OAuth2Authorizations" wg-container="OAuth2Authorizations_gridAuthorizations"></qp-grid>
+</template>

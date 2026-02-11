@@ -1,0 +1,40 @@
+<template>
+	<qp-template name="1-1" id="form_Header">
+		<qp-fieldset id="form" view.bind="EmployeeClass" slot="A" class="label-size-m">
+			<field name="EmployeeClassID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-template name="1-1" id="form_Current" class="label-size-m equal-height">
+		<div slot="A">
+			<qp-fieldset id="leftSidePayrollSettings" view.bind="CurEmployeeClassRecord" wg-container="CurEmployeeClassRecord_PXFormView2" caption="Default Settings">
+				<field name="EmpType"></field>
+				<field name="PayGroupID" config-allow-edit.bind="true"></field>
+				<field name="CalendarID" config-allow-edit.bind="true"></field>
+				<field name="HoursPerWeek"></field>
+				<field name="StdWeeksPerYear"></field>
+				<field name="HoursPerYear"></field>
+				<field name="OverrideHoursPerYearForCertified"></field>
+				<field name="HoursPerYearForCertified"></field>
+				<field name="ExemptFromOvertimeRules"></field>
+				<field name="NetPayMin"></field>
+				<field name="GrnMaxPctNet"></field>
+				<field name="WorkCodeID" config-allow-edit.bind="true"></field>
+				<field name="UnionID" config-allow-edit.bind="true"></field>
+				<field name="ExemptFromCertifiedReporting"></field>
+			</qp-fieldset>
+		</div>
+
+		<div slot="B">
+			<qp-fieldset id="workLocationPayrollSettings" view.bind="CurEmployeeClassRecord" wg-container="CurEmployeeClassRecord_PXFormView2" caption="Work Locations">
+				<field name="FakeField1" unbound class="no-label">
+					<qp-field control-state.bind="CurEmployeeClassRecord.UsePayrollProjectWorkLocation"></qp-field>
+				</field>
+				<field name="FakeField" replace-content unbound class="stretch">
+					<qp-grid view.bind="WorkLocations" id="grdWorkLocations" class="col-12"></qp-grid>
+				</field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

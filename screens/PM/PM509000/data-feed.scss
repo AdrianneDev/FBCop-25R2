@@ -1,0 +1,344 @@
+.sp-invoices {
+	--qp-sections-column-gap: 16px;
+
+	&-invoice {
+		width: 100%;
+	}
+
+	&-disabled {
+		qp-fieldset { // we need to keep the outer border with 100% opacity
+			// background: var(--background-color);
+			// height: 100%;
+
+			fieldset {
+				opacity: 0.3;
+			}
+
+			.qp-check-box-control {
+				pointer-events: none;
+			}
+		}
+	}
+
+	.sp-field-date {
+		overflow: hidden;
+    	text-overflow: ellipsis;
+
+		@container qp-screen (width >= 692px) {
+			display: none !important;
+		}
+	}
+
+	.sp-field-date-lg {
+		display: block;
+		text-wrap: nowrap;
+		color: var(--qp-feed-label-color);
+
+		@container qp-screen (width < 692px) {
+			display: none !important;
+		}
+	}
+
+	// TODO: this should be placed in qp-template.scsss
+	.sp-field-date-label {
+		color: var(--qp-feed-label-color);
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		@container qp-screen (width < 692px) {
+			flex: 1;
+			text-wrap: nowrap;
+			display: flex;
+			text-align: left !important;
+			padding-right: 4px;
+		}
+	}
+
+
+	.sp-due-date-passed {
+		color: red !important;
+	}
+
+	&-balance .qp-text-editor {
+		font-weight: 700;
+	}
+}
+
+.sp-invoices {
+
+	&-feed feed-item {
+		display: flex;
+		border-bottom: 1px solid var(--control-border-color);
+	}
+
+	qp-tab {
+		padding: 0;
+	}
+}
+
+.file-type-icon {
+	svg {
+		vertical-align: middle;
+		height: 50px;
+		width: 50px;
+	}
+}
+
+.custom-link {
+	div.qp-text-editor {
+		cursor: pointer;
+		color: var(--qp-primary-color) !important;
+	}
+
+	div.qp-text-editor:hover {
+		text-decoration: underline;
+	}
+}
+
+.secondary-text {
+	div.qp-text-editor {
+		color: var(--qp-feed-label-color);
+	}
+}
+
+.dummy-menu {
+	width: 36px;
+}
+
+.active-row .record-item {
+	background-color: var(--qp-highlight-color) !important;
+}
+
+.qp-data-feed .active-row qp-template:not(.no-hover) .record-item:hover {
+	background-color: var(--qp-highlight-color) !important;
+}
+
+.file-caption {
+	display: flex;
+	font-weight: 700;
+	margin-bottom: 10px;
+
+	svg {
+		vertical-align: middle;
+		margin-right: 5px;
+		margin-bottom: 2px;
+	}
+}
+
+.centered-menu {
+	.fieldset-menu {
+		align-content: center;
+	}
+}
+
+.custom-collapse {
+	margin-bottom: 3px;
+	cursor: pointer;
+}
+
+.compact-feed .record-item {
+	padding-top: 5px !important;
+	padding-bottom: 2px !important;
+}
+
+.large-icon .main-icon {
+	width: 48px;
+	height: 48px;
+	cursor: pointer;
+}
+
+.tag-list {
+	display: flex;
+
+	svg {
+		vertical-align: middle;
+		margin-bottom: 4px;
+	}
+
+	.qp-text-editor {
+		padding-left: 2px !important;
+		white-space: normal !important;
+		display: inline !important;
+	}
+}
+
+.upload-file-icon {
+	width: 48px;
+	height: 48px;
+	cursor: pointer;
+
+	svg {
+		width: 24px;
+		height: 24px;
+	}
+
+	.main-icon {
+		width: 24px;
+		height: 24px;
+	}
+}
+
+.feed-row {
+	display: flex
+}
+
+.custom-search-field {
+	.icon-container {
+		top: 0px;
+		left: auto;
+		right: 8px;
+		cursor: pointer;
+
+		&::after {
+			content: "\e91a";
+			font-size: 16px;
+			display: inline-block;
+			visibility: visible;
+			font-family: 'FontAwesome';
+			color: #808080;
+		}
+	}
+}
+
+.clickable-row {
+	cursor: pointer;
+}
+
+.text-ellipsis {
+	min-width: 0 !important;
+	width: auto !important;
+
+	* {
+		min-width: 0 !important;
+		width: auto !important;
+	}
+
+	div.qp-text-editor {
+		width: 100% !important;
+		min-width: 0 !important;
+		text-overflow: ellipsis !important;
+	}
+}
+
+#customizationMenu_menu_items {
+	#miSwitchUIScreenMode {
+		display: none !important;
+	}
+
+	#miSwitchUIScreenMode + .qp-menu-separator {
+		display: none !important;
+	}
+}
+
+.actions-with-multi-upload {
+	display: flex;
+	gap: 10px;
+	padding: 10px 0 10px 0;
+	align-items: center;
+
+	qp-multi-upload {
+		flex: 1;
+
+		qp-uploader {
+			margin: 0 !important;
+		}
+	}
+}
+
+#fileVersionsByTag {
+	min-height: 60px;
+}
+
+#fileEntitiesByTag {
+	min-height: 30px;
+}
+
+#fileVersionsByEntity {
+	min-height: 60px;
+}
+
+#fileEntitiesByEntity {
+	min-height: 30px;
+}
+
+.prefix-checkbox-with-image {
+	display: grid;
+	grid-auto-flow: column;
+
+	qp-fieldset {
+		margin-right: 8px !important;
+
+		qp-field {
+			align-content: center;
+		}
+	}
+}
+.section-caption {
+	legend {
+		flex-grow: 1;
+	}
+}
+
+.feed-search-div {
+	width: 30px;
+	cursor: pointer;
+	padding-top: 7px;
+	padding-left: 6px;
+}
+
+.feed-search {
+	line-height: 0;
+}
+
+.filter-used {
+	background-color: rgba(0, 0, 0, 0.06);
+}
+
+.withCaption {
+	.captionLine {
+		display: none;
+	}
+}
+
+.custom-feed-filter {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+	column-gap: 8px !important;
+	row-gap: 8px !important;
+
+	div.wrapper {
+		padding-left: 0 !important;
+	}
+}
+
+.no-close-panel {
+	.qp-dialog-maximize {
+		display: none;
+	}
+
+	.qp-dialog-close {
+		display: none;
+	}
+}
+
+#pdfPreviewFrame {
+	width: 100%;
+	aspect-ratio: 2/3;
+}
+
+.qp-data-feed {
+	--qp-hovered-color: #F9F9F9;
+}
+
+.qp-data-feed qp-template:not(.no-hover) .record-item:hover {
+	background-color: var(--qp-hovered-color);
+}
+
+.qp-data-feed .record-item-compound {
+	&:not(.no-hover):not(:has(qp-template.no-hover)):hover {
+		background-color: var(--qp-hovered-color);
+		qp-template:not(.no-hover) .record-item:hover {
+			background-color: initial;
+		}
+	}
+}

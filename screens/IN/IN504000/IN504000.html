@@ -1,0 +1,64 @@
+<template>
+	<qp-template id="form-Preview" name="17-17-14" class="equal-height" wg-container="GeneratorSettings_tab">
+		<qp-fieldset id="fsColumnA-Preview" slot="A" view.bind="GeneratorSettings">
+			<field name="PIClassID"></field>
+			<field name="Descr"></field>
+			<field name="SiteID"></field>
+			<field name="Method"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Preview" slot="B" view.bind="GeneratorSettings">
+			<field name="SelectedMethod"></field>
+			<field name="CycleID"></field>
+			<field name="ABCCodeID"></field>
+			<field name="MovementClassID"></field>
+			<field name="RandomItemsLimit"></field>
+			<field name="ByFrequency"></field>
+			<field name="BlankLines"></field>
+			<field name="MaxLastCountDate"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Preview" caption="Preview">
+			<qp-grid id="grid-Preview" view.bind="PreliminaryResultRecs" wg-container="PreliminaryResultRecs_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-LocationSelection" caption="Location Selection">
+			<qp-template id="formGrids-LocationSelection" name="1-1" class="stretch equal-height">
+				<qp-grid id="gridToLock-LocationSelection"
+					slot="A"
+					view.bind="LocationsToLock"
+					caption="Selected Locations"
+					class="framed-section no-stretch"
+					wg-container="LocationsToLock_gridLocations">
+				</qp-grid>
+				<qp-grid id="gridExcluded-LocationSelection"
+					slot="B"
+					view.bind="ExcludedLocations"
+					caption="Excluded Locations"
+					class="framed-section no-stretch"
+					wg-container="ExcludedLocations_gridExcludedLocations">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-ItemSelection" caption="Item Selection">
+			<qp-template id="formGrids-ItemSelection" name="1-1" class="stretch equal-height">
+				<qp-grid id="gridToLock-ItemSelection"
+					slot="A"
+					view.bind="InventoryItemsToLock"
+					caption="Selected Inventory Items"
+					class="framed-section no-stretch"
+					wg-container="InventoryItemsToLock_gridInventoryItems">
+				</qp-grid>
+				<qp-grid id="gridExcluded-ItemSelection"
+					slot="B"
+					view.bind="ExcludedInventoryItems"
+					caption="Excluded Inventory Items"
+					class="framed-section no-stretch"
+					wg-container="ExcludedInventoryItems_gridExcludedInventoryItems">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

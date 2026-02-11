@@ -1,0 +1,48 @@
+<template>
+	<qp-panel id="CurrentItem" auto-repaint="true" caption="Synchronization Status" width="lg" height="80vh">
+		<qp-template id="frmStatus_key-form" name="1-1">
+			<qp-fieldset slot="A" id="edServerID" view.bind="CurrentItem" wg-container="CurrentItem_frmStatus">
+				<field name="ServerID"></field>
+				<field name="ContactsExportDate_Date">
+					<qp-field control-state.bind="CurrentItem.ContactsExportDate_Time"></qp-field>
+				</field>
+				<field name="TasksExportDate_Date">
+					<qp-field control-state.bind="CurrentItem.TasksExportDate_Time"></qp-field>
+				</field>
+				<field name="EventsExportDate_Date">
+					<qp-field control-state.bind="CurrentItem.EventsExportDate_Time"></qp-field>
+				</field>
+				<field name="EmailsExportDate_Date">
+					<qp-field control-state.bind="CurrentItem.EmailsExportDate_Time"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="edAddress" view.bind="CurrentItem">
+				<field name="Address"></field>
+				<field name="ContactsImportDate_Date">
+					<qp-field control-state.bind="CurrentItem.ContactsImportDate_Time">
+						<qp-button id="btnContactsReset" caption="Reset" state.bind="ResetContacts"></qp-button>
+					</qp-field>
+				</field>
+				<field name="TasksImportDate_Date">
+					<qp-field control-state.bind="CurrentItem.TasksImportDate_Time">
+						<qp-button id="btnTasksReset" caption="Reset" state.bind="ResetTasks"></qp-button>
+					</qp-field>
+				</field>
+				<field name="EventsImportDate_Date">
+					<qp-field control-state.bind="CurrentItem.EventsImportDate_Time">
+						<qp-button id="btnEventsReset" caption="Reset" state.bind="ResetEvents"></qp-button>
+					</qp-field>
+				</field>
+				<field name="EmailsImportDate_Date">
+					<qp-field control-state.bind="CurrentItem.EmailsImportDate_Time">
+						<qp-button id="btnEmailsReset" caption="Reset" state.bind="ResetEmails"></qp-button>
+					</qp-field>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridLog" view.bind="OperationLog"> </qp-grid>
+		<footer>
+			<qp-button id="btnCopyCompanyCancel" caption="Close" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,15 @@
+<template>
+    <div replace="#budget-vs-actual-chart">
+        <qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenCostProjection'}" value.two-way="captions.BudgetVsActual" class="caption-with-link"></qp-text-editor>
+        <qp-dashboard-container>
+            <qp-dashboard-widget 
+                type.bind="charts.BudgetVsActual.type"
+                config.bind="charts.BudgetVsActual.config"
+                data.bind="charts.BudgetVsActual.data">
+            </qp-dashboard-widget>
+        </qp-dashboard-container>    
+    </div>    
+    <div append="#hidden-grids">
+		<qp-grid id="budget-vs-actual-chart-grid" view.bind="BudgetVsActualChart"></qp-grid>
+    </div>
+</template>

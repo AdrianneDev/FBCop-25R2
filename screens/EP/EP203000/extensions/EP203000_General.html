@@ -1,0 +1,57 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template id="General-form" name="1-1">
+			<div slot="A">
+				<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+					fs-id="tabGeneral_ContactInfo"
+					contact-view="Contact"
+					fs-wg-container="Contact_ContactInfo"
+					fs-caption="Contact Info"
+				>
+					<field remove="#tabGeneral_ContactInfo [name='FullName']"></field>
+					<field remove="#tabGeneral_ContactInfo [name='Salutation']"></field>
+					<field name="Contact.Title" before="#tabGeneral_ContactInfo [name='FirstName']"></field>
+					<field name="Contact.MidName" after="#tabGeneral_ContactInfo [name='FirstName']"></field>
+				</qp-include>
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="tabGeneral_AddressInfo"
+					address-view="Address"
+					fs-caption="Address info"
+					fs-wg-container="Address_AddressInfo"
+					override-fieldname
+					with-validation="false"
+				>
+					<field modify="#tabGeneral_AddressInfo [name='CountryID']" after="#tabGeneral_AddressInfo [name='PostalCode']"></field>
+				</qp-include>
+			</div>
+			<div slot="B">
+				<qp-fieldset id="tabGeneral_EmployeeSettings_Time" view.bind="CurrentEmployee" caption="Employee Settings">
+					<field name="ParentBAccountID"></field>
+					<field name="DepartmentID"></field>
+					<field name="Contact.Salutation"></field>
+					<field name="SupervisorID"></field>
+					<field name="CalendarID"></field>
+					<field name="DefaultWorkgroupID"></field>
+					<field name="AcctReferenceNbr"></field>
+					<field name="UserID"></field>
+					<using view="Contact" wg-container="Contact_PersonalInfo">
+						<field name="DateOfBirth"></field>
+					</using>
+				</qp-fieldset>
+
+				<qp-fieldset id="tabGeneral_EmployeeSettings_Additional" view.bind="CurrentEmployee" caption="Additional Settings">
+					<field name="HoursValidation"></field>
+					<field name="TimeCardRequired"></field>
+					<field name="AMProductionEmployee"></field>
+					<field name="SDEnabled"></field>
+					<field name="SalesPersonID"></field>
+					<field name="LabourItemID"></field>
+					<field name="RouteEmails"></field>
+					<using view="Contact" wg-container="Contact_frmEmployeeContact">
+						<field name="Synchronize"></field>
+					</using>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

@@ -1,0 +1,11 @@
+﻿<template>
+	<qp-template name="17-17-14" id="Filter_form" wg-container class="label-size-m">
+		<qp-fieldset id="form" view.bind="Filter" slot="A">
+			<field name="Action"></field>
+			<field name="MasterEntity"></field>
+			<field name="DocumentDateWithinXDays"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="SelectedItems"></qp-grid>
+</template>

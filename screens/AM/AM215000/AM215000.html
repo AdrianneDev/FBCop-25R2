@@ -1,0 +1,67 @@
+<template>
+	<require from="./AM215000.scss"></require>
+	<qp-template id="Documents_form" wg-container name="7-10-7" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="Documents1" view.bind="Documents">
+			<field name="ECOID"></field>
+			<field name="RevisionID"></field>
+			<field name="BOMID" config-allow-edit.bind="true"></field>
+			<field name="BOMRevisionID" config-allow-edit.bind="true"></field>
+			<field name="Status" class="colored"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Documents2" view.bind="Documents">
+			<field name="InventoryID"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID"></field>
+			<field name="Requestor"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Documents3" view.bind="Documents">
+			<field name="RequestDate"></field>
+			<field name="EffectiveDate"></field>
+			<field name="Priority"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabTop">
+		<qp-tab id="tabOperations" caption="Operations">
+			<qp-resizer id="resizer-grid" initial-size="235px" min-size="235px">
+				<qp-grid id="grid" view.bind="BomOperRecords"></qp-grid>
+			</qp-resizer>
+			<qp-tabbar id="tabBottom">
+				<qp-tab id="tabMaterials" caption="Materials">
+					<qp-grid id="gridMatl" view.bind="BomMatlRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabSteps" caption="Steps">
+					<qp-grid id="gridStep" view.bind="BomStepRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTools" caption="Tools">
+					<qp-grid id="gridTool" view.bind="BomToolRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOverhead" caption="Overhead">
+					<qp-grid id="gridOvhd" view.bind="BomOvhdRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOutsideProcess" caption="Outside Process">
+					<qp-template id="OutsideProcessingOperationSelected_outsideProcessingform" wg-container name="17-17-14">
+						<qp-fieldset slot="A" id="SelectedConfiguration1" view.bind="OutsideProcessingOperationSelected">
+							<field name="OutsideProcess"></field>
+							<field name="DropShippedToVendor"></field>
+							<field name="VendorID" config-allow-edit.bind="true"></field>
+							<field name="VendorLocationID"></field>
+						</qp-fieldset>
+					</qp-template>
+				</qp-tab>
+			</qp-tabbar>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="AttributesGrid" view.bind="BomAttributes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>	
+
+	<qp-panel id="PanelRef" caption="Reference Designators" auto-repaint="true">
+		<qp-grid id="gridref" view.bind="BomRefRecords"></qp-grid>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

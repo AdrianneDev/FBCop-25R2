@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+   <qp-panel id="TrackingTables"
+            wg-container="ViewSelectDasboards_ViewSelectDasboards"
+            caption="Add Tables"
+            auto-repaint="true"
+            width="50vw"
+            height="60vh">
+      <qp-grid id="grid-AddTables" wg-container="TrackingTables_gridAddTables" view.bind="TrackingTables"></qp-grid>
+      <footer>
+         <qp-button id="btnOK" caption="Save" wg-name="OK" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="btnCancel" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>
+</template>

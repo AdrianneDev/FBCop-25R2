@@ -1,0 +1,9 @@
+<template>
+	<qp-include-parameters view.required></qp-include-parameters>
+
+	<div class="sp-paymethod">
+		<qp-hyper-icon images.bind="{ normal: {{view}}.cardIcon }"
+			class="${ {{view}}.isCard ? '' : 'hidden' }"></qp-hyper-icon>
+		${ {{view}}.paymentMethod }
+	</div>
+</template>

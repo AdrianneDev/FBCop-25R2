@@ -1,0 +1,39 @@
+<template>
+	<template id="content_WarehouseManagement">
+		<qp-template id="form-WarehouseManagementMessage" name="1-1">
+			<div id="divColumnA-WarehouseManagementMessage" slot="A">
+				<field name="infoMessage" replace-content unbound>
+					<qp-info-box caption="These settings are specific to the current branch." type="info"></qp-info-box>
+				</field>
+			</div>
+		</qp-template>
+		<qp-template id="form-WarehouseManagement" name="1-1" wg-container="ReceivePutAwaySetup_formScanSetup">
+			<div id="divColumnA-WarehouseManagement" slot="A">
+				<qp-fieldset id="fsWorkflow-WarehouseManagement" view.bind="ReceivePutAwaySetup" caption="Receiving Workflow">
+					<field name="ShowReceivingTab"></field>
+					<field name="ShowPutAwayTab"></field>
+					<field name="ShowReturningTab"></field>
+					<field name="ShowReceiveTransferTab"></field>
+					<field name="ShowScanLogTab"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsSettings-WarehouseManagement" view.bind="ReceivePutAwaySetup" caption="Receiving Settings">
+					<field name="UseDefaultQty"></field>
+					<field name="ExplicitLineConfirmation"></field>
+					<field name="UseCartsForPutAway"></field>
+					<field name="DefaultLotSerialNumber"></field>
+					<field name="DefaultExpireDate"></field>
+					<field name="SingleLocation"></field>
+					<field name="DefaultReceivingLocation"></field>
+					<field name="RequestLocationForEachItemInReceive"></field>
+					<field name="RequestLocationForEachItemInPutAway"></field>
+					<field name="RequestLocationForEachItemInReturn"></field>
+					<field name="VerifyReceiptsBeforeRelease"></field>
+					<field name="KeepZeroLinesOnReceiptConfirmation" class="indent-1"></field>
+					<field name="PrintPurchaseReceiptAutomatically"></field>
+					<field name="PrintInventoryLabelsAutomatically"></field>
+					<field name="InventoryLabelsReportID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

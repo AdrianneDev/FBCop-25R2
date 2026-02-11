@@ -1,0 +1,28 @@
+﻿<template>
+	<template id="tabDetails_Content">
+		<qp-template name="1-1" id="details" wg-container="CurrentMessage_tab">
+			<qp-fieldset id="tabDetails_MessageLeft" view.bind="CurrentMessage" slot="A" caption="Teams Activity Details">
+				<field name="MPStatus"></field>
+				<field name="OwnerID"></field>
+				<field name="WorkgroupID"></field>
+				<field name="RefNoteIDType"></field>
+				<field name="RefNoteID"></field>
+				<field name="BAccountID"></field>
+				<field name="ContactID"></field>
+				<field name="ParentNoteID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="tabDetails_MessageRight" view.bind="Message" slot="B" caption="Activity Time Details">
+				<field name="TimeActivity.TrackTime"></field>
+				<field name="TimeActivity.ProjectID"></field>
+				<field name="TimeActivity.ProjectTaskID"></field>
+				<field name="TimeActivity.LabourItemID"></field>
+				<field name="TimeActivity.ApproverID"></field>
+				<field name="TimeActivity.EarningTypeID"></field>
+				<field name="TimeActivity.TimeSpent"></field>
+				<field name="TimeActivity.IsBillable"></field>
+				<field name="TimeActivity.Released"></field>
+				<field name="TimeActivity.TimeBillable"></field>
+			</qp-fieldset>
+		</qp-template>
+	</template>
+</template>

@@ -1,0 +1,14 @@
+
+<template>
+	<qp-panel id="GIMLProcessingInfo" caption="Anomaly Settings" width="sm" auto-repaint="true">
+		<qp-info-box type="info" text.bind="GIMLProcessingInfo.GIMLProcessing__anomalySettings.value"></qp-info-box>
+		<qp-fieldset id="fsAnomaly-Settings" view.bind="GIMLProcessingInfo">
+			<field name="mlTargetColumn"></field>
+			<field name="mlTimeAxis"></field>
+			<field name="groupFields"></field>
+			<field name="mlReCalcIntervalType"></field>
+			<field name="GIMLProcessing__importDate"></field>
+			<field name="GIMLProcessing__nextRun"></field>
+		</qp-fieldset>
+	</qp-panel>
+</template>

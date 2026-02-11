@@ -1,0 +1,19 @@
+<template>
+	<qp-panel id="addsofilter" caption="Add Sales Order" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddSalesOrder" name="17-17-14" class="equal-height">
+			<qp-fieldset id="fsColumnA-AddSalesOrder" slot="A" view.bind="addsofilter" wg-container="addsofilter_form4">
+				<field name="Operation"></field>
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddSalesOrder" view.bind="soshipmentplan" wg-container="soshipmentplan_grid4"></qp-grid>
+
+		<footer id="footer-AddSalesOrder">
+			<qp-button id="buttonAdd-AddSalesOrder" state.bind="AddSO"></qp-button>
+			<qp-button id="buttonAddClose-AddSalesOrder" dialog-Result="OK" caption="Add & Close" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="buttonCancel-AddSalesOrder" dialog-result="Cancel" state.bind="AddSOCancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

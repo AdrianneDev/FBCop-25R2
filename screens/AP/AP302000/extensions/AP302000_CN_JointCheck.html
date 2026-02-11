@@ -1,0 +1,20 @@
+<template>
+
+	<field after="#columnSecond-Summary [name='VendorLocationID']" name="SelectedJointPayee.Name"></field>
+
+	<qp-panel id="BillWithJointPayee" caption="Select Joint Payee" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="formAvailableJointPayeesFilter" name="17-17-14">
+			<qp-fieldset id="panelAvailableJointPayeesFilter" slot="A" view.bind="BillWithJointPayeeFilter" wg-container="BillWithJointPayeeFilter_AvailableJointPayeesFilter">
+				<field name="RefNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridAvailableJointPayeesGrid" view.bind="BillWithJointPayee" wg-container="BillWithJointPayee_AvailableJointPayeesGrid"></qp-grid>
+		<footer>
+			<qp-button id="btnAddJointPayee" caption="Add" state.bind="AddJointPayee"></qp-button>
+			<qp-button id="btnAddCloseJointPayee" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="btnCloseJointPayee" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+
+</template>

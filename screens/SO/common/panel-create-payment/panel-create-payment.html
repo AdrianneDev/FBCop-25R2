@@ -1,0 +1,31 @@
+<template>
+	<qp-panel id="QuickPayment" caption="Create Payment" auto-repaint="true">
+		<qp-template id="form-CreatePayment" name="1" wg-container="QuickPayment_CreatePaymentFormView">
+			<qp-fieldset id="fsColumnA-CreatePayment" slot="A" view.bind="QuickPayment">
+				<field name="CuryOrigDocAmt"></field>
+				<field name="CuryRefundAmt"></field>
+				<field name="CuryID"></field>
+				<field name="DocDesc"></field>
+				<field name="PaymentMethodID"></field>
+				<field name="RefTranExtNbr"></field>
+				<field name="NewCard"></field>
+				<field name="NewAccount"></field>
+				<field name="SaveCard"></field>
+				<field name="SaveAccount"></field>
+				<field name="PMInstanceID"></field>
+				<field name="CashAccountID"></field>
+				<field name="ProcessingCenterID"></field>
+				<field name="TerminalID"></field>
+				<field name="ExtRefNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-CreatePayment">
+			<qp-button id="buttonRefund-CreatePayment" dialog-result="Abort" state.bind="CreatePaymentRefund"></qp-button>
+			<qp-button id="buttonCapture-CreatePayment" dialog-result="Yes" state.bind="CreatePaymentCapture"></qp-button>
+			<qp-button id="buttonAuthorize-CreatePayment" dialog-result="No" state.bind="CreatePaymentAuthorize"></qp-button>
+			<qp-button id="buttonOK-CreatePayment" dialog-result="OK" state.bind="CreatePaymentOK" class="major-button" caption="Create"></qp-button>
+			<qp-button id="buttonCancel-CreatePayment" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

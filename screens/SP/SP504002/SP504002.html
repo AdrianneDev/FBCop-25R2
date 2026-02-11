@@ -1,0 +1,43 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP504002.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="sp-itemview h-stack" tabindex="0">
+		<div class="sp-image-view col-sm-12 col-md-6 col-lg-6">
+			<div class="sp-image">
+				<div if.bind="SPInventoryItem.Data.value !== ''" class="sp-image-blob"
+					style="background-image: url(data:image/png;base64,${SPInventoryItem.Data.value})"></div>
+				<div if.bind="SPInventoryItem.Data.value === ''" class="sp-image-empty">
+					<qp-hyper-icon images.bind="{ normal: 'svg:sp@photo' }"></qp-hyper-icon>
+				</div>
+			</div>
+		</div>
+		<div
+			class="sp-controls-view v-stack gray-pane item-info-panel ${(SPInventoryItem.SiteQtyAvail.value >= 1) ? '' : 'sp-item-out-of-stock'} col-sm-12 col-md-6 col-lg-6">
+			<qp-fieldset id="fsControls" view.bind="SPInventoryItem">
+				<!--<field name="InventoryCD"></field>-->
+				<field name="Descr" replace-content>
+					<div class="sp-item-descr">${SPInventoryItem.Descr.value}</div>
+				</field>
+				<field name="CuryUnitPriceWithSymbol" no-label="true" class="sp-item-price"></field>
+				<field name="IAStatus" class="sp-item-stock" no-label.bind="true"></field>
+				<field name="SiteIdList"></field>
+				<field name="UOMList" class="sp-item-uom"></field>
+				<field name="Qty" class="sp-item-qty"></field>
+				<field name="AddToCart" replace-content class="sp-add-to-cart">
+					<qp-button id="btnAddToCart" state.bind="SPInventoryItem.AddToCart"
+						config.bind="{ displayIconAndText: true, images: { normal: 'svg:main@plus' }}">
+					</qp-button>
+				</field>
+			</qp-fieldset>
+			<div class="sp-body" if.bind="SPInventoryItem.Body.value">
+				<qp-fieldset id="fsBody" view.bind="SPInventoryItem">
+					<field name="Body" class="item-body" control-type="qp-rich-text-editor"
+						config.bind="{readOnly: true}" no-label.bind="true"></field>
+				</qp-fieldset>
+			</div>
+		</div>
+	</div>
+</template>

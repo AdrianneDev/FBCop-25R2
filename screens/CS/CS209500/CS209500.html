@@ -1,0 +1,27 @@
+﻿<template>
+	<qp-template name="1-1" class="equal-height" id="formDocument">
+		<qp-fieldset id="fsColumnA-ShippingZoneFilter" slot="A" view.bind="ShippingZones" wg-container="ShippingZones_formSZ">
+			<field name="ZoneID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid view.bind="ShippingZoneLines" class="stretch" wg-container="ShippingZoneLines_gridZL"></qp-grid>
+
+	<qp-panel id="CountryFilter" caption="Add Country States" auto-repaint="true" width="50vw" height="85vh">
+		<qp-template id="form-CountryFilter" name="1-1" wg-container="CountryFilter_formCF">
+			<qp-fieldset id="fsColumnA-CountryFilter" slot="A" view.bind="CountryFilter">
+				<field name="CountryID"></field>
+				<field name="CountryID_description"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid view.bind="CountryStatesList" class="stretch" wg-container="CountryStatesList_gridCS"></qp-grid>
+
+		<footer id="footer-CountryFilter">
+			<qp-button id="buttonOK-CountryFilter" state.bind="AddState"></qp-button>
+			<qp-button id="buttonAddClose-CountryFilter" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-CountryFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,3 @@
+.invoice-details-pnl .label-container::after {
+    content: none;
+}

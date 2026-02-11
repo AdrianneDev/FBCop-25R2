@@ -1,0 +1,9 @@
+<template>
+	<qp-panel id="OrderLines" caption="Purchase Order Lines" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="grid-PurchaseOrderLines" view.bind="OrderLines" wg-container="OrderLines_gridContent"></qp-grid>
+
+		<footer id="footer-PurchaseOrderLines">
+			<qp-button id="buttonOK-PurchaseOrderLines" dialog-result="Cancel" caption="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

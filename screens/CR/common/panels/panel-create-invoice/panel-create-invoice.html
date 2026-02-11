@@ -1,0 +1,19 @@
+<template>
+	<qp-panel id="CreateInvoicesParams" caption="Create Invoice" auto-repaint="true" width="sm">
+		<qp-fieldset id="formCreateInvoice" view.bind="CreateInvoicesParams" class="no-label" wg-container="CreateInvoicesParams_formCreateInvoice">
+			<field name="RefNbr"></field>
+			<field name="MakeQuotePrimary"></field>
+			<field name="RecalculatePrices"></field>
+			<field name="OverrideManualPrices" class="indent-1"></field>
+			<field name="RecalculateDiscounts"></field>
+			<field name="OverrideManualDiscounts" class="indent-1"></field>
+			<field name="OverrideManualDocGroupDiscounts" class="indent-1"></field>
+			<field name="ConfirmManualAmount"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnCreateInvoiceOK" dialog-result="Yes" caption="Create"></qp-button>
+			<qp-button id="btnCreateInvoiceCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

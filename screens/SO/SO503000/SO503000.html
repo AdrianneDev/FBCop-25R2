@@ -1,0 +1,28 @@
+<template>
+	<qp-template name="17-17-14" id="Filter_form" wg-container class="equal-height">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="Action" pinned="true"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range" pinned="true"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate" pinned="true"></qp-field>
+			</field>
+			<field name="InvoiceDate"></field>
+			<field name="ShowPrinted"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="CustomerID" pinned="true"></field>
+			<field name="CarrierPluginID" pinned="true"></field>
+			<field name="ShipVia"></field>
+			<field name="SiteID" pinned="true"></field>
+			<field name="PackagingType"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Filter" slot="C" view.bind="Filter">
+			<field name="PrintWithDeviceHub" class="no-label" pinned="true"></field>
+			<field name="DefinePrinterManually" class="no-label" pinned="true"></field>
+			<field name="PrinterID" pinned="true"></field>
+			<field name="NumberOfCopies"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Orders"></qp-grid>
+</template>

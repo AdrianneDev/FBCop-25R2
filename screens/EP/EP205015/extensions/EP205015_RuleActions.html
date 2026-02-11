@@ -1,0 +1,30 @@
+<template>
+	<template id="tabRuleActions_Content">
+		<qp-template id="CurrentItem_template1_rule" name="1" class="label-size-xm">
+			<div id="CurrentItem1_rule_slotA" slot="A">
+				<qp-template id="tabRuleActions_Content_template1" name="1-1">
+					<qp-fieldset slot="A" id="PXFormConditions" view.bind="CurrentNode" caption="Approval Settings">
+						<field name="RuleType"></field>
+					</qp-fieldset>
+				</qp-template>
+				<qp-grid id="ruleApproversGrid" view.bind="RuleApprovers" wg-container="RuleApprovers_ruleApproversGrid"></qp-grid>
+				<qp-grid id="employeeApproveGrid" view.bind="EmployeeCondition"></qp-grid>
+				<qp-template id="tabRuleActions_Content_template2" name="1-1">
+					<qp-fieldset slot="A" id="PXFormViewBottom" view.bind="CurrentNode">
+						<field name="OwnerSource"></field>
+						<field name="WorkgroupID"></field>
+						<field name="AllowReassignment"></field>
+						<field name="WaitTime"></field>
+						<field name="ApproveType"></field>
+					</qp-fieldset>
+				</qp-template>
+				<qp-template id="tabRuleActions_Content_template3" name="1-1">
+					<qp-fieldset slot="A" id="PXFormView1" view.bind="CurrentNode" caption="Reason Settings">
+						<field name="ReasonForApprove"></field>
+						<field name="ReasonForReject"></field>
+					</qp-fieldset>
+				</qp-template>
+			</div>
+		</qp-template>
+	</template>
+</template>

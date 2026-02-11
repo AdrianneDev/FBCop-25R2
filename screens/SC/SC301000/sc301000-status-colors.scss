@@ -1,0 +1,12 @@
+@import '../../PM/common/pm-status-colors-common.scss';
+
+/* –– red –– */
+@include colored-status('B', var(--status-red-color)); // Pending Approval
+@include colored-status('V', var(--status-red-color)); // Rejected
+
+/* –– blue –– */
+@include colored-status('A', var(--status-blue-color)); // Awaiting Link
+@include colored-status('D', var(--status-blue-color)); // Pending Print
+@include colored-status('E', var(--status-blue-color)); // Pending Email
+@include colored-status('N', var(--status-blue-color)); // Open
+@include colored-status('P', var(--status-blue-color)); // Printed

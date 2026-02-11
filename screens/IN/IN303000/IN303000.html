@@ -1,0 +1,48 @@
+<template>
+	<require from="src/screens/IN/common/status-styles.scss"></require>
+	<qp-template id="form-Adjustment" name="7-10-7" class="equal-height" qp-collapsible wg-container="adjustment_form">
+		<qp-fieldset id="fsColumnA-Adjustment" slot="A" view.bind="adjustment">
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="TranDate" pinned="false"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Adjustment" slot="B" view.bind="adjustment">
+			<field name="ExtRefNbr" pinned="true"></field>
+			<field name="PIID"></field>
+			<field name="TranDesc" config-type.bind="1" config-rows.bind="3" pinned="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Adjustment" slot="C" view.bind="adjustment" class="highlights-section">
+			<field name="TotalQty" pinned="true"></field>
+			<field name="ControlQty"></field>
+			<field name="TotalCost" pinned="true"></field>
+			<field name="ControlCost"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Details">
+			<qp-grid id="grid-Details" view.bind="transactions" wg-container="transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Financial" caption="Financial" load-on-demand.bind="false">
+			<qp-template id="form-Financial" name="17-17-14" wg-container="CurrentDocument_form2">
+				<qp-fieldset id="fsColumnA-Financial" slot="A" view.bind="CurrentDocument">
+					<field name="BatchNbr" config.bind="{allowEdit: true}"></field>
+					<field name="BranchID"></field>
+					<field name="BranchBaseCuryID"></field>
+					<field name="IgnoreAllocationErrors"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Manufacturing" caption="Manufacturing">
+			<qp-template id="form-Manufacturing" name="17-17-14" wg-container="CurrentDocument_formam1">
+				<qp-fieldset id="fsColumnA-Manufacturing" slot="A" view.bind="CurrentDocument">
+					<field name="AMBatNbr"></field>
+					<field name="AMDocType"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

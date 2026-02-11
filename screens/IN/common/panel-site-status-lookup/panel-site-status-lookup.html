@@ -1,0 +1,24 @@
+<template>
+	<qp-panel id="ItemInfo" caption="Inventory Lookup" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-SiteStatusLookup" name="17-17-14" class="equal-height" wg-container="ItemFilter_formSitesStatus">
+			<qp-fieldset id="fsColumnA-SiteStatusLookup" slot="A" view.bind="ItemFilter">
+				<field name="Inventory" qp-fast-filter.bind="gridSiteStatusVM"></field>
+				<field name="BarCode"></field>
+				<field name="ItemClass"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-SiteStatusLookup" slot="B" view.bind="ItemFilter">
+				<field name="SubItem"></field>
+				<field name="SiteID"></field>
+				<field name="OnlyAvailable"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-SiteStatusLookup" view.bind="ItemInfo" view-model.ref="gridSiteStatusVM" wg-container="ItemInfo_gripSiteStatus"></qp-grid>
+
+		<footer id="footer-SiteStatusLookup">
+			<qp-button id="buttonAdd-SiteStatusLookup" state.bind="AddSelectedItems"></qp-button>
+			<qp-button id="buttonAddClose-SiteStatusLookup" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-SiteStatusLookup" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

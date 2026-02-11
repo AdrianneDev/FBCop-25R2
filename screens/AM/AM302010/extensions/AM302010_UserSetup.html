@@ -1,0 +1,14 @@
+<template>
+	<qp-panel id="UserSetupView" caption="Settings" auto-repaint="true" wg-container="UserSetupView_frmSettings">
+		<qp-fieldset id="fsGeneral-UserSetup" view.bind="UserSetupView" no-label="true">
+			<field name="DefaultWarehouse"></field>
+			<field name="DefaultLotSerialNumber"></field>
+			<field name="DefaultExpireDate"></field>
+		</qp-fieldset>
+
+		<footer id="footer-UserSetup">
+			<qp-button id="pbClose" dialog-result="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

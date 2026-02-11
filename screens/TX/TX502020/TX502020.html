@@ -1,0 +1,33 @@
+<template>
+	<qp-template id="formPeriod" name="1-1" wg-container="Period_Header_form" class="equal-height label-size-m">
+		<qp-fieldset caption="Tax Periods" slot="A" id="columnFirstPeriod" view.bind="Period_Header">
+			<field name="OrganizationID" config-allow-edit.bind="true"></field>
+			<field name="BranchID" config-allow-edit.bind="true"></field>
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="TaxPeriodID"></field>
+			<field name="RevisionId"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range" pinned="true"></qp-label>
+				<qp-field control-state.bind="Period_Header.EndDate" pinned="true"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset caption="HMRC Tax Period" id="columnSecondPeriod" view.bind="Period_Header" slot="B">
+			<field name="Start">
+				<qp-label slot="label" caption="Date Range" pinned="true"></qp-label>
+				<qp-field control-state.bind="Period_Header.End" pinned="true"></qp-field>
+			</field>
+			<field name="Due"></field>
+			<field name="Status"></field>
+			<field name="Received"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabVATReturn" caption="VAT Return">
+			<qp-grid id="gridPeriodDetails" view.bind="Period_Details" wg-container="Period_Details_gridDetails"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSubmittedVATReturn" caption="Submitted VAT Return">
+			<qp-grid id="gridVATRows" view.bind="VATRows"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

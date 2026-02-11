@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="template" name="1-1-1" class="label-size-sm">
+		<qp-fieldset id="form" slot="A" view.bind="RightsUser">
+			<field name="Username"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="sp1" initial-split="300px">
+		<split-pane>
+			<qp-tree id="tree" view.Bind="Entities" caption="Screens" wg-container="Parameters"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="griddet" view.Bind="UserRoleEntities" caption="Access Rights"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="ClarifiedRoles" caption="View Roles" auto-repaint="true" width="sm" height="500px">
+		<qp-grid id="gripSiteStatus" view.bind="ClarifiedRoles" batchUpdate="True"></qp-grid>
+		<footer>
+			<qp-button id="btnCancel" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

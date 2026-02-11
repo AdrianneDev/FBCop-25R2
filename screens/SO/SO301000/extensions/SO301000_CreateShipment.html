@@ -1,0 +1,12 @@
+<template>
+	<qp-panel id="soparamfilter" caption="Specify Shipment Parameters" auto-repaint="true">
+		<qp-fieldset id="fsParameters-CreateShipment" view.bind="soparamfilter" wg-container="soparamfilter_formCreateShipment">
+			<field name="ShipDate"></field>
+			<field name="SiteID"></field>
+		</qp-fieldset>
+
+		<footer id="footer-CreateShipment">
+			<qp-button id="buttonOK-CreateShipment" dialog-result="OK" config.bind="{ validateInput: true }"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

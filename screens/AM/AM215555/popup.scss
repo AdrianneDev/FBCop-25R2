@@ -1,0 +1,163 @@
+:root {
+	--qp-sch-dialog-width: 530px;
+	--qp-sch-edit-dialog-width: 530px;
+	--qp-sch-dialog-padding: 20px;
+}
+.qp-sch-popup-holder {
+	position: absolute;
+	height: 100px;
+	top: -10000px;
+}
+
+.qp-sch-popup {
+	max-height: calc(100% - var(--qp-sch-dialog-padding) * 2);
+	max-width: none !important;
+	border-radius: 10px !important;
+	box-shadow: 0px 0px 24px 2px #00000059 !important;
+
+	/* the collapse icon needs to be in the same style as the close button (per the mockup) */
+	/* TODO: remove once/if platform adds alternative styling for qp-collapsible-anchor */
+	.qp-collapser {
+		background-color: transparent !important;
+		height: 16px !important;
+		width: 16px !important;
+		padding: 0px !important;
+
+		&.expanded:before {
+			content: "\e915" !important;
+		}
+		&:not(.expanded):before {
+			content: "\e914" !important;
+		}
+	}
+
+	.b-panel-content {
+		background-color: white !important;
+		border-radius: 10px !important;
+		padding: var(--qp-sch-dialog-padding);
+		padding-bottom: 0px;
+	}
+
+	.grid-content-table > tbody > tr.active > td {
+		&, &.active {
+			background-color: transparent !important;
+		}
+	}
+
+	// Make Employee table background gray
+	.gray-pane .grid-content .grid-content-table {
+		background-color: var(--qp-sch-dark-background);
+	}
+
+	.control-CurrentRow:before {
+		content: none;
+	}
+
+	.toggle {
+		position: static;
+		background: transparent;
+		color: #00000066;
+
+		&:hover {
+			color: #000000;
+		}
+	}
+
+	.qp-menu-shadow {
+		background-color: transparent;
+	}
+
+	.gray-pane qp-grid {
+		padding-inline-start: 10px;
+	}
+
+	.transparent-section {
+		&.qp-fieldset {
+			padding: 0px;
+			.qp-field .wrapper{
+				padding: 0px;
+			}
+
+			:is(
+				.qp-selector.qp-selector-readonly,
+				.qp-datetime__editor.ReadOnly,
+				textarea.qp-text-editor,
+				input.qp-text-editor
+			) {
+				border-bottom-color: #00000014;
+			}
+		}
+		.qp-fieldset-caption {
+			padding: 0px;
+		}
+	}
+
+	qp-tool-bar {
+		margin-inline-start: -4px;
+	}
+
+	&-data {
+		overflow: visible;
+		position: absolute;
+		z-index: 10000;
+		background: white;
+		width: calc(var(--qp-sch-dialog-width) - var(--qp-sch-dialog-padding) * 2);
+		height: auto;
+
+		ux-dialog {
+			box-shadow: none;
+			width: 100%;
+			&-header {
+				/* TODO: Remove once adapted to native popups */
+				padding: 0;
+				border-bottom: none;
+
+				.qp-dialog-header {
+					/* TODO: Remove once adapted to native popups */
+					padding: 0;
+					margin: 0;
+				}
+			}
+			ux-dialog-body {
+				padding: 0;
+				padding-top: 16px;
+			}
+			.qp-dialog-title {
+				color: black;
+				font-weight: 600;
+			}
+			.qp-tool-bar {
+				margin-top: 5px;
+			}
+		}
+
+		*:not(.event-info) > &.transparent {
+			filter:alpha(opacity=0);
+			pointer-events: none;
+			opacity: 0;
+			z-index: 0;
+		}
+		.grid-top-bar {
+			display: none;
+		}
+		.grid-content {
+			min-height: 32px !important;   // TODO: Replacing the 100px, remove when fixed in Platform
+
+			&-wrap {
+				position: initial;
+			}
+		}
+
+	}
+
+	&-edit-data {
+		width: calc(var(--qp-sch-edit-dialog-width) - var(--qp-sch-dialog-padding) * 2);
+	}
+}
+
+// TODO: Revise when platform has support for grids with a caption inside gray panels [AC-292107]
+.qp-sch-grid-fieldset {
+	gap: 6px;
+	display: flex;
+	flex-direction: column;
+}

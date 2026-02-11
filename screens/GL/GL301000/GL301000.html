@@ -1,0 +1,41 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template name="7-10-7" class="equal-height" id="formBatch" wg-container="BatchModule_form" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirst" view.bind="BatchModule">
+			<field name="Module"></field>
+			<field name="BatchNbr"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="DateEntered" pinned="false"></field>
+			<field name="FinPeriodID" pinned></field>
+			<field name="AutoReverse" pinned="false"></field>
+			<field name="AutoReverseCopy" pinned="false"> </field>
+
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="BatchModule">
+			<field name="BranchID"></field>
+			<field name="LedgerID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_Batch_CurrencyInfo_" pinned></field>
+			<field name="CreateTaxTrans" pinned="false"></field>
+			<field name="SkipTaxValidation" pinned="false"></field>
+			<field name="Description" pinned="false"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird" view.bind="BatchModule" class="highlights-section">
+			<field name="CuryDebitTotal" pinned></field>
+			<field name="CuryCreditTotal" pinned></field>
+			<field name="CuryControlTotal" pinned></field>
+			<field name="BatchType" pinned="false"></field>
+			<field name="OrigBatchNbr" pinned="false"></field>
+			<field name="ReverseCount" pinned="false"> </field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabTransactions" caption="Details">
+			<qp-grid id="gridDetails" wg-container="GLTranModuleBatNbr_grid" view.bind="GLTranModuleBatNbr">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+</template>

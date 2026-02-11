@@ -1,0 +1,32 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" qp-collapsible wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="BranchID"></field>
+			<field name="PurchDate"></field>
+			<field name="OwnerID">
+				<qp-field control-state.bind="Filter.MyOwner" class="col-3" pinned="true"></qp-field>
+			</field>
+			<field name="WorkGroupID">
+				<qp-field control-state.bind="Filter.MyWorkGroup" class="col-3" pinned="true"></qp-field>
+			</field>
+			<field name="ItemClassCD"></field>
+			<field name="RequestedOnDate" pinned="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="OrderType" pinned="true"></field>
+			<field name="OrderNbr" pinned="true"></field>
+			<field name="SrvOrdType"></field>
+			<field name="serviceOrderRefNbr"></field>
+			<field name="AMOrderType" pinned="true"></field>
+			<field name="ProdOrdID" pinned="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Filter" slot="C" view.bind="Filter" class="highlights-section">
+			<field name="OrderTotal" pinned="true"></field>
+			<field name="OrderQty" pinned="true"></field>
+			<field name="OrderWeight" pinned="true"></field>
+			<field name="OrderVolume"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="FixedDemand"></qp-grid>
+</template>

@@ -1,0 +1,101 @@
+<template>
+	<qp-tabbar id="tabBar" active-tab-id.bind="activeTabID">
+
+		<qp-tab id="tabScreenAspx" caption="Screen Aspx">
+			<qp-template name="1-1" id="aspx" wg-container="Filter_PXTab1">
+				<qp-fieldset id="fieldSetScreenAspx" view.bind="Filter" slot="A" >
+					<field name="ScreenID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-fieldset id="fieldSetAspxCode" wg-container="Filter_PXTab1" view.bind="Filter" class="no-label stretch">
+				<field name="AspxCode" class="stretch"></field>
+			</qp-fieldset>
+		</qp-tab>
+
+		<qp-tab id="tabScreenHtml" caption="Screen HTML">
+			<qp-template name="1-1" id="html-code" wg-container="Filter_PXTab1">
+				<qp-fieldset id="fieldSetScreenAspx" view.bind="Filter" slot="A" >
+					<field name="ScreenID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-fieldset id="fieldSetHtmlCode" wg-container="Filter_PXTab1" view.bind="Filter" class="no-label stretch">
+				<field name="HtmlCode" class="stretch"></field>
+			</qp-fieldset>
+		</qp-tab>
+
+		<qp-tab id="tabScreenTypeScript" caption="Screen TypeScript">
+			<qp-template name="1-1" id="typescript-code" wg-container="Filter_PXTab1">
+				<qp-fieldset id="fieldSetScreenTypeScript" view.bind="Filter" slot="A" >
+					<field name="ScreenID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-fieldset id="fieldSetTypeScriptCode" wg-container="Filter_PXTab1" view.bind="Filter" class="no-label stretch">
+				<field name="TypeScriptCode" class="stretch"></field>
+			</qp-fieldset>
+		</qp-tab>
+
+		<qp-tab id="tabBusLogic" caption="Business Logic">
+			<qp-template name="1-1" id="busLogic" wg-container="Filter_PXTab1">
+				<qp-fieldset id="fieldSetBusLogic" view.bind="Filter" slot="A" >
+					<field name="GraphName"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-splitter id="splitterBusLogic" initial-split="300px" split="width" state="normal">
+				<split-pane>
+					<qp-tree id="treeFunctions"
+						view.bind="Functions">
+					</qp-tree>
+				</split-pane>
+				<split-pane class="v-stack">
+					<qp-fieldset id="fieldSetBusLogicCode" wg-container="Filter_PXTab1" view.bind="Filter" class="no-label stretch">
+						<field name="fakename1" class="stretch" unbound replace-content>
+							<qp-code-editor class="stretch" wg-name="ReadonlyEventSource"
+											state.bind="Filter.ReadonlyEventSource"
+											view-model.ref="CodeEditor"
+											config.bind="{id: 'edFilter-ReadonlyEventSource', language: 'c#'}">
+							</qp-code-editor>
+						</field>
+					</qp-fieldset>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+
+		<qp-tab id="tabDataAccess" caption="Data Access">
+			<qp-template name="1-1" id="dataAccess" wg-container="Filter_PXTab1">
+				<qp-fieldset id="fieldSetDataAccessTableName" view.bind="Filter" slot="A" >
+					<field name="TableName"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-fieldset id="fieldSetDataAccess" wg-container="Filter_PXTab1" view.bind="Filter" class="no-label stretch">
+				<field name="GeneratedDacSource" class="stretch"></field>
+			</qp-fieldset>
+		</qp-tab>
+
+		<qp-tab id="tabFindInFiles" caption="Find in Files">
+			<qp-template name="1-1" id="findIfFiles" wg-container="Filter_PXTab1">
+				<qp-fieldset id="fieldSetFindInFiles" view.bind="Filter" slot="A" >
+					<field name="FindText"><qp-button id="buttonFind" caption="Find" class="col-auto"></qp-button></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-splitter id="findTabSplitter">
+				<split-pane>
+					<qp-grid id="ViewFindResults_FormFindResults" view.bind="ViewFindResults"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-fieldset id="fieldSetSourceFile" wg-container="Filter_PXTab1" view.bind="Filter" class="no-label stretch full-height">
+						<field name="fakename2" class="stretch" unbound replace-content>
+							<qp-code-editor class="stretch" wg-name="SourceFile"
+											state.bind="Filter.SourceFile"
+											view-model.ref="SourceFile"
+											config.bind="{id: 'edFilter-SourceFile', language: 'c#'}">
+							</qp-code-editor>
+						</field>
+					</qp-fieldset>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+
+	</qp-tabbar>
+</template>

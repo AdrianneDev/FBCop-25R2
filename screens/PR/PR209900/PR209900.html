@@ -1,0 +1,39 @@
+<template>
+	<qp-template id="CertifiedProject_form" name="1-1" wg-container class="label-size-m equal-height">
+		<qp-fieldset id="FirstFieldSet" slot="A">
+			<field name="CertifiedProject.ProjectID"></field>
+			<field name="CurrentProject.Description"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="SecondFieldSet" slot="B">
+			<field name="CurrentProject.Status"></field>
+			<field name="CurrentProject.FileEmptyCertifiedReport"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tabEarningRates" caption="Earning Rates">
+			<qp-grid id="PXGrid1" view.bind="EarningRates"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabDeductionsandBenefits" caption="Deductions and Benefits">
+			<qp-grid id="PXGrid2" view.bind="DeductionsAndBenefitsPackage"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabFringeBenefits" caption="Fringe Benefits">
+			<qp-template id="FringeBenefits_form" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="formFringeBenefits" view.bind="CurrentProject">
+						<field name="WageAbovePrevailingAnnualizationException"></field>
+						<field name="ApplyOTMultiplierToFringeRate"></field>
+						<field name="BenefitCodeReceivingFringeRate"></field>
+					</qp-fieldset>
+					<qp-grid id="PXGrid3" view.bind="FringeBenefitRates" caption="Rates" class="framed-section"></qp-grid>
+				</div>
+				<div slot="B">
+					<qp-grid id="grdBenefitsReducingRate" view.bind="FringeBenefitRateReducingDeductions" caption="Benefits Reducing the Rate" class="framed-section"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

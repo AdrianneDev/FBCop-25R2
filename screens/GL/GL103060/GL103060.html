@@ -1,0 +1,31 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="formGroup" wg-container="Group_formGroup">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Group">
+			<field name="GroupName"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Group">
+			<field name="GroupType"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabsMain" class="label-size-m">
+		<qp-tab id="tabBranches" caption="Branches">
+			<qp-grid id="gridBranchs" view.bind="Branch">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSubaccounts" caption="Subaccounts" if.bind="SegmentFilter.ValidCombos.value == true">
+			<qp-grid id="gridSubs" view.bind="Sub">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSubaccountSegments" caption="Subaccount Segments" if.bind="SegmentFilter.ValidCombos.value == false">
+			<qp-template id="formSegmentFilter" name="1-1">
+				<qp-fieldset slot="A" id="panelSegmentFilter" view.bind="SegmentFilter" wg-container="SegmentFilter_tab" class="transparent-section">
+					<field name="SegmentID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridSegments" view.bind="Segment">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

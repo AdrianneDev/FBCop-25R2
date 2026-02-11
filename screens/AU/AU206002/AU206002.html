@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+   <qp-panel id="ViewSelectEntityEndpoint"
+            wg-container="ViewSelectEntityEndpoint_ViewSelectEntityEndpoint"
+            caption="Add Entity Endpoint"
+            auto-repaint="true"
+            width="40vw"
+            height="50vh">
+      <qp-grid id="ViewSelectEntityEndpoint_gridAddEntityEndpoint" wg-container view.bind="ViewSelectEntityEndpoint"></qp-grid>
+      <footer>
+         <qp-button id="PXButton1" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="PXButton2" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

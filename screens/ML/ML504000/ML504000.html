@@ -1,0 +1,24 @@
+<template>
+	<qp-template name="1" id="records_csrecords" wg-container>
+		<qp-info-box type="info" text.bind="Records.MLCrossSalesProcessing__InfoMessage.value"></qp-info-box>
+		<qp-fieldset slot="A" id="frequencySettings" caption="Frequency Settings" view.bind="Records">
+			<field name="ReCalculationPeriod"></field>
+			<field name="MLCrossSalesProcessing__NextRun"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="A" id="currentStatus" caption="Processing Summary" view.bind="Records">
+			<field name="MLCrossSalesProcessing__Progress"></field>
+			<field name="MLCrossSalesProcessing__MLStatus"></field>
+			<field name="ErrorMsg" unbound>
+				<qp-info-box type="error" if.bind="!!Records.MLCrossSalesProcessing__Error.value" text.bind="Records.MLCrossSalesProcessing__Error.value"></qp-info-box>
+			</field>
+			<field name="MLCrossSalesProcessing__UploadDate"></field>
+			<field name="MLCrossSalesProcessing__ProcessedDate"></field>
+			<field name="MLCrossSalesProcessing__RowsUploaded"></field>
+			<field name="MLCrossSalesProcessing__RowsImported"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="A" id="calculationSettings" caption="Calculation Summary" view.bind="Records">
+			<field name="MLCrossSalesProcessing__MinRelevanceScorePercent"></field>
+			<field name="MLCrossSalesProcessing__DataPeriodForAnalysis"></field>
+		</qp-fieldset>
+	</qp-template>
+</template>

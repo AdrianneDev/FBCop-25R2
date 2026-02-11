@@ -1,0 +1,11 @@
+<template>
+	<qp-panel id="shipmentlist" caption="Add Order" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="grid-AddSalesOrder" view.bind="shipmentlist" wg-container="shipmentlist_grid4"></qp-grid>
+
+		<footer id="footer-AddSalesOrder">
+			<qp-button id="buttonAdd-AddSalesOrder" state.bind="AddShipment" wg-name="AddShipment"></qp-button>
+			<qp-button id="buttonAddClose-AddSalesOrder" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddSalesOrder" dialog-result="Cancel" state.bind="AddShipmentCancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

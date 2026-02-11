@@ -1,0 +1,102 @@
+<template>
+	<qp-template id="form_0" name="1-1" wg-container="Providers_form" qp-collapsible class="equal-height"> 
+		<qp-fieldset id="form_0_0" view.bind="Providers" class="label-size-m" slot="A">
+			<field name="Name" pinned></field>
+			<field name="IssuerIdentifier" pinned></field>
+			<field name="Active"></field>
+			<field name="ClientId" pinned="false"></field>
+			<field name="ClientSecret" pinned="false"></field>
+			<field name="UserIdentityClaimType" pinned="false"></field>
+			<field name="Scopes"></field>
+			<field name="InitiateSignInUrl">
+				<qp-button id="btnCopyInitiateSignInUrl" caption="Copy" class="col-auto" click.delegate="onCopyInitiateSignInUrlClick()"></qp-button>
+			</field>
+		</qp-fieldset>
+
+		<qp-fieldset id="form_0_1" view.bind="Providers" class="label-size-xs" caption="Icon" slot="B">
+			<field name="RecommendedSize" class="no-label" pinned unbound>
+				<qp-info-box caption="The icon will be displayed on the Sign-In page to the left of the provider's name. The recommended size is 100 x 100 px." type="info" class="col-12"></qp-info-box>
+			</field>
+			<field name="Icon" control-type="qp-image-uploader" class="no-label" config.bind="{allowNull: false, width: '200px', height: '200px'}"></field>
+		</qp-fieldset>
+	</qp-template>
+		
+	<qp-tabbar id="tab" >
+		<qp-tab id="tab_0" caption="Authentication settings">
+			<qp-template id="tab_0_x" name="1-1" wg-container="CurrentProvider_tab" class="equal-height">
+				<qp-fieldset id="tab_0_0_0" view.bind="CurrentProvider" class="label-size-m" Slot="A">
+					<field name="fakename" unbound>
+						<qp-button id="btnAutoconfiguration" caption="Autoconfiguration" state.bind="Autoconfiguration" class="col-auto"></qp-button>
+					</field>
+					<field name="AuthorizationEndpoint"></field>
+					<field name="Flow"></field>
+					<field name="ResponseType"></field>
+					<field name="ResponseMode"></field>
+					<field name="TokenEndpoint"></field>
+					<field name="JWKSetLocation"></field>
+				</qp-fieldset>
+				<qp-fieldset id="tab_0_0_1" view.bind="CurrentProvider" class="label-size-m" Caption="Logout Settings" Slot="B">
+					<field name="LogoutFromProvider"></field>
+					<field name="LogoutEndpoint"></field>
+					<field name="DoNotRedirectBackAfterLogoutFromProvider"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tab_1" caption="User Binding Rules">
+			<qp-template id="tab_1_x" name="1-1" wg-container="CurrentProvider_tab">
+				<qp-fieldset id="tab_1_0_0" view.bind="CurrentProvider" slot="A" class="transparent-section">
+					<field name="AllowAutoIdentifyingUsers" class="no-label"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridAutoIdentifyingRules" view.bind="AutoIdentifyingUsersRules"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_2" caption="User Creation Rules">
+			<qp-template id="tab_2_x" name="1-1" wg-container="CurrentProvider_tab">
+				<qp-fieldset id="tab_2_0_0" view.bind="CurrentProvider" class="label-size-m" slot="A">
+					<field name="AllowAutoAddingUsers"></field>
+					<field name="LoginTypeID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridAutoAddingRules" view.bind="AutoAddingUsersRules"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_3" caption="Role Mapping Rules">
+			<qp-template id="tab_3_x" name="1-1" wg-container="CurrentProvider_tab">
+				<qp-fieldset id="tab_3_0_0" view.bind="CurrentProvider" class="label-size-m" slot="A">
+					<field name="AllowOverridingLocalRoles"></field>
+					<field name="RolesClaimType"></field>
+					<field name="RolesScope"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridRolesMappingRules" view.bind="RolesMappingRules"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+    <qp-panel id="ChangeIDDialog" caption="Specify New Name">
+		<qp-template id="rlAcctCD_0" name="1" wg-container="ChangeIDDialog_formChangeID"> 
+			<qp-fieldset id="rlAcctCD" view.bind="ChangeIDDialog" slot="A" >
+				<field name="CD"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK" wg-name="Ok" state.bind="Save"></qp-button>
+			<qp-button id="PXButton3" dialog-result="Cancel"></qp-button>
+		</footer>
+    </qp-panel>
+	<qp-panel id="StaticInfo" caption="Redirect URIs" auto-repaint="true" width="sm">
+		<qp-template id="rlRedirectURI_0" name="1" wg-container="StaticInfo_formRedirectURI">
+			<qp-fieldset id="rlRedirectURI" view.bind="StaticInfo" slot="A" class="label-size-m">
+				<field name="RedirectURI">
+					<qp-button id="btnCpy" caption="Copy" class="col-auto" click.delegate="onCopyRedirectURIClick()"></qp-button>
+				</field>
+				<field name="PostLogoutRedirectUri">
+					<qp-button id="btnCpyPL" caption="Copy" class="col-auto" click.delegate="onCopyPostLogoutRedirectURIClick()" wg-name="Copy1"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-panel>
+	<qp-panel id="MetadataDocumentInfo" caption="Provider Metadata" width="md" height="480px">
+		<qp-fieldset id="rlMetadataInfo_0" view.bind="MetadataDocumentInfo" slot="A" class="stretch" wg-container="MetadataDocumentInfo_formMetadata">
+			<field name="MetadataURI"></field>
+			<field name="MetadataDocument" class="col-12 stretch" fixed-height></field>
+		</qp-fieldset>
+	</qp-panel>
+</template>

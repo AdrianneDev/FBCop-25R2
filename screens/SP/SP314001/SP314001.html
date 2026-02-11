@@ -1,0 +1,22 @@
+<template>
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div tabindex="0">
+		<div class="gray-pane invoice-details-pnl">
+			<qp-template id="sp314001-header" name="1-1-1">
+				<qp-fieldset slot="A" id="first">
+					<field name="CurrentDocument.RefNbr"></field>
+					<field name="CurrentDocument.DocDate"></field>
+					<field name="CurrentDocument.DueDate"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="second">
+					<field name="CurrentDocument.CustomerID"></field>
+					<field name="CurrentDocument.CuryDocBal"></field>
+					<field name="CurrentDocument.curyOrigDocAmt"></field>
+				</qp-fieldset>
+			</qp-template>
+		</div>
+	</div>
+	<qp-grid id="adjustments" view.bind="Adjustments" class="stretch sp-finances-tab">
+	</qp-grid>
+</template>

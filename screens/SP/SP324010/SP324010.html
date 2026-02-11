@@ -1,0 +1,39 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack sp-documents sp-wide-screen" tabindex="0">
+		<qp-text-light-scope>
+			<qp-data-feed
+				id="dfStatements"
+				class="no-toolbar sp-documents-feed"
+				view.bind="Statements"
+				auto-resize="true"
+				allow-filter="true"
+				show-filter-bar="always"
+				show-filter-picker="false"
+				allow-stored-filters="false"
+				show-stored-filters="true">
+				<template width="100%">
+					<div class="sp-documents-document no-animation">
+						<qp-template id="dfCase" wg-container name="record-1-2">
+							<qp-fieldset slot="Prefix" id="fsCasePrefix" view.bind="{{$viewName}}"
+								class="record-item__prefix--date">
+								<field name="StatementDateText" class="field--bold"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="AX" id="fsCaseA" view.bind="{{$viewName}}"
+								class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg">
+								<field name="AcctName"></field>
+							</qp-fieldset>
+							<qp-fieldset slot="BX" id="fsCaseB" view.bind="{{$viewName}}"
+								class="fieldset--label-above-sm">
+								<field name="CuryEndBalance_Text"></field>
+								<field name="EndBalance_Text"></field>
+							</qp-fieldset>
+						</qp-template>
+					</div>
+				</template>
+			</qp-data-feed>
+		</qp-text-light-scope>
+	</div>
+</template>

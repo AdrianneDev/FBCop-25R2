@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="Items_grid" view.bind="Items"></qp-grid>
+   <qp-panel id="SystemFilters"
+            wg-container="SystemFilters_SystemFilters"
+            caption="Add Shared Filter"
+            auto-repaint="true"
+            width="50vw"
+            height="60vh">
+      <qp-grid id="SystemFilters_gridAddFile" view.bind="SystemFilters"></qp-grid>
+      <footer>
+         <qp-button id="buttonOK-SystemFilters" caption="Add" wg-name="OK" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="buttonCancel-SystemFilters" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

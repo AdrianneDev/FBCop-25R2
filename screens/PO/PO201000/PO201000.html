@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="form-Vendor" name="17-17-14" class="equal-height" wg-container="BAccount_form">
+		<qp-fieldset id="fsColumnA-Vendor" slot="A" view.bind="BAccount">
+			<field name="BAccountID" config-allow-edit.bind="true"></field>
+			<field name="LocationID"></field>
+			<field name="CuryID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Vendor" slot="B" view.bind="BAccount">
+			<field name="VSiteID"></field>
+			<field name="VLeadTime"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="VendorCatalogue"></qp-grid>
+</template>

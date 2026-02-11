@@ -1,0 +1,11 @@
+.modern-ui .case-screen .size-default .qp-datetime__editor {
+	max-width: none;
+}
+
+.case-panel .qp-field-override > * {
+	padding-inline-start: 0;
+}
+
+.sp-case-subject .qp-rte-toolbar {
+	display: none;
+}

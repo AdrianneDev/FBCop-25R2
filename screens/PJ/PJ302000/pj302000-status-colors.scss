@@ -1,0 +1,5 @@
+@import '../../PM/common/pm-status-colors-common.scss';
+
+/* ––––– overrides / additions ––––– */
+@include colored-status('R', var(--status-gray-color)); // Converted to RFI
+@include colored-status('Q', var(--status-gray-color)); // Converted to CR

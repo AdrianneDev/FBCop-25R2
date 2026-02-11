@@ -1,0 +1,37 @@
+<template>
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+			<field name="ScheduledServiceSync"></field>
+			<field name="ProcessingCenterId"></field>
+			<field name="LoadExpiredCards"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridCards" view.bind="CustomerCardPaymentData" wg-container="CustomerCardPaymentData_grid"></qp-grid>
+
+	<qp-panel id="PMFilter" caption="Select Payment Method" auto-repaint="true">
+		<qp-fieldset id="panelPaymentMethod" view.bind="PMFilter" wg-container="PMFilter_formPaymentMethod" class="label-size-m">
+			<field name="EftPaymentMethodId"></field>
+			<field name="OverwriteEftPaymentMethod"></field>
+			<field name="CCPaymentMethodId"></field>
+			<field name="OverwriteCCPaymentMethod"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-PMFilter" dialog-result="OK" wg-name="PaymentMethodOk"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CustPaymentProfileForDialog" caption="Multiple Customer Payment Profiles" width="lg" height="85vh" auto-repaint="true">
+		<qp-template id="PanelCustomerPaymentSet" name="1-1">
+		<qp-fieldset slot="A" class="label-size-xl" id="panelMultiplePMProfiles" view.bind="PMFilter" wg-container="PMFilter_PXFormView2">
+			<field name="CustomerName"></field>
+		</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridCustomerPaymentMethods" view.bind="CustPaymentProfileForDialog" wg-container="CustPaymentProfileForDialog_formCustomerPaymentSet"></qp-grid>
+		<footer>
+			<qp-button id="buttonOK-multiplePMProfiles" dialog-result="OK" config.bind="{action: 'AcceptPaymentProfilesSelection'}"></qp-button>
+			<qp-button id="buttonCancel-multiplePMProfiles" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

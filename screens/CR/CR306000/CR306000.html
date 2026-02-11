@@ -1,0 +1,44 @@
+<template>
+	<require from="./status-styles.scss"></require>
+	<qp-template id="Case_template" name="7-10-7" class="equal-height" qp-collapsible wg-container="Case_form">
+		<qp-fieldset id="Case_formLeft" slot="A" view.bind="Case">
+			<field name="CaseCD" pinned></field>
+			<field name="CaseClassID" pinned="false"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="Resolution"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Case_formCenter" slot="B" view.bind="Case">
+			<field name="CustomerID" pinned></field>
+			<field name="LocationID"></field>
+			<field name="ContactID" pinned>
+				<qp-include url="src/screens/CR/common/teams/form-teams/form-teams-contact.html"></qp-include>
+			</field>
+			<field name="OwnerID">
+				<qp-include url="src/screens/CR/common/teams/form-teams/form-teams-owner.html"></qp-include>
+			</field>
+			<field name="Subject" pinned="false"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Case_formRight" slot="C" view.bind="Case">
+			<field name="ReportedOnDateTime"></field>
+			<field name="Severity" pinned></field>
+			<field name="Priority" pinned></field>
+			<field name="ResolutionDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CaseCurrent_tab" wg-container>
+		<qp-tab id="details_tab" caption="Details">
+			<qp-rich-text-editor id="edDescription" state.bind="CaseCurrent.Description" class="stretch" wg-field></qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="additionalInfo_tab" caption="Additional Info" ref="tabAdditionalInfo_Content" load-on-demand.bind="false"></qp-tab>
+		<qp-tab id="attributes_tab" caption="Attributes" ref="tabAttributes_Content"></qp-tab>
+		<qp-tab id="activities_tab" caption="Activities" ref="tabActivities_Content" class="fit-to-content" wg-container></qp-tab>
+		<qp-tab id="relCases_tab" caption="Related Cases">
+			<qp-grid id="gridCaseReferencesDependsOn" view.bind="CaseRefs"></qp-grid>
+		</qp-tab>
+		<qp-tab id="relations_tab" caption="Relations" ref="tabRelations_Content"></qp-tab>
+		<qp-tab id="closure_tab" caption="Closure Notes">
+			<qp-rich-text-editor id="edClosureNote" state.bind="CaseCurrent.ClosureNotes" class="stretch" wg-field></qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="Salesforce_tab" caption="Salesforce" ref="tabSalesforce_Content"></qp-tab>
+	</qp-tabbar>
+</template>

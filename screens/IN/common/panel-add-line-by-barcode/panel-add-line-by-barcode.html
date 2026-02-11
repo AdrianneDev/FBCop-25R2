@@ -1,0 +1,27 @@
+<template>
+	<qp-panel id="AddByBarCode" caption="Add Line" auto-repaint="true">
+		<qp-template id="form-AddLineByBarcode" name="1" class="equal-height" wg-container="AddByBarCode_frmBarCode">
+			<qp-fieldset id="fsColumnA-AddLineByBarcode" slot="A" view.bind="AddByBarCode">
+				<field name="BarCode"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItemID"></field>
+				<field name="UOM"></field>
+				<field name="LocationID"></field>
+				<field name="Qty"></field>
+				<field name="LotSerialNbr"></field>
+				<field name="ExpireDate"></field>
+				<field name="ByOne"></field>
+				<field name="AutoAddLine"></field>
+				<field name="descriptionMessage" unbound replace-content>
+					<qp-info-box id="infoMessage" text.bind="AddByBarCode.Description.value" if.bind="AddByBarCode.Description.value" type="info"></qp-info-box>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-AddLineByBarcode">
+			<qp-button id="buttonAdd-AddLineByBarcode" state.bind="AddLine2"></qp-button>
+			<qp-button id="buttonAddClose-AddLineByBarcode" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddLineByBarcode" dialog-result="No" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

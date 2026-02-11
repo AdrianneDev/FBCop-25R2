@@ -1,0 +1,39 @@
+<template>
+	<template id="tabAdditionalInfo_Content">
+		<qp-template id="additionalInfo_template" name="17-17-14" wg-container="CaseCurrent_tab">
+			<div slot="A">
+				<qp-fieldset id="CaseCurrent_CRM" view.bind="CaseCurrent" caption="CRM">
+					<field name="WorkgroupID"></field>
+					<field name="IsActive"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CaseCurrent_BAccount" view.bind="CaseCurrent" caption="Business Account Details">
+					<field name="ContractID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CaseCurrent_Commitments" view.bind="CaseCurrent" caption="Commitments">
+					<field name="SolutionActivityNoteID"></field>
+					<field name="SolutionProvidedDateTime"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CaseCurrent_Activities" view.bind="CaseCurrent" caption="Activities">
+					<field name="CaseActivityStatistics.InitialOutgoingActivityCompletedAtDate"></field>
+					<field name="LastActivity"></field>
+					<field name="CaseActivityStatistics.LastIncomingActivityDate"></field>
+					<field name="CaseActivityStatistics.LastOutgoingActivityDate"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset id="CaseCurrent_Billing" view.bind="CaseCurrent" caption="Billing">
+					<field name="IsBillable"></field>
+					<field name="ManualBillableTimes"></field>
+					<field name="TimeBillable"></field>
+					<field name="OvertimeBillable"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CaseCurrent_Statistics" view.bind="CaseCurrent" caption="Statistics">
+					<field name="InitResponse"></field>
+					<field name="TimeSpent"></field>
+					<field name="OvertimeSpent"></field>
+					<field name="TimeResolution"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

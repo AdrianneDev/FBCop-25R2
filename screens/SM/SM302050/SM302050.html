@@ -1,0 +1,87 @@
+<template>
+	<qp-template id="Events_formBPEvent" name="1-1" class="equal-height label-size-m" wg-container qp-collapsible>
+		<qp-fieldset id="Events_formBPEvent_Fields_A" slot="A" view.bind="Events">
+			<field name="Name">
+				<qp-field control-state.bind="Events.Active" config-enabled.bind="false"></qp-field>
+			</field>
+			<field name="Type"></field>
+			<field name="ActionName">
+				<qp-field control-state.bind="Events.ShowMassAction" config-enabled.bind="false"></qp-field>
+			</field>
+			<field name="ActionName2"></field>
+			<field name="RowProcessingType"></field>
+			<field name="GroupBy" replace-content>
+				<qp-field control-state.bind="Events.GroupBy" control-type= "qp-tree-selector">
+					<qp-field control-state.bind="Events.IsGroupByOldValue" config-enabled.bind="false"></qp-field>
+				</qp-field>
+			</field>
+			<field name="RunSynchronously"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Events_formBPEvent_Fields_B" slot="B" view.bind="Events">
+			<field name="ScreenID"></field>
+			<field name="ScreenIdValue" control-state.bind="Events.ScreenIdValue">
+				<qp-button id="edInquiryParameters" caption="Inquiry Parameters" wg-name="InquiryParameters"
+						config.bind="{popupPanel: 'InquiryParameters'}"
+						if.bind="viewInquiryParams.visible===true">
+				</qp-button>
+			</field>
+			<field name="FilterID"></field>
+			<field name="IsTriggerConditionsVisible"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab" active-tab-id="tab_Triggers">
+		<qp-tab id="tab_Triggers" caption="Trigger Conditions" if.bind="Events.IsTriggerConditionsVisible.value === true">
+			<qp-grid id="gridConditions" view.bind="TriggerConditions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_Subscribers" caption="Subscribers">
+			<qp-grid id="gridSubscribers" view.bind="Subscribers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_Fields" caption="Fields to Track" if.bind="Events.Type.value === 0">
+			<qp-template id="temp-Fields" name="1-1">
+				<qp-fieldset id="formFields" view.bind="CurrentEvent" class="no-label" slot="A">
+					<field name="TrackAllFields"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridFields" view.bind="TrackingFields">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_Schedules" caption="Schedules" if.bind="Events.Type.value === 1">
+			<qp-grid id="gridSchedules" view.bind="Schedules">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="InquiryParameters" caption="Inquiry Parameters" auto-repaint="true" height="50vh" wg-container>
+		<qp-grid id="gridInquiryParams" view.bind="InquiryParameters" class="stretch">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXInquirySubmit" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ScheduleHistory" caption="View Schedule History" auto-repaint="true" wg-container>
+		<qp-grid id="gridScheduleHistory" view.bind="ScheduleHistory">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXScheduleHistoryOk" dialog-result="Cancel" caption="Close">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CreateScriptPanelView" caption="Create Import Scenario" auto-repaint="true" wg-container="CreateScriptPanelView_formNewScriptScenario">
+		<qp-fieldset id="formNewScriptScenario" view.bind="CreateScriptPanelView" class="no-label">
+			<field name="ScenarioName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnActionOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnActionCancel" dialog-result="Cancel" caption="Close">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

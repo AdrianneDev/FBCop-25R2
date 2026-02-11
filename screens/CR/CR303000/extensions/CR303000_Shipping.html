@@ -1,0 +1,71 @@
+<template>
+	<template id="tabShipping_Content">
+		<qp-template id="Shipping-form" name="1-1" wg-container="DefLocation_frmDefLocation1">
+			<div slot="A">
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="tabShipping_AddressLookup"
+					address-view="DefLocationAddress"
+					fs-caption="Ship-To Address"
+					fs-wg-container="DefLocationAddress_DefLocationAddress"
+					override-fieldname="DefLocation.OverrideAddress"
+					override-wg-container="DefLocation_frmDefLocation1"
+					view-on-map-action-name="ViewDefLocationAddressOnMap"
+					with-coordinates="true"
+				>
+					<field modify="#tabShipping_AddressLookup [name='CountryID']" after="#tabShipping_AddressLookup [name='PostalCode']"></field>
+				</qp-include>
+				<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+					fs-id="tabShipping_Info"
+					contact-view="DefLocationContact"
+					fs-caption="Ship-To Info"
+					fs-wg-container="DefLocationContact_DefLocationContact"
+					override-fieldname="DefLocation.OverrideContact"
+					override-wg-container="DefLocation_frmDefLocation1">
+				</qp-include>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="tabShipping_TaxSettings"
+					caption="Tax Settings"
+					view.bind="DefLocation"
+				>
+					<field name="TaxRegistrationID"></field>
+					<field name="CTaxZoneID"></field>
+					<field name="CTaxCalcMode"></field>
+					<field name="CAvalaraExemptionNumber"></field>
+					<field name="CAvalaraCustomerUsageType"></field>
+					<field name="CPriceClassID"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="tabShipping_ShippingInstructions"
+					caption="Shipping Instructions"
+					view.bind="DefLocation"
+				>
+				<field name="CBranchID"></field>
+					<field name="CSiteID"></field>
+					<field name="CCarrierID"></field>
+					<field name="CShipTermsID"></field>
+					<field name="CShipZoneID"></field>
+					<field name="CFOBPointID"></field>
+					<field name="CResedential"></field>
+					<field name="CSaturdayDelivery"></field>
+					<field name="CInsurance"></field>
+					<field name="CAdditionalHandling"></field>
+					<field name="CShipComplete"></field>
+					<field name="COrderPriority"></field>
+					<field name="CLeadTime"></field>
+					<field name="CCalendarID"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="tabLTLFTL_ShippingInstructions"
+					caption="LTL/FTL Settings"
+					view.bind="DefLocation"
+				>
+					<field name="CLiftGate"></field>
+					<field name="CInsideDelivery"></field>
+					<field name="CLimitedAccess"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

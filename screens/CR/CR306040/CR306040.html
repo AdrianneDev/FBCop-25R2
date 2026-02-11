@@ -1,0 +1,32 @@
+﻿<template>
+	<qp-splitter id="FormSplitter" split="width" disable="true" invisible="true" initial-split="40%" state="normal">
+		<split-pane>
+			<qp-template id="Message_form" name="1">
+				<qp-fieldset id="form_MessageLeft" view.bind="Message" slot="A" wg-container="Message_message">
+					<field name="Subject"></field>
+					<field name="ChannelID"></field>
+					<field name="MemberID"></field>
+					<using wg-container="CurrentMessage_tab">
+						<field name="IsIncome">
+							<qp-field control-state.bind="Message.IsPrivate"></qp-field>
+						</field>
+						<field name="StartDate_Date">
+							<qp-field control-state.bind="Message.StartDate_Time"></qp-field>
+						</field>
+					</using>
+				</qp-fieldset>
+			</qp-template>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="mainTabBar">
+				<qp-tab id="tabMessage" caption="Message" wg-container="CurrentMessage_tab">
+					<qp-caption caption="Description"></qp-caption>
+					<qp-rich-text-editor id="edBody" class="stretch" state.bind="CurrentMessage.Body" wg-field>
+					</qp-rich-text-editor>
+				</qp-tab>
+				<qp-tab id="tabDetails" caption="Details" ref="tabDetails_Content">
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

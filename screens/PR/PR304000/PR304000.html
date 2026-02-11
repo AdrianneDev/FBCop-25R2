@@ -1,0 +1,45 @@
+<template>
+    <style>
+        /* Workaround suggested by platform for bug where grid was being pushed down */
+        div#form-Filter_form {
+            height: auto;
+        }
+    </style>
+
+    <qp-splitter id="splitter-BatchForSubmission" initial-split="50%" split="width">
+        <split-pane id="splitPaneA-Grid" class="v-stack">
+            <qp-template id="formHeader" qp-collapsible name="1">
+                <qp-fieldset id="fs-Filter" wg-container="SubmissionDocument_batchForm" view.bind="SubmissionDocument" class="label-size-xm" slot="A">
+                    <field name="BatchID" pinned></field>
+                    <field name="FormType" pinned="false"></field>
+                    <field name="Year" pinned></field>
+                    <field name="OrgBAccountID" pinned></field>
+                    <field name="ProvinceOfEmployment" pinned></field>
+                    <field name="DocType" pinned></field>
+                    <field name="DownloadedAt" pinned="false"></field>
+                    <field name="NumberOfEmployees" pinned="false"></field>
+                </qp-fieldset>
+            </qp-template>
+
+            <qp-grid id="grid-BatchEmployees" view.bind="BatchEmployees"></qp-grid>
+        </split-pane>
+
+        <split-pane id="splitPaneB-PDF">
+            <div id="pdf_pane" class="stretch" style="display: flex; flex-direction: column;">
+                <qp-caption caption="Document"></qp-caption>
+                <iframe id="iframe-pdfHolder" class="stretch col-12"></iframe>
+            </div>
+        </split-pane>
+    </qp-splitter>
+
+    <qp-panel id="EmployeeSlipAlreadyPublished" caption="Confirmation" auto-repaint="true" width="md">
+        <qp-fieldset id="fs-EmployeeSlipAlreadyPublishedForm_0" wg-container="EmployeeSlipAlreadyPublished_EmployeeSlipAlreadyPublishedForm" view.bind="EmployeeSlipAlreadyPublished">
+            <field config-type.bind="1" config-rows.bind="2" name="Message"></field>
+        </qp-fieldset>
+
+        <footer>
+            <qp-button id="buttonOk-EmployeeSlipAlreadyPublished" caption="Confirm" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-EmployeeSlipAlreadyPublished" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+</template>

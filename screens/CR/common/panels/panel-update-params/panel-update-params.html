@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="Fields" width="md" height="684px" auto-repaint="true">
+		<qp-wizard id="WizardSummary_wizard" config.bind="WizardConfig">
+			<qp-tab id="tabFields" caption="Please select the fields you want to update" class="tab-caption">
+				<qp-grid id="grdFields" view.Bind="Fields" wg-container></qp-grid>
+			</qp-tab>
+			<qp-tab id="tabAttrs" caption="Please select the attributes you want to update">
+				<qp-grid id="grdAttrs" view.Bind="Attributes" wg-container></qp-grid>
+			</qp-tab>
+			<qp-tab id="tabSummary" caption="Review the settings you have specified, and click Finish to apply the changes to the selected records.">
+				<qp-fieldset id="wizard" view.Bind="WizardSummary" class="no-label" wg-container>
+					<field name="Summary" config.bind="{ type:1, rows:30 }"></field>
+				</qp-fieldset>
+			</qp-tab>
+		</qp-wizard>
+	</qp-panel>
+</template>

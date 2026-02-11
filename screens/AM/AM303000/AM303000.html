@@ -1,0 +1,221 @@
+<template>
+	<qp-template id="Documents_form" wg-container name="17-14-17" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="DocLayoutLeft" view.bind="Documents">
+			<field name="EstimateID">
+				<qp-field control-state.bind="Documents.IsNonInventory"></qp-field>
+			</field>
+			<field name="RevisionID">
+				<qp-field control-state.bind="Documents.IsPrimary"></qp-field>
+			</field>
+			<field name="InventoryCD" config-allow-edit.bind="true"></field>
+			<field name="ItemDesc"></field>
+			<field name="SubItemID"></field>
+			<field name="EstimateClassID" config-allow-edit.bind="true"></field>
+			<field name="ItemClassID" config-allow-edit.bind="true"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="OwnerID"></field>
+			<field name="EngineerID"></field>
+			<field name="BranchID"></field>
+			<field name="RoundUpUnitPrice"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_AMEstimateItem_CurrencyInfo_"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="DocLayoutMiddle" view.bind="Documents">
+			<field name="EstimateStatus" pinned></field>
+			<field name="QuoteSource" pinned></field>
+			<field name="RevisionDate"></field>
+			<field name="RequestDate"></field>
+			<field name="PromiseDate"></field>
+			<field name="LeadTime">
+				<qp-field control-state.bind="Documents.LeadTimeOverride"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="DocLayoutRight" view.bind="Documents" class="highlights-section">
+			<field name="FixedLaborCost">
+				<qp-field control-state.bind="Documents.FixedLaborOverride"></qp-field>
+			</field>
+			<field name="VariableLaborCost">
+				<qp-field control-state.bind="Documents.VariableLaborOverride"></qp-field>
+			</field>
+			<field name="MachineCost">
+				<qp-field control-state.bind="Documents.MachineOverride"></qp-field>
+			</field>
+			<field name="MaterialCost">
+				<qp-field control-state.bind="Documents.MaterialOverride"></qp-field>
+			</field>
+			<field name="ToolCost">
+				<qp-field control-state.bind="Documents.ToolOverride"></qp-field>
+			</field>
+			<field name="FixedOverheadCost">
+				<qp-field control-state.bind="Documents.FixedOverheadOverride"></qp-field>
+			</field>
+			<field name="VariableOverheadCost">
+				<qp-field control-state.bind="Documents.VariableOverheadOverride"></qp-field>
+			</field>
+			<field name="SubcontractCost">
+				<qp-field control-state.bind="Documents.SubcontractOverride"></qp-field>
+			</field>
+			<field name="ExtCostDisplay" pinned>
+				<div></div>
+			</field>
+			<field name="ReferenceMaterialCost" pinned>
+				<div></div>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabOperations" caption="Operations">
+			<qp-grid id="gridOperations" view.bind="EstimateOperRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabReferences" caption="References" load-on-demand.bind="false">
+			<qp-template id="EstimateReferenceRecord_formreferences" wg-container name="17-17-14">
+				<qp-fieldset slot="A" id="RefLayoutLeft" view.bind="EstimateReferenceRecord">
+					<field name="OpportunityID" config-allow-edit.bind="true"></field>
+					<field name="QuoteType"></field>
+					<field name="QuoteNbr"></field>
+					<field name="QuoteNbrLink" config-link-command.bind="'ViewQuote'"></field>
+					<field name="OrderType"></field>
+					<field name="OrderNbr" config-allow-edit.bind="true"></field>
+					<field name="ProjectID" config-allow-edit.bind="true"></field>
+					<field name="TaskID"></field>
+					<field name="CostCodeID"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="RefLayoutRight" view.bind="EstimateReferenceRecord">
+					<field name="TaxCategoryID"></field>
+					<field name="BAccountID" config-allow-edit.bind="true"></field>
+					<field name="ExternalRefNbr"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabDescription" caption="Description">
+			<qp-template id="form-Description" name="17-31" wg-container="EstimateRecordSelected_tab">
+				<div slot="A">
+					<qp-image-uploader id="ImageUrl"
+									   state.bind="EstimateRecordSelected.ImageUrl"
+									   width="100%"
+									   height="400px">
+					</qp-image-uploader>
+				</div>
+				<div slot="B">
+					<qp-rich-text-editor id="edBody"
+										 state.bind="EstimateRecordSelected.Body"
+										 wg-field
+										 class="stretch">
+					</qp-rich-text-editor>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabHistory" caption="History">
+			<qp-grid id="PXGridHistory" view.bind="EstimateHistoryRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTotals" caption="Totals">
+			<qp-template id="EstimateRecordSelected_formTotals" wg-container name="17-17-14">
+				<div slot="A">
+					<qp-fieldset id="topLayoutLeft" view.bind="EstimateRecordSelected" caption="Order Qty">
+						<field name="OrderQty"></field>
+						<field name="UOM"></field>
+					</qp-fieldset>
+					<qp-fieldset id="TotalLayoutRight" view.bind="EstimateRecordSelected" caption="Cost/Price">
+						<field name="CuryUnitCost"></field>
+						<field name="CuryExtCost"></field>
+						<field name="CuryUnitPrice">
+							<qp-field control-state.bind="EstimateRecordSelected.PriceOverride"></qp-field>
+						</field>
+						<field name="CuryExtPrice"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="bellowLayoutLeft" view.bind="EstimateRecordSelected" caption="Markup">
+						<field name="LaborMarkupPct"></field>
+						<field name="MachineMarkupPct"></field>
+						<field name="MaterialMarkupPct"></field>
+						<field name="ToolMarkupPct"></field>
+						<field name="OverheadMarkupPct"></field>
+						<field name="SubcontractMarkupPct"></field>
+						<field name="MarkupPct">
+							<qp-field control-state.bind="EstimateRecordSelected.MarkupPctOverride"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPriceBreaks" caption="Price Breaks">
+			<qp-grid id="gridPriceBreaks" view.bind="PriceBreaks"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CreateProductionOrderFilter" caption="Create Production Order" auto-repaint="true">
+		<qp-template id="CreateProductionOrderFilter_FormCreateProdOrder" wg-container name="1">
+			<qp-fieldset slot="A" id="CreateProductionOrderFilter1" view.bind="CreateProductionOrderFilter">
+				<field name="OrderType" config-allow-edit.bind="true"></field>
+				<field name="ProdOrdID"></field>
+				<field name="SiteID"></field>
+				<field name="LocationID"></field>
+				<field name="CreateSubAssemblyOrders"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="CreateProdOrderButton1" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="CreateProdOrderPXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CreateBomItemFilter" caption="Create BOM" auto-repaint="true">
+		<qp-template id="CreateBomItemFilter_FormCreateBOM" wg-container name="1">
+			<qp-fieldset slot="A" id="CreateBomItemFilter1" view.bind="CreateBomItemFilter">
+				<field name="BomID"></field>
+				<field name="RevisionID"></field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="CreateBOMButton1" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="CreateBOMButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="Add2OrderFilter" caption="Add to Order" auto-repaint="true">
+		<qp-template id="Add2OrderFilter_Add2OrderForm" wg-container name="1">
+			<qp-fieldset slot="A" id="Add2OrderFilter1" view.bind="Add2OrderFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="Add2OrderAdd" dialog-result="OK" caption="Add"></qp-button>
+			<qp-button id="Add2OrderCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="HistoryFilterRecord" caption="Add Comment" auto-repaint="true">
+		<qp-template id="HistoryFilterRecord_EstimateHistoryForm" wg-container name="1">
+			<qp-fieldset slot="A" id="HistoryFilterRecord1" view.bind="HistoryFilterRecord">
+				<field name="Description" class="no-label"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="HistoryOKButton" dialog-result="OK"></qp-button>
+			<qp-button id="HistoryCancelButton" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CopyEstimateFromFilter" caption="Copy From" auto-repaint="true">
+		<qp-template id="CopyEstimateFromFilter_CopyFromForm" wg-container name="1">
+			<div slot="A">
+				<qp-fieldset id="CopyEstimateFromFilter1" view.bind="CopyEstimateFromFilter">
+					<field name="CopyFrom"></field>
+					<field name="EstimateID"></field>
+					<field name="RevisionID"></field>
+					<field name="BOMID"></field>
+					<field name="BOMRevisionID"></field>
+					<field name="OrderType" config-allow-edit.bind="true"></field>
+					<field name="ProdOrdID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CopyEstimateFromFilter2" view.bind="CopyEstimateFromFilter" caption="Options">
+					<field name="OverrideInventoryID"></field>
+					<field name="note" replace-content unbound>
+						<qp-info-box caption="Note: This process will replace the current estimate details with the new source details." id="CopyEstimateFromFilter2_nm" type="info"></qp-info-box>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="CopyFromButton1" dialog-result="OK" caption="Copy"></qp-button>
+			<qp-button id="CopyFromButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

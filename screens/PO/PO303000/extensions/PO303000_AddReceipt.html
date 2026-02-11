@@ -1,0 +1,21 @@
+<template>
+	<qp-panel id="poReceiptSelection" caption="Add Receipt" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddReceipt" name="1-1-1" class="equal-height" wg-container="Filter_filter">
+			<qp-fieldset id="fsColumnA-AddReceipt" slot="A" view.bind="filter">
+				<field name="ReceiptType"></field>
+				<field name="ReceiptNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddReceipt" slot="B" view.bind="filter">
+				<field name="VendorID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddReceipt" view.bind="poReceiptSelection" wg-container="poReceiptSelection_grdReceipts"></qp-grid>
+
+		<footer id="footer-AddReceipt">
+			<qp-button id="buttonAdd-AddReceipt" state.bind="AddPOReceipt2"></qp-button>
+			<qp-button id="buttonAddClose-AddReceipt" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddReceipt" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

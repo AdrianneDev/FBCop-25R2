@@ -1,0 +1,20 @@
+<template>
+
+	<qp-panel id="StatusEditPanel"
+			  caption="Add or Edit Sync Status"
+			  auto-repaint="true">
+		<qp-fieldset id="CstFormView17" view.bind="StatusEditPanel" wg-container>
+			<field name="ConnectorType"></field>
+			<field name="BindingID"></field>
+			<field name="EntityType"></field>
+			<field name="LocalID" config.bind="{displayMode:'text'}"></field>
+			<field name="ExternID"></field>
+			<field name="NeedSync"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnStatusEditPanelOK" dialog-result="OK" caption="Apply" class="major-button"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,161 @@
+<template>
+	<require from="./pm304500-status-colors.scss"></require>
+	<qp-template name="7-10-7" class="equal-height" id="Quote_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="form01" view.bind="Quote">
+			<field name="QuoteNbr" pinned config-display-mode.bind="'id'"></field>
+			<field name="OpportunityID" config-allow-edit.bind="true" pinned></field>
+			<field name="IsPrimary" pinned></field>
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="DocumentDate"></field>
+			<field name="ExpirationDate"></field>
+			<field name="ExternalRef"></field>
+			<field name="QuoteProjectID" config-allow-edit.bind="true"></field>
+			<field name="QuoteProjectCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Quote">
+			<field name="TemplateID" config-allow-edit.bind="true" pinned></field>
+			<field name="ProjectManager"></field>
+			<field name="BAccountID" config-allow-edit.bind="true" pinned></field>
+			<field name="ContactID" config-allow-edit.bind="true"></field>
+			<field name="OwnerID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo" pinned></field>
+			<field name="Subject" config-rows.bind="3" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form03" view.bind="Quote" class="summary-pane">
+			<field name="CuryLineTotal" pinned></field>
+			<field name="CuryCostTotal" pinned></field>
+			<field name="CuryGrossMarginAmount"></field>
+			<field name="GrossMarginPct"></field>
+			<field name="CuryTaxTotal" pinned></field>
+			<field name="CuryQuoteTotal" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="EstimationTab" caption="Estimation">
+			<qp-grid id="Products_ProductsGrid" view.bind="Products"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ProjectTasksTab" caption="Project Tasks">
+			<qp-grid id="Tasks_TasksGrid" view.bind="Tasks"></qp-grid>
+		</qp-tab>
+		<qp-tab id="FinancialTab" caption="Financial" load-on-demand.bind="false">
+			<qp-template name="17-17-14" id="financial-form">
+				<qp-fieldset slot="A" id="PXFormView1" view.bind="QuoteCurrent" wg-container>
+					<field name="BranchID" pinned="false"></field>
+					<field name="LocationID" config-allow-edit.bind="true" pinned="false"></field>
+					<field name="ExternalTaxExemptionNumber"></field>
+					<field name="AvalaraCustomerUsageType"></field>
+					<field name="TermsID"></field>
+					<field name="CreatedByID_Creator_Username"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="Activities_tab" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-template name="17-7" id="TaxesForm">
+				<div slot="A">
+					<qp-grid id="grid1" view.bind="Taxes" class="framed-section"></qp-grid>
+				</div>
+				<div slot="B">
+					<qp-fieldset caption="Tax Info" view.bind="QuoteCurrent" id="TaxesFieldset">
+						<field name="TaxZoneID"></field>
+					</qp-fieldset>
+					<qp-fieldset caption="Tax Totals" view.bind="QuoteCurrent" id="TaxesTotals" class="highlights-section">
+						<field name="CuryTaxTotal"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+		<qp-tab id="AddressesTab" caption="Addresses">
+			<qp-template name="17-17-14" id="addresses-form">
+				<div slot="A">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+								fs-id="formA"
+								address-view="Shipping_Address"
+								fs-caption="Project Address"
+								with-coordinates="true"
+								view-on-map-action-name="ViewShippingOnMap">
+						<field modify="#formA [name='CountryID']" after="#formA [name='PostalCode']"></field>
+					</qp-include>
+				</div>
+				<div slot="B">
+					<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+								fs-id="edQuote_Contact"
+								contact-view="Quote_Contact"
+								fs-caption="Bill-To Contact"
+								fs-wg-container="Quote_Contact_edQuote_Contact">
+						<field before="#edQuote_Contact [name='FirstName']" name="Quote_Contact.OverrideContact" wg-container="Quote_Contact_edQuote_Contact"></field>
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+								fs-id="edQuote_Address"
+								address-view="Quote_Address"
+								fs-caption="Bill-To Address"
+								view-on-map-action-name="ViewMainOnMap">
+						<field modify="#edQuote_Address [name='CountryID']" after="#edQuote_Address [name='PostalCode']"></field>
+					</qp-include>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CopyQuoteInfo" caption="Copy Quote" auto-repaint="true">
+		<qp-fieldset id="formCopyQuote" view.bind="CopyQuoteInfo">
+			<field name="Description"></field>
+			<field name="RecalculatePrices"></field>
+			<field name="OverrideManualPrices"></field>
+			<field name="RecalculateDiscounts"></field>
+			<field name="OverrideManualDiscounts"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButtonOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ConvertQuoteInfo"
+			  caption="Convert to Project"
+			  auto-repaint="true">
+		<qp-fieldset id="formConvertQuote" view.bind="ConvertQuoteInfo" class="no-label">
+			<field name="CreateLaborRates"></field>
+			<field name="ActivateProject"></field>
+			<field name="ActivateTasks"></field>
+			<field name="CopyNotes"></field>
+			<field name="CopyFiles"></field>
+			<field name="MoveActivitiesGroup" unbound replace-content>
+				<qp-field control-state.bind="ConvertQuoteInfo.MoveActivities"></qp-field>
+				<qp-field control-state.bind="ConvertQuoteInfo.TaskCD"></qp-field>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton3" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton4" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="recalcdiscountsfilter" caption="Recalculate Prices" auto-repaint="true">
+		<qp-fieldset id="formRecalculate" view.bind="recalcdiscountsfilter">
+			<field name="RecalcTarget"></field>
+			<field name="RecalcUnitPrices"></field>
+			<field name="OverrideManualPrices"></field>
+			<field name="RecalcDiscounts"></field>
+			<field name="OverrideManualDiscounts"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="TasksForAddition"
+			  caption="Add Tasks"
+			  auto-repaint="true"
+			  width="lg"
+			  height="85vh">
+		<qp-grid id="gridAddCommonTasks" view.bind="TasksForAddition"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAddCommonTasksOk" state.bind="AddCommonTasks" dialog-result="OK"></qp-button>
+			<qp-button id="PXButtonAddCommonTasksCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

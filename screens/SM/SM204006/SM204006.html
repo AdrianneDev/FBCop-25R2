@@ -1,0 +1,37 @@
+﻿<template>
+	<qp-template id="PXFormView1" wg-container="Notifications_PXFormView1" name="1-1" class="equal-height label-size-m">
+		<qp-fieldset id="first" view.bind="Notifications" slot="A">
+			<field name="NotificationID" config.bind="{displayMode:'text'}"></field>
+			<field name="Name"></field>
+			<field name="Subject"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" view.bind="Notifications" slot="B">
+			<field name="ScreenID"></field>
+			<field name="ChannelID"></field>
+			<field name="LocaleName"></field>
+			<field name="ShowReportTabExpr"></field>
+			<field name="ShowSendByEventsTabExpr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="CurrentNotification_tab" wg-container>
+		<qp-tab id="MessageTab" caption="Message">
+			<qp-rich-text-editor id="edBody" class="stretch" state.bind="Notifications.Body" wg-field>
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="SendByEventsTab" caption="Send by Events" if.bind="Notifications.ShowSendByEventsTabExpr.value===true">
+			<qp-grid id="grdSendByEvents" view.bind="BusinessEvents">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="NewEventData" caption="Create Business Event">
+		<qp-fieldset id="NewEventData_frmCreateBusinessEvent" wg-container view.bind="NewEventData">
+			<field name="Name"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

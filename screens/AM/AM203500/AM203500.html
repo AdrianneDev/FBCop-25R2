@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="Features_form" wg-container name="1-1" class="label-size-m equal-height">
+		<qp-fieldset slot="A" id="FeaturesRecords1" view.bind="Features">
+			<field name="FeatureID"></field>
+			<field name="ActiveFlg"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="FeaturesRecords2" view.bind="Features" class="no-label">
+			<field name="AllowNonInventoryOptions"></field>
+			<field name="DisplayOptionAttributes"></field>
+			<field name="PrintResults"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabOptions" caption="Options">
+			<qp-grid id="PXGridFeatureOptions" view.bind="FeatureOptions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="AttributesGrid" view.bind="FeatureAttributes"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

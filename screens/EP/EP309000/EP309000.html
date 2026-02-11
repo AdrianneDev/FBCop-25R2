@@ -1,0 +1,67 @@
+<template>
+	<require from="./EP309000.css"></require>
+	<div id="timersScrollArea" style="overflow-y: auto">
+		<qp-data-feed id="dfAvailableTimers" auto-resize="true" caption="Available Timer" class="no-toolbar" view="AvailableTimers">
+			<template width="100%">
+				<qp-template name="record-1-1-1-compact" wg-container id="CTIFeedTemplate">
+					<qp-fieldset slot="A1" id="CTIFormA1" class="no-label" view.bind="AvailableTimers">
+						<field name="EntityName" class="entityName noLink">
+							<field name="DocumentNbr" class="documentNbr noLink"></field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset slot="A2" id="CTIFormA2" class="no-label" view.bind="AvailableTimers">
+						<field name="Summary" class="noLink summary"></field>
+					</qp-fieldset>
+					<qp-fieldset slot="BX" id="CTIFormB" class="no-label" view.bind="AvailableTimers">
+						<field name="TimeLogTypeID" class="timeLogTypeID"></field>
+					</qp-fieldset>
+					<div slot="CX">
+						<qp-fieldset id="CTIFormC" class="no-label" view.bind="AvailableTimers">
+							<field name="TimerDisplay" class="field--bold timerDisplay"></field>
+							<field name="StartDateUTC" class="startDateUTC"></field>
+							<field name="TimeSpent" class="timeSpent"></field>
+							<field name="Status" class="timerStatus"></field>
+						</qp-fieldset>
+						<qp-button id="btnCTIClockIn" caption="Clock In" class="timerButton clockInButton" show.bind="AvailableTimers.IsClockIn.value == true" click.delegate="onClockInTimer()"></qp-button>
+					</div>
+				</qp-template>
+			</template>
+		</qp-data-feed>
+		<div id="AvailableTimerEmptyFeed" class="emptyFeedContainer">
+			<qp-label caption="None is available. Open a "></qp-label>
+			<a id="linkProjectTask" class="emptyFeedLink" href="" click.delegate="openProjectTask()" i18n>project task</a>
+			<qp-label caption=" on the Project Tasks (PM302000) form to clock in."></qp-label>
+		</div>
+		<qp-data-feed id="dfActiveTimers" auto-resize="true" caption="Active Timers" class="no-toolbar" view="ActiveTimers">
+			<template width="100%">
+				<qp-template name="record-1-1-1-compact" wg-container id="CCIFeedTemplate">
+					<qp-fieldset slot="A1" id="CCIFormA1" class="no-label" view.bind="ActiveTimers">
+						<field name="EntityName" class="entityName noLink">
+							<field name="DocumentNbr" class="documentNbr"></field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset slot="A2" id="CCIFormA2" class="no-label" view.bind="ActiveTimers">
+						<field name="Summary" class="noLink summary"></field>
+					</qp-fieldset>
+					<qp-fieldset slot="BX" id="CCIFormB" class="no-label" view.bind="ActiveTimers">
+						<field name="TimeLogTypeID" class="timeLogTypeID"></field>
+					</qp-fieldset>
+					<div slot="CX">
+						<qp-fieldset id="CCIFormC" class="no-label" view.bind="ActiveTimers">
+							<field name="TimerDisplay" class="field--bold timerDisplay"></field>
+							<field name="StartDateUTC" class="startDateUTC"></field>
+							<field name="TimeSpent" class="timeSpent"></field>
+							<field name="Status" class="timerStatus"></field>
+						</qp-fieldset>
+						<qp-button id="btnCCIPause" caption="Pause" class="timerButton pauseButton" config.bind="{ images: { normal: 'svg:timer@pause' } }" show.bind="ActiveTimers.IsPause.value == true" click.delegate="onPauseTimer()"></qp-button>
+						<qp-button id="btnCCIStart" caption="Start" class="timerButton startButton" config.bind="{ images: { normal: 'svg:timer@start' } }" show.bind="ActiveTimers.IsStart.value == true" click.delegate="onStartTimer()"></qp-button>
+						<qp-button id="btnCCIStop" caption="Stop" class="timerButton stopButton" config.bind="{ images: { normal: 'svg:timer@stop' } }" show.bind="ActiveTimers.IsStop.value == true" click.delegate="onStopTimer()"></qp-button>
+					</div>
+				</qp-template>
+			</template>
+		</qp-data-feed>
+		<div id="ActiveTimersEmptyFeed" class="emptyFeedContainer">
+			<qp-label caption="None is available."></qp-label>
+		</div>
+	</div>
+</template>

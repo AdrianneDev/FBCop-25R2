@@ -1,0 +1,35 @@
+<template>
+	<qp-include-parameters view.required></qp-include-parameters>
+
+	<qp-fieldset slot="Prefix" id="fsDocumentCheckbox" view.bind="{{view}}">
+		<field name="Selected"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="A1" id="fsDocumentA1" view.bind="{{view}}">
+		<field name="RefNbr"></field>
+		<field name="Status" class="colored"></field>
+		<field name="DocDate"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="A2" id="fsDocumentA2" view.bind="{{view}}">
+		<field name="CustomerID_Customer_acctName"></field>
+		<field name="DocType"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="AX" id="fsDocumentAX" view.bind="{{view}}"
+		class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg">
+		<field name="DocDesc" replace-content>
+			<div class="wrapper field--text">${ {{view}}.DocDesc.value }</div>
+		</field>
+		<field name="ExtRefNbr"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="BX" id="fsDocumentBX" view.bind="{{view}}">
+		<qp-include url="./ar-document-origdisc.html" view="{{view}}"></qp-include>
+	</qp-fieldset>
+	<qp-fieldset slot="CX" id="fsDocumentCX" view.bind="{{view}}">
+		<field name="TotalOfPayments_Text" class="grayed-zero"></field>
+	</qp-fieldset>
+	<qp-fieldset slot="DX" id="fsDocumentDX" view.bind="{{view}}">
+		<field name="CuryDocBal_Text" class="sp-documents-balance"></field>
+	</qp-fieldset>
+	<qp-info-box slot="Postfix" caption="This invoice cannot be paid through the portal because another unprocessed payment has been applied to it."
+		type="error"
+		show.bind="{{view}}.HasUnreleasedPayment.value"></qp-info-box>
+</template>

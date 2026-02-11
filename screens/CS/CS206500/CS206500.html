@@ -1,0 +1,60 @@
+<template>
+	<qp-template id="formCreditTerm" name="1-1" wg-container="TermsDef_form" class="label-size-m">
+		<div slot="A">
+			<qp-fieldset
+				id="groupGeneralSettings"
+				view.bind="TermsDef"
+				caption="General Settings">
+				<field name="TermsID"></field>
+				<field name="Descr"></field>
+				<field name="InstallmentType"></field>
+				<field name="VisibleTo"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupDueDaySettings"
+				view.bind="TermsDef"
+				caption="Due Day Settings">
+				<field name="DueType"></field>
+				<field name="DayDue00" show.bind="TermsDef.DueType.value == 'C' || TermsDef.DayDue00.enabled == true"></field>
+				<field name="range1" unbound>
+					<qp-label slot="label" caption="Day Range 1" class="no-label" if.bind="TermsDef.DueType.value == 'C' || TermsDef.DayFrom00.enabled == true"></qp-label>
+					<qp-field control-state.bind="TermsDef.DayFrom00"  class="col-6" if.bind="TermsDef.DueType.value == 'C' || TermsDef.DayFrom00.enabled == true"></qp-field>
+					<qp-field control-state.bind="TermsDef.DayTo00" class="col-6" if.bind="TermsDef.DueType.value == 'C' || TermsDef.DayTo00.enabled == true"></qp-field>
+				</field>
+				<field name="DayDue01" show.bind="TermsDef.DueType.value == 'C' || TermsDef.DayDue01.enabled == true"></field>
+				<field name="range2" unbound>
+					<qp-label slot="label" caption="Day Range 2" class="no-label"  if.bind="TermsDef.DueType.value == 'C' || TermsDef.DayFrom01.enabled == true"></qp-label>
+					<qp-field control-state.bind="TermsDef.DayFrom01"  class="col-6"  if.bind="TermsDef.DueType.value == 'C' || TermsDef.DayFrom01.enabled == true"></qp-field>
+					<qp-field control-state.bind="TermsDef.DayTo01" class="col-6"  if.bind="TermsDef.DueType.value == 'C' || TermsDef.DayTo01.enabled == true"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset
+				id="groupCashDiscountSettings"
+				view.bind="TermsDef"
+				caption="Cash Discount Settings"
+				if.bind="TermsDef.DiscPercent.enabled == true || TermsDef.DayDisc.enabled == true">
+				<field name="DiscType" show.bind="TermsDef.DiscPercent.enabled == true"></field>
+				<field name="DayDisc" show.bind="TermsDef.DayDisc.enabled == true"></field>
+				<field name="DiscPercent" show.bind="TermsDef.DiscPercent.enabled == true"></field>
+			</qp-fieldset>
+			<qp-fieldset
+				id="groupSalesOrderPrepaymentSettings"
+				view.bind="TermsDef"
+				caption="Sales Order Prepayment Settings" if.bind="TermsDef.PrepaymentRequired.enabled == true">
+				<field name="PrepaymentRequired" show.bind="TermsDef.PrepaymentRequired.enabled == true"></field>
+				<field name="PrepaymentPct" show.bind="TermsDef.PrepaymentPct.enabled == true"></field>
+			</qp-fieldset>
+			<qp-fieldset
+				id="groupInstallmentsSettings"
+				view.bind="TermsDef"
+				caption="Installments Settings" if.bind="TermsDef.InstallmentMthd.enabled == true">
+				<field name="InstallmentMthd" show.bind="TermsDef.InstallmentMthd.enabled == true"></field>
+				<field name="InstallmentCntr"></field>
+				<field name="InstallmentFreq" show.bind="TermsDef.InstallmentFreq.enabled == true"></field>
+			</qp-fieldset>
+
+			<span show.bind="TermsDef.InstallmentType.value == 'M' && TermsDef.InstallmentMthd.value == 'S'">
+				<qp-grid id="gridInstallments" view.bind="Installments" wg-container="Installments_grid" caption="Installment Schedule" class="framed-section"></qp-grid>
+			</span>
+		</div>
+	</qp-template>
+</template>

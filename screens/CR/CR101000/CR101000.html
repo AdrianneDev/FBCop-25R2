@@ -1,0 +1,46 @@
+<template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="CRSetupRecord_form" name="1-1" class="label-size-xm" wg-container="CRSetupRecord_tab">
+				<div slot="A">
+					<qp-fieldset id="CRSetupRecord_Numbering" view.bind="CRSetupRecord" caption="Numbering Sequences">
+						<field name="OpportunityNumberingID"></field>
+						<field name="CaseNumberingID"></field>
+						<field name="MassMailNumberingID"></field>
+						<field name="CampaignNumberingID"></field>
+						<field name="QuoteNumberingID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CRSetupRecord_Assignment" view.bind="CRSetupRecord" caption="Assignment Settings">
+						<field name="LeadDefaultAssignmentMapID"></field>
+						<field name="ContactDefaultAssignmentMapID"></field>
+						<field name="DefaultBAccountAssignmentMapID"></field>
+						<field name="DefaultOpportunityAssignmentMapID"></field>
+						<field name="DefaultCaseAssignmentMapID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CRSetupRecord_Approval" view.bind="CRSetupRecord" caption="Quote Approval Settings">
+						<field name="QuoteApprovalMapID"></field>
+						<field name="QuoteApprovalNotificationID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="CRSetupRecord_DataEntry" view.bind="CRSetupRecord" caption="Data Entry Settings">
+						<field name="DefaultLeadClassID"></field>
+						<field name="DefaultContactClassID"></field>
+						<field name="DefaultCustomerClassID"></field>
+						<field name="DefaultOpportunityClassID"></field>
+						<field name="DefaultCaseClassID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CRSetupRecord_Misc" view.bind="CRSetupRecord" caption="Miscellaneous Settings">
+						<field name="AMEstimateEntry"></field>
+						<field name="AMConfigurationEntry"></field>
+						<field name="CopyNotes"></field>
+						<field name="CopyFiles"></field>
+						<field name="DefaultRateTypeID"></field>
+						<field name="AllowOverrideRate"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailingPrintingPreferences" caption="Mailing & Printing" ref="tabMailingPrintingPreferences_Content"></qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,5 @@
+<template>
+	<qp-tab id="tab-ReceiveTransfer" before="#tab-Logs" caption="Receive Transfer" if.bind="HeaderView.ShowReceiveTransfer.value == true">
+		<qp-grid id="grid-ReceiveTransfer" view.bind="ReceivedForTransfer" wg-container="ReceivedForTransfer_gridReceivedForTransfer"></qp-grid>
+	</qp-tab>
+</template>

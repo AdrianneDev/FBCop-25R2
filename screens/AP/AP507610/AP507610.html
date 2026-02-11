@@ -1,0 +1,17 @@
+<template>
+	<qp-template name="1-1" wg-container="Filter_form" id="formFilter">
+		<qp-fieldset id="columnFirstFilter" slot="A" view.bind="Filter">
+			<field name="ActionType"></field>
+			<field name="OrgBAccountID"></field>
+			<field name="Year"></field>
+			<field name="ShowAll"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" slot="B" view.bind="Filter">
+			<field name="PrintWithDeviceHub" class="no-label"></field>
+			<field name="DefinePrinterManually" class="no-label"></field>
+			<field name="PrinterID"></field>
+			<field name="NumberOfCopies"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridSlips" view.bind="Slips" wg-container="Slips_grid"></qp-grid>
+</template>

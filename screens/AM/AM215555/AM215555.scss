@@ -1,0 +1,562 @@
+:root {
+	--qp-sch-header-height: 31.5px;
+	--qp-sch-line-height: 38px;
+
+	--qp-highlight-color: #D6EFFF80;
+	--qp-highlight-hover-color: #D6EFFF;
+
+	--qp-sch-black: #1B1B1B;
+	--qp-sch-event-background: #D6EFFF;
+	--qp-sch-event-border: #007ACC1F;
+	--qp-sch-event-color: #1B1B1B;
+	--qp-sch-event-unassigned: #1B1B1B;
+	--qp-sch-event-unassigned-border: #D0D0D0;
+	--qp-sch-splitter-line: var(--qp-shadow-color, rgba(0, 0, 0, 0.2));
+	--qp-sch-unavailable-background: #00204012;
+	--qp-sch-header-background: #FFFFFF;
+	--qp-sch-header-hover-background: #E0E4E8;
+	--qp-sch-button-hover-background: rgba(0, 0, 0, 0.06);
+	--qp-sch-header-border: #E8E8E8;
+	--qp-sch-border: rgba(0, 0, 0, 0.09);
+	--qp-sch-dark-background: #F5F7F8;
+	--qp-sch-semi-transparent-main: rgba(var(--primary-color), 0.88);
+	--qp-late-icon-color-dark: #EE4051;
+	--qp-late-color-dark: #FF9999;
+	--qp-early-color-dark: #47A824;
+	--qp-on-time-color-dark: #F8B200;
+	--qp-priority-high-color-dark: #EE4051;
+	--qp-priority-normal-color-dark: #BFBFBF;
+	--qp-priority-low-color-dark: #4BA5E2;
+	--qp-lack-of-material-color-dark: #EE4051;
+	--qp-firm-schedule-color-dark: #000000;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.top-bar-cont {
+	display: none; // TODO: is it possible to do in some other way?
+}
+
+.qp-system-menu {
+	z-index: auto; /* we need this for the drop down menu to be on top of appointment popup */
+}
+.qp-menu-options {
+	z-index: 4500; /* we need this for the drop down menu to be on top of ppointment popup */
+}
+.b-float-root {
+	z-index: 4000; /* below grid filter dialog */
+}
+
+.qp-sch-full-screen {
+	.page-host {
+		background-color: white;
+		padding: 0px !important;
+		margin: 0px;
+	}
+	.pageHeader {
+		display: none !important;
+	}
+
+	.page-workspace {
+		width: 100% !important;
+	}
+
+	#mainTabBar {
+		.qp-tabbar-header {
+			padding-inline-start: 12px;
+		}
+		.grid-top-bar {
+			padding-inline-start: 8px;
+		}
+	}
+
+	.qp-sch-grid-container-inner {
+		.grid-top-bar {
+			padding-inline-end: 8px;
+		}
+	}
+}
+
+.qp-sch-hide-grid {
+	.grid-content,
+	.grid-header,
+	.grid-pager {
+		position: absolute;
+		display: none;
+		height: 10000px;
+	}
+}
+
+.qp-sch-left-container {
+	flex: 1 1 0%;
+
+	.b-grid-header-container {
+		display: none;
+	}
+	.b-grid-row {
+		border-color: transparent;
+
+		&.b-selected,
+		&.b-hover {
+			background-color: transparent !important;
+		}
+	}
+	.b-grid-vertical-scroller {
+		padding-top: 0;
+		padding-inline-end: 4px;
+		padding-bottom: 12px;
+	}
+	.b-grid-cell {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 0;
+		padding-bottom: 9px;
+	}
+	.b-grid-cell.qp-sch-not-assigned.qp-sch-not-confirmed {
+		padding-bottom: 0;
+	}
+	.b-gridbase .b-grid-panel-body:not(.b-autoheight) > .b-grid-body-container {
+		overflow-y: scroll !important;
+	}
+}
+
+.b-grid-subgrid:not(.b-timeaxissubgrid) .b-grid-row:not(.b-group-row) {
+	.qp-sch-calendar-container & {
+		body:not(.b-draghelper-active) &.b-hover,
+		&:is(.b-selected, [qp-sch-dragged-over~="true"]) {
+			background-color: var(--qp-highlight-color) !important;
+		}
+
+		body:not(.b-draghelper-active) &.b-hover.b-selected,
+		&.b-selected[qp-sch-dragged-over~="true"]  {
+			background-color: var(--qp-highlight-hover-color) !important;
+		}
+
+		body.b-draghelper-active &.b-hover:not(.b-selected):not([qp-sch-dragged-over~="true"]) {
+			background-color: transparent !important;
+		}
+	}
+
+	.qp-sch-grid-container &.b-hover .b-grid-cell {
+		background-color: transparent !important;
+	}
+}
+
+.b-sch-color-blue.b-sch-resourcetimerange {
+    background-color: var(--qp-sch-unavailable-background);
+    color: #015be2;
+}
+
+.qp-sch-grid-container {
+	height: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+
+	.b-grid-cell {
+		color: inherit;
+		outline: none !important;
+	}
+
+	&-inner {
+		padding-top: var(--qp-sections-row-gap);
+		display: flex;
+		overflow-y: auto;
+		flex-grow: 1;
+		flex-direction: column;
+	}
+
+	qp-tabbar { // hide tabbar content
+		height: initial;
+
+		.qp-tabbar-content {
+			display: none;
+		}
+	}
+	&:not(.qp-sch-calendar-container) .grid-right-toolbar-cont {
+		flex: 1;
+		justify-content: flex-end;
+	}
+}
+
+.qp-sch-config-form {
+	position: absolute;
+    z-index: 1;
+    inset-inline-end: 0px;
+	pointer-events:none;
+
+	.container {
+		padding-inline-end: 0px;
+	}
+	.v-stack {
+		color: transparent;
+		overflow: hidden;
+	}
+	qp-fieldset {
+		padding: 0;
+		border: 0;
+	}
+
+	.qp-fieldset-icon {
+		pointer-events: all;
+		border: 1px solid var(--qp-sch-black);
+		padding-top: 4px;
+		padding-inline-start: 8px;
+		padding-inline-end: 10px;
+		top: 9px;
+		inset-inline-end: 10px;
+		width: max-content;
+		text-align: center;
+
+		.qp-sch-left-container & {
+			top: 10px;
+			inset-inline-end: 20px;
+		}
+		&:not(:hover) {
+			background: white;
+		}
+		&:hover {
+			background: #F0F0F0; /* can't have it semi-transparent - it's right on the grid */
+		}
+		&:after {
+			font-size: 13px;
+			font-family: Arial, sans-serif !important;
+			position: relative;
+			top: -2px;
+			inset-inline-start: -1px;
+		}
+	}
+
+	.toggle,
+	fieldset {
+		display: none;
+	}
+	.qp-sch-config-left {
+		position: absolute;
+		inset-inline-end: 82px;
+
+		.qp-fieldset-icon:after {
+			content: "Left";
+		}
+	}
+	.qp-sch-config-right {
+		position: absolute;
+
+		.qp-fieldset-icon:after {
+			content: "Right";
+		}
+	}
+}
+
+.qp-sch-menu {
+	color: black;
+
+	&.b-menuitem {
+		&.b-contains-focus,
+		&:focus {
+			background-color: var(--qp-highlight-color);
+		}
+	}
+}
+
+.b-resourcehistogram {
+	position: absolute;
+	width: 100%;
+	top: 0px;
+
+	.b-grid-subgrid-locked .b-grid-cell {
+		border: none;
+	}
+}
+
+
+
+// hide scales
+.b-scale-cell,
+.b-resourcehistogram .b-grid-headers-locked .b-last-leaf {
+	display: none;
+}
+
+.b-yscroll-pad {
+    display: block !important;
+    order: 9999 !important;
+    border-inline-start: 1px solid #ddd !important;
+
+	.b-yscroll-pad-sizer {
+		overflow-x: hidden !important;
+		overflow-y: scroll !important;
+		visibility: hidden !important;
+		margin-inline-start: -1px !important;
+		height: 0 !important;
+	}
+}
+
+.b-grid-body-container {
+	overflow-y: scroll !important;
+}
+
+.b-resourcehistogram-histogram rect {
+    cursor: pointer;
+}
+
+.qp-sch-histogram-background {
+	rect {
+		fill: #00204010 !important;
+	}
+}
+
+.qp-sch-histogram-foreground {
+
+	&, &  * {
+		pointer-events: none;
+	}
+
+	.b-grid-splitter {
+		visibility: hidden;
+	}
+	.b-grid-panel-body {
+		background-color: transparent;
+	}
+	.b-sch-background-canvas {
+		display: none;
+	}
+	.b-virtual-scrollers {
+		visibility: hidden;
+	}
+	path {
+		display: none;
+	}
+	.b-grid-subgrid-locked {
+		visibility: hidden;
+	}
+}
+
+.qp-sch-calendar-container {
+	.grid-left-toolbar-cont {
+	}
+
+	.grid-right-toolbar-cont .qp-tool-bar {
+		text-wrap: nowrap; /* TODO: Qickfixes for the bugs in qp-grid/qp-tool-bar */
+		overflow: visible;
+
+		.qp-sch-time-period .qp-tool-bar-button {
+			padding: calc( ( var(--qp-toolbar-height) - var(--qp-icon-size) ) / 2 - 1px ) 10px !important;
+		}
+	}
+
+	.qp-datetime__editor {
+		border: none !important;
+		box-shadow: none !important;
+		background-color: var(--qp-sch-button-hover-background);
+
+
+		.buttonsCont {
+			display: flex;
+			flex-direction: row;
+
+			span {
+				padding-top: 2px;
+				padding-inline-end: 5px;
+				text-wrap: nowrap;
+			}
+			& > qp-icon {
+				margin-top: 7px;
+			}
+		}
+	}
+}
+
+
+.qp-sch-events-container {
+	border: 1px solid var(--qp-sch-border);
+    flex: 1;
+	position: relative;
+
+	.b-grid-header-text > .b-grid-header-text-content {
+		font-size: 14px;
+	}
+}
+
+.qp-sch-events {
+	flex: 1 1 0% !important;
+}
+
+.b-grid-header-container {
+	box-shadow: none !important;
+	background-color: var(--qp-sch-header-background);
+	flex-basis: 60px;
+
+	.b-sch-header-row {
+		min-height: var(--qp-sch-header-height) !important;
+	}
+
+	.b-sch-timeaxiscolumn {
+		background-color: var(--qp-sch-header-background);
+
+		&.b-depth-0:hover {
+			background-color: var(--qp-sch-header-background) !important;
+		}
+		.b-sch-header-timeaxis-cell:hover {
+			background-color: var(--qp-sch-button-hover-background) !important;
+		}
+	}
+
+	.b-depth-0:not(.b-sch-timeaxiscolumn):hover {
+		background-color: var(--qp-sch-header-hover-background) !important;
+	}
+}
+
+.b-grid-header {
+	text-transform: none;
+
+	&.b-sort &-text .b-sort-icon::before {
+		content: "\e9ed" !important;
+		display: inline-block;
+		font: normal normal normal 14px/1 "FontAwesome" !important;
+		text-rendering: auto;
+		-webkit-font-smoothing: antialiased;
+		color: rgba(0, 0, 0, 0.5) !important;
+	}
+}
+
+.b-sch-header-timeaxis-cell {
+	text-transform: none !important;
+	justify-content: flex-start;
+	padding-bottom: 2px !important;
+	color: black;
+	border-color: var(--qp-sch-header-border);
+
+	.b-sch-header-row-0 & {
+		padding-inline-start: 0px;
+		font-size: 14px;
+	}
+	.b-sch-header-row-1 & {
+		padding-inline-start: 5px;
+		font-size: 10px;
+		height: 36px;
+	}
+}
+
+b-schedulerpro .b-selected {
+    background-color: var(--qp-highlight-color) !important;
+}
+
+.b-grid-header {
+	text-transform: none;
+
+	&.b-sort &-text .b-sort-icon::before {
+		content: "\e9ed" !important;
+		display: inline-block;
+		font: normal normal normal 14px/1 "FontAwesome" !important;
+		text-rendering: auto;
+		-webkit-font-smoothing: antialiased;
+		color: rgba(0, 0, 0, 0.5) !important;
+	}
+}
+
+.b-grid-cell {
+	outline: none !important;
+}
+
+.b-sticky-headers .b-horizontaltimeaxis .b-sch-header-text.b-sticky-header {
+	padding-inline-start: 6px !important;
+}
+
+.qp-sch-time-period {
+    border: 1px solid #0000001A !important;
+    height: calc(var(--qp-toolbar-height) - 2px) !important;
+
+	& > * {
+		padding: calc( ( var(--qp-toolbar-height) - var(--qp-icon-size) ) / 2 - 1px) 10px;
+	}
+	&:not(.qp-sch-selected-time-period):not(:hover) > * {
+		background: inherit !important;
+	}
+}
+
+#productionOrdersGridId,
+#unscheduledOrdersGridId,
+#workCenterResourceGridId,
+#machineResourceGridId {
+	.grid-header-table th {
+		height: calc(var(--qp-sch-header-height) * 2);
+
+	}
+	.grid-content-wrap {
+		overflow-x: scroll;
+
+		&::-webkit-scrollbar {
+			width: 0px !important;
+		}
+	}
+
+	.grid-content-table > tbody > tr > td {
+		line-height: var(--qp-sch-line-height) !important;
+	}
+}
+
+*:hover::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+}
+*:not(:hover)::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.09);
+}
+
+*::-webkit-scrollbar-track {
+    background-color: var(--qp-sch-dark-background);
+}
+
+*:not(:hover)::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.04);
+}
+*:hover::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.10);
+}
+
+.b-resourcehistogram-histogram rect {
+	fill: rgba(var(--link-color), 0.7);
+	&:hover {
+		fill: rgba(var(--link-color), 0.77);
+	}
+
+	&.b-underallocated {
+		fill: rgba(var(--link-color), .9);
+		&:hover {
+			fill: rgba(var(--link-color), 1);
+		}
+	}
+}
+
+#mainTabBar .filter-box {
+    min-width: 100px;
+    max-width: 200px;
+    width: auto !important;
+}
+
+// TODO: Check if we need this
+// There was a bug in Platform: Removing it the normal way changes the size of the toolbar
+#workCenterOperationGridId_topBarrefresh,
+#machineOperationGridId_topBarrefresh {
+	opacity: 0;
+	pointer-events: none;
+}
+
+#pnlFiles, #pnlActivities, #pnlNote {
+	display: none;
+}
+
+#datePickerHolderID {
+	#filter_btnApply {
+		background-color: #0B72B9;
+		border-radius: 10px;
+		color: white;
+		-webkit-text-fill-color: white;
+	}
+
+	button {
+		margin: unset;
+	}
+}
+

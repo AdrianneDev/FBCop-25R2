@@ -1,0 +1,32 @@
+<template>
+	<require from="./ReportScreen.scss"></require>
+
+	<qp-custom-toolbar-item toolbar-id="ScreenToolbar" action-id="search" index="100" tooltip="Search">
+		<div class="control-container size-default  template-selector" show.bind="!Report.ViewPdf.value">
+			<qp-filter-box id="search-fb" on-key-down.call="onSearchPressed(ev)" on-filter.call="onSearch(filter)"
+				always-show-search-button="true">
+			</qp-filter-box>
+		</div>
+	</qp-custom-toolbar-item>
+
+	<div class="splash loading" if.bind="refreshing">
+		<div class="message">${refreshingMessage}</div>
+	</div>
+
+	<iframe frameborder="0" id="print-iframe" class="hiddenFrame" ref="printFrame" load.trigger="printResultLoaded()" src.bind="printUrl">
+	</iframe>
+
+	<qp-splitter id="splitViewer" split="width" splitter-state.bind="groupsSplitterState" disabled.bind="groupsHidden"
+		invisible.bind="groupsHidden" initial-state="collapsed-first" initial-split="23%">
+		<split-pane>
+			<qp-tree id="viewer_gt" view.bind="GroupsTree" ref="treeElement" wg-container="GroupTree"
+				view-model.ref="treeViewModel">
+			</qp-tree>
+		</split-pane>
+		<split-pane>
+			<iframe frameborder="0" id="report-result-iframe" src.bind="resultUrl" class="viewer-iframe"
+				ref="resultFrame" load.trigger="resultLoaded()" onload="OnFrameLoad(this)" if.bind="!hideIframe">
+			</iframe>
+		</split-pane>
+	</qp-splitter>
+</template>

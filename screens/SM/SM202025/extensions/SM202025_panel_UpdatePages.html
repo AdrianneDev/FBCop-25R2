@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="fltArticlesProps" caption="Update Article Properties" auto-repaint="true">
+		<qp-template id="frmUpdatePages_template" name="1">
+			<qp-fieldset slot="A" id="frmUpdatePages" view.bind="fltArticlesProps">
+				<field name="ParentUID" tabindex="-2"></field>
+				<field name="TagID" tabindex="-4"></field>
+				<field name="Keywords" ></field>
+				<field name="Hold"></field>
+				<field name="Versioned"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK" caption="Apply"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

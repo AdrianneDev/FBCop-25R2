@@ -1,0 +1,108 @@
+<template>
+	<require from="../../PM/common/pm-status-colors-common.scss"></require>
+	<qp-splitter id="FormSplitter"
+				 split="width"
+				 disable="true"
+				 invisible="true"
+				 initial-split="33%"
+				 state="normal">
+		<split-pane>
+			<qp-template id="RequestForInformation_form" name="1" wg-container>
+				<div slot="A">
+					<qp-fieldset id="formSlotA01" view.bind="RequestForInformation">
+						<field name="RequestForInformationCd"></field>
+						<field name="Status" class="colored" pinned="false"></field>
+						<field name="Incoming"></field>
+						<field name="IncomingRequestForInformationId" config-allow-edit.bind="true"></field>
+						<field name="Reason"></field>
+						<field name="Summary" config-rows.bind="3"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSlotA02" view.bind="RequestForInformation">
+						<field name="ClassId" caption="Class"></field>
+						<field name="PriorityId" config-display-mode.bind="'id'"></field>
+						<field name="DueResponseDate"></field>
+						<field name="OwnerId" config-display-mode.bind="'text'"></field>
+						<field name="ProjectId"></field>
+						<field name="ProjectTaskId"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSlotA03" view.bind="RequestForInformation">
+						<field name="BusinessAccountId" config-allow-edit.bind="true"></field>
+						<field name="ContactId" config-display-mode.bind="'text'" config-allow-edit.bind="true"></field>
+						<field name="DocumentationLink" caption="Specification"></field>
+						<field name="SpecSection"></field>
+						<field name="ConvertedFrom" config-allow-edit.bind="true"></field>
+						<field name="ConvertedTo" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="CurrentRequestForInformation_tab" active-tab-id="DetailsTab" wg-container>
+				<qp-tab id="DetailsTab" caption="Details">
+					<qp-caption caption="Question"></qp-caption>
+					<qp-rich-text-editor id="edCurrentRequestForInformationRequestDetails"
+						state.bind="CurrentRequestForInformation.RequestDetails"
+						wg-field
+						config.bind="{ expandToContent: true }"></qp-rich-text-editor>
+					<qp-caption caption="Answer"></qp-caption>
+					<qp-rich-text-editor id="edCurrentRequestForInformationRequestAnswer"
+						state.bind="CurrentRequestForInformation.RequestAnswer"
+						wg-field
+						config.bind="{ expandToContent: true }"></qp-rich-text-editor>
+				</qp-tab>
+				<qp-tab id="AdditionalInfoTab" caption="Additional Info">
+					<qp-template id="AdditionalInfoTabForm" name="1-1" class="equal-height label-size-m" wg-container="CurrentRequestForInformation_form2">
+						<div slot="A">
+							<qp-fieldset id="AdditionalInfoTabFormA01" view.bind="RequestForInformation" caption="Assigned To">
+								<field name="CreatedById" config-display-mode.bind="'text'"></field>
+								<field name="CreationDate"></field>
+								<field name="CurrentRequestForInformation.LastModifiedRequestAnswer"></field>
+								<field name="WorkgroupID" config-display-mode.bind="'id'"></field>
+							</qp-fieldset>
+						</div>
+						<div slot="B">
+							<qp-fieldset id="AdditionalInfoTabFormB01" view.bind="RequestForInformation" caption="Change Impact">
+								<field name="ScheduleImpactGroup" unbound>
+									<qp-field slot="label"
+											  control-state.bind="RequestForInformation.IsScheduleImpact"
+											  caption="Schedule Impact (days)"></qp-field>
+									<qp-field control-state.bind="RequestForInformation.ScheduleImpact"></qp-field>
+								</field>
+								<field name="CostImpactGroup" unbound>
+									<qp-field slot="label" control-state.bind="RequestForInformation.IsCostImpact"></qp-field>
+									<qp-field control-state.bind="RequestForInformation.CostImpact"></qp-field>
+								</field>
+								<field name="DesignChange" class="no-label"></field>
+							</qp-fieldset>
+						</div>
+					</qp-template>
+				</qp-tab>
+				<qp-tab id="AttributesTab" caption="Attributes">
+					<qp-grid id="PXGridAnswers" view.bind="Attributes"></qp-grid>
+				</qp-tab>
+				<qp-tab id="ActivitiesTab" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+				<qp-tab id="RelationsTab" caption="Relations">
+					<qp-grid id="grdRelations" view.bind="Relations"></qp-grid>
+				</qp-tab>
+				<qp-tab id="DrawingsTab" caption="Drawings">
+					<qp-grid id="PXDrawingsGrid" view.bind="LinkedDrawingLogs"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="DrawingLogs" caption="Add Drawing Log" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="PXDrawingLogsGrid" view.bind="DrawingLogs"></qp-grid>
+		<footer>
+			<qp-button id="PXButton6" state.bind="LinkDrawingLogToEntity"></qp-button>
+			<qp-button id="PXButton7" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="PXButton8" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="DrawingLogsAttachments"
+			  caption="Drawing Log Document Attachments"
+			  auto-repaint="true"
+			  width="lg"
+			  height="85vh">
+		<qp-grid id="GridDrawingLogsAttachments" view.bind="DrawingLogsAttachments"></qp-grid>
+	</qp-panel>
+</template>

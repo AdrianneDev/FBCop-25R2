@@ -1,0 +1,13 @@
+<template>
+	<qp-template id="form" name="1-1" class="label-size-m">
+		<qp-fieldset id="form_0" wg-container="Filter_form" view.bind="Filter" slot="A">
+			<field name="TemplateID"></field>
+			<field name="ScreenID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_1" wg-container="Filter_form" view.bind="Filter" slot="B">
+			<field name="Description"></field>
+			<field name="Graph"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+</template>

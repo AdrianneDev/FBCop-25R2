@@ -1,0 +1,21 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="Action"></field>
+			<field name="ItemClassID"></field>
+			<field name="InventoryID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsNonStockItem-Filter" slot="B" view.bind="Filter" caption="Non-Stock Item Settings">
+			<field name="NonStockItemClassID"></field>
+			<field name="NonStockPostClassID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsStockItem-Filter" slot="B" view.bind="Filter" caption="Stock Item Settings">
+			<field name="StockItemClassID"></field>
+			<field name="StockPostClassID"></field>
+			<field name="StockValMethod"></field>
+			<field name="StockLotSerClassID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="ItemList"></qp-grid>
+</template>

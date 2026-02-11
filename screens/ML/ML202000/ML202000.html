@@ -1,0 +1,98 @@
+<template>
+	<require from="./ML202000.scss"></require>
+	<qp-template name="1-1" class="equal-height" qp-collapsible id="formDocument" wg-container>
+		<qp-fieldset id="fsDocumentA" slot="A" view.bind="Document" class="label-size-m">
+			<field name="PromptID" pinned="true" config-display-mode.bind="'id'"></field>
+			<field name="IsActive" pinned="true"></field>
+			<field name="Name" pinned="false"></field>
+			<field name="ConnectionID" pinned="false" config-allow-edit.bind="true"></field>
+			<field name="ScreenID" pinned="false"></field>
+			<field name="ActionName"></field>
+		</qp-fieldset>
+		<qp-fieldset class="label-size-m" slot="B" id="fsTesting" view.bind="Testing" caption="Prompt Testing">
+			<field name="ExampleID" pinned="true">
+				<qp-button id="btnTestPrompt" state.bind="TestPrompt" class="major-button col-sm-12 col-md-auto col-lg-auto"></qp-button>
+			</field>
+		</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-template name="1-1" class="stretch" id="formInstructionTesting" wg-container>
+		<div slot="A">
+			<qp-tabbar id="tabsInstructions" wg-container>
+				<qp-tab id="tabPromptInstructions" caption="Instructions">
+					<qp-rich-text-editor
+						id="edInstruction"
+						state.bind="Document.PromptInstruction"
+						class="stretch ml-instructions separate-section"
+						config.bind = "{ expandToContentMinHeight: 168, toolbar:'data-field-group > undo redo'}"
+						value-format="html">
+						<InsertDataField enabled="true"
+										caption="Input Data Field"
+										tooltip="Insert Input Data Field"
+										dataMember="EntityItems"
+										idField="Key"
+										textField="Name"
+										valueField="Path"
+										iconField="Icon">
+						</InsertDataField>
+						<InsertDataFieldPrev enabled="true"
+										caption="Output Data Field"
+										tooltip="Insert Output Data Field"
+										prefix="@"
+										dataMember="OutputItems"
+										idField="Key"
+										textField="Name"
+										valueField="Path"
+										iconField="Icon">
+						</InsertDataFieldPrev>
+					</qp-rich-text-editor>
+				</qp-tab>
+				<qp-tab id="tabUpdateInstructions" caption="Output Format">
+					<qp-button id="btnGenerateOutputExample"
+						state.bind="GenerateOutputExample"
+						class="col-auto ml-rte-button"
+						portal="target.bind: updateInstructionsToolbar; position: afterbegin">
+					</qp-button>
+					<qp-rich-text-editor
+						id="edInstructionsBOutputExamples"
+						state.bind="Document.OutputExamples"
+						class="stretch separate-section"
+						config.bind = "{ expandToContentMinHeight: 168, toolbar:'> undo redo'}"
+						value-format="text">
+					</qp-rich-text-editor>
+				</qp-tab>
+			</qp-tabbar>
+		</div>
+		<div slot="B">
+			<qp-tabbar id="tabsTesting" wg-container>
+				<qp-tab id="tabLLMPreview" caption="Preview">
+					<qp-fieldset class="stretch" id="fsTestingPreview" view.bind="Testing" caption="">
+						<field class="no-label stretch" name="LLMResponse" replace-content>
+							<qp-rich-text-editor id="rtePreview" class="col-12"
+								state.bind="Testing.LLMResponse" value-format="html" read-only="true" wg-container
+							></qp-rich-text-editor>
+						</field>
+					</qp-fieldset>
+				</qp-tab>
+				<qp-tab id="tabLLMPrompt" caption="Prompt">
+					<qp-fieldset class="stretch" id="fsTestingPrompt" view.bind="Testing" caption="">
+						<field class="no-label stretch" name="LLMResponse" replace-content>
+							<qp-rich-text-editor id="rtePrompt" class="col-12"
+								state.bind="Testing.LLMPrompt" value-format="text" read-only="true" wg-container
+							></qp-rich-text-editor>
+						</field>
+					</qp-fieldset>
+				</qp-tab>
+				<qp-tab id="tabLLMResponse" caption="Response">
+					<qp-fieldset class="stretch" id="fsTestingResponse" view.bind="Testing" caption="">
+						<field class="no-label stretch" name="LLMResponseRaw" replace-content>
+							<qp-rich-text-editor id="rteResponse" class="col-12"
+								state.bind="Testing.LLMResponseRaw" value-format="text" read-only="true" wg-container
+							></qp-rich-text-editor>
+						</field>
+					</qp-fieldset>
+				</qp-tab>
+			</qp-tabbar>
+		</div>
+	</qp-template>
+</template>

@@ -1,0 +1,12 @@
+<template>
+	<qp-template id="template" name="1-1" class="label-size-m">
+		<qp-fieldset id="form" slot="A" view.bind="Header">
+			<field name="NumberingID"></field>
+			<field name="Descr"></field>
+			<field name="UserNumbering"></field>
+			<field name="NewSymbol"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Sequence" caption="Details"></qp-grid>
+</template>

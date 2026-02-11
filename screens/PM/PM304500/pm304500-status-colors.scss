@@ -1,0 +1,18 @@
+@import '../common/pm-status-colors-common.scss';
+
+/* –– blue –– */
+@include colored-status('S', var(--status-blue-color)); // Sent
+
+/* –– orange –– */
+@include colored-status('D', var(--status-orange-color)); // Draft
+
+/* -- red -- */
+@include colored-status('P', var(--status-red-color)); // Pending Approval
+
+/* –– green –– */
+@include colored-status('T', var(--status-green-color)); // Accepted
+@include colored-status('V', var(--status-green-color)); // Approved
+@include colored-status('A', var(--status-green-color)); // Approved
+
+/* –– grey –– */
+@include colored-status('O', var(--status-gray-color)); // Converted

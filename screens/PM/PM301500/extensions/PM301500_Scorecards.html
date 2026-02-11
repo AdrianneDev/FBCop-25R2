@@ -1,0 +1,148 @@
+<template>
+    <div replace="#scorecards-main">
+        <div class="h-stack">
+            <div class="col-2">
+                <qp-dashboard-widget
+                    type="scorecard"
+                    config.bind="scorecards.ProjectCompleted.config"
+                    data.bind="scorecards.ProjectCompleted.data">
+                </qp-dashboard-widget>
+            </div>
+            <div class="col-3">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.GrossProfitAtCompletion.config"
+                    data.bind="scorecards.GrossProfitAtCompletion.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.GrossProfitToDate.config"
+                    data.bind="scorecards.GrossProfitToDate.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.MarginToDate.config"
+                    data.bind="scorecards.MarginToDate.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-3">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.ProjectedMargin.config"
+                    data.bind="scorecards.ProjectedMargin.data">
+                </qp-dashboard-widget>				
+            </div>
+        </div>
+        <div class="h-stack">
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.BudgetedRevenue.config"
+                    data.bind="scorecards.BudgetedRevenue.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-3">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.ActualRevenueToDate.config"
+                    data.bind="scorecards.ActualRevenueToDate.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.ContractBilled.config"
+                    data.bind="scorecards.ContractBilled.data">
+                </qp-dashboard-widget>							
+            </div>
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.OverbillingUnderbilling.config"
+                    data.bind="scorecards.OverbillingUnderbilling.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-3">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.RevenueBudgetBacklog.config"
+                    data.bind="scorecards.RevenueBudgetBacklog.data">
+                </qp-dashboard-widget>				
+            </div>
+        </div>
+        <div class="h-stack">
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.BudgetedCost.config"
+                    data.bind="scorecards.BudgetedCost.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-3">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.ActualCostsToDate.config"
+                    data.bind="scorecards.ActualCostsToDate.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.OpenCommitments.config"
+                    data.bind="scorecards.OpenCommitments.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-3">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.CostBudgetBacklog.config"
+                    data.bind="scorecards.CostBudgetBacklog.data">
+                </qp-dashboard-widget>				
+            </div>
+            <div class="col-2">
+                <qp-dashboard-widget 
+                    type="scorecard"
+                    config.bind="scorecards.RemainingBudget.config"
+                    data.bind="scorecards.RemainingBudget.data">
+                </qp-dashboard-widget>
+            </div>
+        </div>
+    </div>
+    <div replace="#scorecards-qty">
+        <div class="col-6">
+            <qp-dashboard-widget 
+                type="scorecard"
+                config.bind="scorecards.OutstandingAPBills.config"
+                data.bind="scorecards.OutstandingAPBills.data">
+            </qp-dashboard-widget>
+        </div>				
+        <div class="col-6">
+            <qp-dashboard-widget 
+                type="scorecard"
+                config.bind="scorecards.PotentialChangeOrders.config"
+                data.bind="scorecards.PotentialChangeOrders.data">
+            </qp-dashboard-widget>
+        </div>				
+        <div class="col-6">
+            <qp-dashboard-widget 
+                type="scorecard"
+                config.bind="scorecards.OpenProjectIssues.config"
+                data.bind="scorecards.OpenProjectIssues.data">
+            </qp-dashboard-widget>
+        </div>				
+        <div class="col-6">
+            <qp-dashboard-widget 
+                type="scorecard"
+                config.bind="scorecards.OpenRFIs.config"
+                data.bind="scorecards.OpenRFIs.data">
+            </qp-dashboard-widget>				
+        </div>				
+    </div>
+    <div append="#hidden-grids">
+		<qp-grid id="scorecards-grid" view.bind="Scorecards"></qp-grid>     
+    </div>
+</template>

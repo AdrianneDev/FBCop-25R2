@@ -1,0 +1,8 @@
+<template>
+	<qp-fieldset id="Outlook" view.bind="UserPrefs" slot="C" caption="Outlook" append="#UserPrefs_form2" if.bind="CustomerModule.IsOutlookIntegrationInstalled.value">
+		<field name="UserPrefs_button1" replace-content unbound>
+			<a id="UserPrefs_form2_ModernOnPremiseManifest" href="" click.delegate="processDownloadOnPremiseManifestLinkClick()" i18n>Get Outlook Add-In Manifest for Exchange Server On-Premises</a>
+			<a id="UserPrefs_form2_Modern365Manifest" if.bind="CustomerModule.IsOutlookOidcEnabled.value" href="" click.delegate="processDownload365ManifestLinkClick()" i18n>Get Outlook Add-In Manifest for Microsoft 365</a>
+		</field>
+	</qp-fieldset>
+</template>

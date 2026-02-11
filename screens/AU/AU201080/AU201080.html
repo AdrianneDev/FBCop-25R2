@@ -1,0 +1,241 @@
+<template>
+	<require from="client-controls/controls/dialog/edit-dialog-base/qp-edit-element"></require>
+	<require from="./AU201080.scss"></require>
+	<qp-splitter id="splitter" split="width" initial-split="300px">
+		<split-pane class="v-stack">
+			<div class="customization-editor-tree-toolbar">
+				<qp-button id="btnFilterCustomized" class="customization-editor-tree-toolbar__button ${ filteredByCustomized ? 'major-button' : '' }" caption="Customized" click.delegate="filterCustomized()"
+					config.bind="{ imageUrl: 'svg:main@filterLittle', displayIconAndText: true, toolTip: filteredByCustomized ? Names.FilterAllButtonTooltip : Names.FilterCustomizedButtonTooltip }"></qp-button>
+				<qp-filter-box class="fields-filter-box" on-filter.call="searchAvailableFields(filter, prevFilterCustomized)"></qp-filter-box>
+			</div>
+			<div class="customization-code-editor__column-content no-animation">
+				<div class="customization-tree">
+					<div repeat.for="parentField of currentAvailableFields" class="customization-tree__group">
+						<div class="customization-tree__view ${parentField.id === selectedNodeId ? 'customization-tree__view--selected' : ''}"
+							tabindex="0"
+							click.delegate="$parent.setActive(parentField) && $parent.showViewProperties($event, parentField)">
+							<qp-icon class="customization-tree__view-collapse" click.delegate="$parent.toggleCollapse($event, parentField)"
+								imagesrc="${collapsedNodes.includes(parentField.id) ? 'svg:main@treeArrowDown' : 'svg:main@treeArrowUp'}" title.bind="collapsedNodes.includes(parentField.id) ? Names.ExpandHierarchy : Names.CollapseHierarchy">
+							</qp-icon>
+							<div class="customization-tree__view-content">
+								<div class="customization-tree__view-name-container ${collapsedNodes.includes(parentField.id) ? 'collapsed' : ''}">
+									<div class="customization-tree__view-name customization-tree__text customization-tree__text--l">${parentField.name}</div>
+									<div if.bind="parentField.label" class="customization-tree__view-label" title.bind="parentField.labelTooltip">${parentField.label}</div>
+								</div>
+								<div class="customization-tree__view-id customization-tree__text customization-tree__text--s">${parentField.id}</div>
+							</div>
+						</div>
+						<div repeat.for="childField of parentField.children"
+							class="customization-tree__field ${childField.id === selectedNodeId ? 'customization-tree__field--selected' : ''}"
+							tabindex="0"
+							show.bind="!collapsedNodes.includes(parentField.id)" click.delegate="$parent.$parent.setActive(childField) && $parent.$parent.showItemProperties($event, childField)">
+							<div class="customization-tree__field-group">
+								<div class="customization-tree__field-content">
+									<div class="customization-tree__field-name-container">
+										<div
+											class="customization-tree__field-name customization-tree__text customization-tree__text--m  ${options.showRequired && config.required ? 'req-l': ''}">
+											${childField.name}</div>
+										<div if.bind="childField.label" class="customization-tree__field-label" title.bind="parentField.labelTooltip">${childField.label}</div>
+									</div>
+									<div class="customization-tree__field-id customization-tree__text customization-tree__text--s">${childField.id}
+									</div>
+								</div>
+							</div>
+							<div class="customization-tree__field-group customization-tree__field-group--toolbar">
+								<qp-menu config.bind="getCustomizationTreeNodeMenuConfig(childField)"
+									if.bind="false"
+									class="customization-tree__field-menu"
+									menuselected.delegate="processCustomizationTreeNodeMenu($event, { id: childField.id })">
+								</qp-menu>
+								<div class="customization-tree__field-icon-container" click.delegate="addFieldToHtml($event, { id: childField.id })" title.bind="Names.AddFieldToHtml" if.bind="!parentField.isGrid">
+									<qp-icon
+										class="customization-tree__field-icon"
+										imagesrc.bind="'svg:main@arrowRight'">
+									</qp-icon>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</split-pane>
+		<split-pane class="v-stack">
+			<div class="customization-code-editor__column-content">
+				<qp-tabbar id="screenEdit_tab" wg-container="">
+					<qp-tab id="tabHtml" caption="HTML">
+						<div class="h-stack grid-top-toolbar">
+							<qp-button id="btnSaveExtension" state.bind="htmlDiff"></qp-button>
+							<qp-button id="btnReloadOriginal" state.bind="rollbackHtml"></qp-button>
+						</div>
+						<qp-info-box class="info-box-prewrap" type="error" caption.bind="ScreenHtmlEdit.HtmlError.value" if.bind="ScreenHtmlEdit.HtmlError.value"></qp-info-box>
+						<qp-code-editor class="stretch" config.bind="{ id: 'htmlContentControlId',  language: 'html' }"
+							wg-name = "htmlContentControl"
+							state.bind="ScreenHtmlEdit.HtmlContent"
+							view-model.ref="htmlContentControl">
+						</qp-code-editor>
+					</qp-tab>
+					<qp-tab id="tab-properties" caption="View or Field Customization">
+						<div class="h-stack grid-top-toolbar">
+							<qp-button id="btnRollbackAttributes" click.trigger="rollbackAttributes()" config.bind="{ imageUrl: 'main@Cancel' }" enabled.bind="customPropertiesModified"></qp-button>
+							<qp-button id="btnDeleteViewOrField" click.trigger="deleteViewOrField()" config.bind="{ imageUrl: 'main@Remove' }"></qp-button>
+							<qp-button id="btnAddDecorators" state.bind="actionAddDecorators"></qp-button>
+						</div>
+						<qp-label caption.bind="AttributesEditor.CustomProperties.text"></qp-label>
+						<qp-code-editor id="edAttributesEditor-CustomProperties"
+							wg-name="CustomProperties" class="stretch separate-section"
+							config.bind="{ language: 'typescript' }"
+							state.bind="AttributesEditor.CustomProperties">
+						</qp-code-editor>
+						<qp-label caption.bind="AttributesEditor.OriginalProperties.text"></qp-label>
+						<qp-code-editor id="edAttributesEditor-OriginalProperties"
+							wg-name="OriginalProperties" class="stretch separate-section"
+							config.bind="{ language: 'typescript', readOnly: true }"
+							state.bind="AttributesEditor.OriginalProperties">
+						</qp-code-editor>
+					</qp-tab>
+					<qp-tab id="tabTS" caption="TypeScript">
+						<qp-code-editor id="edscreenTsEdit-TsContent"
+							wg-name="TsContent" class="stretch"
+							config.bind="{ language: 'typescript', readOnly: true }"
+							state.bind="ScreenTsEdit.TsContent">
+						</qp-code-editor>
+					</qp-tab>
+				</qp-tabbar>
+			</div>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="ExtensionInfo" auto-repaint="true" caption="Preview HTML Extension" width="90vw" height="90vh">
+		<qp-fieldset id="extensionInfo2" wg-container view.bind="ExtensionInfo" class="stretch">
+			<field name="HtmlContent" class="stretch"
+				control-type="qp-code-editor"
+				no-label.bind="true"
+				control-config.bind="{ language: 'html' }"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK" class="major-button"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FilterNewFieldProps" auto-repaint="true" caption="Add Field">
+		<qp-fieldset id="filterNewField1" wg-container view.bind="FilterNewFieldProps">
+			<field name="FieldName"></field>
+			<field name="CommitChanges"></field>
+			<field name="IsReadOnly"></field>
+			<field name="Hidden"></field>
+			<field name="NoLabel"></field>
+			<field name="Multiline"></field>
+			<field name="Disabled"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="FinishAddFieldSnippet" dialog-result="OK" state.bind="finishAddFieldSnippet" class="major-button"></qp-button>
+			<qp-button id="CancelAddFieldSnippet" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FilterNewBaseViewPropsFilter" auto-repaint="true" caption="Add View Extension">
+		<qp-fieldset id="filterNewBaseViewPropsFilter1" wg-container view.bind="FilterNewBaseViewPropsFilter">
+			<field name="BaseView"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="FinishAddViewExtensionSnippet" dialog-result="OK" state.bind="finishAddFieldSnippet" class="major-button"></qp-button>
+			<qp-button id="CancelAddViewExtensionSnippet" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FilterNewViewPropsFilter" auto-repaint="true" caption="Add View">
+		<qp-fieldset id="filterNewViewPropsFilter1" wg-container view.bind="FilterNewViewPropsFilter">
+			<field name="ViewName"></field>
+			<field name="ClassName"></field>
+			<field name="ContainerName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="FinishAddViewSnippet" dialog-result="OK" state.bind="finishAddFieldSnippet" class="major-button"></qp-button>
+			<qp-button id="CancelAddViewSnippet" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FilterNewField" width="lg" auto-repaint="true" height="500px" caption="Add Field">
+		<qp-template id="FormFilterNewField" name="1">
+			<qp-fieldset id="FormFilterNewField_0" wg-container="FilterNewField_FormFilterNewField"
+				view.bind="FilterNewField" slot="A">
+				<field name="DataView"></field>
+				<field name="ObjectName"></field>
+				<field name="Search" qp-fast-filter.bind="searchFieldsVm"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="NewFields_PXGridNewFields" wg-container view.bind="NewFields" view-model.ref="searchFieldsVm"></qp-grid>
+		<footer>
+			<qp-button id="btnNewFieldSave" dialog-result="OK" caption="Save to Extension" state.bind="finishAddDataFieldToTs" class="major-button"></qp-button>
+			<qp-button id="btnNewFieldCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FilterNewView" width="lg" auto-repaint="true">
+		<qp-wizard id="FilterNewViewWizard" config.bind="wizardConfig" wg-container="FilterNewViewWizard" caption="Add View">
+			<qp-tab id="tabFilterNewViewWizard-viewSettings" caption="View Settings">
+				<qp-template id="FormFilterNewView-form" name="1">
+					<qp-fieldset id="FormFilterNewView-header" wg-container="FilterNewView_FormFilterNewView"
+						view.bind="FilterNewView" slot="A">
+						<field name="DataView"></field>
+						<field name="ViewType"></field>
+						<field name="DisplayName"></field>
+						<field name="DacName"></field>
+						<field name="Preset"></field>
+					</qp-fieldset>
+				</qp-template>
+			</qp-tab>
+			<qp-tab id="tabFilterNewViewWizard-fields" caption="Select fields">
+				<div class="new-view-wizard-grid-container">
+					<qp-grid id="FilterNewViewWizard-grid" wg-container view.bind="NewFieldsForNewView"></qp-grid>
+				</div>
+			</qp-tab>
+		</qp-wizard>
+	</qp-panel>
+
+	<qp-panel id="FilterEditExtension" wg-container = "FilterEditExtensionContainer" auto-repaint="true" caption="Edit TypeScript Extension" width="90vw" height="90vh">
+		<div class="h-stack grid-top-toolbar">
+			<qp-button id="btnNewExtension" state.bind="newExtension"></qp-button>
+			<qp-menu class="qp-button" hidden.bind="isReadonly" config.bind="extensionsMenuConfig" menuselected.delegate="processSnippetMenuSelected($event)"></qp-menu>
+		</div>
+		<qp-fieldset id="filterEditExtension1" wg-container view.bind="FilterEditExtension">
+			<field name="ExtensionName"></field>
+		</qp-fieldset>
+		<qp-code-editor state.bind="FilterEditExtension.TsContent" no-label.bind="true" class="stretch" wg-container = "FilterEditExtensionContainer"
+			view-model.ref="editTsControl"
+			wg-name = 'extensionEditorTsContent'
+			config.bind="{ id: 'extensionEditorTsContentId', language: 'typescript' }">
+		</qp-code-editor>
+		<qp-info-box type="error" caption.bind="FilterEditExtension.ValidationError.value" if.bind="FilterEditExtension.ValidationError.value"></qp-info-box>
+		<footer>
+			<qp-button id="btnValidate" state.bind="validate"></qp-button>
+			<qp-button id="btnFormat" state.bind="format"></qp-button>
+			<qp-button id="btnOK" dialog-result="OK" caption="Save Extension" class="major-button"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="deleteViewOrField-dialog" width="550px" config.bind="deleteViewOrFieldDialogConfig">
+		<span i18n>Customization of the view or the field will be deleted. Do you want to continue?</span>
+		<footer>
+			<qp-button config.bind="deleteViewOrFieldOkButtonConfig" click.trigger="doDeleteViewOrField()" class="major-button"></qp-button>
+			<qp-button config.bind="deleteViewOrFieldCancelButtonConfig"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FilterAddDecorators" width="lg" auto-repaint="true" height="500px" caption="Add Decorators">
+		<qp-splitter id="FilterAddDecorators_splitter" split="width" disable-collapse="true" first-pane-min-size="100px" second-pane-min-size="100px" initial-split="40%">
+			<split-pane>
+				<qp-grid id="FilterAddDecorators_AddDecorators" wg-container view.bind="AddDecorators"></qp-grid>
+			</split-pane>
+			<split-pane>
+				<qp-grid id="FilterAddDecorators_AddDecoratorProperties" wg-container
+					view.bind="AddDecoratorProperties"></qp-grid>
+			</split-pane>
+		</qp-splitter>
+		<footer>
+			<qp-button id="btnAddDecoratorsAppend" dialog-result="OK" caption="Add" class="major-button"></qp-button>
+			<qp-button id="btnAddDecoratorsCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

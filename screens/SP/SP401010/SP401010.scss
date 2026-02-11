@@ -1,0 +1,87 @@
+@import "../ar-document/ar-documents.scss";
+
+.top-bar-cont .qp-tool-bar-no-menu {
+	display: none;
+}
+
+.sp-cases-activity-header {
+	display: flex;
+	column-gap: 10px;
+	width: 100%;
+	padding-bottom: 10px;
+	line-height: 17px;
+
+	> :first-child {
+		display: flex;
+		flex: 0 0 30px;
+		width: 30px;
+		height: 30px;
+		margin-top: 3px;
+		padding-top: 4.5px;
+		padding-inline-start: 5px;
+		border-radius: 15px;
+
+		svg {
+			width: 20px;
+			height: 20px;
+			vertical-align: top;
+			color: white;
+		}
+	}
+	> :last-child {
+		flex: 1 0 1px;
+		margin-top: 2px;
+		input {
+			padding: 3px 0;
+		}
+	}
+
+	&.sp-activity-class-email-sent {
+		qp-hyper-icon {
+			background-color: #95d4ff;
+		}
+		.sp-cases-activity-title {
+			color: #95d4ff;
+		}
+	}
+	&.sp-activity-class-appointment {
+		qp-hyper-icon {
+			background-color: #e14251;
+		}
+		.sp-cases-activity-title {
+			color: #e14251;
+		}
+	}
+	&.sp-activity-class-task {
+		qp-hyper-icon {
+			background-color: #6f42c1;
+		}
+		.sp-cases-activity-title {
+			color: #6f42c1;
+		}
+	}
+	&.sp-activity-class-activity {
+		qp-hyper-icon {
+			background-color: #17a2b8;
+		}
+		.sp-cases-activity-title {
+			color: #17a2b8;
+		}
+	}
+	&.sp-activity-class-email {
+		qp-hyper-icon {
+			background-color: #007acc;
+		}
+		.sp-cases-activity-title {
+			color: #007acc;
+		}
+	}
+}
+
+.sp-cases-header {
+	font-size: 16px;
+}
+
+.sp-cases-activity-title {
+	color: #69bef7;
+}

@@ -1,0 +1,33 @@
+<template>
+	<qp-upload-dialog config.bind="{
+		id: 'pnlNewRev',
+		key: 'NewRevisionPanel',
+		sessionKey: 'ImportStatementProtoFile',
+		caption: 'Statement File Upload',
+		autoSave: false,
+		renderCheckIn: false,
+		renderComment: true,
+		renderLink: true,
+	}"></qp-upload-dialog>
+	<qp-template id="formHeader" name="10-7-7" class="equal-height" wg-container="Header_form">
+		<qp-fieldset id="columnFirstHeader" view.bind="Header" slot="A">
+			<field name="CashAccountID"></field>
+			<field name="RefNbr" class="control-size-m"></field>
+			<field name="DocDate"></field>
+			<field name="TranType"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHEader" view.bind="Header" slot="B">
+			<field name="StartBalanceDate"></field>
+			<field name="EndBalanceDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdHeader" view.bind="Header" slot="C" class="highlights-section">
+			<field name="CuryBegBalance"></field>
+			<field name="CuryEndBalance"></field>
+			<field name="CuryDetailsEndBalance"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Details"></qp-grid>
+
+</template>

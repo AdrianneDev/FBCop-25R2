@@ -1,0 +1,35 @@
+<template>
+	<qp-template id="form-Classes" name="1-1" class="equal-height label-size-m" qp-collapsible wg-container="Classes_form">
+		<qp-fieldset id="fsColumnA-Classes" slot="A" view.bind="Classes">
+			<field name="ReqClassID"></field>
+			<field name="Descr"></field>
+			<field name="PromisedLeadTime"></field>
+			<field name="CustomerRequest"></field>
+			<field name="IssueRequestor"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Classes" slot="B" view.bind="Classes" class="no-label">
+			<field name="VendorNotRequest"></field>
+			<field name="VendorMultiply"></field>
+			<field name="RestrictItemList"></field>
+			<field name="HideInventoryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-ItemList" caption="Item List">
+			<qp-grid id="grid-ItemList" view.bind="ClassItems" wg-container="ClassItems_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-GLAccounts" caption="GL Accounts">
+			<qp-template id="form-GLAccounts" name="1-1" class="label-size-m" wg-container="CurrentClass_tab">
+				<qp-fieldset id="fsColumnA-GLAccounts" slot="A" view.bind="CurrentClass">
+					<field name="BudgetValidation"></field>
+					<field name="ExpenseAccountDefault"></field>
+					<field name="ExpenseSubMask"></field>
+					<field name="ExpenseAcctID"></field>
+					<field name="ExpenseSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

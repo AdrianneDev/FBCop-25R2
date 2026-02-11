@@ -1,0 +1,80 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="Notifications_PXFormView1" wg-container>
+		<qp-fieldset slot="A" id="formNotifications1" view.bind="Notifications">
+			<field name="NotificationID" config.bind="{displayMode:'text'}"></field>
+			<field name="ScreenID" config.bind="{displayMode:'text'}"></field>
+			<field name="Name"></field>
+			<field name="NTo"></field>
+			<field name="NFrom"></field>
+			<field name="Subject"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formNotifications2" view.bind="Notifications">
+			<field name="DeliveryType"></field>
+			<field name="ScreenIdValue"></field>
+			<field name="DestinationScreenID"></field>
+			<field name="DestinationEntityID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar active-tab-id="clientSecrets" id="tabs">
+		<qp-tab id="tabMessage" caption="Message" wg-container="CurrentNotification_tab">
+			<qp-tree-selector-dialog view-model.ref="EntityItemsTreeSelector" editor-div.bind="editorDiv" wg-name="EdDataField" config.bind="{
+				id: 'edDataField',
+				disabled: true,
+				treeConfig: {
+					idField: 'Key',
+					valueField: 'Path',
+					dataMember: 'EntityItems',
+					textField: 'Name',
+					iconField: 'Icon',
+					mode: 'single',
+					hideRootNode: true,
+				},
+			}"></qp-tree-selector-dialog>
+			<qp-tree-selector-dialog view-model.ref="PreviousEntityItemsTreeSelector" editor-div.bind="editorDiv" wg-name="EdPrevDataField" config.bind="{
+				id: 'edPrevDataField',
+				disabled: true,
+				treeConfig: {
+					idField: 'Key',
+					valueField: 'Path',
+					dataMember: 'PreviousEntityItems',
+					textField: 'Name',
+					iconField: 'Icon',
+					mode: 'single',
+					hideRootNode: true,
+				},
+				allowEditValue: true,
+			}"></qp-tree-selector-dialog>
+			<qp-template name="1" id="templateCurrentNotification" class="stretch">
+				<div slot="A" class="v-stack">
+					<div class="h-stack separate-section">
+						<qp-button caption="Insert Data Field" data-selector-caption="${LocalizableStrings.DatafieldToolbarButton}" click.delegate="onHelpClick($event, false)" config.bind="{id: 'btnDataField'}"></qp-button>
+						<qp-button caption="Insert Previous Data Field" data-selector-caption="${LocalizableStrings.DatafieldPrevToolbarButton}" click.delegate="onHelpClick($event, true)"
+							tooltip.bind = "LocalizableStrings.btnPrevDataField_tooltip" config.bind="{id: 'btnPrevDataField'}"></qp-button>
+					</div>
+					<qp-text-editor class="col-12 stretch separate-section"
+						state.bind="CurrentNotification.Body"
+						view-model.ref="BodyControl"
+						config.bind="{type: 1, rows: 10, selectOnFocus: false, id: 'edCurrentNotification-Body', enterKeyAddsNewLine: true}"
+						fixed-height
+						wg-name="Body">
+					</qp-text-editor>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabBusinessEvents" caption="Send by Events" if.bind="Notifications.ShowSendByEventsTabExpr.value">
+			<qp-grid id="grdSendByEvents" view.bind="BusinessEvents">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel caption="Create Business Event" id="NewEventData">
+		<qp-fieldset id="frmCreateBusinessEvent" view.bind="NewEventData">
+			<field name="Name"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

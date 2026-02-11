@@ -1,0 +1,22 @@
+<template>
+
+	<qp-panel id="DeleteConfirmationPanel"
+			  caption="Clear Sync Data"
+			  auto-repaint="true">
+		<qp-template name="1" id="form-DeleteConfirmationPanelTemplate" class="label-size-m">
+			<qp-info-box id="info-DeleteConfirmationPanel"
+				caption="Are you sure you want to delete all synchronization data for the entity? This operation cannot be undone. Enter the Entity Name and click Proceed."
+				type="warning">
+			</qp-info-box>
+			<qp-fieldset slot="A" id="DeleteConfirmationPanel_CstFormView45" view.bind="DeleteConfirmationPanel" wg-container>
+				<field name="EntityName"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="buttonProceed-DeleteConfirmationPanel" caption="Proceed" dialog-result="Yes" class="major-button"></qp-button>
+			<qp-button id="buttonCancel-DeleteConfirmationPanel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

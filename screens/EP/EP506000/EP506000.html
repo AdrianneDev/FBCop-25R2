@@ -1,0 +1,19 @@
+<template>
+	<require from="client-controls/controls/compound/system-menu/qp-reminder/qp-reminder.scss"></require>
+	<qp-template id="reminderList" name="1" class="stretch">
+		<qp-grid config.bind="reminderListGridConfig" view.bind="ReminderList" slot="A"></qp-grid>
+	</qp-template>
+	<div class="reminder-controls" wg-container="DeferFilter_frmSnooze">
+		<div class="reminder-controls__footer">
+			<field name="Snooze" replace-content class="reminder-controls__footer--snooze">
+				<qp-button state.bind="DeferFilter.DeferCurrent" config.bind="{ id: 'btnSnooze' }" wg-name="Snooze"></qp-button>
+				<qp-field control-state.bind="DeferFilter.Type" class="no-label reminder-controls__footer--control"></qp-field>
+			</field>
+		</div>
+		<div class="reminder-controls__footer">
+			<qp-button caption="View Details" config.bind="{ id: 'btnViewActivity', action: 'ViewActivity'}" wg-name="Open"></qp-button>
+			<qp-button caption="Dismiss" config.bind="{ id: 'btnDismissCurrent', action: 'DismissCurrent'}" wg-name="Dismiss"></qp-button>
+			<qp-button caption="Dismiss All" config.bind="{ id: 'btnDismissAll', action: 'DismissAll'}"></qp-button>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,22 @@
+<template>
+	<qp-panel id="OrderEstimateItemFilter" caption="Add Estimate" auto-repaint="true">
+		<qp-fieldset id="estimateAddForm" view.bind="OrderEstimateItemFilter">
+			<field name="EstimateID"></field>
+			<field name="AddExisting"></field>
+			<field name="RevisionID"></field>
+			<field name="InventoryCD"></field>
+			<field name="IsNonInventory"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID"></field>
+			<field name="ItemDesc"></field>
+			<field name="EstimateClassID"></field>
+			<field name="ItemClassID"></field>
+			<field name="UOM"></field>
+			<field name="BranchID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="AddEstButton1" dialog-result="OK"></qp-button>
+			<qp-button id="AddEstButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

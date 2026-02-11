@@ -1,0 +1,13 @@
+<template>
+	<qp-panel id="AddMembersToExistingListsFilterView"
+		caption="Add Members to Marketing Lists"
+		auto-repaint="true"
+		close-button-locator="#btnAddMembersToExistingListsCancel"
+	>
+		<qp-grid id="grdAddMembersToExistingLists" view.bind="AddMembersToExistingListsFilterView"></qp-grid>
+		<footer>
+			<qp-button id="btnAddMembersToExistingListsOK" dialog-result="OK" caption="Copy"></qp-button>
+			<qp-button id="btnAddMembersToExistingListsCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

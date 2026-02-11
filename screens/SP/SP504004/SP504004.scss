@@ -1,0 +1,49 @@
+@import "../sp-paymethods.scss";
+@import "../sp-ordered-items.scss";
+
+.order-review {
+	@media (width < 800px) {
+		min-width: 100%;
+	}
+
+	& > div {
+		width: 100%;
+		position: relative;
+	}
+}
+
+:root {
+	--qp-sections-column-gap: 12px;
+}
+
+.top-bar-cont {
+	display: none;
+}
+
+.use-customer-account {
+	position: relative;
+	display: flex;
+	width: 100%;
+}
+
+.collapsed .qp-field-override {
+	display: none;
+}
+
+.change-button {
+	position: absolute;
+	top: 12px;
+	inset-inline-end: 16px;
+}
+
+.ship-complete-comment {
+	min-width: 100%;
+}
+
+.sp-full-width {
+	width: 100%;
+}
+
+.sp-customer-location{
+	height: var(--qp-input-height);
+}

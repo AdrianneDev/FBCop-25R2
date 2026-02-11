@@ -1,0 +1,21 @@
+<template>
+	<qp-template id="Filter_PhotoLogsFilter" name="1-1-1" class="equal-height" wg-container>
+		<qp-fieldset id="PhotoLogsFilterSlotA" slot="A" view.bind="Filter">
+			<field name="ProjectId"></field>
+			<field name="ProjectTaskId"></field>
+		</qp-fieldset>
+		<qp-fieldset id="PhotoLogsFilterSlotB" slot="B" view.bind="Filter">
+			<field name="DateFrom"></field>
+			<field name="DateTo"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitterId" split="width" class="equal-height" state="normal">
+		<split-pane>
+			<qp-grid id="gridPhotoLogs" view.bind="PhotoLogs"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-caption caption="Main Photo Preview"></qp-caption>
+			<qp-image-view state.bind="MainPhoto.ImageUrl" value.two-way="MainPhoto.ImageUrl.value" aspect-ratio="auto 4/3.6" object-fit="contain"></qp-image-view>
+		</split-pane>
+	</qp-splitter>
+</template>

@@ -1,0 +1,21 @@
+<template>
+
+	<qp-template name="17-17-14" id="formHistoryHeader" class="equal-height" wg-container="History_Header_form">
+		<qp-fieldset id="panelFirstHistoryHeader" slot="A" view.bind="History_Header">
+			<field name="OrganizationID"></field>
+			<field name="BranchID"></field>
+			<field name="VendorID"></field>
+			<field name="TaxPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="panelSecondHistoryHeader" slot="B" view.bind="History_Header">
+			<field name="StartDateUI">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="History_Header.EndDateInclusive"></qp-field>
+			</field>
+			<field name="LineNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridHistoryDetails" view.bind="History_Detail" wg-container="History_Detail_grid"> </qp-grid>
+
+</template>

@@ -1,0 +1,15 @@
+<template>
+	<qp-tab id="tab-Move" after="#tab-PutAway" caption="Move">
+		<qp-template name="17-17-14" id="form-Move" wg-container="POReceiptAMBatch_formam1">
+			<div id="divColumnA-Manufacturing" slot="A">
+				<qp-fieldset id="formam1" view.bind="poReceiptAMBatch">
+					<field name="BatNbr" config-allow-edit.bind="true"></field>
+					<field name="DocType"></field>
+					<field name="Status"></field>
+					<field name="TranDate"></field>
+					<field name="FinPeriodID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</qp-tab>
+</template>

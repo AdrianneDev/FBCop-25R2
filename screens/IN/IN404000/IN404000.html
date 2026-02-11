@@ -1,0 +1,31 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID"></field>
+			<field name="FinPeriodID"></field>
+			<field name="ByFinancialPeriod"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemCD"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="SiteID"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+			<field name="PeriodStartDate">
+				<qp-label slot="label" caption="Period Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.PeriodEndDateInclusive"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Filter" slot="C" view.bind="Filter">
+			<field name="SummaryByDay" class="no-label"></field>
+			<field name="IncludeUnreleased" class="no-label"></field>
+			<field name="Estimated CostsLabel" unbound replace-content>
+				<qp-label caption="[*]  Estimated Costs"></qp-label>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="ResultRecords"></qp-grid>
+</template>

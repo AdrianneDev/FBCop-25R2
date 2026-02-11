@@ -1,0 +1,42 @@
+<template>
+	<qp-grid id="grid-Items" wg-container="Items_grid" view.bind="Items"></qp-grid>
+	<qp-panel id="ViewSelectFile"
+		caption="Add Files"
+		auto-repaint="true"
+		width="md"
+		height="50vh">
+		<qp-grid id="grid-ViewSelectFile" wg-container="ViewSelectFile_gridAddFile" view.bind="ViewSelectFile"></qp-grid>
+		<footer>
+			<qp-button id="btnSave-ViewSelectFile" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-ViewSelectFile" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="FilterFileEdit"
+		caption="Edit File"
+		auto-repaint="true"
+		width="md"
+		height="50vh">
+		<qp-fieldset id="fs-FormEditFile"
+			wg-container="FilterFileEdit_FormEditFile"
+			view.bind="FilterFileEdit"
+			class="stretch">
+			<field name="Content"
+				class="no-label stretch"
+				control-type="qp-text-editor"
+				config.bind="{type: 1, enterKeyAddsNewLine: true}"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnSave-FilterFileEdit" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-FilterFileEdit" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ViewCheckinFiles" caption="Modified Files Detected" auto-repaint="true" width="md">
+		<qp-label caption="Some files have been modified in the file system. Please resolve the conflicts."></qp-label>
+		<qp-grid id="ViewCheckinFiles_gridCheckinFiles" wg-container batchUpdate="True"
+			view.bind="ViewCheckinFiles"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonUpdate" wg-name="UpdateCustomizationProject" state.bind="ActionFileCheckIn"></qp-button>
+			<qp-button id="PXButtonDiscard" wg-name="Discardallchanges" dialog-result="Cancel" state.bind="ActionRemoveConflicts"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

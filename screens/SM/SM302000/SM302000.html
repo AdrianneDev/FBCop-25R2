@@ -1,0 +1,33 @@
+<template>
+	<qp-template name="1-1" id="Hooks_form" class="equal-height label-size-m" wg-container>
+		<qp-fieldset slot="A" id="Hooks_form_left" view.bind="Hooks">
+			<field name="Name"></field>
+			<field name="Type"></field>
+			<field name="Address"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Hooks_form_add" view.bind="Hooks">
+			<field name="Active" class="no-label"></field>
+			<field name="HeaderName"></field>
+			<field name="HeaderValue"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tab_Item1" caption="Generic Inquiries">
+			<qp-template name="1-1" id="GenericInquiries" class="stretch">
+				<qp-grid id="grid1" view.bind="SourcesGI" caption="Inquiries" slot="A" class="framed-section">
+				</qp-grid>
+				<qp-grid id="grid3" view.bind="TrackingFieldsGI" caption="Fields" slot="B" class="framed-section">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tab_Item2" caption="Built-In Definitions">
+			<qp-template name="1-1" id="BuiltInDefinitions" class="stretch">
+				<qp-grid id="grid2" view.bind="SourcesInCode" caption="Definitions" slot="A" class="framed-section">
+				</qp-grid>
+				<qp-grid id="grid4" view.bind="TrackingFieldsIC" caption="Fields" slot="B" class="framed-section">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,9 @@
+<template>
+	<qp-tab id="tabLineDetails" after="#tabTotals" caption="Line Details">
+		<qp-include url="../../../IN/common/line-splitting/tab-line-splitting/tab-line-splitting.html"
+			extension-name="ItemLineSplittingExtension"
+			splits-view="splits">
+			<template modify="#buttonGenerate-LineSplittingTab" wg-name="Generate"></template>
+		</qp-include>
+	</qp-tab>
+</template>

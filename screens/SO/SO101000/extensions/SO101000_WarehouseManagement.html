@@ -1,0 +1,42 @@
+<template>
+	<template id="content_WarehouseManagement">
+		<qp-template id="form-WarehouseManagementMessage" name="1-1">
+			<div id="divColumnA-WarehouseManagementMessage" slot="A">
+				<field name="infoMessage" replace-content unbound>
+					<qp-info-box caption="These settings are specific to the current branch." type="info"></qp-info-box>
+				</field>
+			</div>
+		</qp-template>
+		<qp-template id="form-WarehouseManagement" name="1-1" class="label-size-xm" wg-container="PickPackShipSetup_formScanSetup">
+			<div id="divColumnA-WarehouseManagement" slot="A">
+				<qp-fieldset id="fsFulfillmentWorkflow-WarehouseManagement" view.bind="PickPackShipSetup" caption="Fulfillment Workflow">
+					<field name="ShowPickTab"></field>
+					<field name="ShowPackTab"></field>
+					<field name="ShowShipTab"></field>
+					<field name="ShowReturningTab"></field>
+					<field name="ShowScanLogTab"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsFulfillmentSettings-WarehouseManagement" view.bind="PickPackShipSetup" caption="Fulfillment Settings">
+					<field name="ShortShipmentConfirmation"></field>
+					<field name="ShipmentLocationOrdering"></field>
+					<field name="UseDefaultQty"></field>
+					<field name="ExplicitLineConfirmation"></field>
+					<field name="UseCartsForPick"></field>
+					<field name="DefaultLocationFromShipment"></field>
+					<field name="DefaultLotSerialFromShipment"></field>
+					<field name="EnterSizeForPackages"></field>
+					<field name="PrintShipmentConfirmation"></field>
+					<field name="PrintShipmentLabels"></field>
+					<field name="PrintCommercialInvoices"></field>
+					<field name="ConfirmEachPackageWeight"></field>
+					<field name="ConfirmEachPackageDimensions"></field>
+					<field name="RequestLocationForEachItem"></field>
+					<field name="ConfirmToteForEachItem"></field>
+					<field name="AllowMultipleTotesPerShipment"></field>
+					<field name="PrintPickListsAndPackSlipsTogether"></field>
+					<field name="AllowBidirectionalPickLists"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

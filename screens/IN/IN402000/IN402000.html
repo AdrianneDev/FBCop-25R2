@@ -1,0 +1,45 @@
+<template>
+	<qp-template id="form-Filter" name="10-7-7" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SiteID"></field>
+			<field name="LocationID"></field>
+			<field name="SubItemCD"></field>
+			<field name="LotSerialNbr"></field>
+			<field name="BaseUnit"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter" class="highlights-section">
+			<field name="QtyOnHand"></field>
+			<field name="QtyAvail"></field>
+			<field name="QtyHardAvail"></field>
+			<field name="QtyActual"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Filter" slot="C" view.bind="Filter" class="highlights-section">
+			<field name="QtyNotAvail"></field>
+			<field name="QtyExpired"></field>
+			<field name="LabelLocation" replace-content unbound>
+				<qp-label slot="label" caption.bind="Filter.Label.value"></qp-label>
+			</field>
+			<field name="LabelExpired" replace-content unbound>
+				<qp-label slot="label" caption.bind="Filter.Label2.value"></qp-label>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-ItemPlans" caption="Item Plans">
+			<qp-grid id="grid-ItemPlans" view.bind="ResultRecords" wg-container="ResultRecords_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-QtyByPlanType" caption="Qty by Plan Type">
+			<qp-splitter id="splitter-QtyByPlanType" split="width">
+				<split-pane id="splitPaneA-QtyByPlanType">
+					<qp-grid id="gridAddition-QtyByPlanType" view.bind="Addition" caption="Addition" wg-container="Addition_grid1"></qp-grid>
+				</split-pane>
+				<split-pane id="splitPaneB-QtyByPlanType">
+					<qp-grid id="gridDeduction-QtyByPlanType" view.bind="Deduction" caption="Deduction" wg-container="Deduction_grid2"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="edTranslationSet" wg-container="TranslationSet_edTranslationSet" name="1-1" class="equal-height" > 
+		<qp-fieldset id="edTranslationSet_0" view.bind="TranslationSet" slot="A" class="label-size-m" >
+			<field name="Id" ></field>
+			<field name="Description" ></field>
+			<field name="ResourceToCollect" ></field>
+			<field name="IsCollected" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="edTranslationSet_1" view.bind="TranslationSet" slot="B" class="label-size-m">
+			<field name="CurrentSystemVersion" ></field>
+			<field name="SystemVersion" ></field>
+			<field name="SystemTime" class="control-size-l"></field>
+		</qp-fieldset>
+	</qp-template> 
+	<qp-splitter id="sp1" initial-split="450px" split="width">
+		<split-pane class="v-stack">
+			<qp-tree id="treeEntities_tree" view.bind="EntitiesTree" class="stretch"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="gridTranslationSetItems" view.bind="TranslationSetItem" wg-container="TranslationSetItem_edItems"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

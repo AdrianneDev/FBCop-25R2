@@ -1,0 +1,73 @@
+<template>
+	<qp-template name="1-1" id="EarningTypes_form" class="equal-height label-size-m" wg-container>
+		<qp-fieldset id="Basic" view.bind="EarningTypes" slot="A">
+			<field name="TypeCD"></field>
+			<field name="Description"></field>
+			<field name="EarningTypeCategory"></field>
+			<field name="OvertimeMultiplier"></field>
+			<field name="RegularTypeCD"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="Boxes" view.bind="EarningTypes" class="no-label" slot="B">
+			<field name="IsActive"></field>
+			<field name="IsWCCCalculation"></field>
+			<field name="PublicHoliday"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="EarningSettings_tab" wg-container>
+		<qp-tab id="RegularTimeTab" caption="Regular Time" if.bind="EarningTypes.EarningTypeCategory.value == 'OVT'">
+			<qp-grid id="gridRegularTime" view.bind="PRRegularTypesForOvertime"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="USTaxandReportingTab" caption="US Tax and Reporting" if.bind="ShowUSTab">
+			<qp-template id="usTemplate" name="1-1">
+				<qp-fieldset id="frmUSTaxReportingForm" wg-container="EarningSettings_frmUSTaxReportingForm" view.bind="EarningSettings" class="label-size-m" slot="A">
+					<field name="WageTypeCD"></field>
+					<field name="ReportType"></field>
+					<field name="IncludeType"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="grdTaxDetailsUS" view.bind="EarningTypeTaxesUS"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="CANTaxandReportingTab" caption="CAN Tax and Reporting" if.bind="ShowCANTab">
+			<qp-template id="canTemplate" name="1-1">
+				<qp-fieldset id="frmCANTaxReportingForm" wg-container="EarningSettings_frmCANTaxReportingForm" view.bind="EarningSettings" class="label-size-m" slot="A">
+					<field name="WageTypeCDCAN"></field>
+					<field name="ReportTypeCAN"></field>
+					<field name="QuebecReportTypeCAN"></field>
+					<field name="IsSupplementalCAN"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="grdTaxDetailsCAN" view.bind="EarningTypeTaxesCAN"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="ProjectsTab" caption="Projects">
+			<qp-template name="1-1" id="projectsTemplate" class="label-size-m">
+				<qp-fieldset id="projectsForm" view.bind="EarningSettings" class="label-size-m" slot="A">
+					<field name="ProjectID"></field>
+					<field name="TaskID"></field>
+					<field name="IsBillable"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="GLAccountsTab" caption="GL Accounts">
+			<qp-template name="1-1" id="accountsTemplate" class="label-size-m">
+				<qp-fieldset id="glAccountsForm" view.bind="EarningSettings" class="label-size-m" slot="A">
+					<field name="EarningsAcctID"></field>
+					<field name="EarningsSubID"></field>
+					<field name="BenefitExpenseAcctID"></field>
+					<field name="BenefitExpenseSubID"></field>
+					<field name="TaxExpenseAcctID"></field>
+					<field name="TaxExpenseSubID"></field>
+					<field name="PTOExpenseAcctID"></field>
+					<field name="PTOExpenseSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

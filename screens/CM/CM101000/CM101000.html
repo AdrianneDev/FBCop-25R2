@@ -1,0 +1,37 @@
+<template>
+	<qp-template id="formSettings" name="1-1" wg-container="cmsetup_formSettings" class="label-size-xm">
+		<div slot="A">
+			<qp-fieldset id="groupSetupNumberingSettings" view.bind="cmsetup" caption="Setup and Numbering Settings">
+				<field name="BatchNumberingID"></field>
+				<field name="TranslNumberingID"></field>
+				<field name="ExtRefNbrNumberingID"></field>
+				<field name="GainLossSubMask"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupPostingSettings" view.bind="cmsetup" caption="Posting Settings">
+				<field name="AutoPostOption"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupDataEntrySettings" view.bind="cmsetup" caption="Data Entry Settings">
+				<field name="RateVarianceWarn"></field>
+				<field name="RateVariance"></field>
+				<field name="TranslDefId"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="groupDefaultRateTypes" view.bind="cmsetup" caption="Default Rate Types">
+				<field name="GLRateTypeDflt"></field>
+				<field name="GLRateTypeReval"></field>
+				<field name="CARateTypeDflt"></field>
+				<field name="ARRateTypeDflt"></field>
+				<field name="ARRateTypeReval"></field>
+				<field name="APRateTypeDflt"></field>
+				<field name="APRateTypeReval"></field>
+				<field name="PMRateTypeDflt"></field>
+				<field name="SOFreightRateTypeDflt"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupRevaluationSettings" view.bind="cmsetup" caption="Revaluation Settings">
+				<field name="RevalueARPrepaymentsOption"></field>
+				<field name="RevalueAPPrepaymentsOption"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

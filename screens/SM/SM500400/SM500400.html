@@ -1,0 +1,9 @@
+<template>
+	<qp-template id="form-Header" name="1-1" wg-container="Header_form">
+		<qp-fieldset id="fsColumnA-Header" slot="A" view.bind="Header" class="label-size-xm">
+			<field name="ArchivingProcessDurationLimitInHours"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid-Detials" view.bind="DatesToArchive" on-filter-columns.call="onFilterColumns(col)" wg-container="DatesToArchive_grid"></qp-grid>
+</template>

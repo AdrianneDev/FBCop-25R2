@@ -1,0 +1,8 @@
+@import 'static/status-colors.scss';
+@include colored-status('ENQ', var(--status-blue-color));
+@include colored-status('RNQ', var(--status-blue-color));
+@include colored-status('HLD', var(--status-orange-color));
+@include colored-status('PNG', var(--status-blue-color));
+@include colored-status('PED', var(--status-blue-color));
+@include colored-status('CMP', var(--status-gray-color));
+@include colored-status('CNL', var(--status-gray-color));

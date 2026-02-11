@@ -1,0 +1,105 @@
+<template>
+	<qp-grid id="grid-CustObjects" wg-container="CustObjects_grid" view.bind="CustObjects"></qp-grid>
+	
+	<qp-panel id="SqlFilter"
+			  caption="Edit SQL Script"
+			  auto-repaint="true"
+			  width="md"
+			  height="70vh">
+		<qp-template id="form-FormEditSql" wg-container="SqlFilter_FormEditSql" name="1">
+			<qp-fieldset id="fs-FormEditSql-Name"
+						 view.bind="SqlFilter"
+						 slot="A">
+				<field name="SqlName"></field>
+				<field name="Priority"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fs-FormEditSql-SqlContent"
+						 view.bind="SqlFilter"
+						 class="stretch"
+						 slot="A">
+				<field name="SqlContent"
+					   class="no-label"
+					   control-type="qp-code-editor"
+					   config-type.bind="1"
+					   config-rows.bind="15"
+					   config-class.bind="'stretch'">
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnAdd-SqlFilter" wg-name="SPECIFYDATABASEENGINE" state.bind="actionAddSqlAttribute"></qp-button>
+			<qp-button id="btnOK-SqlFilter" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-SqlFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="AddAttributeFilter" caption="Specify Database Engine" auto-repaint="true">
+		<qp-fieldset id="fs-AddAttributeFilter"
+					 wg-container="AddAttributeFilter_FormAddAttribute"
+					 view.bind="AddAttributeFilter">
+			<field name="SqlAttribute"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK-AddAttributeFilter" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-AddAttributeFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CustomColumnFilter" caption="Add Custom Column to Table" auto-repaint="true">
+		<qp-fieldset id="fs-CustomColumnFilter"
+					 wg-container="CustomColumnFilter_PXFormView1"
+					 view.bind="CustomColumnFilter">
+			<field name="TableName"></field>
+			<field name="FieldName"></field>
+			<field name="DataType"></field>
+			<field name="StringLength"></field>
+			<field name="DecimalPrecision"></field>
+			<field name="DecimalScale"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK-CustomColumnFilter" dialog-result="OK" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="btnCancel-CustomColumnFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ViewEditCustomTable"
+			  caption="Edit Table Columns"
+			  auto-repaint="true"
+			  width="md"
+			  height="60vh">
+		<qp-grid id="grid-ViewEditCustomTable"
+				 wg-container="ViewEditCustomTable_GridEditCustomColumns"
+				 view.bind="ViewEditCustomTable">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK-ViewEditCustomTable" caption="Done" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CreateSchemaFilter" caption="Add Custom Table Schema" auto-repaint="true">
+		<qp-fieldset id="fs-CreateSchemaFilter"
+					 wg-container="CreateSchemaFilter_FormAddNewTableSchema"
+					 view.bind="CreateSchemaFilter">
+			<field name="TableName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK-CreateSchemaFilter" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-CreateSchemaFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="IncreaseColumnFilter" caption="Column Length Increase" auto-repaint="true">
+		<qp-fieldset id="fs-IncreaseColumnFilter"
+					 wg-container="IncreaseColumnFilter_PXFormView3"
+					 view.bind="IncreaseColumnFilter">
+			<field name="TableName"></field>
+			<field name="FieldName"></field>
+			<field name="DataType"></field>
+			<field name="NewLength"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK-IncreaseColumnFilter" dialog-result="OK" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="btnCancel-IncreaseColumnFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

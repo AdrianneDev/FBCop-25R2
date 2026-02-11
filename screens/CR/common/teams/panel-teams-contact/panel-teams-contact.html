@@ -1,0 +1,49 @@
+<template>
+	<qp-panel id="TeamsContactCard" caption="Teams Contact" auto-repaint="true">
+		<qp-fieldset id="formTeamsContactCard" view.bind="TeamsContactCard" wg-container="TeamsContactCard_formTeamsContact">
+			<field name="PhotoFileName" class="no-label" control-type="qp-image-view" config.bind="{ height: '64px', width: '64px' }"></field>
+			<field name="actions" class="no-label" unbound>
+				<qp-button id="buttonOffline-TeamsContactCard" state.bind="StatusIconContactOffline" config.bind="{ images: { normal: 'svg:teams@offline' } }"></qp-button>
+				<qp-button id="buttonAvailable-TeamsContactCard" state.bind="StatusIconContactAvailable" config.bind="{ images: { normal: 'svg:teams@available' } }"></qp-button>
+				<qp-button id="buttonBusy-TeamsContactCard" state.bind="StatusIconContactBusy" config.bind="{ images: { normal: 'svg:teams@busy' } }"></qp-button>
+				<qp-button id="buttonAway-TeamsContactCard" state.bind="StatusIconContactAway" config.bind="{ images: { normal: 'svg:teams@away' } }"></qp-button>
+			</field>
+			<field name="DisplayName"></field>
+			<field name="TeamsStatus"></field>
+			<field name="JobTitle"></field>
+			<field name="CompanyName"></field>
+			<field name="Email"></field>
+			<field name="MobilePhone"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="buttonChat-TeamsContactCard" dialog-result="OK" state.bind="ContactChat" config.bind="{ images: { normal: 'svg:teams@teams_chat' } }"></qp-button>
+			<qp-button id="buttonCall-TeamsContactCard" dialog-result="OK" state.bind="ContactCall" config.bind="{ images: { normal: 'svg:teams@teams_call' } }"></qp-button>
+			<qp-button id="buttonEvent-TeamsContactCard" dialog-result="OK" state.bind="ContactMeeting" config.bind="{ images: { normal: 'svg:teams@teams_event' } }"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="TeamsOwnerCard" caption="Teams Contact" auto-repaint="true">
+		<qp-fieldset id="formTeamsOwnerCard" view.bind="TeamsOwnerCard" wg-container="TeamsOwnerCard_formTeamsOwner">
+			<field name="PhotoFileName" class="no-label" control-type="qp-image-view" config.bind="{ height: '64px', width: '64px' }"></field>
+			<field name="SetStatusActions" class="no-label" unbound>
+				<qp-button id="buttonOffline-TeamsOwnerCard" state.bind="StatusIconOwnerOffline" config.bind="{ images: { normal: 'svg:teams@offline' } }"></qp-button>
+				<qp-button id="buttonAvailable-TeamsOwnerCard" state.bind="StatusIconOwnerAvailable" config.bind="{ images: { normal: 'svg:teams@available' } }"></qp-button>
+				<qp-button id="buttonBusy-TeamsOwnerCard" state.bind="StatusIconOwnerBusy" config.bind="{ images: { normal: 'svg:teams@busy' } }"></qp-button>
+				<qp-button id="buttonAway-TeamsOwnerCard" state.bind="StatusIconOwnerAway" config.bind="{ images: { normal: 'svg:teams@away' } }"></qp-button>
+			</field>
+			<field name="DisplayName"></field>
+			<field name="TeamsStatus"></field>
+			<field name="JobTitle"></field>
+			<field name="CompanyName"></field>
+			<field name="Email"></field>
+			<field name="MobilePhone"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="buttonChat-TeamsOwnerCard" dialog-result="OK" state.bind="OwnerChat" config.bind="{ images: { normal: 'svg:teams@teams_chat' } }"></qp-button>
+			<qp-button id="buttonCall-TeamsOwnerCard" dialog-result="OK" state.bind="OwnerCall" config.bind="{ images: { normal: 'svg:teams@teams_call' } }"></qp-button>
+			<qp-button id="buttonEvent-TeamsOwnerCard" dialog-result="OK" state.bind="OwnerMeeting" config.bind="{ images: { normal: 'svg:teams@teams_event' } }"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

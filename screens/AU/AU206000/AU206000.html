@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="ProjectItems_grid" wg-container view.bind="ProjectItems"></qp-grid>
+   <qp-panel id="ViewSelectGiDesign"
+            wg-container="ViewSelectGiDesign_ViewSelectGiDesign"
+            caption="Add Generic Inquiries"
+            auto-repaint="true"
+            width="60vw"
+            height="60vh">
+      <qp-grid id="ViewSelectGiDesign_gridAddGiDesign" wg-container view.bind="ViewSelectGiDesign"></qp-grid>
+      <footer>
+         <qp-button id="PXButton1" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="PXButton2" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

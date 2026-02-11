@@ -1,0 +1,145 @@
+<template>
+
+<qp-splitter id="splitter" split="height" initial-split="30%" first-pane-min-size="140px" class="stretch">
+	<split-pane>
+		<qp-grid id="grid1" view.bind="Status"></qp-grid>
+	</split-pane>
+	<split-pane>
+		<qp-tabbar id="tab">
+			<qp-tab id="tabDispatcherStatisticsPerHour" caption="Statistics by Hour" load-on-demand="true">
+				<qp-grid id="grid0" view.bind="DispatcherStatisticsPerHour"></qp-grid>
+			</qp-tab>
+			<qp-tab id="tabDispatcherStatistics" caption="Statistics by Minute" load-on-demand="true">
+				<qp-grid id="grid01" view.bind="DispatcherStatistics"></qp-grid>
+			</qp-tab>
+
+			<qp-tab id="tabCurrentDispatcherSettings" caption="Performance Issues">
+				<qp-grid id="grid10" view.bind="SlowLogs"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+	</split-pane>
+</qp-splitter>
+
+	<qp-panel id="Errors" caption="Errors" width="60vw" height="85vh">
+		<qp-grid id="grid60" view.bind="Errors"></qp-grid>
+	</qp-panel>
+
+	<qp-panel id="CurrentError" caption="Source Data" width="60vw" >
+		<qp-fieldset id="frmViewNotification" view.bind="CurrentError" class="v-stack">
+			<field name="SourceData" class="v-stack" replace-content>
+				<qp-text-editor
+						state.bind="CurrentError.SourceData"
+						class="col-12 stretch"
+						config.bind="{type: 1, rows:20, id:'edCurrentError-SourceData' }"
+						fixed-height
+						fixed-width>
+				</qp-text-editor>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" caption="Close" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CurrentNotificationSettings" caption="Notification Settings" width="820px">
+		<qp-fieldset id="frmNotificationSettings1" view.bind="CurrentNotificationSettings" class="no-label">
+			<field name="QueueTypeContainer" unbound replace-content>
+				<qp-label caption="Queue Type:" class="col-6"></qp-label>
+				<qp-field control-state.bind="NotificationSettingsSwitch.QueueType" class="col-6"></qp-field>
+			</field>
+			<field name="FillThresholdContainer" unbound replace-content>
+				<qp-label caption="Notification Threshold (% of Maximum Queue Size):" class="col-6"></qp-label>
+				<qp-field control-state.bind="CurrentNotificationSettings.FillThreshold" class="col-6"></qp-field>
+			</field>
+			<field name="EmailRow" unbound replace-content>
+				<qp-field control-state.bind="CurrentNotificationSettings.IsEmailActive" class="col-4"></qp-field>
+				<qp-label caption="Template:" class="col-2"></qp-label>
+				<qp-field control-state.bind="CurrentNotificationSettings.EmailNotificationID" class="col-6" config-allow-edit.bind="true"></qp-field>
+			</field>
+			<field name="SmsRow" unbound replace-content>
+				<qp-field control-state.bind="CurrentNotificationSettings.IsMobileSmsActive" class="col-4"></qp-field>
+				<qp-label caption="Template:" class="col-2"></qp-label>
+				<qp-field control-state.bind="CurrentNotificationSettings.MobileSmsNotificationID" class="col-6" config-allow-edit.bind="true"></qp-field>
+			</field>
+			<field name="PushRow" unbound replace-content>
+				<qp-field control-state.bind="CurrentNotificationSettings.IsMobilePushActive" class="col-4"></qp-field>
+				<qp-label caption="Template:" class="col-2"></qp-label>
+				<qp-field control-state.bind="CurrentNotificationSettings.MobilePushNotificationID" class="col-6" config-allow-edit.bind="true"></qp-field>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk" caption="OK" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="No" ></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="DispatcherLogDetail" caption="Queue Processing Log" auto-repaint="true" width="lg" height="80vh">
+		<qp-fieldset slot="A" id="LogDetailView" view.bind="DispatcherLogDetail" wg-container="DispatcherLogDetail_LogDetailView">
+			<field name="ProcessingTime"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="A" id="LogDetailViewLog" class="v-stack" view.bind="DispatcherLogDetail" wg-container="DispatcherLogDetail_LogDetailView">
+			<field name="Log" class="v-stack" replace-content>
+				<qp-text-editor
+						state.bind="DispatcherLogDetail.Log"
+						class="col-12 stretch"
+						fixed-height
+						config.bind="{type: 1, rows:35, id: 'edDispatcherLogDetail-Log' }"
+						fixed-width>
+				</qp-text-editor>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PanelNqdLogDetailsSubmit" caption="Close" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="DetailsFilter" caption="Trigger Details" auto-repaint="true" width="60vw" height="85vh">
+		<qp-label caption="Details are logged only if the Log Trigger Details check box is selected on the Statistics tab."></qp-label>
+			<qp-fieldset id="StatisticDetailsView" view.bind="DetailsFilter">
+				<field name="From_Date">
+					<qp-field control-state.bind="DetailsFilter.From_Time"></qp-field>
+				</field>
+				<field name="To_Date">
+					<qp-field control-state.bind="DetailsFilter.To_Time"></qp-field>
+				</field>
+			</qp-fieldset>
+
+			<qp-tabbar id="StatisticDetailsTab">
+				<qp-tab id="tabTriggeredByFields" caption="Triggering Fields" if.bind='DetailsFilter.QueueType.value == "PN"'>
+					<qp-grid id="grid40" view.bind="TriggeredByFields"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTriggeredBySources" caption="Source DACs" if.bind='DetailsFilter.QueueType.value == "PN"'>
+					<qp-grid id="grid41" view.bind="TriggeredBySources"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTriggeredByEvent" caption="Business Event messages" if.bind='DetailsFilter.QueueType.value == "BE"'>
+					<qp-grid id="grid43" view.bind="TriggeredByEvent"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabStatisticCommerceDetail" caption="Commerce messages" if.bind='DetailsFilter.QueueType.value == "CO"'>
+					<qp-grid id="grid42" view.bind="StatisticCommerceDetail"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+	</qp-panel>
+
+	<qp-panel id="DispatcherSettings" caption="System Queues Statistics and Performance Log Settings" auto-repaint="true" width="40vw">
+		<qp-template id="DispatcherSettings_frmStatisticSettings" name="1" class="label-size-xm" wg-container>
+			<qp-fieldset id="GeneralSettings" view.bind="DispatcherSettings" slot="A">
+				<field name="KeepStatisticsForPeriod"></field>
+				<field name="LogDetails" class="no-label"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="DispatcherSettings" view.bind="DispatcherSettings" slot="A">
+				<field name="SettingsCaption" class="no-label" unbound>
+					<qp-label caption="Log Settings per Queue Type" class="col-auto"></qp-label>
+				</field>
+				<field Name="QueueType"></field>
+				<field name="LongProcessingThreshold"></field>
+				<field name="LogMaxLength"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="StaticticSettingsSave" caption="Save" dialog-result="OK" class="major-button" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="StaticticSettingsCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

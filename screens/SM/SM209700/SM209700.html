@@ -1,0 +1,20 @@
+<template>
+	<!--
+		TODO: AC-305165
+		Find a way to initialize "FileId" value on every RowChanged event without declaring qp-fieldset in the template markup.
+		REMARKS:
+		Now it is declared because this option allows to retrieve FileId value on every row change of "PdfFileInfo" view.
+		But not visible because no need to display this field controls.
+		Refactor this markup after AC-305165 task is completed
+	 -->
+	<qp-fieldset id="main" view.bind="File" wg-container="File_form" style="display: none">
+		<field name="FileId"></field>
+	</qp-fieldset>
+	<object
+			id="pdfObject"
+			width="100%"
+			height="100%"
+			type="application/pdf"
+			data.bind="contentUrl"
+			style="inset-inline-start: 0; top: 0"></object>
+</template>

@@ -1,0 +1,41 @@
+<template>
+	<qp-template id="formFilter" name="17-17-14" wg-container="Filter_form" class="label-size-sm equal-height">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="ClassID"></field>
+			<field name="OrgBAccountID"></field>
+			<field name="BuildingID"></field>
+			<field name="EmployeeID"></field>
+			<field name="Department"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="AcqDateFrom" caption="Placed-in-Service Date Range">
+				<qp-field control-state.bind="Filter.AcqDateTo"></qp-field>
+			</field>
+			<field name="PONumber"></field>
+			<field name="ReceiptType"></field>
+			<field name="ReceiptNbr"></field>
+			<field name="BillNumber"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="assets"></qp-grid>
+
+	<qp-panel id="DispParams" caption="Disposal Parameters" auto-repaint="true">
+		<qp-template id="formDispParams" name="1" wg-container="DispParams_DisposePrm">
+			<qp-fieldset id="panelDispParams" view.bind="DispParams" slot="A">
+				<field name="DisposalDate"></field>
+				<field name="DisposalPeriodID"></field>
+				<field name="DisposalAmt"></field>
+				<field name="DisposalMethodID"></field>
+				<field name="DisposalAccountID"></field>
+				<field name="DisposalSubID"></field>
+				<field name="DeprBeforeDisposal"></field>
+				<field name="Reason"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-DispParams" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-DisiParams" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

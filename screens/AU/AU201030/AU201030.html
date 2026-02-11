@@ -1,0 +1,192 @@
+<template>
+	<qp-include url="../common/au-panel-view-changes.html"></qp-include>
+
+	<qp-fieldset id="WorkflowFictiveDiagram" wg-container="Workflow_WorkflowFictiveDiagram" view.bind="Workflow" style="display: none">
+		<field name="LayoutClient" config-rows.bind="25"></field>
+	</qp-fieldset>
+	<qp-splitter id="sp1" initial-split="20%" split="width">
+		<split-pane>
+			<qp-tree id="treeBomTree" caption="States and Transitions" view.bind="Items" wg-container="StatesandTransitions"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="tabStatesDetails" if.bind="CurrentTreeNode.IsState.value === true || CurrentTreeNode.IsTransition.value === true" load-on-demand.bind="false">
+				<qp-tab id="States_tab" caption="State Properties" if.bind="CurrentTreeNode.IsState.value === true">
+					<qp-template id="States_PXLayoutRule2" name="1-1">
+						<qp-fieldset id="FormState_0" wg-container="States_FormState" view.bind="CurrentStateProperties" slot="A">
+							<field name="Identifier"></field>
+							<field name="DisplayName"></field>
+							<field name="SkipConditionID" config-display-mode.bind="'text'"></field>
+							<field name="DisplayNextState"></field>
+						</qp-fieldset>
+						<qp-fieldset id="States_PXLayoutRule3" wg-container="States_FormState" view.bind="CurrentStateProperties" slot="B">
+							<field name="IsActive" class="no-label"></field>
+							<field name="IsInitial" class="no-label"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-tabbar id="tabStatePropertiesDetails" load-on-demand.bind="false">
+						<qp-tab id="StatePropertiesPerState_tab" caption="Fields">
+							<qp-grid id="StatePropertiesPerState_gridStateProperties" wg-container view.bind="StatePropertiesPerState"></qp-grid>
+						</qp-tab>
+						<qp-tab id="OnEnterStateFieldsPerState_tab" caption="Fields to Update on Entry">
+							<qp-grid id="OnEnterStateFieldsPerState_gridOnEnterFields1" wg-container view.bind="OnEnterStateFieldsPerState"></qp-grid>
+						</qp-tab>
+						<qp-tab id="OnLeaveStateFieldsPerState_tab" caption="Fields to Update on Exit">
+							<qp-grid id="OnLeaveStateFieldsPerState_gridOnLeaveFields1" wg-container view.bind="OnLeaveStateFieldsPerState"></qp-grid>
+						</qp-tab>
+					</qp-tabbar>
+				</qp-tab>
+				<qp-tab id="StateActionsPerState_tab" caption="Actions" if.bind="CurrentTreeNode.IsState.value === true">
+					<qp-grid id="StateActionsPerState_gridStateActions" wg-container view.bind="StateActionsPerState"></qp-grid>
+				</qp-tab>
+				<qp-tab id="StateEventHandlersPerState_tab" caption="Handlers" if.bind="CurrentTreeNode.IsState.value === true">
+					<qp-grid id="StateEventHandlersPerState_gridStateHandlers" wg-container view.bind="StateEventHandlersPerState"></qp-grid>
+				</qp-tab>
+				<qp-tab id="CurrentTransition_tab" caption="Transition Properties" if.bind="CurrentTreeNode.IsTransition.value === true">
+					<qp-template id="CurrentTransition_PXLayoutRule2" class="equal-height" name="1-1">
+						<qp-fieldset id="FormTransition_0" wg-container="CurrentTransition_FormTransition" view.bind="CurrentTransition" slot="A">
+							<field name="FromStateName"></field>
+							<field name="TriggeredBy" control-type="qp-radio"></field>
+							<field name="ActionName"></field>
+							<field name="ConditionID"></field>
+							<field name="TargetStateName"></field>
+							<field name="DisplayNextState"></field>
+						</qp-fieldset>
+						<qp-fieldset id="CurrentTransition_PXLayoutRule3" wg-container="CurrentTransition_FormTransition" view.bind="CurrentTransition" slot="B">
+							<field name="IsActive" class="no-label"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-grid id="TransitionFieldsPerTransition_gridTransitionsFields" wg-container view.bind="TransitionFieldsPerTransition" caption="Fields To Update After Transition"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="AddPredefinedWorkflowState" wg-container="AddPredefinedWorkflowState_AddPredefinedWorkflowState" caption="Add Predefined State" auto-repaint="true">
+		<qp-fieldset id="FormAddPredefinedState" wg-container view.bind="AddPredefinedWorkflowState">
+			<field name="StateID"></field>
+			<field name="ParentStateID"></field>
+			<field name="Layout"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PanelAddPredefinedStateButtonOk" dialog-result="OK" wg-name="OK" caption="Add" class="major-button"></qp-button>
+			<qp-button id="PanelAddPredefinedStateButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddWorkflowState" wg-container="AddWorkflowState_AddWorkflowState" caption="Add State" auto-repaint="true">
+		<qp-fieldset id="PXFormView1" wg-container view.bind="AddWorkflowState">
+			<field name="Identifier"></field>
+			<field name="DisplayName"></field>
+			<field name="ParentStateID"></field>
+			<field name="Layout"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK" wg-name="OK" caption="Add" class="major-button" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ChangeWorkflowStateParent" wg-container="ChangeWorkflowStateParent_ChangeWorkflowStateParent" caption="Change Parent State" auto-repaint="true">
+		<qp-fieldset id="PXFormView6" wg-container view.bind="ChangeWorkflowStateParent">
+			<field name="CurrentState"></field>
+			<field name="ParentStateID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton9" dialog-result="OK" wg-name="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="PXButton10" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddWorkflowTransition" caption="Add Transition" auto-repaint="true" width="50vw">
+		<qp-fieldset id="PXFormView2" wg-container view.bind="AddWorkflowTransition">
+			<field name="FromStateName"></field>
+			<field name="TriggeredBy" control-type="qp-radio"></field>
+			<field name="ActionName">
+				<qp-button id="PXButtonAddAction" wg-name="Create" caption="Create" state.bind="createAction"></qp-button>
+			</field>
+			<field name="ConditionID"></field>
+			<field name="TargetStateName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton3" dialog-result="OK" wg-name="OK" caption="Add" class="major-button"></qp-button>
+			<qp-button id="PXButton4" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="StateProperties" caption="Combo Box Values" auto-repaint="true" width="md" height="85vh">
+		<qp-grid id="StateProperties_gridCombos" wg-container="Combos_gridCombos" view.bind="Combos"></qp-grid>
+		<footer>
+			<qp-button id="PXButton5" dialog-result="OK" wg-name="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="PXButton6" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddWorkflowAction" wg-container="AddWorkflowAction_AddWorkflowAction" caption="New Action" auto-repaint="true" width="50vw">
+		<qp-fieldset id="PXFormView3" wg-container view.bind="AddWorkflowAction">
+			<field name="ActionType"></field>
+			<field name="ActionName"></field>
+			<field name="DisplayName"></field>
+			<field name="FormName"></field>
+			<field name="ActionFolder"></field>
+			<field name="IsTopLevel"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton7" dialog-result="OK" wg-name="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="PXButton8" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddWorkflowEventHandler" wg-container="AddWorkflowEventHandler_AddWorkflowEventHandler" caption="New Event Handler" auto-repaint="true">
+		<qp-fieldset id="PXFormView5" wg-container view.bind="AddWorkflowEventHandler">
+			<field name="HandlerName"></field>
+			<field name="DisplayName"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton15" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton16" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CurrentState" caption="State" auto-repaint="true">
+		<qp-template id="CurrentState_PXLayoutRule21" name="1-1">
+			<qp-fieldset id="FormState1_0" wg-container="CurrentState_FormState1" view.bind="CurrentState" slot="A">
+				<field name="Identifier"></field>
+				<field name="DisplayName"></field>
+			</qp-fieldset>
+			<qp-fieldset id="CurrentState_PXLayoutRule31" wg-container="CurrentState_FormState1" view.bind="CurrentState" slot="B">
+				<field name="IsActive"></field>
+				<field name="IsInitial"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-tabbar id="tab1">
+			<qp-tab caption="Fields" id="tabFields">
+				<qp-grid id="StatePropertiesPerState_gridStateProperties1" wg-container view.bind="StatePropertiesPerState"></qp-grid>
+			</qp-tab>
+			<qp-tab caption="Actions" id="tabActions">
+				<qp-grid id="StateActionsPerState_gridStateActions1" wg-container view.bind="StateActionsPerState"></qp-grid>
+			</qp-tab>
+			<qp-tab caption="Handlers" id="tabHandlers">
+				<qp-grid id="StateEventHandlersPerState_gridStateHandlers1" wg-container view.bind="StateEventHandlersPerState"></qp-grid>
+			</qp-tab>
+			<qp-tab caption="Fields to Update on Entry" id="tabFieldsToUpdateOnEntry">
+				<qp-grid id="OnEnterStateFieldsPerState_gridOnEnterFields" wg-container view.bind="OnEnterStateFieldsPerState"></qp-grid>
+			</qp-tab>
+			<qp-tab caption="Fields to Update on Exit" id="tabFieldsToUpdateOnExit">
+				<qp-grid id="OnLeaveStateFieldsPerState_gridOnLeaveFields" wg-container view.bind="OnLeaveStateFieldsPerState"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="PXButton11" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CurrentTransition" caption="Transition" auto-repaint="true">
+		<qp-template id="CurrentTransition_PXLayoutRule22" name="1-1">
+			<qp-fieldset id="FormTransition2_0" wg-container="CurrentTransition_FormTransition2" view.bind="CurrentTransition" slot="A">
+				<field name="FromStateName"></field>
+				<field name="TriggeredBy" control-type="qp-radio"></field>
+				<field name="ActionName"></field>
+				<field name="ConditionID"></field>
+				<field name="TargetStateName"></field>
+			</qp-fieldset>
+			<qp-fieldset id="CurrentTransition_PXLayoutRule32" wg-container="CurrentTransition_FormTransition2" view.bind="CurrentTransition" slot="B">
+				<field name="IsActive"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="TransitionFieldsPerTransition_gridTransitionsFields2" wg-container view.bind="TransitionFieldsPerTransition"></qp-grid>
+		<footer>
+			<qp-button id="PXButton13" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

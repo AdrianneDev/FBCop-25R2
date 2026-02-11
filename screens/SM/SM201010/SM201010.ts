@@ -1,0 +1,66 @@
+import {
+	createCollection,
+	createSingle,
+	PXScreen,
+	graphInfo,
+	PXActionState,
+	viewInfo,
+} from "client-controls";
+import {
+	Users,
+	Users2,
+	EPLoginTypeAllowsRole,
+	UserFilter,
+	OidcUser,
+	UserPreferences,
+	Contact,
+	EMailAccount,
+	MobilePushNotificationRegToken,
+	FSGPSTrackingRequest,
+	ADUserFilter,
+	UsersInRoles,
+} from "./views";
+
+@graphInfo({
+	graphType: "PX.SM.AccessUsers",
+	primaryView: "UserList",
+	showActivitiesIndicator: true
+})
+export class SM201010 extends PXScreen {
+	ResetPasswordOK: PXActionState;
+	addADUserOK: PXActionState;
+
+	@viewInfo({ containerName: "User Information" })
+	UserList = createSingle(Users);
+	@viewInfo({ containerName: "" })
+	UserListCurrent = createSingle(Users2);
+	@viewInfo({ containerName: "Roles" })
+	AllowedRoles = createCollection(EPLoginTypeAllowsRole);
+	// AllowedRoles view uses UsersInRoles DAC (Table) inside but for Audit
+	// it is not obvious. By declaring the view RoleList we can
+	// ensure that this table will be included into screenInfo and Audit.Tables table.
+	RoleList = createCollection(UsersInRoles);
+
+	@viewInfo({ containerName: "Allowed IP Address Ranges" })
+	UserFilters = createCollection(UserFilter);
+
+	@viewInfo({ containerName: "External Identities" })
+	Identities = createCollection(OidcUser);
+
+	@viewInfo({ containerName: "Personal Settings" })
+	UserPrefs = createSingle(UserPreferences);
+	@viewInfo({ containerName: "Personal Settings" })
+	Contact = createSingle(Contact);
+
+	@viewInfo({ containerName: "Email Accounts" })
+	EMailAccounts = createCollection(EMailAccount);
+
+	@viewInfo({ containerName: "Devices" })
+	UserDevices = createCollection(MobilePushNotificationRegToken);
+
+	@viewInfo({ containerName: "Location Tracking" })
+	LocationTracking = createCollection(FSGPSTrackingRequest);
+
+	@viewInfo({ containerName: "Active Directory User" })
+	ADUser = createSingle(ADUserFilter);
+}

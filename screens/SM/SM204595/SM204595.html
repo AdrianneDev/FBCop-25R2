@@ -1,0 +1,12 @@
+<template>
+	<qp-fieldset id="CustomizationXml_Form" class="stretch" wg-container view.bind="Package">
+		<field name="Content" class="no-label stretch"></field>
+	</qp-fieldset>
+	<qp-upload-dialog
+		id="CustomizationXml_UploadPackageDlg"
+		key="UploadPanel"
+		session-key="CustomizationXml_UploadPackage"
+		caption="Open Package"
+		allowed-types=".zip">
+	</qp-upload-dialog>
+</template>

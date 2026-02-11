@@ -1,0 +1,25 @@
+<template>
+
+	<qp-template id="formGroup" name="1-1" wg-container="Group_formGroup" class="label-size-m">
+		<qp-fieldset slot="A" id="columnFirst-Group" view.bind="Group">
+			<field name="GroupName"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-Group" view.bind="Group">
+			<field name="GroupType"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+
+		<qp-tab id="tabUsers" caption="Users">
+			<qp-grid id="gridUsers" view.bind="Users"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabVendors" caption="Vendors">
+			<qp-grid id="gridVendors" view.bind="Vendor"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+</template>

@@ -1,0 +1,16 @@
+<template>
+	<qp-tab id="tab-Carts" before="#tab-GLAccounts" caption="Carts">
+		<qp-grid id="grid-Carts" view.bind="carts" wg-container="carts_gridCarts"></qp-grid>
+	</qp-tab>
+
+	<qp-tab id="tab-Totes" before="#tab-GLAccounts" caption="Totes">
+		<qp-grid id="grid-Totes" view.bind="totes" wg-container="totes_gridTotes"></qp-grid>
+	</qp-tab>
+
+	<qp-panel id="totesInCart" caption="Assigned Totes" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="grid-TotesInCart" view.bind="totesInCart" wg-container="totesInCart_gridTotesInCart"></qp-grid>
+		<footer id="footer-TotesInCart">
+			<qp-button id="buttonOK-TotesInCart" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

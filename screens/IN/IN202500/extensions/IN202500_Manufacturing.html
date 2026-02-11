@@ -1,0 +1,38 @@
+<template>
+	<qp-tab id="tab-Manufacturing" after="#tab-PriceCost" caption="Manufacturing" load-on-demand.bind="false">
+		<qp-template id="form-Manufacturing" name="1-1" wg-container="manufacturingSettings_manufacturingSettingsForm">
+			<div id="divColumnA-Manufacturing" slot="A">
+				<qp-fieldset id="fsProdOrderDefaults-Manufacturing" view.bind="manufacturingSettings" caption="General">
+					<field name="AMBOMID">
+						<qp-button id="buttonViewBOM-Manufacturing" state.bind="ViewBOM" class="col-auto" wg-name="Unnamed"></qp-button>
+					</field>
+					<field name="AMPlanningBOMID">
+						<qp-button id="buttonViewPlanningBOM-Manufacturing" state.bind="ViewPlanningBOM" class="col-auto" wg-name="Unnamed1"></qp-button>
+					</field>
+					<field name="AMConfigurationID" config-allow-edit.bind="true"></field>
+					<field name="AMDefaultMarkFor"></field>
+					<field name="AMMakeToOrderItem"></field>
+					<field name="AMQtyRoundUp"></field>
+					<field name="AMCTPItem"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsScrap-Manufacturing" view.bind="manufacturingSettings" caption="Scrap" wg-container="ItemCurySettings_CurySettingsFormScrap">
+					<field name="AMScrapSiteID" config-allow-edit.bind="true"></field>
+					<field name="AMScrapLocationID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<qp-grid id="AMGridAMSubItemDefault" view.bind="AMSubItemDefaults"></qp-grid>
+			</div>
+			<div id="divColumnB-Manufacturing" slot="B">
+				<qp-fieldset id="fsPlanning-Manufacturing" view.bind="manufacturingSettings" caption="Production Order Defaults">
+					<field name="ReplenishmentSource"></field>
+					<field name="AMMinOrdQty"></field>
+					<field name="AMMaxOrdQty"></field>
+					<field name="AMLotSize"></field>
+					<field name="AMMFGLeadTime"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsScheduling-Manufacturing" view.bind="manufacturingSettings" caption="Scheduling">
+					<field name="AMCheckSchdMatlAvailability"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</qp-tab>
+</template>

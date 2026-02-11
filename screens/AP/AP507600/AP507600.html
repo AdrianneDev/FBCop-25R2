@@ -1,0 +1,57 @@
+<template>
+
+	<qp-template id="formMasterView" name="17-17-14" class="equal-height" wg-container="ReportFilter_form">
+		<qp-fieldset slot="A" id="columnFirstMasterView" view.bind="ReportFilter">
+			<field name="CRAReportType"></field>
+			<field name="OrgBAccountID"></field>
+			<field name="OrganizationID"></field>
+			<field name="Year"></field>
+			<field name="Revision"></field>
+			<field name="Report.RevisionSubmitted"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondMasterView" view.bind="Report">
+			<field name="DateRange" unbound>
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Report.FromDate" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+				<qp-field control-state.bind="Report.ToDate" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+			</field>
+			<field name="FilingType"></field>
+			<field name="ThresholdAmount"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridDetailsView" view.bind="ReportDetails" wg-container="ReportDetails_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSummary" caption="Summary">
+			<qp-template name="17-17-14" id="formSummary" wg-container="ReportSummary_tab">
+				<div slot="A">
+					<qp-fieldset id="groupSettings" view.bind="ReportSummary" caption="Settings">
+						<field name="Language"></field>
+						<field name="ProgramNumber"></field>
+						<field name="TransmitterNumber"></field>
+					</qp-fieldset>
+					<qp-fieldset  id="groupCompany" view.bind="ReportSummary" caption="Company">
+						<field name="AcctName"></field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="Province"></field>
+						<field name="Country"></field>
+						<field name="PostalCode"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="B" id="groupContact" view.bind="ReportSummary" caption="Contact">
+					<field name="Name"></field>
+					<field name="AreaCode"></field>
+					<field name="Phone"></field>
+					<field name="ExtensionNbr"></field>
+					<field name="EMail"></field>
+					<field name="SecondEmail"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+</template>

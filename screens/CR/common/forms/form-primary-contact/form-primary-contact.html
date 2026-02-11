@@ -1,0 +1,54 @@
+<template>
+
+	<qp-include-parameters
+		view-name.required
+		primary-wg-container.required
+	></qp-include-parameters>
+
+	<qp-fieldset id="fsPrimaryContact" view.bind="PrimaryContactCurrent" caption="Primary Contact" wg-container="PrimaryContactCurrent_frmPrimaryContact">
+		<using view="{{view-name}}" wg-container="{{primary-wg-container}}">
+			<field name="PrimaryContactID">
+				<qp-button id="buttonContactTeamsCardOffline"
+					state.bind="ContactTeamsCardOffline"
+					config.bind="{ images: { normal: 'svg:teams@teams_offline' } }"
+					if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+					class="col-2">
+				</qp-button>
+				<qp-button id="buttonContactTeamsCardAvailable"
+					state.bind="ContactTeamsCardAvailable"
+					config.bind="{ images: { normal: 'svg:teams@teams_available' } }"
+					if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+					class="col-2">
+				</qp-button>
+				<qp-button id="buttonContactTeamsCardBusy"
+					state.bind="ContactTeamsCardBusy"
+					config.bind="{ images: { normal: 'svg:teams@teams_busy' } }"
+					if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+					class="col-2">
+				</qp-button>
+				<qp-button id="buttonContactTeamsCardAway"
+					state.bind="ContactTeamsCardAway"
+					config.bind="{ images: { normal: 'svg:teams@teams_away' } }"
+					if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+					class="col-2">
+				</qp-button>
+			</field>
+		</using>
+		<field name="FirstNameLastNameContainer" replace-content unbound>
+			<qp-field control-state.bind="PrimaryContactCurrent.FirstName" config-placeholder.bind="'First Name'">
+				<qp-label slot="label" caption="Name" if.bind="PrimaryContactCurrent.FirstName.visible == true"></qp-label>
+				<qp-field control-state.bind="PrimaryContactCurrent.LastName" class="label-size-zero" config-placeholder.bind="'Last Name'" config-required="PrimaryContactCurrent.LastName.required">
+				</qp-field>
+			</qp-field>
+		</field>
+		<field name="Salutation"></field>
+		<field name="EMail" control-type="qp-mail-editor"></field>
+		<field name="Phone1">
+			<qp-field slot="label" control-state.bind="PrimaryContactCurrent.Phone1Type" class="no-label"></qp-field>
+		</field>
+		<field name="Phone2">
+			<qp-field slot="label" control-state.bind="PrimaryContactCurrent.Phone2Type" class="no-label"></qp-field>
+		</field>
+	</qp-fieldset>
+
+</template>

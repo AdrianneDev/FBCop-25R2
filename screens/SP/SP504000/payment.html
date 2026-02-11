@@ -1,0 +1,34 @@
+<template>
+
+	<qp-include-parameters view.required></qp-include-parameters>
+	<qp-fieldset id="fsPaymentA1" slot="A1" view.bind="{{view}}" class="sp-data-feed-fieldset">
+
+		<field name="Adjustments.RefNbr"></field>
+		<field name="Adjustments.RefNbr"
+			class="sp-payments-status colored Payment_Status_${Adjustments.shortStatus}" replace-content unbound>
+			<span id="Payment_Status_${Adjustments.shortStatus}" class="qp-text-light">
+				${Adjustments.shortStatusText}
+			</span>
+		</field>
+		<field name="Adjustments.DocDate" class="sp-payments-date"></field>
+	</qp-fieldset>
+
+	<qp-fieldset id="fsShipmentCX" slot="CX" view.bind="{{view}}" class="sp-data-feed-fieldset">
+
+		<field name="fieldTotal" unbound replace-content
+			class="col-sm-12 col-md-12 col-lg-6 sp-data-feed-field sp-payments-method">
+			<div class="wrapper">
+				<span class="label-wrapper">
+					<div class="label-container">
+						<label>${msg.PaymentMethod}</label>
+						<div class="label-container__dotted-space"></div>
+					</div>
+				</span>
+				<qp-include url="../sp-paymethod.html" view="Adjustments"></qp-include>
+			</div>
+		</field>
+	</qp-fieldset>
+	<qp-fieldset id="fsShipmentDX" slot="DX" view.bind="{{view}}" class="sp-data-feed-fieldset">
+		<field name="Adjustments.CuryOrigDocAmt_Text" class="field--bold"></field>
+	</qp-fieldset>
+</template>

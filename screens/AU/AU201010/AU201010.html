@@ -1,0 +1,23 @@
+<template>
+	<qp-grid id="Conditions_gridConditions" wg-container view.bind="Conditions" view-model.ref="ConditionsGridViewModel"></qp-grid>
+	<qp-panel id="SelectedCondition" caption="Condition Properties" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="FormSelectedCondition" name="1-1">
+			<qp-fieldset id="FormSelectedCondition_0" wg-container="SelectedCondition_FormSelectedCondition" view.bind="SelectedCondition" slot="A" >
+				<field name="ConditionName"></field>
+				<field name="AppendSystemCondition"></field>
+				<field name="InvertCondition"></field>
+			</qp-fieldset>
+			<qp-fieldset id="FormSelectedCondition_1" wg-container="SelectedCondition_FormSelectedCondition" view.bind="SelectedCondition" slot="B" >
+				<field name="ParentCondition"></field>
+				<field name="JoinMethod"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="Filters_gridFilters" wg-container view.bind="Filters"></qp-grid>
+		<footer>
+			<qp-button id="ButtonOK" wg-name="Ok2" dialog-result="OK" caption="Save" class="major-button"></qp-button>
+			<qp-button id="ButtonCancel" wg-name="Cancel2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

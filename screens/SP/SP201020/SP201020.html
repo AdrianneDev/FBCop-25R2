@@ -1,0 +1,67 @@
+<template>
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack col-12" tabindex="0">
+		<div class="col-xs-12 col-6">
+			<qp-fieldset id="section1" view.bind="Contact" hide-caption="true" wg-container>
+				<field name="Status"></field>
+				<field name="FirstName"></field>
+				<field name="LastName"></field>
+				<field name="Salutation"></field>
+				<field name="Email"></field>
+				<field name="Phone1"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="section4" view.bind="UserPrefs" caption.bind="msg.OtherSettingsCaption" wg-container>
+				<field name="TimeZone"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="section3" caption.bind="msg.AccessInfoCaption" wg-container>
+				<field name="User.State" replace-content>
+					<qp-field control-state.bind="User.State" class="col-12 never-collapse">
+						<qp-button id="btnGrantAccess" class="col-4 col-xs-12" if.bind="['N','D','L'].includes(User.State.value)"
+							caption="Grant Access" config.bind="{ action: 'GrantAccess', enabled: (Contact.ContactID.value.id > 0) }">
+						</qp-button>
+						<qp-button id="btnRevokeAccess" class="col-4 col-xs-12"
+							if.bind="!['N','D','L'].includes(User.State.value)"
+							caption="Revoke Access" config.bind="{action: 'RevokeAccess', enabled: (Contact.ContactID.value.id > 0) }">
+						</qp-button>
+					</qp-field>
+				</field>
+				<field name="User.Username" replace-content>
+					<qp-field control-state.bind="User.Username" control-type="qp-text-editor"
+						config.bind="{displayMode: PXSelectorMode.DisplayModeValue, selectorMode: PXSelectorMode.Hidden}"
+						class="col-12">
+						<qp-button id="btnEditUsername" class="showhidepassword col-1"
+							if.bind="(User.Username.readOnly || !User.Username.enabled) && Contact.ContactID.value.id > 0 && !['N'].includes(User.State.value) && !StateFilter.UsernameEditMode.value && StateFilter.UsernameEditButton.value"
+							config.bind="{action: 'EditUsername', imageSet: 'svg:main', imageKey: 'edit' }">>
+						</qp-button>
+					</qp-field>
+				</field>
+				<field name="FakeUserRolesFieldState" unbound class="force-collapse size-fit">
+					<qp-label slot="label" caption.bind="StateFilter.UserRolesFieldState.text"></qp-label>
+					<qp-grid id="AllowedRolesGrid" view.bind="Roles">
+					</qp-grid>
+				</field>
+			</qp-fieldset>
+		</div>
+		<div class="col-xs-12 col-6">
+			<qp-fieldset id="section2" view.bind="AddressCurrent" caption.bind="msg.AddressCaption" wg-container>
+				<field name="overrideAddress" unbound>
+					<qp-field no-label="true" control-state.bind="Contact.OverrideAddress"></qp-field>
+					<qp-address-lookup view.bind="AddressCurrent" override-address.bind="Contact.OverrideAddress.value"
+						class="col-3"
+						config.bind="{cancelButtonText: Contact.OverrideAddress.value ? SysMessages.Cancel : SysMessages.Close }">
+					</qp-address-lookup>
+				</field>
+				<field name="AddressLine1"></field>
+				<field name="AddressLine2"></field>
+				<field name="City"></field>
+				<field name="State"></field>
+				<field name="PostalCode"></field>
+				<field name="CountryID"></field>
+			</qp-fieldset>
+
+		</div>
+	</div>
+</template>

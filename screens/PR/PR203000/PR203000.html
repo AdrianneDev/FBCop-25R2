@@ -1,0 +1,229 @@
+<template>
+	<qp-template name="1-1" id="form-PayrollEmployee" wg-container="PayrollEmployee_form" class="equal-height label-size-m">
+		<div id="divSlotA-PayrollEmployee" slot="A">
+			<qp-fieldset id="fs-Basic" view.bind="PayrollEmployee">
+				<field name="AcctCD"></field>
+				<field name="AcctName"></field>
+			</qp-fieldset>
+		</div>
+		<div id="divSlotB-PayrollEmployee" slot="B">
+			<qp-fieldset id="fs-Boxes" view.bind="PayrollEmployee">
+				<field name="ActiveInPayroll" class="no-label"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="tab" view.bind="CurrentPayrollEmployee">
+		<qp-tab id="tab-General" caption="General">
+			<qp-template name="1-1" id="form-General" class="label-size-m">
+				<div id="divSlotA-GeneralForm" slot="A" class="v-stack">
+					<qp-fieldset id="fs-GeneralInfo" wg-container="CurrentPayrollEmployee_tab" view.bind="CurrentPayrollEmployee" caption="General Info">
+						<field name="EmployeeClassID" config-allow-edit.bind="true"></field>
+						<field name="EmpType">
+							<qp-field control-state.bind="CurrentPayrollEmployee.EmpTypeUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="PayGroupID">
+							<qp-field control-state.bind="CurrentPayrollEmployee.PayGroupUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="CalendarID">
+							<qp-field control-state.bind="CurrentPayrollEmployee.CalendarIDUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="HoursPerWeek">
+							<qp-field class="col-4"></qp-field>
+						</field>
+						<field name="StdWeeksPerYear">
+							<qp-field control-state.bind="CurrentPayrollEmployee.StdWeeksPerYearUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="HoursPerYear">
+							<qp-field class="col-4"></qp-field>
+						</field>
+						<field name="CurrentPayrollEmployee.OverrideHoursPerYearForCertified">
+							<qp-field control-state.bind="CurrentPayrollEmployee.OverrideHoursPerYearForCertifiedUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="CurrentPayrollEmployee.HoursPerYearForCertified">
+							<qp-field control-state.bind="CurrentPayrollEmployee.HoursPerYearForCertifiedUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="CurrentPayrollEmployee.ExemptFromOvertimeRules">
+							<qp-field control-state.bind="CurrentPayrollEmployee.ExemptFromOvertimeRulesUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="CurrentPayrollEmployee.ExemptFromCertifiedReporting">
+							<qp-field control-state.bind="CurrentPayrollEmployee.ExemptFromCertifiedReportingUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="UnionID">
+							<qp-field control-state.bind="CurrentPayrollEmployee.UnionUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="WorkCodeID">
+							<qp-field control-state.bind="CurrentPayrollEmployee.WorkCodeUseDflt" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="fs-PersonalInfo" wg-container="Contact_PersonalInfo" view.bind="Contact" caption="Personal Info">
+						<field name="DateOfBirth"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divSlotB-GeneralForm" slot="B" class="v-stack">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+								fs-id="fs-AddressInfo"
+								address-view="Address"
+								fs-caption="Address Info"
+								fs-wg-container="Address_fAddressInfo"
+								with-validation="false"
+								override-fieldname></qp-include>
+					<qp-fieldset id="fs-WorkLocations" wg-container="CurrentPayrollEmployee_tab" view.bind="CurrentPayrollEmployee" caption="Work Locations">
+						<field name="UsePayrollProjectWorkLocation" class="no-label"></field>
+						<field name="UsePayrollProjectWorkLocationUseDflt" class="no-label"></field>
+						<field name="LocationUseDflt" class="no-label"></field>
+						<field name="FakeField" unbound replace-content>
+							<qp-grid id="grid-WorkLocations" wg-container="WorkLocations_grdWorkLocations" view.bind="WorkLocations" class="col-12">
+							</qp-grid>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tab-EmploymentHistoryTab" caption="Employment History">
+			<qp-template name="1-1" id="form-EmploymentHistory" class="label-size-m">
+				<div id="divSlotA-EmploymentHistory" slot="A">
+					<qp-fieldset id="fs-Employment" wg-container="EmploymentHistory_fEmployment" view.bind="EmploymentHistory">
+						<field name="HireDate"></field>
+						<field name="TerminationDate"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+			<qp-grid id="grid-Positions" view.bind="EmployeePositions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab-TaxSettings" caption="Tax Settings">
+			<qp-grid id="grid-EmployeeAttributes" wg-container="EmployeeAttributes_EmpAttr" view.bind="EmployeeAttributes">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab-Taxes" caption="Taxes" load-on-demand.bind="false">
+			<qp-splitter id="splitter-Taxes" initial-split="40%" class="stretch">
+				<split-pane id="splitPaneA-Taxes">
+					<qp-grid id="grid-EmployeeTax" wg-container="EmployeeTax_EmployeeTax" caption="Tax Codes" view.bind="EmployeeTax">
+					</qp-grid>
+				</split-pane>
+				<split-pane id="splitPaneB-Taxes">
+					<qp-grid id="grid-EmployeeTaxAttributes" wg-container="EmployeeTaxAttributes_EmployeeTaxAttributes" caption="Tax Settings" view.bind="EmployeeTaxAttributes">
+					</qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="tab-Compensation" caption="Compensation">
+			<qp-grid id="grid-Salary" view.bind="EmployeeEarning">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab-DeductionsandBenefits" caption="Deductions and Benefits">
+			<qp-template name="1-1" id="form-DeductionsandBenefits" class="label-size-m">
+				<div id="divSlotA-DeductionsandBenefits" slot="A">
+					<qp-fieldset id="fs-SplitTypeForm" wg-container="CurrentPayrollEmployee_splitTypeForm" view.bind="CurrentPayrollEmployee">
+						<field name="DedSplitType"></field>
+						<field name="NetPayMin">
+							<qp-field control-state.bind="CurrentPayrollEmployee.NetPayMinUseDflt" config-enabled.bind="false" class="col-8"></qp-field>
+						</field>
+						<field name="GrnMaxPctNet">
+							<qp-field control-state.bind="CurrentPayrollEmployee.GrnMaxPctuseDflt" config-enabled.bind="false" class="col-8"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+			<qp-grid id="grid-Deductions" view.bind="EmployeeDeduction">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab-PaidTimeOff" caption="Paid Time Off">
+			<qp-template name="1-1" id="form-PaidTimeOff" class="label-size-m">
+				<div id="divSlotA-PaidTimeOff" slot="A">
+					<qp-fieldset id="fs-PTOEmployment" wg-container="EmploymentHistory_fPTOEmployment" view.bind="EmploymentHistory">
+						<field name="ProbationPeriodEndDate"></field>
+						<field name="HireDate"></field>
+						<field name="TerminationDate"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fs-PTOCustom" wg-container="CurrentPayrollEmployee_fPTOCustom" view.bind="CurrentPayrollEmployee">
+						<field class="no-label transparent-section" name="UseCustomSettings"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+			<qp-grid id="grid-EmployeePTOBanks" wg-container="EmployeePTOBanks_grdPTOBanks" view.bind="EmployeePTOBanks"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab-Payment" caption="Payment">
+			<qp-template name="1-1" id="form-Payment" class="label-size-m">
+				<div id="divSlotA-Payment" slot="A">
+					<qp-fieldset id="fs-PaymentSettings" wg-container="CurrentPayrollEmployee_formPaymentSettings" view.bind="CurrentPayrollEmployee">
+						<field name="PaymentMethodID"></field>
+						<field name="CashAccountID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+			<qp-grid id="grid-DirectDeposit" view.bind="EmployeeDirectDeposit">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tab-GLAccounts" caption="GL Accounts">
+			<qp-template name="1-1" id="form-GLAccounts" class="label-size-m">
+				<div id="divSlotA-GlAccounts" slot="A">
+					<qp-fieldset id="fs-GLAccounts" wg-container="CurrentPayrollEmployee_frmGLAccounts" view.bind="CurrentPayrollEmployee">
+						<field name="EarningsAcctID"></field>
+						<field name="EarningsSubID"></field>
+						<field name="DedLiabilityAcctID"></field>
+						<field name="DedLiabilitySubID"></field>
+						<field name="BenefitExpenseAcctID"></field>
+						<field name="BenefitExpenseSubID"></field>
+						<field name="BenefitLiabilityAcctID"></field>
+						<field name="BenefitLiabilitySubID"></field>
+						<field name="PayrollTaxExpenseAcctID"></field>
+						<field name="PayrollTaxExpenseSubID"></field>
+						<field name="PayrollTaxLiabilityAcctID"></field>
+						<field name="PayrollTaxLiabilitySubID"></field>
+						<field name="PTOExpenseAcctID"></field>
+						<field name="PTOExpenseSubID"></field>
+						<field name="PTOLiabilityAcctID"></field>
+						<field name="PTOLiabilitySubID"></field>
+						<field name="PTOAssetAcctID"></field>
+						<field name="PTOAssetSubID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CurrentDeduction" caption="Garnishment Details" auto-repaint="true">
+		<qp-template name="1" id="form-currentDeduction">
+			<qp-fieldset slot="A" id="fs-CurrentDeduction" wg-container="CurrentDeduction_formCurrentDeduction" view.bind="CurrentDeduction">
+				<field name="GarnBAccountID"></field>
+				<field name="VndInvDescr"></field>
+				<field name="GarnCourtName"></field>
+				<field name="GarnDocRefNbr"></field>
+				<field name="GarnCourtDate"></field>
+				<field name="GarnOrigAmount"></field>
+				<field name="GarnPaidAmount"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer id="footer-CurrentDeduction">
+			<qp-button id="buttonOk-Garnishment" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CreateEditPREmployeeFilter" caption="Create Employee Payroll Settings" auto-repaint="true">
+		<qp-fieldset id="fs-CreateEmployee" view.bind="CreateEditPREmployeeFilter">
+			<field name="BAccountID"></field>
+			<field name="EmployeeClassID"></field>
+			<field name="PaymentMethodID"></field>
+			<field name="CashAccountID"></field>
+		</qp-fieldset>
+		<footer id="footer-CreateEmployee">
+			<qp-button id="buttonOk-CreateEmployee" caption="Create" dialog-result="OK">
+			</qp-button>
+			<qp-button id="buttonCancel-CreateEmployee" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="PTOPaidHoursPopupFilter" caption="View Payable Hours" auto-repaint="true">
+		<qp-fieldset id="fs-PTOPaidHoursPopupFilter" wg-container="PTOPaidHoursPopupFilter_formPTOPaidHoursPopupFilter" view.bind="PTOPaidHoursPopupFilter">
+			<field name="BankID"></field>
+			<field name="EffectiveDate"></field>
+			<field name="DisbursingType"></field>
+			<field name="PayRate"></field>
+			<field name="AvailablePaidHours"></field>
+		</qp-fieldset>
+		<footer id="footer-PTOPaidHoursPopupFilterButtons">
+			<qp-button id="buttonOk-PTOPaidHoursPopupFilter" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

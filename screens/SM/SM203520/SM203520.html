@@ -1,0 +1,125 @@
+<template>
+	<qp-template name="1-1" id="Companies_form" class="label-size-m" wg-container>
+		<qp-fieldset slot="A" id="col1" view.bind="Companies">
+			<field name="CompanyID"></field>
+			<field name="CompanyCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="col2" view.bind="Companies">
+			<field name="LoginName"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tabGridSnapshots" caption="Snapshots">
+			<qp-grid id="gridSnapshots" view.bind="Snapshots">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGridHistory" caption="Snapshot Restoration History">
+			<qp-grid id="gridHistory" view.bind="SnapshotsHistory">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGridUsers" caption="Users">
+			<qp-grid id="gridUsers" view.bind="Users">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-upload-dialog
+		id="dlgUploadFile"
+		key="UploadDialogPanel"
+		session-key="UploadedSnapshotKey"
+		caption="Upload Snapshot Package"
+		allowed-types=".zip"
+		render-import-options="true"
+		ignore-size="true">
+	</qp-upload-dialog>
+
+	<qp-panel id="Snapshots" wg-container="SnapshotsPanel" caption="Create Snapshot">
+		<qp-info-box type="warning" id="SnapshotsWarning" caption="The system is not in maintenance mode. Creating snapshots can lead to data corruption. Before creating the snapshot, activate maintenance mode for all sites on the Apply Updates (SM203510) form. Do you want to open the form?" />
+		<footer>
+			<qp-button id="btnOK" caption="Open" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SnapshotsHistory" wg-container="SnapshotsHistoryPanel" caption="Restore Snapshot">
+		<qp-info-box type="warning" id="SnapshotsHistoryWarning" caption="The system is not in maintenance mode. Restoring the snapshot can lead to data corruption. Before restoring the snapshot, activate maintenance mode for all sites on the Apply Updates (SM203510) form. Do you want to open the form?" />
+		<footer>
+			<qp-button id="btnOK" caption="Open" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CompanyCurrent" wg-container="CompanyCurrentPanel" caption="Copy Tenant">
+		<qp-info-box type="warning" id="CompanyCurrentWarning" caption="The system is not in maintenance mode. Copying tenants can lead to data corruption. Before copying the tenant, activate maintenance mode for all sites on the Apply Updates (SM203510) form. Do you want to open the form?" />
+		<footer>
+			<qp-button id="btnOK" caption="Open" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="Companies" caption="Notification">
+		<qp-info-box type="warning" id="CompaniesWarning_nm" caption="You can't create snapshot because the DB size limit is exceeded.">
+		</qp-info-box>
+		<qp-info-box type="info" id="CompaniesInfo_nm" caption="Too see detailed information about Database space usage please go to Space Usage form.">
+		</qp-info-box>
+		<footer>
+			<qp-button id="btnOK" caption="Go to Space Usage" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" caption="Return to Tenants" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ImportSnapshotPanel" caption="Restore Snapshot">
+		<qp-info-box type="warning" id="ftmImportSnapshot" caption="This action will overwrite all data in this company.">
+		</qp-info-box>
+		<qp-fieldset id="ftmImportSnapshot" view.bind="ImportSnapshotPanel">
+			<field name="Company"></field>
+			<field name="Name"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ExportSnapshotPanel" caption="Create Snapshot">
+		<qp-fieldset id="frmExportSnapshot" view.bind="ExportSnapshotPanel">
+			<field name="Company"></field>
+			<field name="Description"></field>
+			<field name="ExportMode"></field>
+			<field name="Prepare"></field>
+			<field name="PrepareMode"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel"  dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ReloadSnapshotPanel" caption="Reset Data">
+		<qp-info-box type="warning" id="frmReloadSnapshot_nm" caption="This action will overwrite all data in this company.">
+		</qp-info-box>
+		<qp-fieldset id="frmReloadSnapshot" view.bind="ReloadSnapshotPanel">
+			<field name="DataType"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CopyCompanyPanel" caption="Copy Company">
+		<qp-info-box type="warning" id="frmCopyCompany_nm" caption="This action will overwrite all data in the destination company.">
+		</qp-info-box>
+		<qp-fieldset id="frmCopyCompany" view.bind="CopyCompanyPanel">
+			<field name="CompanyID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

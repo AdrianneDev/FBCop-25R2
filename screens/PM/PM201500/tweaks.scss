@@ -1,0 +1,9 @@
+#customizationMenu_menu_items {
+	#miSwitchUIScreenMode {
+		display: none !important;
+	}
+
+	#miSwitchUIScreenMode + .qp-menu-separator {
+		display: none !important;
+	}
+}

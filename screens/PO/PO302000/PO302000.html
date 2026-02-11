@@ -1,0 +1,86 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-Receipt" name="7-10-7" class="equal-height" qp-collapsible wg-container="document_form">
+		<qp-fieldset id="fsColumnA-Receipt" slot="A" view.bind="Document">
+			<field name="ReceiptType"></field>
+			<field name="ReceiptNbr"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="ReceiptDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Receipt" slot="B" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="AutoCreateInvoice" pinned="true"></field>
+			<field name="InvoiceNbr" pinned="true"></field>
+			<field name="ReturnInventoryCostMode"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Receipt" slot="C" view.bind="Document" class="highlights-section">
+			<field name="OrderQty" pinned="true"></field>
+			<field name="ControlQty" pinned="true"></field>
+			<field name="UnbilledQty" pinned="true"></field>
+			<field name="CuryOrderTotal" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Details">
+			<qp-grid id="grid-Details" view.bind="transactions" wg-container="transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Orders" caption="Orders" load-on-demand="true" visible.bind="Document.ShowPurchaseOrdersTab.value == true">
+			<qp-grid id="grid-Orders" view.bind="ReceiptOrdersLink" wg-container="ReceiptOrdersLink_formOrders"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-PutAway" caption="Put Away" load-on-demand="true" visible.bind="Document.ShowPutAwayHistoryTab.value == true">
+			<qp-grid id="grid-PutAway" view.bind="RelatedTransfers" wg-container="RelatedTransfers_formTransfers"></qp-grid>
+		</qp-tab>
+
+        <qp-tab id="tab-History" caption="History">
+			<qp-grid id="grid-History" view.bind="ReceiptHistory" wg-container="ReceiptHistory_formPRHistory"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Billing" caption="Billing">
+			<div id="div-Billing" class="v-stack">
+				<qp-info-box caption="The values in the Billed Amt., Accrued Amt., and PPV Amt columns are always shown in the base currency." type="info"></qp-info-box>
+				<qp-grid id="grid-Billing" view.bind="apDocs" wg-container="apDocs_formBillingHistory"></qp-grid>
+			</div>
+		</qp-tab>
+
+		<qp-tab id="tab-LandedCosts" caption="Landed Costs" load-on-demand="true" visible.bind="Document.ShowLandedCostsTab.value == true">
+			<qp-grid id="grid-LandedCosts" view.bind="landedCosts" wg-container="landedCosts_gridLandedCosts"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Other" caption="Other" load-on-demand.bind="false">
+			<qp-template id="form-Other" name="17-17-14" wg-container="CurrentDocument_tab">
+				<div id="divColumnA-Other" slot="A" class="v-stack">
+					<qp-fieldset id="fsReceiptInfo-Other" view.bind="CurrentDocument" caption="Receipt Info">
+						<field name="InventoryRefNbr" config-allow-edit.bind="true"></field>
+						<field name="BranchID"></field>
+						<field name="BranchBaseCuryID"></field>
+						<field name="InvoiceDate"></field>
+						<field name="SOOrderNbr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsIntercompanySale-Other" view.bind="CurrentDocument" caption="Intercompany Sale">
+						<field name="IntercompanyShipmentNbr" config-allow-edit.bind="true"></field>
+						<field name="IntercompanySOType"></field>
+						<field name="IntercompanySONbr" config-allow-edit.bind="true"></field>
+						<field name="ExcludeFromIntercompanyProc"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsOwnership-Other" view.bind="Document" caption="Ownership" wg-container="document_form">
+						<field name="WorkgroupID"></field>
+						<field name="OwnerID"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset id="fsCorrections-Other" slot="B" view.bind="CurrentDocument" caption="Corrections">
+					<field name="OrigReceiptNbr" config-allow-edit.bind="true"></field>
+					<field name="CorrectionReceiptNbr" config-allow-edit.bind="true"></field>
+					<field name="ReversalInvtRefNbr" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

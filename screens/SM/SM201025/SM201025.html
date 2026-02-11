@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="template" name="1-1-1" class="label-size-sm">
+		<qp-fieldset id="form" slot="A" view.bind="Roles">
+			<field name="Rolename"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="sp1" initial-split="300px">
+		<split-pane>
+			<qp-tree id="tree" view.Bind="Entities" caption="Screens" wg-container="Parameters"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="grid" wg-container="RoleEntities_griddet" view.Bind="RoleEntities" caption="Access Rights"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="NewRole" caption="New Role" auto-repaint="true">
+		<qp-fieldset id="formCopyRole" view.bind="NewRole">
+			<field name="Rolename"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK" caption="Copy"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

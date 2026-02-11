@@ -1,0 +1,30 @@
+<template>
+	<qp-panel id="ItemInfo" caption="Add Item to Worksheet" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddItemLookup" name="17-17-14" class="equal-height">
+			<qp-fieldset id="fsColumnA-AddItemLookup" slot="A" view.bind="ItemFilter" wg-container="ItemFilter_formAddItem">
+				<field name="Inventory" qp-fast-filter.bind="gridAddItemLookupVM"></field>
+				<field name="ItemClass"></field>
+				<field name="PriceClassID"></field>
+				<field name="OwnerID">
+					<qp-field control-state.bind="ItemFilter.MyOwner" class="col-3"></qp-field>
+				</field>
+				<field name="WorkGroupID">
+					<qp-field control-state.bind="ItemFilter.MyWorkGroup" class="col-3"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddItemLookup" slot="B" view.bind="addItemParameters" caption="Price Type to Add" wg-container="ItemFilter_formAddItem">
+				<field name="CuryID"></field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddItemLookup" view.bind="ItemInfo" view-model.ref="gridAddItemLookupVM" wg-container="ItemInfo_gridAddItemLookup"></qp-grid>
+
+		<footer id="footer-AddItemLookup">
+			<qp-button id="buttonAdd-AddItemLookup" state.bind="AddSelectedItems" caption="Add" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="buttonAddAll-AddItemLookup" state.bind="AddAllItems" caption="Add All" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="buttonAddClose-AddItemLookup" dialog-result="OK" caption="Add & Close" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="buttonCancel-AddItemLookup" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

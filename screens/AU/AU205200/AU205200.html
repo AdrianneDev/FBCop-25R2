@@ -1,0 +1,10 @@
+<template>
+	<qp-grid id="grid-Items" wg-container="Items_grid" view.bind="Items"></qp-grid>
+	<qp-panel id="ScreensWithRoles"	caption="Add Access Rights for Screen" auto-repaint="true" height="60vh">
+		<qp-grid id="ScreensWithRoles_grid" view.bind="ScreensWithRoles" wg-container="ScreensWithRoles_gridAddAccessRights"></qp-grid>
+		<footer>
+			<qp-button id="btnAdd-ScreensWithRoles" caption="Add" class="major-button" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-ScreensWithRoles" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

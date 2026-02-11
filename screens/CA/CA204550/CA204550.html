@@ -1,0 +1,50 @@
+<template>
+
+	<qp-template id="formRule" name="1-1" class="label-size-m" wg-container="Rule_form">
+		<qp-fieldset id="panelRule" view.bind="Rule" slot="A">
+			<field name="Description"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-template id="formMatchingCriteria" class="label-size-m" name="1-1" wg-container="Rule_tab">
+
+		<div id="columnFirst" slot="A">
+			<qp-fieldset id="groupGeneral" view.bind="Rule" caption="General Matching Criteria">
+				<field name="BankDrCr"></field>
+				<field name="BankTranCashAccountID"></field>
+				<field name="TranCuryID"></field>
+				<field name="TranCode"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupDescription" view.bind="Rule" caption="Description Matching">
+				<field name="BankTranDescription"></field>
+				<field name="MatchDescriptionCase"></field>
+				<field name="UseDescriptionWildcards"></field>
+			</qp-fieldset>
+		</div>
+
+		<div id="columnSecond" slot="B">
+			<qp-fieldset id="groupPayeePayer" caption="Payee/Payer Matching" view.bind="Rule">
+				<field name="PayeeName"></field>
+				<field name="UsePayeeNameWildcards"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupAmount" caption="Amount Matching" view.bind="Rule">
+				<field name="AmountMatchingMode"></field>
+				<field name="CuryTranAmt"></field>
+				<field name="CuryMinTranAmt"></field>
+				<field name="MaxCuryTranAmt"></field>
+			</qp-fieldset>
+			<qp-fieldset id="panelOutput" view.bind="Rule" caption="Rule Application">
+				<field name="Action"></field>
+				<field name="DocumentEntryTypeID"></field>
+			</qp-fieldset>
+		</div>
+
+	</qp-template>
+
+	<div class="h-stack align-end">
+		<qp-button id="buttonApply" state.bind="SaveClose"></qp-button>
+		<qp-button id="buttonApplyAll" state.bind="SaveAndApply"></qp-button>
+	</div>
+
+</template>

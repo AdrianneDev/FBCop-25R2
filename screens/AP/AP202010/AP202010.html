@@ -1,0 +1,66 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template id="formHeader" name="17-17-14" class="equal-height" wg-container="Document_form">
+		<qp-fieldset id="columnFirstHeader" slot="A" view.bind="Document">
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHeader" slot="B" view.bind="Document">
+			<field name="EffectiveDate"></field>
+			<field name="IsPromotional"></field>
+			<field name="ExpirationDate"></field>
+			<field name="OverwriteOverlapping"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridDetails" view.bind="Details" wg-container="Details_grid"></qp-grid>
+
+	<qp-panel id="CopyPricesSettings" caption="Copy Prices" auto-repaint="true">
+		<qp-template id="formCopyPrices" name="1" wg-container="CopyPricesSettings_massCopyForm">
+			<div slot="A" id="columnFirst-CopyPricesSettings">
+				<qp-fieldset id="groupFirstCopyPricesSource" caption="Source" view.bind="CopyPricesSettings">
+				<field name="SourceVendorID"></field>
+				<field name="SourceCuryID"></field>
+				<field name="SourceSiteID"></field>
+				<field name="EffectiveDate"></field>
+				<field name="IsPromotional"></field>
+			</qp-fieldset>
+				<qp-fieldset id="groupFirstCopyPricesDest" caption="Destination" view.bind="CopyPricesSettings">
+				<field name="DestinationVendorID"></field>
+				<field name="DestinationCuryID"></field>
+				<field name="DestinationSiteID"></field>
+			</qp-fieldset>
+				<qp-fieldset id="groupFirstCopyPricesCuryConv" caption="Currency Conversion" view.bind="CopyPricesSettings">
+				<field name="RateTypeID"></field>
+				<field name="CurrencyDate"></field>
+			</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-CopyPricesSettings" caption="Copy" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-CopyPricesSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CalculatePricesSettings" caption="Calculate Pending Prices" auto-repaint="true">
+		<qp-template id="formCalculatePricesSettings" name="1">
+			<div slot="A">
+				<qp-fieldset id="panelCalculatePricesSettings" view.bind="CalculatePricesSettings" wg-container="CalculatePricesSettings_massUpdateForm">
+					<field name="PriceBasis" control-type="qp-radio" config-class.bind="'vertical'"></field>
+					<field name="BaseCuryID"></field>
+					<field name="CorrectionPercent"></field>
+					<field name="Rounding"></field>
+					<field name="UpdateOnZero"></field>
+				</qp-fieldset>
+				<footer>
+					<qp-button id="buttonOK-CalculatePricesSettings" caption="Update" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+					<qp-button id="buttonCancel-CalculatePricesSettings" dialog-result="Cancel"></qp-button>
+				</footer>
+			</div>
+		</qp-template>
+	</qp-panel>
+
+</template>

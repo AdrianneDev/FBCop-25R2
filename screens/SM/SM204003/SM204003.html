@@ -1,0 +1,128 @@
+<template>
+
+	<qp-template id="form1-Notifications" name="1-1" class="equal-height label-size-s"
+		qp-collapsible wg-container="Notifications_PXFormView1">
+		<qp-fieldset id="fsColumnA-Notifications" view.bind="Notifications" slot="A">
+			<field name="NotificationID" pinned></field>
+			<field name="Name" pinned></field>
+			<field name="ScreenID"></field>
+			<field name="Subject" control-type="qp-tree-selector"></field>
+			<field name="LocaleName"></field>
+			<field name="Type"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fs-Notifications" view.bind="Notifications" slot="B" wg-container="Notifications_PXFormView1">
+			<field name="NFrom" pinned></field>
+			<field name="NTo" control-type="qp-tree-selector" pinned></field>
+			<field name="NCc" control-type="qp-tree-selector"></field>
+			<field name="NBcc" control-type="qp-tree-selector"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+
+		<qp-tab id="tab_Message" caption="Message" wg-container="CurrentNotification_tab">
+			<qp-rich-text-editor
+				id="edCurrentNotificationBody"
+				state.bind="CurrentNotification.Body"
+				class="stretch"
+				value-format="html">
+				<InsertDataField enabled="true"
+								 dataMember="EntityItems"
+								 idField="Key"
+								 textField="Name"
+								 valueField="Path"
+								 iconField="Icon"></InsertDataField>
+				<InsertDataFieldPrev enabled="true"
+								 dataMember="PreviousEntityItems"
+								 idField="Key"
+								 textField="Name"
+								 valueField="Path"
+								 iconField="Icon"></InsertDataFieldPrev>
+			</qp-rich-text-editor>
+		</qp-tab>
+
+		<qp-tab id="tab_Links" caption="Linked Records" wg-container="Notifications_PXFormView1">
+			<qp-template id="form2-Notifications" name="1-1" class="label-size-s">
+				<qp-fieldset id="fsColumnB-Notifications" view.bind="Notifications" slot="A">
+					<field name="attachActivity"></field>
+					<field name="RefNoteID" control-type="qp-tree-selector"></field>
+					<field name="ContactID" control-type="qp-tree-selector"></field>
+					<field name="BAccountID" control-type="qp-tree-selector"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab_Reports" caption="Attached Reports">
+			<qp-template id="Reports" name="1-1" class="stretch">
+				<div slot="A" class="stretch full-width">
+					<qp-fieldset id="fsReportAction-CurrentNotification1" class="label-size-m" view.bind="CurrentNotification" wg-container="CurrentNotification_frmActionReport">
+						<field name="ReportAction"></field>
+					</qp-fieldset>
+					<qp-grid id="grid-NotificationReports" view.bind="NotificationReports" caption="Reports Attached by Report ID"
+						class="framed-section expandable-width" wg-container="NotificationReports_grdNavScreens"></qp-grid>
+				</div>
+				<div slot="B" class="stretch full-width">
+					<qp-fieldset id="fsReports-NotificationReports" class="expandable-width label-size-s"
+						view.bind="CurrentNotificationReport"
+						caption="Report Parameters" wg-container="NotificationReports_frmNavWindowMode">
+						<field name="ReportTemplateID"></field>
+						<field name="PassData"></field>
+						<field name="TableToPass"></field>
+						<field name="NotificationReportParametersGrid" replace-content unbound class="expandable-width">
+							<qp-grid id="grid-NotificationReportParameters" class="col-12" view.bind="NotificationReportParameters"
+								wg-container="NotificationReportParameters_grdNavParams"></qp-grid>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Events" caption="Send by Events">
+			<qp-grid id="grid-BusinessEvents" view.bind="BusinessEvents" wg-container="BusinessEvents_grdSendByEvents"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Schedules" caption="Send by Schedules">
+			<qp-grid id="grid-Schedules" view.bind="Schedules" wg-container="Schedules_grdSendBySchedules">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="NewEventData" caption="Create Business Event" auto-repaint="true">
+		<qp-fieldset id="fsCreateBusinessEvent-NewEventData" view.bind="NewEventData" class="label-size-m" wg-container="NewEventData_frmCreateBusinessEvent">
+			<field name="Name"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-CreateBusinessEvent" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-CreateBusinessEvent" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SendGridDesignImportParametersView" caption="Import SendGrid Design" auto-repaint="true" width="sm">
+		<qp-template name="1" id="ImportSendGridDesignPanel">
+			<qp-fieldset slot="A" id="fsImportSendGridDesign-SendGridDesignImportParametersView" view.bind="SendGridDesignImportParametersView" wg-container="SendGridDesignImportParametersView_frmImportSendGridDesign">
+				<field name="Label1" unbound replace-content>
+					<qp-label id="label-Design1" caption="Select design to import"></qp-label>
+				</field>
+				<field name="DesignID"></field>
+				<field name="Label2" unbound replace-content>
+					<qp-label id="label-Design2" caption="The contents and the subject of the current template will be overridden by the imported design."></qp-label>
+				</field>
+				<field name="ThumbnailUrl" control-type="qp-image-view" config-show-progress.bind="false" class="no-label"></field>
+			</qp-fieldset>
+			<footer>
+				<qp-button id="buttonOK-ImportSendGridDesign" caption="Import" dialog-result="OK"></qp-button>
+				<qp-button id="buttonCancel-ImportSendGridDesign" dialog-result="Cancel"></qp-button>
+			</footer>
+		</qp-template>
+	</qp-panel>
+
+	<qp-panel id="ScheduleHistory" caption="View Schedule History" auto-repaint="true" wg-container>
+		<qp-grid id="gridScheduleHistory" view.bind="ScheduleHistory">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXScheduleHistoryOk" dialog-result="Cancel" caption="Close">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

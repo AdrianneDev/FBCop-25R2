@@ -1,0 +1,12 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="OrganizationID"></field>
+			<field name="Action"></field>
+			<field name="FromYear"></field>
+			<field name="ToYear"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="FinPeriods"></qp-grid>
+</template>

@@ -1,0 +1,70 @@
+<template>
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-General" caption="General" class="label-size-xm">
+			<qp-template id="form-General" name="1-1" wg-container="Setup_tab">
+				<div id="divColumnA-General" slot="A">
+					<qp-fieldset id="fsNumbering-General" view.bind="Setup" caption="Purchase Order Numbering Settings">
+						<field name="StandardPONumberingID" config-allow-edit.bind="true"></field>
+						<field name="RegularPONumberingID" config-allow-edit.bind="true"></field>
+						<field name="ReceiptNumberingID" config-allow-edit.bind="true"></field>
+						<field name="LandedCostDocNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsDataEntry-General" view.bind="Setup" caption="Validate Total on Entry">
+						<field name="RequireReceiptControlTotal"></field>
+						<field name="RequireOrderControlTotal"></field>
+						<field name="RequireBlanketControlTotal"></field>
+						<field name="RequireDropShipControlTotal"></field>
+						<field name="RequireProjectDropShipControlTotal"></field>
+						<field name="RequireLandedCostsControlTotal"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsPpvAllocation-General" view.bind="Setup" caption="Purchase Price Variance Allocation">
+						<field name="PPVAllocationMode"></field>
+						<field name="PPVReasonCodeID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsCopySettings-General" view.bind="Setup" caption="Copying Settings">
+						<field name="CopyLineDescrSO"></field>
+						<field name="CopyLineNoteSO"></field>
+						<field name="CopyLineNotesFromServiceOrder"></field>
+						<field name="CopyLineAttachmentsFromServiceOrder"></field>
+						<field name="CopyLineNotesToReceipt"></field>
+						<field name="CopyLineFilesToReceipt"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-General" slot="B">
+					<qp-fieldset id="fsThreeWayMatch-General" view.bind="Setup" caption="Three-Way Match Validation">
+						<field name="APInvoiceValidation"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsOther-General" view.bind="Setup" caption="Other">
+						<field name="AutoCreateInvoiceOnReceipt"></field>
+						<field name="AutoCreateLCAP"></field>
+						<field name="FreightExpenseAcctID"></field>
+						<field name="FreightExpenseSubID"></field>
+						<field name="RCReturnReasonCodeID" config-allow-edit.bind="true"></field>
+						<field name="TaxReasonCodeID" config-allow-edit.bind="true"></field>
+						<field name="AutoReleaseIN"></field>
+						<field name="AutoReleaseLCIN"></field>
+						<field name="AutoReleaseAP"></field>
+						<field name="HoldReceipts"></field>
+						<field name="HoldLandedCosts"></field>
+						<field name="AddServicesFromNormalPOtoPR"></field>
+						<field name="AddServicesFromDSPOtoPR"></field>
+						<field name="UpdateSubOnOwnerChange"></field>
+						<field name="AutoAddLineReceiptBarcode"></field>
+						<field name="ReceiptByOneBarcodeReceiptBarcode"></field>
+						<field name="ReturnOrigCost"></field>
+						<field name="ChangeCuryRateOnReceipt"></field>
+						<field name="DefaultReceiptAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="ShipDestType"></field>
+						<field name="DefaultReceiptQty"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Approval" caption="Approval" ref="content_Approval"></qp-tab>
+
+		<qp-tab id="tab-MailingPrintingPreferences" caption="Mailing & Printing" ref="tabMailingPrintingPreferences_Content"></qp-tab>
+
+		<qp-tab id="tab-WarehouseManagement" caption="Warehouse Management" ref="content_WarehouseManagement" class="label-size-xm"></qp-tab>
+	</qp-tabbar>
+</template>

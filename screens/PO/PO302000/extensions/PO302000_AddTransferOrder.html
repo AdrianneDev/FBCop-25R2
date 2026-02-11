@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="openTransfers" caption="Add Transfer Order" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddTransferOrder" name="1-1-1" class="equal-height" wg-container="Filter_formTransferFilter1">
+			<qp-fieldset id="fsColumnA-AddTransferOrder" slot="A" view.bind="filter">
+				<field name="ShipFromSiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddTransferOrder" view.bind="openTransfers" wg-container="openTransfers_gridOpenTransfers"></qp-grid>
+
+		<footer id="footer-AddTransferOrder">
+			<qp-button id="buttonAdd-AddTransferOrder" state.bind="AddTransfer2" wg-name="Add"></qp-button>
+			<qp-button id="buttonAddClose-AddTransferOrder" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddTransferOrder" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

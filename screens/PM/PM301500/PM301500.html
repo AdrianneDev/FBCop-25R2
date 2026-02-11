@@ -1,0 +1,112 @@
+<template>
+	<require from="./PM301500.scss"></require>
+	<qp-template id="project-header" name="17-17-14" class="equal-height" qp-collapsible>
+		<qp-fieldset id="project-header-A" slot="A" view.bind="Project">
+			<field name="ContractCD" pinned></field>
+			<field name="CustomerID" ></field>
+			<field name="SiteAddressID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="project-header-B" slot="B" view.bind="Project" class="label-size-m">
+			<field name="OwnerID" pinned>
+				<qp-button id="btnEmail" config.bind="{ images: { normal: 'svg:main@mail' }}" state.bind="newMailActivity" class="col-1 email-button">
+				</qp-button>
+			</field>
+			<field name="AssistantID" >
+				<qp-button id="btnAssistantEmail" config.bind="{ images: { normal: 'svg:main@mail' }}" state.bind="newAssistantMailActivity" class="col-1 email-button">
+				</qp-button>
+			</field>
+			<field name="CuryID" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="project-header-C" slot="C" view.bind="Project">
+			<field name="StartDate" ></field>
+			<field name="ExpireDate" ></field>
+			<field name="Status" class="colored" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitter-main" split="width" initial-split="20%">
+		<split-pane id="treeview"></split-pane>
+		<split-pane class="stretch">
+			<div class="stretch">
+				<div show.bind="currentNavigation == 'Overview'">
+					<div id="scorecards-main"></div>
+					<div id="overview-underscorecards" class="h-stack">
+						<div id="budget-vs-actual-chart" class="col-6"></div>	
+						<div class="col-6">
+							<qp-text-editor if.bind="!restrictedScreens.EP503010" config.bind="{enabled: false, linkCommand: 'OpenApprovals'}" value.two-way="captions.DocumentsToApprove" class="caption-with-link"></qp-text-editor>
+							<div id="approvals-grid-container" if.bind="!restrictedScreens.EP503010" class="stretch" style="max-height: 200px;">
+								<qp-grid  id="approvals-grid" view.bind="Approvals"></qp-grid>		
+							</div>
+							<div id="scorecards-qty" class="h-stack"></div>
+							<qp-text-editor if.bind="!restrictedScreens.AR3010PL" config.bind="{enabled: false, linkCommand: 'OpenARInvoices'}" value.two-way="captions.RecentInvoices" class="caption-with-link"></qp-text-editor>
+							<div id="ar-invoices-grid-container" if.bind="!restrictedScreens.AR3010PL" class="stretch" style="max-height: 200px;">
+								<qp-grid id="ar-invoices-grid" view.bind="ArInvoices"></qp-grid>		
+							</div>
+						</div>	
+					</div>
+				</div>
+				<div show.bind="currentNavigation == 'ProjectProfitability'">
+					<span>Not implemented yet</span>
+				</div>
+				<div show.bind="currentNavigation == 'ProjectVariances'">
+					<span>Not implemented yet</span>
+				</div>
+				<div show.bind="currentNavigation == 'ProjectCashFlow'">
+					<span>Not implemented yet</span>
+				</div>
+				<div show.bind="currentNavigation == 'CommittedCosts'">
+					<span>Not implemented yet</span>
+				</div>
+				<div show.bind="currentNavigation == 'ProjectTasks'" class="stretch">
+					<qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenProjectTasks'}" value.two-way="captions.ProjectTasks" class="caption-with-link"></qp-text-editor>
+					<qp-grid id="project-tasks-grid" view.bind="Tasks" class="grid-with-caption"></qp-grid>
+				</div>
+				<div show.bind="currentNavigation == 'Budget'" class="stretch">
+					<qp-splitter id="splitter-budget" split="height" initial-split="50%">
+						<split-pane>
+							<qp-grid id="revenue-budget-grid" view.bind="RevenueBudgetReport" caption="Revenue Budget"></qp-grid>
+						</split-pane>
+						<split-pane>
+							<qp-grid id="cost-budget-grid" view.bind="CostBudgetReport" caption="Cost Budget"></qp-grid>							
+						</split-pane>
+					</qp-splitter>
+				</div>
+				<div show.bind="currentNavigation == 'ChangeOrders'" id="change-orders-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'CostProjections'" id="cost-projections-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'ProFormaInvoices'" class="stretch">
+					<qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenProformaInvoices'}" value.two-way="captions.ProformaInvoices" class="caption-with-link"></qp-text-editor>
+					<qp-grid id="proforma-invoices-grid" view.bind="ProformaInvoices" class="grid-with-caption"></qp-grid>
+				</div>
+				<div show.bind="currentNavigation == 'Subcontracts'" class="stretch">
+					<qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenSubcontracts'}" value.two-way="captions.Subcontracts" class="caption-with-link"></qp-text-editor>
+					<qp-grid id="subcontracts-grid" view.bind="Subcontracts" class="grid-with-caption"></qp-grid>
+				</div>
+				<div show.bind="currentNavigation == 'PurchaseOrders'" class="stretch">
+					<qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenPurchaseOrders'}" value.two-way="captions.PurchaseOrders" class="caption-with-link"></qp-text-editor>
+					<qp-grid id="purchase-orders-grid" view.bind="PurchaseOrders" class="grid-with-caption"></qp-grid>
+				</div>
+				<div show.bind="currentNavigation == 'ProjectMaterialList'">
+					<span>Not implemented yet</span>
+				</div>
+				<div show.bind="currentNavigation == 'ProjectInventory'" id="project-inventory-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'DailyFieldReports'" id="daily-field-reports-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'RequestsForInformation'" id="rfi-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'ProjectIssues'" id="project-issues-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'DrawingLogs'" id="drawing-logs-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'PhotoLogs'" id="photo-logs-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'Submittals'" id="submittals-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'Compliance'" class="stretch">
+					<qp-text-editor config.bind="{enabled: false, linkCommand: 'OpenCompliance'}" value.two-way="captions.Compliance" class="caption-with-link"></qp-text-editor>
+					<qp-grid id="compliance-grid" view.bind="ComplianceDocuments" class="grid-with-caption"></qp-grid>
+				</div>
+				<div show.bind="currentNavigation == 'ProductionOrders'" id="production-orders-section" class="stretch"></div>
+				<div show.bind="currentNavigation == 'WorkOrders'">
+					<span>Not implemented yet</span>
+				</div>	
+			</div>
+		</split-pane>
+	</qp-splitter>
+
+	<div id="hidden-grids" show.bind="false">
+		<qp-grid id="restrictions-grid" view.bind="Restrictions"></qp-grid>
+	</div>
+</template>

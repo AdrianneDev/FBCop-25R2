@@ -1,0 +1,64 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template id="Details-form" name="1-1">
+			<div slot="A">
+				<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+					fs-id="tabDetails_Contact"
+					contact-view="ContactCurrent"
+					fs-wg-container="ContactCurrent_PXFormView1"
+					fs-caption="Contact">
+				</qp-include>
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="formA"
+					address-view="AddressCurrent"
+					override-fieldname="ContactCurrent2.OverrideAddress"
+					override-wg-container="ContactCurrent2_panelfordatamember"
+					view-on-map-action-name="ViewOnMap"
+				>
+					<field modify="#formA [name='CountryID']" after="#formA [name='PostalCode']"></field>
+				</qp-include>
+				<qp-fieldset id="tabDetails_PersonalDataPrivacy" view.bind="ContactCurrent" caption="Personal Data Privacy" wg-container="ContactCurrent_tab">
+					<field name="ConsentAgreement"></field>
+					<field name="ConsentDate"></field>
+					<field name="ConsentExpirationDate"></field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_PersonalInfo" view.bind="ContactCurrent" caption="Personal Info">
+					<field name="DateOfBirth"></field>
+					<field name="Gender"></field>
+					<field name="MaritalStatus"></field>
+					<field name="Spouse"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset id="AdditionalInfo_AdditionalInfo" view.bind="ContactCurrent" caption="Contact Details">
+					<field name="WorkgroupID"></field>
+					<field name="SalesTerritoryID">
+						<qp-field control-state.bind="ContactCurrent.OverrideSalesTerritory" class="no-label"></qp-field>
+					</field>
+					<field name="ParentBAccountID"></field>
+					<field name="Source"></field>
+					<field name="ExtRefNbr"></field>
+					<field name="Synchronize"></field>
+					<field name="TeamsID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_ContactPreferences" view.bind="ContactCurrent" caption="Contact Preferences">
+					<field name="Method"></field>
+					<field name="NoCall"></field>
+					<field name="NoMarketing"></field>
+					<field name="NoEMail"></field>
+					<field name="NoMassMail"></field>
+					<field name="LanguageID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_ActivitiesHistory" view.bind="ContactActivityStatistics" caption="Activities History">
+					<field name="LastIncomingActivityDate" class="control-size-m"></field>
+					<field name="LastOutgoingActivityDate" class="control-size-m"></field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_Photo" view.bind="ContactCurrent" caption="Photo">
+					<field name="ContactImageUrl" unbound replace-content>
+						<qp-image-uploader id="ImageUrl" state.bind="ContactCurrent.Img" allow-null="false" width="300px 1/1"></qp-image-uploader>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

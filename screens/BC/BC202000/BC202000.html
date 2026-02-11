@@ -1,0 +1,45 @@
+﻿<template>
+    <qp-template name="17-17-14" id="EntityFilter_form" wg-container class="equal-height label-size-sm">
+        <qp-fieldset id="EntityFilter_firstColumn" view.bind="EntityFilter" slot="A">
+            <field name="ConnectorType"></field>
+            <field name="BindingID"></field>
+            <field name="EntityType"></field>
+            <using view="CurrentEntity" wg-container="CurrentEntity_PXFormView1">
+                <field name="IsActive"></field>
+            </using>
+        </qp-fieldset>
+        <qp-fieldset id="CurrentEntity_PXFormView2" view.bind="CurrentEntity" slot="B" wg-container>
+            <field name="Direction"></field>
+            <field name="PrimarySystem"></field>
+            <field name="MaxAttemptCount"></field>
+            <field name="AutoMergeDuplicates"></field>
+            <field name="ParallelProcessing"></field>
+        </qp-fieldset>
+        <qp-fieldset id="CurrentEntity_PXFormView3" view.bind="CurrentEntity" slot="C" wg-container>
+            <field name="ImportRealTimeStatus"></field>
+            <field name="ExportRealTimeStatus"></field>
+            <field name="RealTimeMode"></field>
+            <field name="RealTimeBaseURL"></field>
+        </qp-fieldset>
+    </qp-template>
+    <!-- Tabs -->
+    <qp-tabbar id="mainTab">
+
+        <qp-tab id="tabImportMapping" caption="Import Mapping" load-on-demand.bind="false">
+            <qp-grid id="gridImportMapping" view.bind="ImportMappings"></qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabImportFiltering" caption="Import Filtering" load-on-demand.bind="false">
+            <qp-grid id="gridImportConditions" view.bind="ImportFilters"></qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabExportMapping" caption="Export Mapping" load-on-demand.bind="false">
+            <qp-grid id="gridExportMapping" view.bind="ExportMappings"></qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabExportFiltering" caption="Export Filtering" load-on-demand.bind="false">
+            <qp-grid id="gridExportConditions" view.bind="ExportFilters"></qp-grid>
+        </qp-tab>
+
+    </qp-tabbar>
+</template>

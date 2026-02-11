@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="form-KitSpec" name="1-1" class="equal-height label-size-m" wg-container="Hdr_frmHeader">
+		<qp-fieldset id="fsColumnA-KitSpec" slot="A" view.bind="Hdr">
+			<field name="KitInventoryID"></field>
+			<field name="KitSubItemID"></field>
+			<field name="RevisionID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-KitSpec" slot="B" view.bind="Hdr">
+			<field name="IsActive" class="no-label"></field>
+			<field name="IsNonStock" class="no-label"></field>
+			<field name="AllowCompAddition" class="no-label"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-StockComponents" caption="Stock Components">
+			<qp-grid id="grid-StockComponents" view.bind="StockDet" wg-container="StockDet_gridStock"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-NonStockComponents" caption="Non Stock Components">
+			<qp-grid id="grid-NonStockComponents" view.bind="NonStockDet" wg-container="NonStockDet_gridNonStock"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

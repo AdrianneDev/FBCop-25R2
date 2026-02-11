@@ -1,0 +1,25 @@
+<template>
+	<qp-tabbar id="tab">
+		<qp-tab id="GeneralTab" caption="General">
+			<qp-template id="GeneralTab-form" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="edSetup" view.bind="Setup" caption="Data Entry Settings">
+						<field name="SubcontractNumberingID"
+							config-allow-edit.bind="true"
+							config-allow-null.bind="false">
+						</field>
+						<field name="RequireSubcontractControlTotal"></field>
+					</qp-fieldset>
+					<qp-fieldset id="edSetupApproval" view.bind="SetupApproval" caption="Approval">
+						<field name="AssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="AssignmentNotificationID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailingPrintingPreferences" caption="Mailing & Printing" ref="tabMailingPrintingPreferences_Content"></qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="grid" view.bind="Attributes"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

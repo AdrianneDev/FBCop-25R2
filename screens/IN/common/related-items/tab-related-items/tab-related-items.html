@@ -1,0 +1,15 @@
+<template>
+	<let ml-feature-installed.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['RelatedItemAssistant']"></let>
+	<qp-tab id="tab-RelatedItems" after="#tab-CrossReference" caption="Related Items">
+		<qp-template id="form-RelatedItems" name.bind="mlFeatureInstalled ? '2-1' : '1'" class="stretch">
+			<div id="divColumnA-RelatedItems" slot="A">
+				<qp-grid id="grid-RelatedItems" view.bind="RelatedItems" class.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['RelatedItemAssistant'] ? 'framed-section' : ''" wg-container="RelatedItems_relatedItemsGrid"></qp-grid>
+			</div>
+			<qp-fieldset id="fsColumnB-RelatedItems" slot="B" view.bind="ItemSettings" caption="Cross-Sell Assistant Settings" class="label-size-m" wg-container="ItemSettings_formDR"
+						 if.bind="mlFeatureInstalled">
+				<field name="PreferredItemClasses"></field>
+				<field name="PriceOfSuggestedItems"></field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-tab>
+</template>

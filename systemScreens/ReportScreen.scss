@@ -1,0 +1,58 @@
+.template-selector .filter-combo .text {
+	text-align: start;
+}
+
+.viewer-iframe {
+	width: 100%;
+	height: 100%;
+}
+
+.section-container {
+	background-color: var(--background-color, #F5F7F9);
+	border-radius: 10px;
+    padding: var(--qp-fieldset-padding-top) var(--qp-fieldset-padding-left);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+	margin-bottom: var(--qp-sections-row-gap);
+}
+
+.section-title {
+	margin-bottom: 8px;
+}
+
+#div-sorting {
+	overflow-x: unset;
+}
+
+.section-container .filter-editor > .btn-new {
+    padding: 5px 7px 5px 0;
+    margin-left: 0;
+}
+
+.hiddenFrame {
+	position: absolute;
+	border: 'none';
+	width: 0;
+	height: 0;
+	visibility: hidden
+}
+
+#MainToolbar_full_bar {
+	display: flex;
+	width: 100%;
+}
+
+#MainToolbarsearch {
+	margin-left: auto;
+}
+
+#MainToolbarsearch .filter-box .container {
+	height: 28px;
+}
+
+#grid-filters_filter_editor_body_columns_list {
+	min-width: 350px;
+}
+
+#grid-filters_filter_editor_body_columns_list .field-name {
+    max-width: 315px;
+}

@@ -1,0 +1,12 @@
+
+<template>
+    <require from="./lines-hint.scss"></require>
+    <div show.bind="visible" class="linesHintMainContainer">
+        <div show.bind="canShowLinesLabel" class="linesHintTextContainerWithButton">
+            <div show.bind="mode == 1" class="linesHintSelectPrefixLabel">${Messages.LinesHintSelectPrefix}</div>
+            <div class="linesHintCounter">${linesCount}</div>
+            <div class="linesHintCounterLabel">${linesLabel}</div>
+        </div>
+        <div show.bind="canSelectColumns" class="linesHintButton" click.delegate='onButtonClickCallback()'>Next</div>
+    </div>
+</template>

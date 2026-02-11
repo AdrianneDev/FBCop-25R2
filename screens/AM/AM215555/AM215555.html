@@ -1,0 +1,418 @@
+<template>
+	<require from="./schedulerpro.stockholm.css"></require>
+	<require from="./popup.scss"></require>
+	<require from="./qp-scheduler-events.scss"></require>
+	<require from="./qp-scheduler-splitter.scss"></require>
+	<require from="./AM215555.scss"></require>
+	<require from="./AM215555-boxes.scss"></require>
+
+	<div ref="popups.orderPopupInnerHolder" class="qp-sch-popup-holder">
+		<div class="qp-sch-popup-data qp-sch-popup-view-data transparent" ref="popups.orderPopupInner">
+			<ux-dialog class="dialog qp-dialog qp-collapsible-scope" id="orderPopupDialogID">
+				<ux-dialog-header show-close-button.bind="false">
+					<div class="qp-dialog-header">
+						<div class="qp-dialog-title">${Labels.ProductionOrder}</div>
+						<div class="qp-collapsible-anchor"></div>
+						<qp-icon class="qp-dialog-close" imagesrc="svg:main@close" click.delegate="popups.close()">
+						</qp-icon>
+					</div>
+				</ux-dialog-header>
+				<qp-tool-bar view-model.ref="popups.orderToolBar" config.bind="popups.topBarOrderConfig"></qp-tool-bar>
+				<ux-dialog-body qp-collapsible class="v-stack gray-pane" id="orderPopupForm">
+					<qp-fieldset view.bind="SelectedProdItem" id="groupProdItemID" caption="">
+						<field name="ConstDate" config-allow-edit.bind="true"></field>
+						<field name="SchedulingMethod" config-allow-edit.bind="true"></field>
+						<field name="SchPriority" config-allow-edit.bind="true"></field>
+						<field name="StatusID"></field>
+						<field name="ScheduleStatus"></field>
+						<field name="Descr" config-allow-edit.bind="true"></field>
+						<field name="OrderType" pinned></field>
+						<field name="ProdOrdID" pinned config-allow-edit.bind="true"></field>
+						<field name="InventoryID" pinned config-allow-edit.bind="true"></field>
+						<field name="OrdNbr" config-allow-edit.bind="true"></field>
+						<field name="CustomerID" config-allow-edit.bind="true"></field>
+						<field name="ProjectID" pinned="false" config-allow-edit.bind="true"></field>
+						<field name="TaskID" config-allow-edit.bind="true"></field>
+						<field name="LocationID" config-allow-edit.bind="true"></field>
+						<field name="SiteID" config-allow-edit.bind="true"></field>
+						<field name="StartDate"></field>
+						<field name="EndDate"></field>
+						<field name="DueDate"></field>
+						<field name="DueDateDiff"></field>
+						<field name="QtytoProd" pinned></field>
+						<field name="SelectedSchdItem.QtyRemaining" pinned></field>
+					</qp-fieldset>
+				</ux-dialog-body>
+			</ux-dialog>
+		</div>
+	</div>
+
+	<div ref="popups.operationPopupInnerHolder" class="qp-sch-popup-holder">
+		<div class="qp-sch-popup-data qp-sch-popup-view-data transparent" ref="popups.operationPopupInner">
+			<ux-dialog class="dialog qp-dialog qp-collapsible-scope" id="operationPopupDialogID">
+				<ux-dialog-header show-close-button.bind="false">
+					<div class="qp-dialog-header">
+						<div class="qp-dialog-title">${Labels.Operation}</div>
+						<div class="qp-collapsible-anchor"></div>
+						<qp-icon class="qp-dialog-close" imagesrc="svg:main@close" click.delegate="popups.close()">
+						</qp-icon>
+					</div>
+				</ux-dialog-header>
+				<qp-tool-bar view-model.ref="popups.operationToolBar"
+					config.bind="popups.topBarOrderConfig"></qp-tool-bar>
+				<ux-dialog-body qp-collapsible class="v-stack gray-pane" id="orderPopupForm">
+					<qp-fieldset view.bind="SelectedProdOper" id="groupOperationProdOperID" caption="">
+						<field name="OperationID" pinned config-allow-edit.bind="true"></field>
+						<field name="Descr" config-allow-edit.bind="true"></field>
+						<field id="WcIDFieldID" name="WcID" pinned config-allow-edit.bind="true"></field>
+						<!-- <field id="ShiftCDFieldID" name="SelectedWC.ShiftCD" config-allow-edit.bind="true"></field>
+						<field id="MachIDFieldID" name="SelectedMach.MachID" pinned config-allow-edit.bind="true"></field> -->
+						<field name="StatusID" pinned config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset view.bind="SelectedProdItem" id="groupOperationProdItemID" caption="Production Order">
+						<field name="StatusID"></field>
+						<field name="Descr" config-allow-edit.bind="true"></field>
+						<field name="OrderType" pinned></field>
+						<field name="ProdOrdID" pinned config-allow-edit.bind="true"></field>
+						<field name="InventoryID" pinned config-allow-edit.bind="true"></field>
+						<field name="OrdNbr" config-allow-edit.bind="true"></field>
+						<field name="CustomerID" config-allow-edit.bind="true"></field>
+						<field name="ProjectID" pinned="false" config-allow-edit.bind="true"></field>
+						<field name="TaskID" config-allow-edit.bind="true"></field>
+						<field name="LocationID" config-allow-edit.bind="true"></field>
+						<field name="SiteID" config-allow-edit.bind="true"></field>
+						<!-- <field name="RequestedOn"></field> -->
+						<field name="StartDate"></field>
+						<field name="EndDate"></field>
+						<field name="DueDate"></field>
+						<field name="DueDateDiff"></field>
+						<field name="QtytoProd" pinned></field>
+						<field name="SelectedSchdItem.QtyRemaining" pinned></field>
+					</qp-fieldset>
+				</ux-dialog-body>
+			</ux-dialog>
+		</div>
+	</div>
+
+
+	<div ref="popups.histogramPopupInnerHolder" class="qp-sch-popup-holder">
+		<div class="qp-sch-popup-data qp-sch-popup-view-data transparent" ref="popups.histogramPopupInner">
+			<ux-dialog class="dialog qp-dialog qp-collapsible-scope" id="histogramPopupDialogID">
+				<ux-dialog-header show-close-button.bind="false">
+					<div class="qp-dialog-header">
+						<div class="qp-dialog-title">${Labels.Allocations}</div>
+						<div class="qp-collapsible-anchor"></div>
+						<qp-icon class="qp-dialog-close" imagesrc="svg:main@close" click.delegate="popups.close()">
+						</qp-icon>
+					</div>
+				</ux-dialog-header>
+				<ux-dialog-body qp-collapsible class="v-stack gray-pane" id="histogramPopupForm">
+					<qp-fieldset view.bind="SelectionFilter" id="groupSelectionFilterID" caption="">
+						<field id="WcIDFieldID" name="WcID" pinned config-allow-edit.bind="true"></field>
+						<field id="ShiftCDFieldID" name="ShiftCD" config-allow-edit.bind="true"></field>
+						<field id="MachIDFieldID" name="MachID" pinned config-allow-edit.bind="true"></field>
+						<field name="DateFrom" pinned config-allow-edit.bind="true"></field>
+						<field name="DateTo" pinned config-allow-edit.bind="true"></field>
+						<field name="Allocated" config-allow-edit.bind="true"></field>
+						<field name="MaxAllocation" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<!-- TODO: Replace it when [AC-292107] is implemented -->
+					<div class="qp-fieldset qp-sch-grid-fieldset" id="groupSchdDetailsID">
+						<div class="qp-fieldset-caption">
+							<legend class="qp-caption">${Labels.ProductionOrders}</legend>
+						</div>
+						<div id="schdWCDetailsFormID" wg-container class="v-stack">
+							<qp-grid view.bind="SchdDetailsForShiftAndPeriod" id="schdDetailsForShiftAndPeriodGridId">
+							</qp-grid>
+						</div>
+						<div id="schdMachineDetailsFormID" wg-container class="v-stack">
+							<qp-grid view.bind="SchdDetailsForMachine" id="schdDetailsForMachine">
+							</qp-grid>
+						</div>
+					</div>
+				</ux-dialog-body>
+			</ux-dialog>
+		</div>
+	</div>
+
+	<qp-splitter class="horizontal-splitter" pointerdown.delegate="popups.close()" id="mainSplitterId"
+		view-model.ref="mainSplitter" config.bind="mainSplitterConfig">
+		<split-pane>
+			<div class="stretch">
+				<qp-tabbar view-model.ref="mainTabBar" id="mainTabBar">
+					<qp-tab id="tabUnscheduled" caption="Unscheduled" visible.from-view="tabUnscheduledVisible">
+						<div class="qp-sch-grid-container">
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid view-model.ref="unscheduledOrdersGrid" view.bind="UnscheduledOrders"
+									id="unscheduledOrdersGridId" ref="unscheduledOrdersGridElement"
+									on-filters-list-changed.call="onSearchFiltersChanged(args)"
+									on-active-filter-changed.call="onSearchFiltersChanged(args)"
+									on-filter-changed.call="onSearchFiltersChanged(args)"
+									on-data-ready.call="unscheduledOrdersDataReadyHandler(grid, args)" />
+							</div>
+							<div class="qp-sch-left-container qp-sch-search-container" id="schedulerSOContainer">
+								<div class="qp-sch-config-form">
+									<div class="v-stack">
+										<qp-fieldset class="qp-sch-config-left" id="unscheduledBrickLeftID"
+											view.bind="SelectedWCOperation"
+											view-model.ref="renderer.unscheduledBrickLeft"
+											caption="Unscheduled Production Order - Left">
+											<field name="ProdOrdID"></field>
+											<field name="InventoryCD"></field>
+											<field name="StartDate"></field>
+										</qp-fieldset>
+										<qp-fieldset class="qp-sch-config-right" id="unscheduledBrickRightID"
+											view.bind="SelectedWCOperation"
+											view-model.ref="renderer.unscheduledBrickRight"
+											caption="Unscheduled Production Order - Right">
+											<field name="SchPriority"></field>
+											<field name="IsLate"></field>
+											<field name="Selected"></field>
+											<field name="LackOfMaterials"></field>
+										</qp-fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+					</qp-tab>
+					<qp-tab id="tabSearch" caption="Scheduled" visible.from-view="tabSearchVisible">
+						<div class="qp-sch-grid-container">
+							<div class="qp-sch-hide-grid" wg-container>
+								<qp-grid view-model.ref="searchOrdersGrid" view.bind="SearchOrders"
+									id="searchOrdersGridId" ref="searchOrdersGridElement"
+									on-filters-list-changed.call="onSearchFiltersChanged(args)"
+									on-active-filter-changed.call="onSearchFiltersChanged(args)"
+									on-filter-changed.call="onSearchFiltersChanged(args)"
+									on-data-ready.call="searchOrdersDataReadyHandler(grid, args)" />
+							</div>
+							<div class="qp-sch-left-container qp-sch-search-container" id="searchContainer">
+								<div class="qp-sch-config-form">
+									<div class="v-stack">
+										<qp-fieldset class="qp-sch-config-left" id="searchBrickLeftID"
+											view.bind="SelectedWCOperation" view-model.ref="renderer.searchBrickLeft"
+											caption="Production Order - Left">
+											<field name="StatusID"></field>
+											<field name="ProdOrdID"></field>
+											<field name="Descr"></field>
+											<field name="StartDate"></field>
+										</qp-fieldset>
+										<qp-fieldset class="qp-sch-config-right" id="searchBrickRightID"
+											view.bind="SelectedWCOperation" view-model.ref="renderer.searchBrickRight"
+											caption="Production Order - Right">
+											<field name="SchPriority"></field>
+											<field name="IsLate"></field>
+											<field name="Selected"></field>
+											<field name="LackOfMaterials"></field>
+											<field name="FirmSchedule"></field>
+										</qp-fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+					</qp-tab>
+				</qp-tabbar>
+			</div>
+		</split-pane>
+		<split-pane>
+			<div class="qp-sch-grid-container qp-sch-calendar-container">
+				<qp-tabbar view-model.ref="schedulerTabBar" id="schedulerTabBarId" tab-selected.call="filterTabSelected(newTabId)">
+					<qp-tab repeat.for="tab of SchedulerGridFilters" id.to-view="tab.filterID"
+						caption="${tab.filterName}" wg-exclude></qp-tab>
+				</qp-tabbar>
+
+				<div class="qp-sch-grid-container-inner">
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="ordersFilteredGrid" view.bind="OrdersFiltered"
+							id="ordersFilteredGridId" on-active-filter-changed.call="onActiveFilterChanged(args)"
+							on-filters-list-changed.call="onFiltersChanged(args)"
+							on-data-ready.call="ordersFilteredDataReadyHandler(grid, args)" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="ordersHighlightedGrid" view.bind="OrdersHighlighted"
+							id="ordersHighlightedGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="wCOperationsAllGrid" view.bind="WCOperationsAll"
+							id="wCOperationsAllGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="wCResourceGrid" view.bind="WCResources" id="wCResourceGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="wCOperationsFilteredGrid" view.bind="WCOperationsFiltered"
+							id="wCOperationsFilteredGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="wCOperationsHighlightedGrid" view.bind="WCOperationsHighlighted"
+							id="wCOperationsHighlightedGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="wCShiftCalendarGrid" view.bind="WCShiftCalendarResources"
+							id="wCShiftCalendarGridId" />
+					</div>
+
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="machineOperationsAllGrid" view.bind="MachineOperationsAll"
+							id="wCOperationsAllGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="machineResourceGrid" view.bind="MachineResources"
+							id="machineResourceGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="machineOperationsFilteredGrid" view.bind="MachineOperationsFiltered"
+							id="machineOperationsFilteredGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="machineOperationsHighlightedGrid"
+							view.bind="MachineOperationsHighlighted" id="machineOperationsHighlightedGridId" />
+					</div>
+					<div class="qp-sch-hide-grid" wg-container>
+						<qp-grid view-model.ref="machineCalendarGrid" view.bind="MachineCalendarResources"
+							id="machineCalendarGridId" />
+					</div>
+					<qp-splitter class="vertical-splitter" id="ordersSplitterId" config.bind="ordersSplitterConfig"
+						on-splitter-state-changed.call="onSplitterChanged(args)" view-model.ref="ordersSplitter">
+						<split-pane>
+							<qp-splitter class="vertical-splitter" id="operationsSplitterId"
+								config.bind="operationsSplitterConfig"
+								on-splitter-state-changed.call="onSplitterChanged(args)"
+								view-model.ref="operationsSplitter">
+								<split-pane>
+									<div class="qp-sch-events-container stretch" ref="orderContainer">
+										<div class="qp-sch-config-form">
+											<div class="v-stack">
+												<qp-fieldset class="qp-sch-config-left" id="productBrickLeftID"
+													view.bind="SelectedWCOperation"
+													view-model.ref="renderer.productBrickLeft"
+													caption="Operation - Left">
+													<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+													<field name="SchPriority"></field>
+													<field name="FirmSchedule"></field>
+													<field name="LackOfMaterials"></field>
+												</qp-fieldset>
+												<qp-fieldset class="qp-sch-config-right" id="productBrickRightID"
+													view.bind="SelectedWCOperation"
+													view-model.ref="renderer.productBrickRight"
+													caption="Operation - Right">
+													<field name="ShippingDescr"></field>
+													<field name="IsLate"></field>
+													<field name="IsEarly"></field>
+													<field name="IsOnTime"></field>
+													<field name="Selected"></field>
+												</qp-fieldset>
+											</div>
+										</div>
+										<div class="qp-sch-config-form">
+											<div class="v-stack">
+												<qp-fieldset class="qp-sch-config-left" id="ordersBrickLeftID"
+													view.bind="SelectedWCOperation"
+													view-model.ref="renderer.ordersBrickLeft"
+													caption="Operation - Left">
+													<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+													<field name="SchPriority"></field>
+													<field name="FirmSchedule"></field>
+													<field name="LackOfMaterials"></field>
+													<field name="Descr"></field>
+													<field name="QtytoProd"></field>
+												</qp-fieldset>
+												<qp-fieldset class="qp-sch-config-right" id="ordersBrickRightID"
+													view.bind="SelectedWCOperation"
+													view-model.ref="renderer.ordersBrickRight"
+													caption="Operation - Right">
+													<field name="ShippingDescr"></field>
+													<field name="IsLate"></field>
+													<field name="IsEarly"></field>
+													<field name="IsOnTime"></field>
+													<field name="Selected"></field>
+												</qp-fieldset>
+											</div>
+										</div>
+									</div>
+								</split-pane>
+								<split-pane>
+									<div class="qp-sch-events-container stretch" ref="wCContainer">
+										<div class="qp-sch-config-form">
+											<div class="v-stack">
+												<qp-fieldset class="qp-sch-config-left" id="operationsBrickLeftID"
+													view.bind="SelectedWCOperation"
+													view-model.ref="renderer.operationsBrickLeft"
+													caption="Operation - Left">
+													<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+													<field name="OperationDescr"></field>
+												</qp-fieldset>
+												<qp-fieldset class="qp-sch-config-right" id="operationsBrickRightID"
+													view.bind="SelectedWCOperation"
+													view-model.ref="renderer.operationsBrickRight"
+													caption="Operation - Right">
+													<field name="SchPriority"></field>
+													<field name="IsLate"></field>
+													<field name="Selected"></field>
+													<field name="LackOfMaterials"></field>
+												</qp-fieldset>
+											</div>
+										</div>
+									</div>
+								</split-pane>
+							</qp-splitter>
+						</split-pane>
+						<split-pane>
+							<div class="qp-sch-events-container stretch" ref="machineContainer">
+							</div>
+						</split-pane>
+					</qp-splitter>
+				</div>
+			</div>
+		</split-pane>
+	</qp-splitter>
+
+	<!-- TODO: This needs to be refactored -- we should manage loading of views from TS only -->
+	<div class="hidden" wg-container>
+		<qp-fieldset view.bind="DatesFilter" id="groupDatesFilterID" caption="">
+			<field name="DateFrom"></field> <!-- prevent an exception in Platform UI -->
+		</qp-fieldset>
+	</div>
+
+	<qp-tool-bar view-model.ref="rightToolBar" config.bind="rightToolBarConfig" portal="target.bind: schedulerFilter; position: afterbegin">
+	</qp-tool-bar>
+	<qp-button view-model.ref="filterDatePickerBtn" config.bind="filterDatePickerBtnConfig" portal="target.bind: dayButton; position: beforebegin"></qp-button>
+	<qp-panel id="DatesFilter" view.bind="DatesFilter" caption="Production Orders">
+		<qp-template name="14-17-17" id="DatesFilterFormId">
+			<qp-fieldset slot="A" id="Filter1" view.bind="DatesFilter">
+				<field name="PickerDateFrom"></field>
+				<field name="PickerDateTo"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer id="footer-filter-SelectOrder">
+			<qp-button id="buttonOK-SelectOrder" dialog-result="OK" caption="Select"></qp-button>
+			<qp-button id="buttonCancel-SelectOrder" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<!-- <li class="qp-tool-bar-item" portal="target.bind: monthButton; position: afterend">
+		<qp-drop-down value.two-way="colorScheme" config.bind="colorSchemeSelectorConfig"></qp-drop-down>
+	</li> -->
+	<div class="hidden">
+		<qp-hyper-icon view-model.ref="renderer.iconPriorityHigh"
+			images.bind="{ normal: 'svg:am@priorityHigh' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconPriorityMedium"
+			images.bind="{ normal: 'svg:am@priorityMedium' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconPriorityLow"
+			images.bind="{ normal: 'svg:am@priorityLow' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconSelected"
+			images.bind="{ normal: 'svg:main@checkmark' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconLackOfMaterials"
+			images.bind="{ normal: 'svg:am@bolt' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconFirmLock"
+			images.bind="{ normal: 'svg:am@firmLock' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconLate"
+			images.bind="{ normal: 'svg:am@amErrorExclamation' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconEarly"
+			images.bind="{ normal: 'svg:am@amInfoCircle' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconOnTime"
+			images.bind="{ normal: 'svg:am@amWarningExclamation' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconCollapse"
+			images.bind="{ normal: 'svg:qp_tree@CollapseL' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="renderer.iconExpand"
+			images.bind="{ normal: 'svg:qp_tree@ExpandL' }"></qp-hyper-icon>
+	</div>
+</template>

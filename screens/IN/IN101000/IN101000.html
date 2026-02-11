@@ -1,0 +1,80 @@
+<template>
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-General" caption="General" class="label-size-xm" wg-container="setup_tab">
+			<qp-template id="form-General" name="1-1">
+				<div id="divColumnA-General" slot="A">
+					<qp-fieldset id="fsNumbering-General" view.bind="setup" caption="Numbering Settings">
+						<field name="BatchNumberingID"></field>
+						<field name="ReceiptNumberingID"></field>
+						<field name="IssueNumberingID"></field>
+						<field name="AdjustmentNumberingID"></field>
+						<field name="KitAssemblyNumberingID"></field>
+						<field name="PINumberingID"></field>
+						<field name="ReplenishmentNumberingID"></field>
+						<field name="ServiceItemNumberingID"></field>
+						<field name="ManufacturingNumberingID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsInventoryOptions-General" view.bind="setup" caption="Inventory Options">
+						<field name="UseInventorySubItem"></field>
+						<field name="ReplanBackOrders"></field>
+						<field name="AllocateDocumentsOnHold"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsAccount-General" view.bind="setup" caption="Account Settings">
+						<field name="ARClearingAcctID"></field>
+						<field name="ARClearingSubID"></field>
+						<field name="TransitBranchID"></field>
+						<field name="INTransitAcctID"></field>
+						<field name="INTransitSubID"></field>
+						<field name="INProgressAcctID"></field>
+						<field name="INProgressSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsPosting-General" view.bind="setup" caption="Posting Settings">
+						<field name="UpdateGL"></field>
+						<field name="SummPost"></field>
+						<field name="AutoPost"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-General" slot="B">
+					<qp-fieldset id="fsDataEntry-General" view.bind="setup" caption="Data Entry Settings">
+						<field name="HoldEntry"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="AddByOneBarcode"></field>
+						<field name="AutoAddLineBarcode"></field>
+						<field name="ShowBarcodesInOrderLines"></field>
+						<field name="DfltStkItemClassID"></field>
+						<field name="DfltNonStkItemClassID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsDefaultReasonCodes-General" view.bind="setup" caption="Default Reason Codes">
+						<field name="ReceiptReasonCode"></field>
+						<field name="IssuesReasonCode"></field>
+						<field name="AdjustmentReasonCode"></field>
+						<field name="AssemblyDisassemblyReasonCode"></field>
+						<field name="TransferReasonCode"></field>
+						<field name="PIReasonCode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsPhysicalInventory-General" view.bind="setup" caption="Physical Inventory Settings">
+						<field name="PIUseTags"></field>
+						<field name="PILastTagNumber"></field>
+						<field name="TurnoverPeriodsPerYear"></field>
+						<field name="AutoReleasePIAdjustment"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsInventoryTurnover-General" view.bind="setup" caption="Inventory Turnover">
+						<field name="IncludeSaleInTurnover"></field>
+						<field name="IncludeProductionInTurnover"></field>
+						<field name="IncludeAssemblyInTurnover"></field>
+						<field name="IncludeIssueInTurnover"></field>
+						<field name="IncludeTransferInTurnover"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-RestrictionGroups" caption="Subitem/Restriction Groups" ref="content_RestrictionGroups" if.bind="setup.UseInventorySubItem.value == true"></qp-tab>
+
+		<qp-tab id="tab-MailingPrintingPreferences" caption="Mailing & Printing" ref="tabMailingPrintingPreferences_Content"></qp-tab>
+
+		<qp-tab id="tab-WarehouseManagement" caption="Warehouse Management" ref="content_WarehouseManagement" class="label-size-xm"></qp-tab>
+
+		<qp-tab id="tab-GS1Setup" caption="GS1 Units" ref="content_GS1Setup"></qp-tab>
+	</qp-tabbar>
+</template>

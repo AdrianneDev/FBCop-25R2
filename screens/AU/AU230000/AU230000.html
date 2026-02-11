@@ -1,0 +1,29 @@
+<template>
+   <qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+   
+   <qp-panel id="ViewSelectUserFields"
+            wg-container="ViewSelectUserFields_ViewSelectUserFields"
+            caption="Add User-Defined Fields"
+            auto-repaint="true"
+            width="50vw"
+            height="50vh">
+      <qp-grid id="ViewSelectUserFields_gridAddUserFields" wg-container view.bind="ViewSelectUserFields"></qp-grid>
+      <footer>
+         <qp-button id="PXButton1" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="PXButton2" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>
+   
+   <qp-panel id="EditUserFieldScreens"
+            wg-container="EditUserFieldScreens_EditUserFieldScreens"
+            caption="Edit Attribute"
+            auto-repaint="true"
+            width="50vw"
+            height="50vh">
+      <qp-grid id="EditUserFieldScreens_PXGrid1" wg-container view.bind="EditUserFieldScreens"></qp-grid>
+      <footer>
+         <qp-button id="PXButton3" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="PXButton4" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

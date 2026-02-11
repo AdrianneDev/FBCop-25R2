@@ -1,0 +1,16 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="PODocType"></field>
+			<field name="DocDate"></field>
+			<field name="IntercompanyOrderType"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter">
+			<field name="SellingCompany"></field>
+			<field name="PurchasingCompany"></field>
+			<field name="CopyProjectDetails" class="no-label"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Documents"></qp-grid>
+</template>

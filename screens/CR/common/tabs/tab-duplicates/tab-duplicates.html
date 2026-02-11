@@ -1,0 +1,10 @@
+<template>
+	<qp-splitter id="dsplitterId" split="height" initial-split="50%" state="normal">
+		<split-pane>
+			<qp-grid id="PXGridDuplicatesForMerging" view.bind="DuplicatesForMerging" caption="Records for Merging"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="PXGridDuplicatesForLinking" view.bind="DuplicatesForLinking" caption="Records for Association"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

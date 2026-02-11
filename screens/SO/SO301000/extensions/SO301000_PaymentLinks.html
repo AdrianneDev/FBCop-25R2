@@ -1,0 +1,28 @@
+<template>
+	<qp-tab id="tab-PaymentLinks" after="#tab-Shipments" caption="Payment Links">
+		<qp-template id="form-PaymentLinks" name="17-17-14" wg-container="CurrentDocument_PayLinks">
+			<qp-fieldset id="fsColumnA-PaymentLinks" slot="A" view.bind="CurrentDocument">
+				<field name="ProcessingCenterID"></field>
+				<field name="DeliveryMethod"></field>
+				<using view="PayLink" wg-container="PayLink_PXFormPayLink2">
+					<field name="Url"></field>
+					<field name="LinkStatus"></field>
+				</using>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-PaymentLinks" slot="B" view.bind="CurrentDocument" class="transparent-section no-label">
+				<field name="fieldCreate-PaymentLinks" unbound replace-content>
+					<qp-button id="buttonCreate-PaymentLinks" state.bind="CreateLink" class="col-7" wg-name="CreatePaymentLink"></qp-button>
+				</field>
+				<field name="fieldSync-PaymentLinks" unbound replace-content>
+					<qp-button id="buttonSync-PaymentLinks" state.bind="SyncLink" class="col-7" wg-name="SyncPaymentLink"></qp-button>
+				</field>
+				<field name="fieldDeactivate-PaymentLinks" unbound replace-content>
+					<qp-button id="buttonDeactivate-PaymentLinks" state.bind="DeactivateLink" class="col-7" wg-name="ClosePaymentLink"></qp-button>
+				</field>
+				<field name="fieldResend-PaymentLinks" unbound replace-content>
+					<qp-button id="buttonResend-PaymentLinks" state.bind="ResendLink" class="col-7" wg-name="ResendPaymentLink"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-tab>
+</template>

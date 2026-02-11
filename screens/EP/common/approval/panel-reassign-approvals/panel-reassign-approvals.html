@@ -1,0 +1,13 @@
+<template>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true" wg-container="ReassignApprovalFilter_formReassignApproval" close-button-locator="#btnReassignApprovalCancel">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="btnReassignApprovalOK" dialog-result="OK" caption="Reassign" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="btnReassignApprovalCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

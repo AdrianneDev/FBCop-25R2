@@ -1,0 +1,91 @@
+.sp-documents {
+	--qp-sections-column-gap: 16px;
+
+	.record-item__postfix {
+		width: 100%;
+		.info-box-holder {
+			width: fit-content;
+			margin-inline-start: 32px;
+		}
+	}
+
+	&-document {
+		width: 100%;
+	}
+
+	&-disabled {
+		qp-fieldset {
+			// we need to keep the outer border with 100% opacity
+			// background: var(--background-color);
+			// height: 100%;
+
+			fieldset {
+				opacity: 0.3;
+			}
+
+			.qp-check-box-control {
+				pointer-events: none;
+			}
+		}
+	}
+
+	.sp-field-date {
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		@container qp-screen (width >=692px) {
+			display: none !important;
+		}
+	}
+
+	.sp-field-date-lg {
+		display: block;
+		text-wrap: nowrap;
+		color: var(--qp-feed-label-color);
+
+		@container qp-screen (width < 692px) {
+			display: none !important;
+		}
+
+		&>span {
+			float: inline-end;
+		}
+	}
+
+	// TODO: this should be placed in qp-template.scsss
+	.sp-field-date-label {
+		color: var(--qp-feed-label-color);
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		@container qp-screen (width < 692px) {
+			flex: 1;
+			text-wrap: nowrap;
+			display: flex;
+			text-align: left !important;
+			padding-inline-end: 4px;
+		}
+	}
+
+	.sp-due-date-passed {
+		color: red !important;
+	}
+
+	&-balance .qp-text-editor {
+		font-weight: bold;
+	}
+
+	.sp-due-date>span {
+		padding-inline-start: 2px;
+	}
+
+	.sp-valid-till {
+		display: flex;
+		flex-direction: column;
+
+		& > span {
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+	}
+}

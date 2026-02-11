@@ -1,0 +1,20 @@
+<template>
+	<qp-panel id="copyparamfilter" caption="Copy To" auto-repaint="true">
+		<qp-template id="form-CopyOrder" name="1">
+			<qp-fieldset id="fsColumnA-CopyOrder" slot="A" view.bind="copyparamfilter" wg-container="copyparamfilter_formCopyTo">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="RecalcUnitPrices"></field>
+				<field name="OverrideManualPrices" class="indent-1"></field>
+				<field name="RecalcDiscounts"></field>
+				<field name="OverrideManualDiscounts" class="indent-1"></field>
+				<field name="AMIncludeEstimate"></field>
+				<field name="CopyConfigurations"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-CopyOrder">
+			<qp-button id="buttonOK-CopyOrder" dialog-result="OK" state.bind="CheckCopyParams"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

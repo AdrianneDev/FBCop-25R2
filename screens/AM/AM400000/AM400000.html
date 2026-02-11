@@ -1,0 +1,57 @@
+<template>
+	<qp-template id="MRPDisplayFilters_form" wg-container qp-collapsible name="17-17-14" class="label-size-m">
+		<qp-fieldset slot="A" id="MRPDisplayFilters1" view.bind="MRPDisplayFilters">
+			<field name="RefNbr"></field>
+			<field name="ParentRefNbr"></field>
+			<field name="ProductRefNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Detailrecs"></qp-grid>
+
+	<qp-panel id="PlanPurchaseOrderFilter" caption="Create Purchase Order" auto-repaint="true" width="lg" height="80vh" close-button-locator="#XButtonPurchaseCancel">
+		<qp-template id="PlanPurchaseOrderFilter_formPurchaseOrder" wg-container name="17-17-14">
+			<qp-fieldset slot="A" id="PlanPurchaseOrderFilter1" view.bind="PlanPurchaseOrderFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="VendorID" config-allow-edit.bind="true"></field>
+				<field name="VendorLocationID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridPurchaseDisplay" view.bind="ProcessRecords" on-filter-columns.call="detailrecsOnFilterColumns(col, false)"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonPurchaseOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="XButtonPurchaseCancel" caption="Cancel" dialog-result="Abort"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="PlanManufactureOrderFilter" caption="Create Production Orders" auto-repaint="true" width="lg" height="80vh" close-button-locator="#PXButtonManufactureCancel">
+		<qp-grid id="gridManufactureDisplay" view.bind="ProcessRecords" on-filter-columns.call="detailrecsOnFilterColumns(col, true)"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonManufactureOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="PXButtonManufactureCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="PlanKitAssemblyFilter" caption="Create Kit Assemblies" auto-repaint="true" width="lg" height="80vh" close-button-locator="#PXPanelKitAssemblyCancel">
+		<qp-grid id="gridKitAssemblyDisplay" view.bind="ProcessRecords" on-filter-columns.call="detailrecsOnFilterColumns(col, false)"></qp-grid>
+		<footer>
+			<qp-button id="PXPanelKitAssemblyOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="PXPanelKitAssemblyCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="PlanTransferOrderFilter" caption="Create Transfer Order" auto-repaint="true" width="lg" height="80vh" close-button-locator="#PXButtonTransferCancel">
+		<qp-template id="PlanTransferOrderFilter_formTransferOrder" wg-container name="17-17-14">
+			<qp-fieldset slot="A" id="PlanTransferOrderFilter1" view.bind="PlanTransferOrderFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="FromSiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridTransferDisplay" view.bind="ProcessRecords" on-filter-columns.call="detailrecsOnFilterColumns(col, false)"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonTransferOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="PXButtonTransferCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,19 @@
+<template>
+	<qp-template
+		name="17-17-14"
+		id="Filter_form"
+		class="equal-height"
+		wg-container>
+		<qp-fieldset slot="A" id="form01" view.bind="Filter">
+			<field name="DocType"></field>
+			<field name="DateFrom" caption="Date Range">
+				<qp-field control-state.bind="Filter.DateTo"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Filter">
+			<field name="ProjectID"></field>
+			<field name="TaskID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="BudgetControlLines"></qp-grid>
+</template>

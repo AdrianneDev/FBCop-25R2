@@ -1,0 +1,53 @@
+<template>
+	<require from="../common/pm-status-colors-common.scss"></require>
+	<qp-template id="form" name="17-14-17" class="equal-height" wg-container="Document_form" qp-collapsible>
+		<qp-fieldset id="form_1" view.bind="Document" slot="A" class="label-size-sm">
+			<field name="RefNbr" pinned></field>
+			<field name="ProjectID" config-allow-edit.bind="true" pinned></field>
+			<field name="Project.CuryID" pinned="false"></field>
+			<field name="OwnerID"></field>
+			<field name="Document.Status" class="colored" pinned="false"></field>
+			<field name="Date"></field>
+			<field name="ProjectionDate" pinned></field>
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<div slot="B" class="v-stack">
+			<qp-fieldset id="form_2_1" view.bind="Document" caption="Budget Level" class="no-label">
+				<field name="GroupByProjectTaskID" ></field>
+				<field name="GroupByAccountGroupID" ></field>
+				<field name="GroupByInventoryID" ></field>
+				<field name="GroupByCostCodeID" ></field>
+			</qp-fieldset>
+			<qp-fieldset id="form_2_2" view.bind="Document" caption="Calculation Settings" class="no-label">
+				<field name="IncludePendingChangeOrders" ></field>
+				<field name="UpdateProjectBudget" ></field>
+			</qp-fieldset>
+		</div>
+		<qp-fieldset id="form_3" view.bind="Document" slot="C" caption="Summary" class="label-size-xm highlights-section">
+			<field name="CuryRevisedRevenueBudgetedAmountTotal" pinned></field>
+			<field name="CuryPendingRevenueChangeOrderAmountTotal" ></field>
+			<field name="CuryBilledRevenueAmountTotal" pinned></field>
+			<field name="CuryRevenueBudgetBacklogAmountTotal" pinned></field>
+			<field name="CuryRevenueExpectedAmountTotal" pinned></field>
+			<field name="CuryOverbillingAmountTotal" ></field>
+			<field name="CuryProjectedMarginTotal" ></field>
+			<field name="ProjectedMarginPctTotal" ></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab" active-tab-id="DetailsTab">
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-grid id="Report_grid" wg-container view.bind="Report"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+	<qp-panel id="LineCommitments" wg-container="LineCommitments_LineCommitments" caption="Open Commitments" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="LineCommitments_gridLineCommitments" view.bind="LineCommitments"></qp-grid>
+   </qp-panel>
+   <qp-panel id="CostProjectionsToCopyFrom" wg-container="CostProjectionsToCopyFrom_CostProjectionsToCopyFrom" caption="Copy Projected Costs at Completion From" auto-repaint="true">
+		<qp-grid id="CostProjectionsToCopyFrom_gridCostProjectionsToCopyFrom" view.bind="CostProjectionsToCopyFrom"></qp-grid>
+  		<footer>
+			<qp-button id="CostProjectionsToCopyFromListOK" dialog-result="OK"></qp-button>
+			<qp-button id="CostProjectionsToCopyFromListCancel" dialog-result="Cancel"></qp-button>
+  		</footer>
+   </qp-panel>
+</template>

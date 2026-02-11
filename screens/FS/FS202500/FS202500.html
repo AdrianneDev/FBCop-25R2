@@ -1,0 +1,47 @@
+<template>
+	<qp-template id="BranchLocationRecords_form" name="1-1" class="label-size-m" wg-container>
+		<qp-fieldset id="first" slot="A" view.bind="BranchLocationRecords">
+			<field name="BranchLocationCD"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" slot="B" view.bind="BranchLocationRecords">
+			<field name="BranchID" config-allow-edit.bind="true"></field>
+			<field name="RoomFeatureEnabled"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="generalTab" caption="General">
+			<qp-template id="GeneralTemplate" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="BranchLocation_Contact_edBranchLocation_Contact"
+						contact-view="BranchLocation_Contact"
+						fs-caption="Main Contact"
+						fs-wg-container="BranchLocation_Contact_edBranchLocation_Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="BranchLocation_Address_edBranchLocation_Address"
+						address-view="BranchLocation_Address"
+						fs-caption="Main Address"
+						with-validation="false"
+						override-fieldname
+						view-on-map-action-name="ViewonMap"
+					></qp-include>
+				</div>
+				<div id="CurrentBranchLocation_tab" wg-container slot="B">
+					<qp-fieldset id="CurrentBranchLocation_10" caption="Financial Settings" view.bind="CurrentBranchLocation">
+						<field name="SubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBranchLocation_20" caption="Inventory Defaults" view.bind="CurrentBranchLocation">
+						<field name="DfltSiteID"></field>
+						<field name="DfltUOM"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="roomsTab" caption="Rooms" if.bind="BranchLocationRecords.RoomFeatureEnabled.value == true">
+			<qp-grid id="roomGrid" view.bind="RoomRecords">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

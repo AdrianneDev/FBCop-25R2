@@ -1,0 +1,70 @@
+<template>
+	<qp-splitter id="FormSplitter" split="width" disable="true" invisible="true" initial-split="40%" state="normal">
+		<split-pane>
+			<qp-fieldset id="Tasksform" view.bind="Tasks" wg-container="Tasks_tab">
+				<field name="Subject"></field>
+				<field name="UIStatus"></field>
+				<field name="Priority"></field>
+				<field name="ReminderInternalGroup" unbound>
+					<qp-field control-state.bind="Reminder.IsReminderOn"></qp-field>
+					<qp-field control-state.bind="Tasks.IsPrivate"></qp-field>
+				</field>
+				<field name="Reminder.ReminderDate_Date">
+					<qp-field control-state.bind="Reminder.ReminderDate_Time"></qp-field>
+				</field>
+				<field name="ProvidesCaseSolution"></field>
+				<field name="StartDate_Date"></field>
+				<field name="EndDate_Date"></field>
+				<field name="PercentCompletion"></field>
+				<using view="TimeActivity">
+					<field name="ProjectID"></field>
+					<field name="ProjectTaskID"></field>
+				</using>
+				<field name="CompletedDate"></field>
+				<using view="TimeActivity">
+					<field name="CostCodeID"></field>
+					<field name="TimeSpent"></field>
+					<field name="OvertimeSpent"></field>
+					<field name="TimeBillable"></field>
+					<field name="OvertimeBillable"></field>
+				</using>
+			</qp-fieldset>
+		</split-pane>
+		<split-pane>
+			<qp-tabbar id="Tasks_tabMain">
+				<qp-tab id="Description_tab" caption="Description" class="stretch">
+					<div wg-container="Tasks_tab">
+						<qp-rich-text-editor
+							id="edTasksBody"
+							state.bind="CurrentTask.Body"
+							wg-field
+							config.bind="{ expandToContent: true }">
+						</qp-rich-text-editor>
+					</div>
+				</qp-tab>
+				<qp-tab id="Tasks_tab" caption="Details">
+					<qp-template name="1" id="Details_template" class="label-size-xm" wg-container="Tasks_tab">
+						<div slot="A" id="TasksDetaislsHolder">
+							<qp-fieldset id="Details_formLeft" view.bind="CurrentTask" caption="Task Details">
+								<field name="OwnerID"></field>
+								<field name="WorkgroupID"></field>
+								<field name="RefNoteIDType"></field>
+								<field name="RefNoteID"></field>
+								<field name="BAccountID"></field>
+								<field name="ContactID"></field>
+								<field name="ResponseDueDateTime"></field>
+								<field name="ResponseActivityNoteID"></field>
+								<field name="ParentNoteID"></field>
+								<field name="CategoryID"></field>
+							</qp-fieldset>
+							<qp-fieldset id="Details_formLeftService" view.bind="TimeActivity" caption="Service Management">
+								<field name="ServiceID"></field>
+							</qp-fieldset>
+						</div>
+					</qp-template>
+				</qp-tab>
+				<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content" class="fit-to-content"></qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

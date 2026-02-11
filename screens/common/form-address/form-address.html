@@ -1,0 +1,57 @@
+<template>
+
+	<qp-include-parameters
+		fs-id.required
+		address-view.required
+		fs-wg-container
+		fs-caption="Address"
+		override-fieldname="OverrideAddress"
+		override-wg-container
+		with-coordinates="false"
+		with-validation="true"
+		view-on-map-action-name
+	></qp-include-parameters>
+
+	<qp-fieldset id="{{fs-id}}" view.bind="{{address-view}}" caption="{{fs-caption}}" wg-container="{{fs-wg-container}}" show.bind="{{address-view}}.AddressLine1.visible">
+
+		{{#override-wg-container}}
+		<using wg-container="{{override-wg-container}}">
+		{{/override-wg-container}}
+		{{#override-fieldname}}
+		<field name="{{override-fieldname}}"></field>
+		{{/override-fieldname}}
+		{{#override-wg-container}}
+		</using>
+		{{/override-wg-container}}
+
+		<field name="AddressLookupButtons" unbound>
+			
+			<qp-address-lookup id="{{fs-id}}_btn"
+				class="col-12"
+				view.bind="{{address-view}}"
+				if.bind="{{#view-on-map-action-name}}{{view-on-map-action-name}}.visible == false{{/view-on-map-action-name}}{{^view-on-map-action-name}}true{{/view-on-map-action-name}}">
+			</qp-address-lookup>
+			
+			{{#view-on-map-action-name}}
+			<qp-button id="btn{{view-on-map-action-name}}" state.bind="{{view-on-map-action-name}}" class="col-auto" caption="View On Map"></qp-button>
+			{{/view-on-map-action-name}}
+		</field>
+		<field name="AddressLine1"></field>
+		<field name="AddressLine2"></field>
+		<field name="City"></field>
+		<field name="CountryID"></field>
+		<field name="State"></field>
+		<field name="PostalCode"></field>
+
+		{{#with-coordinates}}
+		<field name="Latitude"></field>
+		<field name="Longitude"></field>
+		{{/with-coordinates}}
+
+		{{#with-validation}}
+		<field name="IsValidated"></field>
+		{{/with-validation}}
+
+	</qp-fieldset>
+
+</template>

@@ -1,0 +1,30 @@
+<template>
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack" tabindex="0">
+		<div class="h-stack gray-pane payment-details-pnl col-12">
+			<qp-fieldset id="first" class="col-sm-12 col-md-6 col-lg-6">
+				<field name="CurrentDocument.RefNbr"></field>
+				<field name="CurrentDocument.ExtRefNbr"></field>
+				<field name="CurrentDocument.DocType"></field>
+				<field name="CurrentDocument.AdjDate"></field>
+				<field name="CurrentDocument.DocDesc"></field>
+			</qp-fieldset>
+			<qp-fieldset id="second" class="col-sm-12 col-md-6 col-lg-6">
+				<field name="CurrentDocument.Status" class="colored"></field>
+				<field name="CurrentDocument.CuryOrigDocAmt"></field>
+				<field name="CurrentDocument.CuryDocDisc"></field>
+				<field name="CurrentDocument.CuryID"></field>
+				<field name="CurrentDocument.CustomerPaymentMethod__Descr" unbound caption="Payment method">
+					<div if.bind="CurrentDocument.CustomerPaymentMethod__Descr.value">
+						<qp-include url="../sp-paymethod.html" view="CurrentDocument"></qp-include>
+					</div>
+					<div else>${CurrentDocument.PaymentMethodID.value.text}</div>
+				</field>
+			</qp-fieldset>
+		</div>
+	</div>
+
+	<qp-grid view.bind="ARPost" class="stretch sp-finances-tab">
+	</qp-grid>
+</template>

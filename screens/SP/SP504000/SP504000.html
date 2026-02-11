@@ -1,0 +1,115 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP504000.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack sp-main-reversed sp-order">
+		<div class="col-sm-12 col-md-5 col-lg-4">
+			<qp-fieldset label-size="col-lg-6" id="fsOrderSummary" view.bind="Document" caption="Order Summary"
+				class="sp-fieldset-summary">
+				<field name="CuryLineTotal_Text"></field>
+				<field name="CuryDiscTot_Text"></field>
+				<field name="CuryFreightTot_Text"></field>
+				<field name="CuryTaxTotal_Text"></field>
+				<field name="CuryOrderTotal_Text"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsShippingAddress" class="sp-filled-section sp-condensed-section"
+				view.bind="ShippingAddressSection" caption="Shipping Address">
+				<field name="Document.CustomerLocationID" no-label="true" class="sp-no-label"></field>
+				<field name="Contact" no-label="true" class="sp-no-label"></field>
+				<field name="ShippingContact.Phone1" caption="Phone"></field>
+				<field name="ShippingContact.Email"></field>
+				<field name="Address" no-label="true" class="sp-field-text-replaced" replace-content>
+					<div class="sp-address-link">
+						<div class="sp-section-item-address">${ShippingAddressSection.Address.value}</div>
+						<qp-address-lookup class="col-12" view.bind="Shipping_Address"
+							address-line1.bind="ShippingAddressSection.Address.value"></qp-address-lookup>
+					</div>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="fsBillingAddress" class="sp-filled-section sp-condensed-section"
+				view.bind="BillingAddressSection" caption="Billing Address">
+				<field name="SameAsShippingLabel" class="sp-no-value"></field>
+				<field name="Contact" no-label="true" class="sp-no-label"></field>
+				<field name="BillingContact.Phone1" caption="Phone"></field>
+				<field name="BillingContact.Email"></field>
+				<field name="Address" no-label="true" class="sp-field-text-replaced" replace-content>
+					<div class="sp-address-link">
+						<div class="sp-section-item-address">${BillingAddressSection.Address.value}</div>
+						<qp-address-lookup class="col-12" view.bind="Billing_Address"
+							address-line1.bind="BillingAddressSection.Address.value"></qp-address-lookup>
+					</div>
+				</field>
+			</qp-fieldset>
+
+			<qp-fieldset id="fsUnusedShippingAddress" view.bind="ShippingAddress" class="hidden">
+				<!-- we need this unused section due to a bug in platform -->
+				<field name="FullName" class="sp-no-value"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsUnusedBillingAddress" view.bind="BillingAddress" class="hidden">
+				<!-- we need this unused section due to a bug in platform -->
+				<field name="FullName" class="sp-no-value"></field>
+			</qp-fieldset>
+		</div>
+
+		<div class="gray-pane col-sm-12 col-md-7 col-lg-8">
+			<qp-fieldset id="fsDocument" view.bind="Document">
+				<field name="OrderNbr"></field>
+				<field name="OrderDate"></field>
+				<field name="RequestDate"></field>
+				<field name="Status" class="colored"></field>
+				<field name="CustomerOrderNbr"></field>
+				<field name="OrderDesc"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsShipments" class="sp-shipments" caption="Shipments" view.bind="ShipmentList">
+				<field name="ShipmentsListField" unbound replace-content>
+					<div class="no-shipment-pnl" if.bind="Document.ShowShipmentEmptyPanel.value">
+						<div class="center-content">
+							<qp-label caption="No Shipments yet"></qp-label>
+						</div>
+					</div>
+					<qp-text-light-scope>
+						<qp-data-feed id="dfShipments" if.bind="ShipmentList.totalRowCount > 0"
+							class="no-toolbar sp-shipments" view="ShipmentList"
+							page-size.bind="10" auto-resize="true">
+							<template width="100%">
+								<qp-template id="dfOpenOrder" wg-container name="record-3-2-2-2">
+
+									<qp-include url="./shipment.html" view="ShipmentList"></qp-include>
+								</qp-template>
+							</template>
+						</qp-data-feed>
+					</qp-text-light-scope>
+				</field>
+			</qp-fieldset>
+
+			<qp-fieldset id="fsPayments" class="sp-feed-grid sp-payments" caption="Payments" page-size.bind="10" view.bind="Adjustments">
+				<field name="PaymentsFeed" unbound replace-content>
+					<div class="no-payment-pnl" if.bind="Document.ShowAdjustmentEmptyPanel.value">
+						<div class="center-content">
+							<qp-label caption="No Payments yet"></qp-label>
+						</div>
+					</div>
+					<qp-text-light-scope>
+						<qp-data-feed id="dfPayments" if.bind="Adjustments.totalRowCount > 0"
+							class="no-toolbar sp-payments" view="Adjustments" auto-resize="true">
+							<template width="100%">
+								<qp-template id="dpOpenOrder" wg-container name="record-3-2-2-2">
+
+									<qp-include url="./payment.html" view="Adjustments"></qp-include>
+								</qp-template>
+							</template>
+						</qp-data-feed>
+					</qp-text-light-scope>
+				</field>
+			</qp-fieldset>
+			<compose view-model="../sp-ordered-items"></compose>
+		</div>
+
+		<qp-panel id="Packages" caption="Packages in Shipment" auto-repaint="true">
+			<qp-grid view.bind="Packages" class="stretch sp-packages">
+			</qp-grid>
+		</qp-panel>
+	</div>
+</template>

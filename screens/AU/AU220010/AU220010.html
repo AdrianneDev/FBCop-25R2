@@ -1,0 +1,26 @@
+<template>
+	<qp-splitter id="externalSplitter" initial-split="60" split="width">
+		<split-pane>
+			<qp-splitter id="internalSplitter" initial-split="75%" state="normal" split="height" last-pane-min-size="200">
+				<split-pane>
+					<qp-fieldset id="scriptFieldSet" caption="Script" wg-container="MobileSiteMaps_PXFormView3" view.bind="MobileSiteMaps" class="stretch">
+						<field name="Script" class="no-label stretch"></field>
+					</qp-fieldset>
+				</split-pane>
+				<split-pane>
+					<qp-template id="errorsTemplate" name="1" class="stretch">
+						<qp-fieldset id="errorsFieldSet" caption="Errors" wg-container="MobileSiteMaps_PXFormView7" view.bind="MobileSiteMaps" slot="A" class="no-label stretch">
+							<field name="Errors" class="no-label stretch"></field>
+						</qp-fieldset>
+					</qp-template>
+				</split-pane>
+			</qp-splitter>
+		</split-pane>
+		<split-pane>
+			<qp-fieldset id="previewFieldSet" caption="Preview" wg-container="MobileSiteMaps_PXFormView4" view.bind="MobileSiteMaps" class="stretch">
+				<field name="PreviewResult" class="no-label stretch"></field>
+			</qp-fieldset>
+		</split-pane>
+	</qp-splitter>
+
+</template>

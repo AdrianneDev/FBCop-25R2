@@ -1,0 +1,19 @@
+<template>
+	<qp-template
+		name="1-1"
+		class="equal-height label-size-m"
+		id="Project_form"
+		wg-container>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="Project">
+			<field name="ContractCD" config-allow-edit.bind="true"></field>
+			<field name="Status"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB01" view.bind="Project">
+			<field name="CustomerID"></field>
+			<field name="TemplateID"></field>
+			<field name="ProjectGroupID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Groups"></qp-grid>
+</template>

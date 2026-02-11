@@ -1,0 +1,67 @@
+<template>
+	<require from="./AM310000.scss"></require>
+	<qp-template id="Document_form" wg-container name="7-10-7" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="Document1" view.bind="Document">
+			<field name="ShipmentNbr"></field>
+			<field name="ShipmentType"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="ShipmentDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Document2" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="SiteID"></field>
+			<field name="WorkgroupID"></field>
+			<field name="EmployeeID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Document3" view.bind="Document" class="highlights-section">
+			<field name="ShipmentQty" pinned></field>
+			<field name="ControlQty"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="grid" view.bind="Transactions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabShipping" caption="Shipping">
+			<qp-template id="ShippingTemplate" name="17-17-14">
+				<div slot="A">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="formD"
+						contact-view="ShippingContact"
+						fs-wg-container="ShippingContact_formD"
+						fs-caption="Ship-To Address">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html" fs-id="formB" address-view="ShippingAddress" fs-caption="Ship-To Address"></qp-include>
+				</div>
+				<div slot="B" wg-container="CurrentDocument_formF">
+					<qp-fieldset id="CurrentDocument1" view.bind="CurrentDocument" caption="Shipping Information">
+						<field name="ShipVia"></field>
+						<field name="FOBPoint"></field>
+						<field name="ShipTermsID"></field>
+						<field name="ShipZoneID"></field>
+						<field name="Residential"></field>
+						<field name="SaturdayDelivery"></field>
+						<field name="Insurance"></field>
+						<field name="GroundCollect"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentDocument2" view.bind="CurrentDocument" caption="Freight">
+						<field name="CuryFreightCost"></field>
+						<field name="OverrideFreightAmount"></field>
+						<field name="FreightAmountSource"></field>
+						<field name="CuryFreightAmt"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="ShipmentProdOrders" caption="Production Order Lookup" auto-repaint="true" width="lg" height="85vh" close-button-locator="#btnCancelLink">
+		<qp-grid id="ShipLinesProdGrid" view.bind="ShipmentProdOrders"></qp-grid>
+		<footer>
+			<qp-button id="btnAddShipLines" state.bind="AddShipLines"></qp-button>
+			<qp-button id="btnAddAndCloseShipLines" state.bind="AddShipLinesClose" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancelLink" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

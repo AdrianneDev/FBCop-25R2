@@ -1,0 +1,37 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template id="contactInfo-formOverride" name="7-17">
+			<div slot="A">
+				<qp-fieldset id="contactInfo_override" view.bind="LeadCurrent" class="transparent-section" wg-container="LeadCurrent_edLeadCurrent">
+					<field name="OverrideRefContact" class="no-label"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<qp-template id="contactInfo-form" name="1-1">
+			<div slot="A">
+				<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+					fs-id="tabContactInfo_Contact"
+					contact-view="LeadCurrent"
+					fs-wg-container="LeadCurrent_edOpportunity_Contact"
+					fs-caption="Contact">
+				</qp-include>
+				<qp-fieldset id="tabContactInfo_PersonalDataPrivacy" view.bind="LeadCurrent" caption="Personal Data Privacy">
+					<field name="ConsentAgreement"></field>
+					<field name="ConsentDate"></field>
+					<field name="ConsentExpirationDate"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-include
+					url="src/screens/common/form-address/form-address.html"
+					fs-id="formA"
+					address-view="AddressCurrent"
+					override-fieldname
+					view-on-map-action-name="ViewOnMap"
+				>
+					<field modify="#formA [name='CountryID']" after="#formA [name='PostalCode']"></field>
+				</qp-include>
+			</div>
+		</qp-template>
+	</template>
+</template>

@@ -1,0 +1,17 @@
+<template>
+	<qp-grid id="grid" view.bind="AccountRecords">
+	</qp-grid>
+	<qp-panel id="AccountTypeChangePrepare" caption="Update Account Type" auto-repaint="true">
+		<qp-info-box
+					 caption.bind="AccountTypeChangePrepare.Message.value"
+					 id="messageLabel"
+					 type="info"
+					 wg-container="AccountTypeChangePrepare_FormAccountTypeChange"
+					 wg-name="MessageLabel_">
+		</qp-info-box>
+		<footer>
+			<qp-button id="buttonOK-AccountTypeChangePrepare" caption="Update" dialog-result="OK" ></qp-button>
+			<qp-button id="buttonCancel-AccountTypeChangePrepare" dialog-result="Cancel" ></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,87 @@
+<template>
+	<qp-include url="../sp-base.html"></qp-include>
+	<require from="./SP401000.css"></require>
+	<qp-template id="Case_template" name="1-2" wg-container="Case_form">
+		<div slot="A" id="Case_form_holder">
+			<qp-fieldset id="Case_form_up" view.bind="Case" caption="Case Details">
+				<field name="CaseCD"></field>
+				<field name="Priority"></field>
+				<field name="Severity"></field>
+				<field name="Subject" class="sp-case-subject"></field>
+				<field name="CaseClassID"></field>
+				<field name="CustomerID"></field>
+				<field name="ContractID"></field>
+				<field name="ContactID"></field>
+				<field name="Status"></field>
+				<field name="Resolution"></field>
+				<field name="OwnerID"></field>
+				<field name="ReportedOnDateTime_Date"></field>
+				<field name="ReportedOnDateTime_Time"></field>
+				<field name="LastActivity"></field>
+			</qp-fieldset>
+			<qp-grid id="PXGridAnswers" view.bind="Answers" wg-container="Answers_PXGridAnswers" caption="Additional Info" class="framed-section"></qp-grid>
+		</div>
+		<qp-tabbar slot="B" id="mainTab">
+			<qp-tab id="ActivitiesTab" caption="Activities" load-on-demand="true" if.bind="Activities.totalRowCount > 0">
+				<qp-grid id="Activities_grid" view.bind="Activities"></qp-grid>
+				<qp-caption caption="${Activities.activeRow.Subject.value.text}"></qp-caption>
+				<qp-rich-text-editor
+					id="edActivityBody"
+					state.bind="Activities.Body"
+					wg-field
+					value.bind="Activities.activeRow.Body.value"
+					class="stretch"
+					config.bind="{readOnly: true, expandToContent: true}">
+				</qp-rich-text-editor>
+			</qp-tab>
+			<qp-tab id="DescriptionTab" wg-container caption="Details">
+				<qp-rich-text-editor
+					id="DescriptionEditor"
+					state.bind="Case.Description"
+					wg-field
+					value.bind="Case.Description.value"
+					class="stretch"
+					config.bind="{expandToContent: true}">
+				</qp-rich-text-editor>
+			</qp-tab>
+		</qp-tabbar>
+	</qp-template>
+
+
+	<qp-panel id="ReopenCaseFilter" caption.bind="msg.ReopenCase" auto-repaint="true" wg-container>
+		<qp-label caption.bind="msg.ReopenCaseQuestion"></qp-label>
+		<footer>
+			<div class="h-stack">
+				<qp-button id="ReopenBtn" class="major-button" caption.bind="msg.Reopen" dialog-result="OK">
+				</qp-button>
+				<qp-button id="CancelBtn" caption.bind="SysMessages.Cancel" dialog-result="Cancel">
+				</qp-button>
+			</div>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CloseCaseFilter" caption.bind="msg.CloseCase" auto-repaint="true" wg-container>
+		<qp-label caption.bind="msg.CloseCaseQuestion"></qp-label>
+		<footer>
+			<div class="h-stack">
+				<qp-button id="CCFCloseBtn" class="major-button" caption.bind="msg.Close" dialog-result="OK">
+				</qp-button>
+				<qp-button id="CCFCancelBtn" caption.bind="SysMessages.Cancel" dialog-result="Cancel">
+				</qp-button>
+			</div>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="Comment" caption.bind="msg.SendMsg" auto-repaint="true" wg-container>
+		<qp-fieldset id="fsComment" class="col-12">
+			<field name="Comment.Subject"></field>
+			<field name="Comment.Body" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="SaveComment" class="major-button" caption="Send" dialog-result="OK" config.bind="{ validateInput: true}">
+			</qp-button>
+			<qp-button id="CommentCancelButton" caption.bind="SysMessages.Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

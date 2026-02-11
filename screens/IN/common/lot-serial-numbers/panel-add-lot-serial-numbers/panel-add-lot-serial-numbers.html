@@ -1,0 +1,24 @@
+﻿<template>
+	<qp-panel id="LotSerialNbrHeader" caption="Add Lot/Serial Nbr." auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddLotSerialNumber" name="17-17-14" wg-container="LotSerialNbrHeader_LotSerialNbrHeaderForm" class="equal-height">
+			<qp-fieldset id="fsColumnA-AddLotSerialNumber" slot="A" view.bind="LotSerialNbrHeader">
+				<field name="LotSerClassID"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddLotSerialNumber" slot="B" view.bind="LotSerialNbrHeader">
+				<field name="Search" qp-fast-filter.bind="lotSerialNbrResultVM"></field>
+				<field name="OnlyAvailable"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="gridNumbers-AddLotSerialNumber" view.bind="lotSerialNbrResult" view-model.ref="lotSerialNbrResultVM" wg-container="lotSerialNbrResult_LotSerialNumbers"
+				on-filter-columns.call="attributesOnFilterColumns(col)"
+				on-initialize-columns.call="attributesColumnsGenerated(columns)"></qp-grid>
+
+		<footer id="footer-AddLotSerialNumber">
+			<qp-button id="buttonAdd-AddLotSerialNumber" state.bind="AddSelectedLotSerialNbrs" wg-name="Add"></qp-button>
+			<qp-button id="buttonAddClose-AddLotSerialNumber" dialog-result="OK" wg-name="AddClose" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddLotSerialNumber" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

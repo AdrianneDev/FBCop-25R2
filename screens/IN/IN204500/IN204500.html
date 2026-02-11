@@ -1,0 +1,183 @@
+<template>
+	<qp-template id="form-ItemSite" name="1-1" class="label-size-m" wg-container="itemsiterecord_form">
+		<qp-fieldset id="fsColumnA-ItemSite" slot="A" view.bind="itemsiterecord">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="SiteStatus"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-ItemSite" slot="B" view.bind="itemsiterecord">
+			<field name="ProductManagerOverride"></field>
+			<field name="ProductWorkgroupID"></field>
+			<field name="ProductManagerID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar" class="label-size-m">
+		<qp-tab id="tab-General" caption="General">
+			<qp-template id="form-General" name="1-1" wg-container="itemsitesettings_tab">
+				<div id="divColumnA-General" slot="A">
+					<qp-fieldset id="fsStorageDefaults-General" view.bind="itemsitesettings" caption="Storage Defaults">
+						<field name="DfltShipLocationID" config-allow-edit.bind="true"></field>
+						<field name="DfltReceiptLocationID" config-allow-edit.bind="true"></field>
+						<field name="DfltPutawayLocationID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsPhysicalInventory-General" view.bind="itemsitesettings" caption="Physical Inventory">
+						<field name="ABCCodeOverride"></field>
+						<field name="ABCCodeID"></field>
+						<field name="ABCCodeIsFixed"></field>
+						<field name="MovementClassOverride"></field>
+						<field name="MovementClassID" config-allow-edit.bind="true"></field>
+						<field name="MovementClassIsFixed"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-General" slot="B">
+					<qp-fieldset id="fsItemDefaults-General" view.bind="itemsitesettings" caption="Item Defaults">
+						<field name="CountryOfOrigin"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsGLAccounts-General" view.bind="itemsitesettings" caption="GL Accounts">
+						<field name="OverrideInvtAcctSub"></field>
+						<field name="InvtAcctID" config-allow-edit.bind="true"></field>
+						<field name="InvtSubID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-InventoryPlanning" caption="Inventory Planning">
+			<qp-template id="form-InventoryPlanning" name="1-1">
+				<div id="divColumnA-InventoryPlanning" slot="A">
+					<qp-fieldset id="fsPlanningMethod-InventoryPlanning" view.bind="itemsitesettings" caption="Planning Method Settings" wg-container="itemsitesettings_tab">
+						<field name="PlanningMethod"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsReplenishmentSettings-InventoryPlanning"
+							view.bind="PlanningReplenishmentSettings"
+							caption="Replenishment Settings"
+							wg-container="PlanningReplenishmentSettings_PlanningReplenishmentSettingsForm">
+						<field name="ReplenishmentClassID"></field>
+						<field name="ReplenishmentPolicyOverride"></field>
+						<field name="ReplenishmentPolicyID"></field>
+						<field name="ReplenishmentSource"></field>
+						<field name="ReplenishmentMethod"></field>
+						<field name="ReplenishmentSourceSiteID"></field>
+						<field name="MaxShelfLife">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.MaxShelfLifeOverride"></qp-field>
+						</field>
+						<field name="LaunchDate">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.LaunchDateOverride"></qp-field>
+						</field>
+						<field name="TerminationDate">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.TerminationDateOverride"></qp-field>
+						</field>
+						<field name="ServiceLevelPct">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.ServiceLevelOverride"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="fsReplenishmentParameters-InventoryPlanning"
+							view.bind="PlanningReplenishmentSettings"
+							caption="Replenishment Parameters"
+							wg-container="PlanningReplenishmentSettings_PlanningReplenishmentSettingsForm">
+						<field name="SafetyStock">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.SafetyStockOverride"></qp-field>
+						</field>
+						<field name="MinQty">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.MinQtyOverride"></qp-field>
+						</field>
+						<field name="MaxQty">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.MaxQtyOverride"></qp-field>
+						</field>
+						<field name="TransferERQ">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.TransferERQOverride"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="fsDemandForecast-InventoryPlanning"
+							view.bind="PlanningReplenishmentSettings"
+							caption="Demand Forecast Result"
+							wg-container="PlanningReplenishmentSettings_PlanningReplenishmentSettingsForm">
+						<field name="DemandPerDayAverage"></field>
+						<field name="DemandPerDaySTDEV"></field>
+						<field name="LeadTimeAverage"></field>
+						<field name="LeadTimeSTDEV"></field>
+						<field name="SafetyStockSuggested"></field>
+						<field name="MinQtySuggested"></field>
+						<field name="LastForecastDate"></field>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-InventoryPlanning" slot="B">
+					<qp-fieldset id="fsPreferedVendor-InventoryPlanning"
+							view.bind="preferedVendorFields"
+							caption="Preferred Parameters"
+							wg-container="PreferedVendorFields_preferedVendorFieldsForm">
+						<field name="PreferredVendorOverride"></field>
+						<field name="PreferredVendorID" config-allow-edit.bind="true"></field>
+						<field name="PreferredVendorLocationID"></field>
+						<field name="InventoryItem__DefaultSubItemID"></field>
+						<using view="PreferredVendorItem" wg-container="PreferredVendorItem_preferredForm">
+							<field name="VLeadTime"></field>
+							<field name="AddLeadTimeDays"></field>
+							<field name="MinOrdFreq"></field>
+							<field name="MinOrdQty"></field>
+							<field name="MaxOrdQty"></field>
+							<field name="LotSize"></field>
+							<field name="ERQ"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-SubItemReplenishment" caption="Subitem Replenishment Info">
+			<qp-template id="form-SubItemReplenishment" name="1-1">
+				<qp-fieldset id="fsColumnA-SubItemReplenishment" slot="A" view.bind="itemsitesettings" class="transparent-section" wg-container="itemsitesettings_pnlSubitem">
+					<field name="SubItemOverride" class="no-label"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="grid-SubItemReplenishment" view.bind="subitemrecords" wg-container="subitemrecords_subRepGrid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-PriceCost" caption="Price/Cost">
+			<qp-template id="form-PriceCost" name="1-1">
+				<qp-fieldset id="fsPriceManagement-PriceCost" slot="A" view.bind="itemsitesettings" caption="Price Management" wg-container="itemsitesettings_tab">
+					<field name="PriceWorkgroupID"></field>
+					<field name="PriceManagerID" config-allow-edit.bind="true"></field>
+					<field name="Commissionable"></field>
+					<field name="MarkupPctOverride"></field>
+					<field name="MarkupPct"></field>
+					<field name="RecPriceOverride"></field>
+					<field name="RecPrice">
+						<qp-field slot="label" control-state.bind="itemsitesettings.RecPrice_Label" class="no-label"></qp-field>
+					</field>
+				</qp-fieldset>
+				<div id="divColumnB-PriceCost" slot="B">
+					<qp-fieldset id="fsStandardCost-PriceCost" view.bind="itemsitesettings" caption="Standard Cost" wg-container="itemsitesettings_tab">
+						<field name="StdCostOverride"></field>
+						<field name="LastStdCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.LastStdCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="StdCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.StdCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="StdCostDate"></field>
+						<field name="PendingStdCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.PendingStdCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="PendingStdCostDate"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsCostStatistics-PriceCost" view.bind="itemsitesettings" caption="Cost Statistics" wg-container="itemsitesettings_tab">
+						<field name="LastCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.LastCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="AvgCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.AvgCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="MinCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.MinCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="MaxCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.MaxCost_Label" class="no-label"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

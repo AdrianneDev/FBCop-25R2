@@ -1,0 +1,126 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template name="7-10-7" id="formHeader" wg-container="Document_form" class="equal-height" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirstHeader" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="AdjDate"></field>
+			<field name="AdjFinPeriodID" pinned="false"></field>
+			<field name="DepositAfter" pinned="false"></field>
+			<field name="ExtRefNbr" pinned="false"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondHeader" view.bind="Document">
+			<field name="VendorID"></field>
+			<field name="VendorLocationID" pinned="false"></field>
+			<field name="PaymentMethodID" pinned></field>
+			<field name="CashAccountID" pinned></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="ProjectID"></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThirdHeader" view.bind="Document" class="highlights-section">
+			<field name="CuryLineTotal" pinned></field>
+			<field name="CuryTaxTotal" pinned></field>
+			<field name="CuryRoundDiff"></field>
+			<field name="CuryOrigDocAmt" pinned></field>
+			<field name="CuryDocBal"></field>
+			<field name="CuryTaxAmt"></field>
+			<field name="CuryOrigDiscAmt"></field>
+			<field name="CuryChargeAmt" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs" wg-container="CurrentDocument_tab">
+
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridTransactions" view.bind="Transactions" wg-container="Transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabFinancial" caption="Financial">
+
+			<qp-template name="17-17-14" id="formFinancial">
+				<qp-fieldset id="columnFirstFinancial" slot="A" view.bind="CurrentDocument" caption="GL Link">
+					<field name="BatchNbr"></field>
+					<field name="PrebookBatchNbr"></field>
+					<field name="VoidBatchNbr"></field>
+					<field name="BranchID"></field>
+					<field name="APAccountID"></field>
+					<field name="APSubID"></field>
+					<field name="PrebookAcctID"></field>
+					<field name="PrebookSubID"></field>
+					<field name="OrigRefNbr"></field>
+				</qp-fieldset>
+				<div slot="B" id="columnSecondFinancial">
+					<qp-fieldset id="groupPaymentInfo" caption="Payment Info" view.bind="CurrentDocument">
+						<field name="TermsID"></field>
+						<field name="Cleared"></field>
+						<field name="ClearDate"></field>
+						<field name="DepositAsBatch"></field>
+						<field name="Deposited"></field>
+						<field name="DepositDate"></field>
+						<field name="DepositNbr"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabTaxes" caption="Taxes" load-on-demand.bind="false">
+			<qp-template name="17-7" id="formTaxes">
+				<div slot="A" id="columnFirst-Taxes">
+					<qp-grid id="gridTaxes" view.bind="Taxes" class="framed-section" wg-container="Taxes_grid1"></qp-grid>
+				</div>
+				<div slot="B" id="columnSecond-Taxes">
+					<qp-fieldset id="groupTaxAndTerms" caption="Tax Info" view.bind="CurrentDocument">
+						<field name="TaxZoneID"></field>
+						<field name="TaxCalcMode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupVATTotals" caption="Tax Totals" view.bind="CurrentDocument" class="highlights-section">
+						<field name="CuryVatTaxableTotal"></field>
+						<field name="CuryVatExemptTotal"></field>
+						<using wg-container="Document_form" view="Document">
+							<field name="CuryTaxTotal"></field>
+						</using>
+						<using wg-container="Document_form" view="Document">
+							<field name="CuryOrigWhTaxAmt"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+
+		<qp-tab id="tabRemittance" caption="Remittance">
+			<qp-template name="17-17-14" id="formRemittance">
+				<div slot="A" id="columnFirstRemittance">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="groupRemittanceContact"
+						contact-view="Remittance_Contact"
+						fs-wg-container="Remittance_Contact_Remittance_Contact"
+						fs-caption="Remittance Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupRemittanceAddress"
+						address-view="Remittance_Address"
+						fs-caption="Remittance Address"
+						fs-wg-container="Remittance_Address_Remittance_Address"
+					></qp-include>
+				</div>
+				<div slot="B" id="columnSecondRemittance">
+					<qp-fieldset id="groupPrintOptions" view.bind="CurrentDocument" caption="Print Options">
+						<field name="PrintCheck"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabCharges" caption="Charges">
+			<qp-grid id="gridPaymentCharges" view.bind="PaymentCharges" wg-container="PaymentCharges_detgrid3"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+</template>

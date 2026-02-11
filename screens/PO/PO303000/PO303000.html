@@ -1,0 +1,76 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-LandedCost" name="7-10-7" class="equal-height" qp-collapsible wg-container="document_form">
+		<qp-fieldset id="fsColumnA-LandedCost" slot="A" view.bind="Document">
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="DocDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-LandedCost" slot="B" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID" config-allow-edit.bind="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="CreateBill" pinned="true"></field>
+			<field name="VendorRefNbr" pinned="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-LandedCost" slot="C" view.bind="Document" class="summary-pane">
+			<field name="CuryAllocatedTotal" pinned="true"></field>
+			<field name="CuryLineTotal" pinned="true"></field>
+			<field name="CuryTaxTotal" pinned="true"></field>
+			<field name="CuryDocTotal" pinned="true"></field>
+			<field name="CuryControlTotal" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Landed Costs">
+			<qp-grid id="grid-Details" view.bind="Details" wg-container="Details_gridLandedCost"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-ReceiptLines" caption="Details">
+			<qp-grid id="grid-ReceiptLines" view.bind="ReceiptLines" wg-container="ReceiptLines_gridReceiptLines"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Taxes" caption="Taxes" load-on-demand="true">
+			<qp-template id="form-Taxes" name="17-7">
+				<div id="columnFirst-Taxes" slot="A">
+					<qp-grid id="grid-Taxes" view.bind="Taxes" class="framed-section" wg-container="Taxes_grid1"></qp-grid>
+				</div>
+				<div id="fsColumnB-Taxes" slot="B">
+					<qp-fieldset id="fsTaxInfo-Taxes" caption="Tax Info" view.bind="CurrentDocument"
+						wg-container="CurrentDocument_tab">
+						<field name="TaxZoneID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsTaxTotals-Taxes" class="highlights-section" caption="Tax Totals" view.bind="Document">
+						<using wg-container="document_form">
+							<field name="CuryVatTaxableTotal"></field>
+							<field name="CuryVatExemptTotal"></field>
+						</using>
+						<using view="Document">
+							<field name="CuryTaxTotal"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Financial" caption="Financial">
+			<qp-template id="form-Financial" name="17-17-14" wg-container="CurrentDocument_tab">
+				<qp-fieldset id="fsBilling-Financial" slot="A" view.bind="CurrentDocument" caption="Billing Settings">
+					<field name="BranchID"></field>
+					<field name="TermsID"></field>
+					<field name="BillDate"></field>
+					<field name="DueDate"></field>
+					<field name="DiscDate"></field>
+					<field name="CuryDiscAmt"></field>
+					<field name="PayToVendorID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsOwnership-Financial" slot="B" view.bind="CurrentDocument" caption="Assign To">
+					<field name="WorkgroupID"></field>
+					<field name="OwnerID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

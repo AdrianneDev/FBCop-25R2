@@ -1,0 +1,113 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-Requisition" name="7-10-7" class="equal-height" qp-collapsible wg-container="document_form">
+		<qp-fieldset id="fsColumnA-Requisition" slot="A" view.bind="Document">
+			<field name="ReqNbr"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="OrderDate" pinned="true"></field>
+			<field name="Priority"></field>
+			<field name="Quoted"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Requisition" slot="B" view.bind="Document">
+			<field name="EmployeeID" pinned="false"></field>
+			<field name="CustomerID" config-allow-edit.bind="true" pinned="true"></field>
+			<field name="CustomerLocationID" pinned="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_RQRequisition_CurrencyInfo_" pinned="true"></field>
+			<field name="Description" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Requisition" slot="C" view.bind="Document" class="highlights-section">
+			<field name="CuryEstExtCostTotal" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Details">
+			<qp-grid id="grid-Details" view.bind="Lines" wg-container="Lines_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Shipping" caption="Shipping">
+			<qp-template id="form-Shipping" name="17-17-14">
+				<div id="divColumnA-Shipping" slot="A">
+					<qp-fieldset id="fsShipTo-Shipping" view.bind="CurrentDocument" caption="Ship To" wg-container="CurrentDocument_tab">
+						<field name="ShipDestType"></field>
+						<field name="ShipToBAccountID"></field>
+						<field name="SiteID"></field>
+						<field name="ShipToLocationID"></field>
+					</qp-fieldset>
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="fsShipToContact-Shipping"
+						contact-view="Shipping_Contact"
+						fs-wg-container="Shipping_Contact_formSC"
+						fs-caption="Ship-To Contact">
+					</qp-include>
+				</div>
+				<div id="divColumnB-Shipping" slot="B">
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="fsShipToAddress-Shipping"
+						fs-wg-container="Shipping_Address_formSA"
+						address-view="Shipping_Address"
+						fs-caption="Ship-to Address">
+					</qp-include>
+					<qp-fieldset id="fsShipVia-Shipping" view.bind="CurrentDocument" caption="Ship Via" wg-container="CurrentDocument_tab">
+						<field name="FOBPoint"></field>
+						<field name="ShipVia"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Bidding" caption="Bidding">
+			<qp-template id="form-Bidding" name="17-7" class="full-width stretch">
+				<qp-grid id="grid-Bidding" slot="A" view.bind="Vendors" class="framed-section" caption="Bidding Vendors" wg-container="Vendors_gridVendor"></qp-grid>
+				<qp-fieldset id="fsColumnB-Bidding" slot="B" view.bind="CurrentDocument" caption="Selected Vendor" wg-container="CurrentDocument_tab">
+					<field name="VendorID"></field>
+					<field name="VendorLocationID"></field>
+					<field name="VendorRefNbr"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-VendorInfo" caption="Vendor Info">
+			<qp-template id="form-VendorInfo" name="17-17-14">
+				<div id="divColumnA-VendorInfo" slot="A">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="fsVendorContact-VendorInfo"
+						contact-view="Remit_Contact"
+						fs-wg-container="Remit_Contact_formVC"
+						fs-caption="Vendor Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="fsVendorAddress-VendorInfo"
+						fs-wg-container="Remit_Address_formVA"
+						address-view="Remit_Address"
+						fs-caption="Vendor Address">
+					</qp-include>
+				</div>
+				<qp-fieldset id="fsColumnB-VendorInfo" slot="B" view.bind="CurrentDocument" caption="Info" wg-container="CurrentDocument_tab">
+					<field name="TermsID"></field>
+					<field name="POType"></field>
+					<field name="Splittable"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Other" caption="Other">
+			<qp-template id="form-Other" name="17-17-14">
+				<qp-fieldset id="fsColumnA-Other" slot="A" view.bind="CurrentDocument" caption="Ownership" wg-container="CurrentDocument_tab">
+					<field name="WorkgroupID"></field>
+					<field name="OwnerID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-PurchaseOrders" caption="Purchase Orders">
+			<qp-grid id="grid-PurchaseOrders" view.bind="POOrders" wg-container="POOrders_gridPOOrders"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-SalesOrders" caption="Sales Orders">
+			<qp-grid id="grid-SalesOrders" view.bind="SOOrders" wg-container="SOOrders_gridSOOrders"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

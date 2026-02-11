@@ -1,0 +1,79 @@
+.qp-sch-event-info > div:first-child > span:first-child {
+	&, & * {
+		font-weight: 700 !important;
+	}
+}
+
+:is(.qp-sch-main-container, .qp-sch-dragged) span[sch-field="SelectedAppointment.RefNbr"] {
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.qp-sch-left-container span[sch-field="SelectedAppointment.RefNbr"] {
+	line-height: 26px;
+	font-size: 16px;
+	font-weight: 700;
+}
+.qp-sch-left-container span[sch-field="SelectedSO.RefNbr"] {
+	line-height: 20px;
+	font-size: 14px;
+	font-weight: 700;
+	padding-bottom: 2px;
+}
+.qp-sch-tile-icon:has(span > svg[sch-value="H"]) {
+	flex-shrink: 0;
+}
+
+[sch-field="SelectedAppointment.Status"] {
+	&[sch-value="N"] {
+		color: var(--primary-color);
+	}
+	&[sch-value="Z"],
+	&[sch-value="C"],
+	&[sch-value="B"] {
+		color: #626262;
+}
+}
+
+[sch-field="SelectedSO.Priority"] {
+	font-weight: 700 !important;
+
+	&[sch-value="H"] {
+		color: #EE4051;
+	}
+	&[sch-value="M"] {
+		color: #BFBFBF;
+
+		span:has(> &) {
+			display: none;
+		}
+	}
+	&[sch-value="L"] {
+		color: #4BA5E2;
+	}
+}
+
+[sch-field="SelectedSO.Severity"] {
+	font-weight: 700 !important;
+
+	&[sch-value="H"] {
+		color: #EE4051;
+	}
+	&[sch-value="M"] {
+		color: #BFBFBF;
+		span:has(> &) {
+			display: none;
+		}
+	}
+	&[sch-value="L"] {
+		color: #4BA5E2;
+	}
+}
+
+[sch-field="SelectedAppointment.StaffCntr"]:not([sch-value="1"]) {
+	color: black;
+
+	.qp-sch-not-confirmed & {
+		color: white;
+	}
+}

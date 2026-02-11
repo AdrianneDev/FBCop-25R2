@@ -1,0 +1,77 @@
+﻿<template>
+	<qp-tabbar id="tab" active-tab-id="General">
+		<qp-tab id="General" caption="General">
+			<qp-template name="1-1" id="Setup_tab" class="label-size-l" wg-container>
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="numb" view.bind="Setup" caption="Numbering Settings">
+						<field name="BatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="TranNumberingCD" config-allow-edit.bind="true"></field>
+						<field name="BatchNumberingCD" config-allow-edit.bind="true"></field>
+						<field name="PTOAdjustmentNumberingCD" config-allow-edit.bind="true"></field>
+						<field name="ROENumberingCD" config-allow-edit.bind="true"></field>
+						<field name="BatchForSubmissionNumberingCD" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="misc" view.bind="Setup" caption="Miscellaneous Settings">
+						<field name="PayRateDecimalPlaces"></field>
+						<field name="DedBenDecimalPlaces"></field>
+						<field name="PayPeriodDateChangeAllowed"></field>
+						<field name="RegularHoursType" config-allow-edit.bind="true"></field>
+						<field name="HolidaysType" config-allow-edit.bind="true"></field>
+						<field name="CommissionType" config-allow-edit.bind="true"></field>
+						<field name="EnablePieceworkEarningType"></field>
+						<field name="HoldEntry"></field>
+						<field name="UseBenefitRateFromUnionInCertProject"></field>
+					</qp-fieldset>
+					<qp-fieldset id="post" view.bind="Setup" caption="Posting Settings">
+						<field name="ProjectCostAssignment"></field>
+						<field name="TimePostingOption"></field>
+						<field name="OffBalanceAccountGroupID"></field>
+						<field name="UpdateGL"></field>
+						<field name="SummPost"></field>
+						<field name="AutoPost"></field>
+						<field name="AutoReleaseOnPay"></field>
+						<field name="DisableGLWarnings"></field>
+						<field name="HideEmployeeInfo"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" class="v-stack">
+					<qp-fieldset id="acct" view.bind="Setup" caption="Account Settings">
+						<field name="EarningsAcctDefault"></field>
+						<field name="Setup.EarningsAlternateAcctDefault"></field>
+						<field name="EarningsSubMask"></field>
+						<field name="Setup.EarningsAlternateSubMask"></field>
+						<field name="DeductLiabilityAcctDefault"></field>
+						<field name="Setup.DeductLiabilitySubMask"></field>
+						<field name="BenefitExpenseAcctDefault"></field>
+						<field name="Setup.BenefitExpenseAlternateAcctDefault"></field>
+						<field name="BenefitExpenseSubMask"></field>
+						<field name="Setup.BenefitExpenseAlternateSubMask"></field>
+						<field name="BenefitLiabilityAcctDefault"></field>
+						<field name="BenefitLiabilitySubMask"></field>
+						<field name="TaxExpenseAcctDefault"></field>
+						<field name="Setup.TaxExpenseAlternateAcctDefault"></field>
+						<field name="TaxExpenseSubMask"></field>
+						<field name="Setup.TaxExpenseAlternateSubMask"></field>
+						<field name="TaxLiabilityAcctDefault"></field>
+						<field name="TaxLiabilitySubMask"></field>
+						<field name="PTOExpenseAcctDefault"></field>
+						<field name="Setup.PTOExpenseAlternateAcctDefault"></field>
+						<field name="PTOExpenseSubMask"></field>
+						<field name="Setup.PTOExpenseAlternateSubMask"></field>
+						<field name="PTOLiabilityAcctDefault"></field>
+						<field name="PTOLiabilitySubMask"></field>
+						<field name="PTOAssetAcctDefault"></field>
+						<field name="PTOAssetSubMask"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="TransactionDateExceptions" caption="Transaction Date Exceptions">
+			<qp-fieldset id="noTransDateOnWeekendForm" view.bind="Setup" class="no-label transparent-section">
+				<field name="NoWeekendTransactionDate"></field>
+			</qp-fieldset>
+			<qp-grid id="transactionDateExceptionGrid" view.bind="TransactionDateExceptions">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,24 @@
+.showhidepasswordContainer {
+	position: relative;
+	width: 100%;
+}
+
+.showhidepassword {
+	width: 16px !important;
+	position: absolute;
+	inset-inline-end: 0;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@media (width >= 480px) {
+	#Passwords .label-container.size-custom {
+		width: 130px !important;
+		justify-content: flex-end;
+	}
+
+	#NewAnswer .label-container.size-custom {
+		width: 150px !important;
+		justify-content: flex-end;
+	}
+}

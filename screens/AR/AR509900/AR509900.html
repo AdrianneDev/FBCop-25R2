@@ -1,0 +1,12 @@
+<template>
+	<qp-template name="1-1" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="panelFilter" view.bind="Filter">
+			<field name="FinPeriodID"></field>
+			<field name="RecalcDocumentBalances"></field>
+			<field name="RecalcCustomerBalancesReleased"></field>
+			<field name="RecalcCustomerBalancesUnreleased"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ARCustomerList">
+	</qp-grid>
+</template>

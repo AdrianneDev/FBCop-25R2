@@ -1,0 +1,7 @@
+@import '../common/pm-status-colors-common.scss';
+
+/* ––––– overrides / additions ––––– */
+@include colored-status('A', var(--status-green-color)); // Active
+@include colored-status('D', var(--status-blue-color)); // Planned
+@include colored-status('E', var(--status-orange-color)); // Suspended
+@include colored-status('I', var(--status-red-color)); // Pending Approval

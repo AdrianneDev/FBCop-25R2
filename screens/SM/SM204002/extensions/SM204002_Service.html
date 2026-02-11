@@ -1,0 +1,43 @@
+<template>
+	<template id="tabService_Content">
+		<qp-template id="serviceTemplate" name="1-1">
+			<div slot="A">
+				<qp-fieldset id="CurrentEMailAccounts_OutgoingMailServerSettings" view.bind="EMailAccounts" caption="Outgoing Mail Server">
+					<field name="OutcomingHostName"></field>
+					<field name="OutgoingConnectionEncryption"></field>
+					<field name="OutcomingPort"></field>
+					<field name="SendGroupMails"></field>
+					<field name="ValidateFrom"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CurrentEMailAccounts_IncomingMailServerSettings" view.bind="EMailAccounts" caption="Incoming Mail Server">
+					<field name="IncomingHostProtocol"></field>
+					<field name="IncomingHostName"></field>
+					<field name="IncomingConnectionEncryption"></field>
+					<field name="IncomingPort"></field>
+					<field name="ImapRootFolder"></field>
+					<field name="IncomingDelSuccess"></field>
+					<field name="IncomingAttachmentType"></field>
+					<field name="FetchingBehavior"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B" class="label-size-m">
+				<qp-fieldset id="CurrentEMailAccounts_AuthenticationSettings" view.bind="EMailAccounts" caption="Authentication">
+					<field name="AuthenticationMethod"></field>
+					<field name="OAuthApplicationID"></field>
+					<field name="OAuthScopes"></field>
+					<field name="OAuthParameters"></field>
+					<field name="AzureTenantID"></field>
+					<field name="LoginName"></field>
+					<field name="Password" config-type.bind="2"></field>
+					<field name="OutcomingAuthenticationRequest"></field>
+					<field name="OutcomingAuthenticationDifferent"></field>
+					<field name="OutcomingLoginName"></field>
+					<field name="OutcomingPassword" config-type.bind="2"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CurrentEMailAccounts_Other" view.bind="EMailAccounts" caption="Other">
+					<field name="Timeout"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

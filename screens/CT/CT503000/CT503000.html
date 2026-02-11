@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="formContractItem" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirst-ContractItem" view.bind="SelectedContractItem">
+			<using view="Filter">
+				<field name="ContractItemID"></field>
+			</using>
+			<field name="BasePriceOption"></field>
+			<field name="BasePrice"></field>
+			<field name="BasePriceVal"></field>
+			<field name="RenewalPriceOption"></field>
+			<field name="RenewalPrice"></field>
+			<field name="RenewalPriceVal"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-ContractItem" view.bind="SelectedContractItem">
+			<field name="FixedRecurringPriceOption"></field>
+			<field name="FixedRecurringPrice"></field>
+			<field name="FixedRecurringPriceVal"></field>
+			<field name="UsagePriceOption"></field>
+			<field name="UsagePrice"></field>
+			<field name="UsagePriceVal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridContractDetails" view.bind="Items" wg-container="Items_grid"></qp-grid>
+</template>

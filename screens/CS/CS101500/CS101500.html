@@ -1,0 +1,231 @@
+﻿<template>
+
+	<qp-template name="1-1" id="formBAccount" wg-container="BAccount_PXFormView1" class="equal-height label-size-m">
+
+		<qp-fieldset slot="A" id="columnFirst" view.bind="BAccount">
+			<field name="AcctCD"></field>
+			<field name="AcctName"></field>
+			<field name="OrganizationView.OrganizationType"></field>
+		</qp-fieldset>
+
+		<div slot="B" id="columnSecond">
+			<qp-fieldset id="panelStatus" view.bind="OrganizationView">
+				<field name="Status"></field>
+				<field name="UseForAnomalyService"></field>
+			</qp-fieldset>
+		</div>
+
+	</qp-template>
+
+	<qp-tabbar id="tabs" class="label-size-m">
+		<qp-tab id="tabCompanyDetails" caption="Company Details">
+			<qp-template name="1-1" id="formCompanyDetails">
+				<div slot="A" id="columnFirst-CompanyDetails">
+
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupDefContact"
+						contact-view="DefContact"
+						fs-caption="Main Contact"
+						fs-wg-container="DefContact_DefContact">
+					</qp-include>
+
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupDefAddress"
+						fs-wg-container="DefAddress_DefAddress"
+						address-view="DefAddress"
+						fs-caption="Main Address"
+						view-on-map-action-name="ViewMainOnMap"
+						override-fieldname
+					>
+						<field modify="#groupDefAddress [name='CountryID']" after="#groupDefAddress [name='PostalCode']"></field>
+						<field append="#groupDefAddress" name="OrganizationView.CarrierFacility" wg-container="OrganizationView_formCarrierFacility"></field>
+					</qp-include>
+
+				</div>
+
+				<div slot="B" id="columnSecond-CompanyDetails">
+
+					<qp-fieldset id="groupBaseCuryID" view.bind="OrganizationView" caption="Base Currency Settings" wg-container="OrganizationView_Company">
+						<field name="BaseCuryID"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="groupTaxRegistrationInfo" view.bind="CurrentBAccount" caption="Tax Registration Info" wg-container="CurrentBAccount_tab">
+						<field name="LegalName"></field>
+						<field name="TaxRegistrationID"></field>
+						<field name="MTDApplicationID"></field>
+						<using view="DefLocation" wg-container="DefLocation_PXFormViewLocation">
+							<field name="CAvalaraExemptionNumber"></field>
+							<field name="CAvalaraCustomerUsageType"></field>
+						</using>
+						<field name="OrganizationView.FileTaxesByBranches"></field>
+						<field name="OrganizationView.Reporting1099ByBranches"></field>
+						<field name="OrganizationView.Reporting1099"></field>
+						<field name="RegisteredEntityForReporting"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="groupConfigurationSettings" view.bind="OrganizationView" caption="Configuration Settings" wg-container="OrganizationView_ConfigurationSettings">
+						<field name="RoleName"></field>
+						<field name="CountryID"></field>
+						<field name="OrganizationLocalizationCode"></field>
+						<field name="CashDiscountBase"></field>
+						<field name="DefaultPrinterID"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="groupMiscellaneousSettings" view.bind="commonsetup" caption="Miscellaneous Settings (Shared)" wg-container="commonsetup_CommonSettings">
+						<field name="DecPlQty"></field>
+						<field name="DecPlPrcCst"></field>
+						<field name="WeightUOM"></field>
+						<field name="LinearUOM"></field>
+						<field name="VolumeUOM"></field>
+						<using view="Company" wg-container="Company_MiscSettings">
+							<field name="PhoneMask"></field>
+						</using>
+					</qp-fieldset>
+
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabBranches" caption="Branches" if.bind="StateView.IsBranchTabVisible.value == true">
+			<qp-grid id="gridBranches" view.bind="BranchesView" wg-container="BranchesView_grdBranches">
+			</qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabDeliverySettings" caption="Delivery Settings" if.bind="StateView.IsDeliverySettingsTabVisible.value == true">
+			<qp-template name="1-1" id="formDeliverySettings">
+				<div slot="A" id="columnFirst-DeliverySettings">
+
+					<qp-include url="src/screens/common/form-contact-profile/form-contact-profile.html"
+						fs-id="groupDefLocationContact"
+						contact-view="DefLocationContact"
+						fs-caption="Delivery Contact"
+						fs-wg-container="DefLocationContact_DefLocationContact"
+						override-fieldname="DefLocation.OverrideContact"
+						override-wg-container="DefLocation_frmDefLocation">
+					</qp-include>
+
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupFirstDefLocationAddress"
+						address-view="DefLocationAddress"
+						fs-caption="Delivery Address"
+						fs-wg-container="DefLocationAddress_DefLocationAddress"
+						override-fieldname="DefLocation.OverrideAddress"
+						override-wg-container="DefLocation_frmDefLocation"
+						view-on-map-action-name="ViewDefLocationAddressOnMap"
+					>
+						<field modify="#groupFirstDefLocationAddress [name='CountryID']" after="#groupFirstDefLocationAddress [name='PostalCode']"></field>
+					</qp-include>
+
+				</div>
+
+				<div slot="B" id="columnSecond-DeliverySettings">
+
+					<qp-fieldset id="groupShippingInstructions" view.bind="DefLocation" caption="Shipping Instructions" wg-container="DefLocation_frmDefLocation">
+						<field name="VTaxZoneID"></field>
+						<field name="CShipComplete"></field>
+					</qp-fieldset>
+
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabEmployees" caption="Employees" if.bind="StateView.IsGroup.value != true">
+			<qp-grid id="gridEmployees" view.bind="Employees" wg-container="Employees_grdEmployees">
+			</qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabLedgers" caption="Ledgers" if.bind="StateView.IsGroup.value != true">
+			<qp-grid id="gridLedgers" view.bind="OrganizationLedgerLinkWithLedgerSelect" wg-container="OrganizationLedgerLinkWithLedgerSelect_grdLedgerLinks">
+			</qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabGLAccounts" caption="GL Accounts" if.bind="StateView.IsGLAccountsTabVisible.value == true">
+			<qp-template name="1-1" id="formGLAccounts">
+				<qp-fieldset slot="A" id="columnFirst-GLAccounts" view.bind="DefLocation" wg-container="DefLocation_frmDefLocationGL">
+					<field name="CMPSalesSubID"></field>
+					<field name="CMPExpenseSubID"></field>
+					<field name="CMPFreightSubID"></field>
+					<field name="CMPDiscountSubID"></field>
+					<field name="CMPGainLossSubID"></field>
+					<field name="CMPPayrollSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabCanadianTaxReporting" caption="Canadian Tax Reporting" load-on-demand.bind="false">
+		</qp-tab>
+
+		<qp-tab id="tabTaxes" caption="Taxes" ref="tabTaxes_Content" load-on-demand.bind="false"></qp-tab>
+
+		<qp-tab id="tabVisualAppearance" caption="Visual Appearance" load-on-demand.bind="false" if.bind="StateView.IsGroup.value != true">
+			<qp-template name="1-1" id="formVisualAppearance" wg-container="OrganizationView_frmLogo">
+				<div slot="A" id="columnFirst-VisualAppearance">
+					<qp-fieldset id="groupSiteLogo" view.bind="OrganizationView" caption="Site Logo">
+
+						<field name="LogoName" unbound>
+							<qp-label slot="label" caption="Logo"></qp-label>
+							<qp-image-uploader id="LogoName" state.bind="OrganizationView.LogoName"
+								width="100% 7/2"></qp-image-uploader>
+						</field>
+
+						<field name="LogoNameLabel" unbound>
+							<qp-label slot="label" caption="Recommended Size"></qp-label>
+							<qp-label caption="Width 210px, Height 50px"></qp-label>
+						</field>
+
+
+						<using wg-container="OrganizationView_frmLogo">
+							<field name="LogoNameGetter"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="groupTheme" view.bind="OrganizationView" caption="Theme" wg-container="OrganizationView_frmLogo">
+						<field name="OverrideThemeVariables"></field>
+						<field name="PrimaryColor" control-type="qp-color-picker"></field>
+						<field name="BackgroundColor" control-type="qp-color-picker"></field>
+					</qp-fieldset>
+				</div>
+
+				<div slot="B" id="columnSecond-VisualAppearance">
+					<qp-fieldset id="groupReportLogo" view.bind="OrganizationView" caption="Report Logo">
+
+						<field name="LogoNameReport" unbound>
+							<qp-label slot="label" caption="Logo"></qp-label>
+							<qp-image-uploader id="LogoNameReport" state.bind="OrganizationView.LogoNameReport"
+								width="100% 7/2"></qp-image-uploader>
+						</field>
+
+						<field name="LogoReportNameLabel" unbound>
+							<qp-label slot="label" caption="Recommended Size"></qp-label>
+							<qp-label caption="Width 300px, Height 100px"></qp-label>
+						</field>
+
+
+						<using wg-container="OrganizationView_frmLogo">
+							<field name="LogoNameReportGetter"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabCompanyGroups" caption="Company Groups" load-on-demand.bind="false" if.bind="StateView.IsCompanyGroupsVisible.value == true">
+			<qp-grid id="gridCompanyGroups" view.bind="Groups" wg-container="Groups_grid">
+			</qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+	<qp-panel id="CreateLedgerView" caption="Create Ledger" auto-repaint="true">
+		<qp-template id="formCreateLedgerView" name="1" wg-container="CreateLedgerView_loform">
+			<qp-fieldset slot="A" id="groupFirstCreateLedgerView" view.bind="CreateLedgerView">
+				<field name="LedgerCD"></field>
+				<field name="Descr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-CreateLedgerView" caption="Create" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-CreateLedgerView" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,40 @@
+<template>
+	<template id="content_GS1Setup">
+		<qp-template id="form-GS1Setup" name="1-1-1" wg-container="gs1setup_formGS1Setup">
+			<div id="divColumnA-GS1Setup" slot="A">
+				<qp-fieldset id="fsWeight-GS1Setup" view.bind="gs1setup" caption="Weight">
+					<field name="Kilogram"></field>
+					<field name="Pound"></field>
+					<field name="Ounce"></field>
+					<field name="TroyOunce"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsPressure-GS1Setup" view.bind="gs1setup" caption="Pressure">
+					<field name="KilogramPerSqrMetre"></field>
+				</qp-fieldset>
+			</div>
+			<div id="divColumnB-GS1Setup" slot="B">
+				<qp-fieldset id="fsLinearSize-GS1Setup" view.bind="gs1setup" caption="Linear Size">
+					<field name="Metre"></field>
+					<field name="Inch"></field>
+					<field name="Foot"></field>
+					<field name="Yard"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsArea-GS1Setup" view.bind="gs1setup" caption="Area">
+					<field name="SqrMetre"></field>
+					<field name="SqrInch"></field>
+					<field name="SqrFoot"></field>
+					<field name="SqrYard"></field>
+				</qp-fieldset>
+			</div>
+			<qp-fieldset id="fsColumnC-GS1Setup" slot="C" view.bind="gs1setup" caption="Volume">
+				<field name="CubicMetre"></field>
+				<field name="CubicInch"></field>
+				<field name="CubicFoot"></field>
+				<field name="CubicYard"></field>
+				<field name="Litre"></field>
+				<field name="Quart"></field>
+				<field name="GallonUS"></field>
+			</qp-fieldset>
+		</qp-template>
+	</template>
+</template>

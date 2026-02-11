@@ -1,0 +1,15 @@
+<template>
+	<qp-panel id="ClassInfo" caption="Add Items" auto-repaint="true" wg-container="ClassInfo_formCreateAccount">
+		<qp-template id="form-AddMembers" name="1">
+			<qp-fieldset id="fsColumnA-AddMembers" slot="A" view.bind="ClassInfo">
+				<field Name="AddItemsTypes"></field>
+				<field Name="ItemClassID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-AddMembers">
+			<qp-button id="buttonAdd-AddMembers" dialog-result="OK" caption="Add" class="major-button"></qp-button>
+			<qp-button id="buttonCancel-AddMembers" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

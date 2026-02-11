@@ -1,0 +1,88 @@
+<template>
+
+	<qp-template id="formScheduleHeader" name="1-1" class="equal-height label-size-m" wg-container="Schedule_Header_form" qp-collapsible>
+
+		<div id="columnFirstHeader" slot="A">
+			<qp-fieldset id="panelFirstHeader" view.bind="Schedule_Header">
+				<field name="ScheduleID" pinned>
+					<qp-field control-state.bind="Schedule_Header.Active"></qp-field>
+				</field>
+				<field name="ScheduleName" pinned></field>
+				<field name="StartDate" class="control-size-sm" pinned="false"></field>
+				<field name="EndDate" class="control-size-sm" pinned="false">
+					<qp-field control-state.bind="Schedule_Header.NoEndDate" class="col-5"></qp-field>
+				</field>
+				<field name="RunLimit" class="control-size-sm">
+					<qp-field control-state.bind="Schedule_Header.NoRunLimit" class="col-5"></qp-field>
+				</field>
+				<field name="LastRunDate" class="control-size-sm" pinned></field>
+				<field name="NextRunDate" class="control-size-sm" pinned></field>
+				<field name="RunCntr" class="control-size-sm"></field>
+
+			</qp-fieldset>
+		</div>
+
+		<div id="columnSecondScheduleHeader" slot="B">
+			<qp-fieldset id="groupSecondScheduleHeader" view.bind="Schedule_Header" caption="Recurrence">
+				<field name="FormScheduleType" pinned></field>
+
+				<!-- --------------------------- DAILY -------------------------------------------- -->
+				<field name="DailyFrequency" pinned>
+					<qp-label class="col-8" caption.bind="Schedule_Header.Days.value"></qp-label>
+				</field>
+
+				<!-- --------------------------- MONTHLY ------------------------------------------ -->
+				<field name="MonthlyFrequency" pinned>
+					<qp-label class="col-8" caption.bind="Schedule_Header.Months.value"></qp-label>
+				</field>
+				<field name="MonthlyDaySel" pinned>
+					<qp-field class="col-4" control-state.bind="Schedule_Header.MonthlyOnDay"></qp-field>
+					<span class="col-4" if.bind="Schedule_Header.MonthlyDaySel.value == 'D'"></span>
+					<qp-field class="col-4" control-state.bind="Schedule_Header.MonthlyOnWeek"></qp-field>
+					<qp-field class="col-4" control-state.bind="Schedule_Header.MonthlyOnDayOfWeek"></qp-field>
+				</field>
+
+				<!-- --------------------------- FIN PERIOD ---------------------------------------- -->
+				<field name="PeriodFrequency" pinned>
+					<qp-label class="col-8" caption.bind="Schedule_Header.Periods.value"></qp-label>
+				</field>
+				<field name="PeriodDateSel" pinned>
+					<qp-field class="col-3" control-state.bind="Schedule_Header.PeriodFixedDay" ></qp-field>
+					<span class="col-3" if.bind="Schedule_Header.PeriodDateSel.value != 'D'"></span>
+				</field>
+
+				<!-- --------------------------- WEEKLY ------------------------------------------- -->
+				<field name="WeeklyFrequency" pinned>
+					<qp-label class="col-8" caption.bind="Schedule_Header.Weeks.value"></qp-label>
+				</field>
+
+				<field name="WeeklyOnDay1" pinned>
+					<qp-label caption="Day of Week" if.bind="Schedule_Header.FormScheduleType.value == 'W'" slot="label"></qp-label>
+					<qp-field class="no-label col-4" control-state.bind="Schedule_Header.WeeklyOnDay4"></qp-field>
+					<qp-field class="no-label col-4" control-state.bind="Schedule_Header.WeeklyOnDay7"></qp-field>
+				</field>
+
+				<field name="WeeklyOnDay2" pinned>
+					<qp-field class="no-label col-4" control-state.bind="Schedule_Header.WeeklyOnDay5"></qp-field>
+					<span class="col-4"></span>
+				</field>
+
+				<field name="WeeklyOnDay3" pinned>
+					<qp-field class="no-label col-4" control-state.bind="Schedule_Header.WeeklyOnDay6"></qp-field>
+					<span class="col-4"></span>
+				</field>
+
+			</qp-fieldset>
+
+		</div>
+	</qp-template>
+
+	<qp-tabbar id="tabDocumentList">
+		<qp-tab id="tabDocuments" caption="Document List">
+			<qp-grid id="gridDocuments" view.bind="Document_Detail" wg-container="Document_Detail_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGeneratedDocuments" caption="Generated Documents" load-on-demand="true">
+			<qp-grid id="gridGeneratedDocuments" view.bind="Document_History" wg-container="Document_History_grid2"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,49 @@
+<template>
+	<qp-template id="formCustomerPaymentMethod" name="1-1" wg-container="CustomerPaymentMethod_form" class="label-size-m equal-height">
+		<qp-fieldset slot="A" id="columnFirst-formCustomerPaymentMethod" view.bind="CustomerPaymentMethod">
+			<field name="BAccountID" config-allow-edit.bind="true"></field>
+			<field name="PaymentMethodID"></field>
+			<field name="HasBillingInfo"></field>
+			<field name="IsActive"></field>
+			<field name="CashAccountID"></field>
+			<field name="Descr"></field>
+			<field name="ExpirationDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-formCustomerPaymentMethod" view.bind="CustomerPaymentMethod">
+			<field name="CCProcessingCenterID"></field>
+			<field name="CustomerCCPID"></field>
+			<field name="DisplayCardType"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabPaymentMethodDetails" caption="Payment Method Details">
+			<qp-grid id="grid" view.bind="Details"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBillingInfo" caption="Billing Info" if.bind="CustomerPaymentMethod.HasBillingInfo.value == true">
+			<qp-template id="formBillingInfo" name="1-1"  class="label-size-m">
+				<div slot="A" id="columnFirst-formBillingInfo">
+					<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+						fs-id="groupContactInformation"
+						contact-view="BillContact"
+						fs-wg-container="BillContact_BillContact"
+						fs-caption="Contact Information"
+					>
+						<field remove="#groupContactInformation [name='FullName']"></field>
+						<field remove="#groupContactInformation [name='Salutation']"></field>
+						<field before="#groupContactInformation [name='FirstName']" name="CurrentCPM.IsBillContactSameAsMain" wg-container="CurrentCPM_tab"></field>
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupAddress"
+						address-view="BillAddress"
+						fs-caption="Address"
+						fs-wg-container="BillAddress_BillAddress"
+						override-fieldname="CurrentCPM.IsBillAddressSameAsMain"
+						override-wg-container="CurrentCPM_tab"
+						view-on-map-action-name="ViewBillAddressOnMap"
+					></qp-include>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

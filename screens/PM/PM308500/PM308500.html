@@ -1,0 +1,46 @@
+<template>
+	<require from="../common/pm-status-colors-common.scss"></require>
+	<qp-template name="7-10-7" class="equal-height label-size-sm" id="Document_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="form01" view.bind="Document">
+			<field name="RefNbr" config-display-mode.bind="'id'"></field>
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="Date"></field>
+			<field name="DelayDays"></field>
+			<field name="ExtRefNbr"></field>
+			<field name="ChangeOrderNbr" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Document">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="ProjectIssueID" config-allow-edit.bind="true"></field>
+			<field name="RFIID" config-allow-edit.bind="true"></field>
+			<field name="CostChangeOrderNbr" config-allow-edit.bind="true"></field>
+			<field name="Description" config-rows.bind="3" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form03" view.bind="Document" class="highlights-section">
+			<field name="CostTotal" pinned></field>
+			<field name="LineTotal"></field>
+			<field name="MarkupTotal"></field>
+			<field name="GrossMarginPct" caption="Gross Margin (%)" pinned></field>
+			<field name="PriceTotal" pinned></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="DocumentSettings_tab" wg-container>
+		<qp-tab id="EstimationTab" caption="Estimation">
+			<qp-grid id="Details_DetailsGrid" view.bind="Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="DetailedDescriptionTab" caption="Detailed Description">
+			<qp-rich-text-editor id="edDocumentSettingsText"
+								 state.bind="DocumentSettings.Text"
+								 wg-field
+								 class="stretch">
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="MarkupsTab" caption="Markups">
+			<qp-grid id="gridMarkups" view.bind="Markups">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="ProdItemSplits_form" wg-container name="7-10-7"  qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="ProdItemSplits1" view.bind="ProdItemSplits">
+			<field name="OrderType"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+			<field name="LotSerialNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="ProdItemSplits2" view.bind="ProdItemSplits">
+			<field name="StatusID" pinned></field>
+			<field name="InventoryID" pinned></field>
+			<field name="SiteId"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="ProdItemSplits3" view.bind="ProdItemSplits" class="highlights-section">
+			<field name="Qty" pinned></field>
+			<field name="QtyComplete" pinned></field>
+			<field name="QtyScrapped"></field>
+			<field name="QtyRemaining"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridAssigned" view.bind="MatlAssigned"></qp-grid>
+	<qp-grid id="gridUnassigned" view.bind="MatlUnassigned"></qp-grid>
+</template>

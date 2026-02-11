@@ -1,0 +1,11 @@
+<template>
+	<qp-panel id="arTranList" caption="Add Return Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-grid id="grid-AddReturnLine" view.bind="arTranList" wg-container="arTranList_gridARTranList"></qp-grid>
+
+		<footer id="footer-AddReturnLine">
+			<qp-button id="buttonAdd-AddReturnLine" state.bind="AddARTran"></qp-button>
+			<qp-button id="buttonAddClose-AddReturnLine" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddReturnLine" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,110 @@
+<template>
+	<qp-template id="Schedule_formSchedule" name="1-1" class="equal-height label-size-m" wg-container>
+		<qp-fieldset view.bind="Schedule" id="Schedule_1" slot="A" >
+			<field name="ScheduleID">
+				<qp-field control-state.bind="Schedule.IsActive" config-enabled.bind="false"></qp-field>
+			</field>
+			<field name="Action"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset view.bind="Schedule" id="Schedule_2" slot="B" >
+			<field name="ScreenID"></field>
+			<field name="ActionName"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabsSchedule" active-tab-id="tabDetails">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template id="CurrentSchedule_tab_Details" name="1-1" class="equal-height label-size-m" wg-container="CurrentSchedule_tab">
+				<qp-fieldset id="CurrentSchedule_tab_Details_1" view.bind="CurrentSchedule" slot="A">
+					<field name="StartDate" class="control-size-m"></field>
+					<field name="EndDate" class="control-size-m">
+						<qp-field control-state.bind="CurrentSchedule.NoEndDate" config-enabled.bind="false"></qp-field>
+					</field>
+					<field name="RunLimit" class="control-size-m">
+						<qp-field control-state.bind="CurrentSchedule.NoRunLimit" config-enabled.bind="false"></qp-field>
+					</field>
+					<field name="HistoryRetainCount" class="control-size-m">
+						<qp-field control-state.bind="CurrentSchedule.KeepFullHistory" config-enabled.bind="false"></qp-field>
+					</field>
+					<field name="MaxAbortCount" class="control-size-m">
+						<qp-field control-state.bind="CurrentSchedule.DoNotDeactivate" config-enabled.bind="false"></qp-field>
+					</field>
+					<field name="BranchID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="CurrentSchedule_tab_Details_2" view.bind="CurrentSchedule" slot="B">
+					<field name="RunCntr" class="control-size-m"><qp-label caption="Times"></qp-label></field>
+					<field name="LastRunDate" class="control-size-m"></field>
+					<field name="NextRunDateTime" class="control-size-m"></field>
+					<field name="TimeZoneID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabSchedule" caption="Schedule">
+			<qp-template id="CurrentSchedule_tab_Schedule" name="1-1" class="equal-height label-size-m" wg-container="CurrentSchedule_tab">
+				<div slot="A">
+					<qp-fieldset id="CurrentSchedule_tab_Schedule_Type" view.bind="CurrentSchedule" caption="Execution Date">
+						<field name="ScheduleType"></field>
+						<field name="DailyFrequency">
+							<qp-label caption="Day(s)" if.bind="CurrentSchedule.ScheduleType.value == 'D'" class="col-8"></qp-label>
+						</field>
+						<field name="WeeklyFrequency">
+							<qp-label caption="Week(s)" if.bind="CurrentSchedule.ScheduleType.value == 'W'" class="col-8"></qp-label>
+						</field>
+						<field name="WeeklyOnDay1">
+							<qp-field control-state.bind="CurrentSchedule.WeeklyOnDay4" config-enabled.bind="false" class="col-4"></qp-field>
+							<qp-field control-state.bind="CurrentSchedule.WeeklyOnDay7" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="WeeklyOnDay2">
+							<qp-field control-state.bind="CurrentSchedule.WeeklyOnDay5" config-enabled.bind="false" class="col-8"></qp-field>
+						</field>
+						<field name="WeeklyOnDay3">
+							<qp-field control-state.bind="CurrentSchedule.WeeklyOnDay6" config-enabled.bind="false" class="col-8"></qp-field>
+						</field>
+						<field name="MonthlyFrequency">
+							<qp-label caption="Month(s)" if.bind="CurrentSchedule.ScheduleType.value == 'M'"></qp-label>
+						</field>
+						<field name="MonthlyDaySel">
+							<qp-field control-state.bind="CurrentSchedule.MonthlyOnDay" config-enabled.bind="false" if.bind="CurrentSchedule.MonthlyDaySel.value == 'D'" class="col-6"></qp-field>
+							<qp-field control-state.bind="CurrentSchedule.MonthlyOnWeek" config-enabled.bind="false" if.bind="CurrentSchedule.MonthlyDaySel.value == 'W'" class="col-4"></qp-field>
+							<qp-field control-state.bind="CurrentSchedule.MonthlyOnDayOfWeek" config-enabled.bind="false" if.bind="CurrentSchedule.MonthlyDaySel.value == 'W'" class="col-4"></qp-field>
+						</field>
+						<field name="PeriodFrequency">
+							<qp-label caption="Period(s)" if.bind="CurrentSchedule.ScheduleType.value == 'P'" class="col-8"></qp-label>
+						</field>
+						<field name="PeriodDateSel">
+							<qp-field control-state.bind="CurrentSchedule.PeriodFixedDay" config-enabled.bind="false" if.bind="CurrentSchedule.PeriodDateSel.value == 'D'" class="col-4"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+
+				<qp-fieldset id="CurrentSchedule_tab_Schedule_Time" view.bind="CurrentSchedule" class="control-size-m" caption="Execution Time" slot="B">
+					<field name="StartTime"></field>
+					<field name="EndTime"></field>
+					<field name="Interval"></field>
+					<field name="NextRunDateTime" unbound>
+						<qp-field control-state.bind="CurrentSchedule.NextRunDate" config-enabled.bind="false"></qp-field>
+						<qp-field control-state.bind="CurrentSchedule.NextRunTime" config-enabled.bind="false"></qp-field>
+					</field>
+					<field name="exactTimeRow" unbound>
+						<qp-field name="exactTimeTab" unbound></qp-field>
+						<qp-field control-state.bind="CurrentSchedule.ExactTime" config-enabled.bind="false"></qp-field>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabConditions" caption="Conditions" if.bind="Schedule.ShowConditionsTabExpr.value == true">
+			<qp-grid id="gridConditions" view.bind="Filters" wg-container="Filters_gridConditions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFills" caption="Filter to Apply" if.bind="Schedule.FilterVisible.value==true">
+			<qp-grid id="gridFills" view.bind="Fills" wg-container="Fills_gridFills"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBPEvents" caption="Events" if.bind="Schedule.ShowEventsTabExpr.value==true">
+			<qp-grid id="grdEvents" view.bind="BPEvents" wg-container="BPEvents_grdEvents">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabEmailNotifications" caption="Email Notifications" if.bind="Schedule.ShowEmailNotificationsTabExpr.value == true">
+			<qp-grid id="grdEmailNotifications" view.bind="EmailNotifications">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,25 @@
+<template>
+	<qp-panel id="Vendors" caption="Vendor Address" auto-repaint="true">
+		<qp-template id="form-VendorAddress" name="1-1" class="equal-height">
+			<div id="contactHolder" slot="A">
+				<qp-include
+					url="src/screens/common/form-contact-document/form-contact-document.html"
+					fs-id="fsColumnA-VendorAddress"
+					contact-view="Bidding_Remit_Contact"
+					fs-wg-container="Bidding_Remit_Contact_formVC">
+				</qp-include>
+			</div>
+			<div id="divColumnB-Address" slot="B">
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="fsColumnB-VendorAddress"
+					fs-wg-container="Bidding_Remit_Address_formVA"
+					address-view="Bidding_Remit_Address"
+					with-validation="false">
+				</qp-include>
+			</div>
+		</qp-template>
+		<footer id="footer-VendorAddress">
+			<qp-button id="buttonOK-VendorAddress" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

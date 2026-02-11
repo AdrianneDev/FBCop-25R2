@@ -1,0 +1,212 @@
+@use "sass:map";
+
+:root {
+    --qp-late-icon-color-dark: #EE4051;
+    --qp-late-color-dark: #FF9999;
+    --qp-early-color-dark: #47A824;
+    --qp-on-time-color-dark: #F8B200;
+    --qp-priority-high-color-dark: #EE4051;
+    --qp-priority-normal-color-dark: #BFBFBF;
+    --qp-priority-low-color-dark: #4BA5E2;
+    --qp-lack-of-material-color-dark: #EE4051;
+    --qp-firm-schedule-color-dark: #000000;
+}
+
+
+@mixin status-background-light($status) {
+	#edProdItemPopup {
+		&-StatusID.drop-down__editor .drop-down__text[valueattr = "#{$status}"] {
+			background-color: status-color($status, false);
+		}
+	}
+
+	#edOperationTemplate {
+		&-StatusID.drop-down__editor .drop-down__text[valueattr = "#{$status}"] {
+			background-color: status-color($status, false);
+		}
+	}
+}
+
+@mixin status-background-dark($status) {
+    .b-sch-event {
+        & [event-background-dark = "#{$status}"]:not(.qp-sch-event-status-bar-fixed, .qp-sch-event-status-bar, .qp-product-event-jaw) {
+            background-color: status-color($status, true);
+        }
+
+        & :is(.qp-sch-event-status-bar-fixed, .qp-sch-event-status-bar)[event-background-dark = "#{$status}"] {
+            background: linear-gradient(to right, status-color($status, true) 0px, status-color($status, true) 9px, transparent 9px); ;
+        }
+
+        & .qp-product-event-jaw[event-background-dark = "#{$status}"] {
+            color: status-color($status, true);
+        }
+    }
+}
+
+@function status-color($status, $is-dark: true) {
+    @if $is-dark {
+        @return map.get($map: (
+            H: var(--status-dark-orange-color),
+            P: var(--status-dark-purple-color),
+            R: var(--status-dark-blue-color),
+            I: var(--status-dark-green-color),
+            X: var(--status-dark-gray-color),
+            M: var(--status-dark-gray-color),
+            C: var(--status-dark-gray-color),
+            L: var(--status-dark-orange-color)
+        ), $key: $status);
+    } @else {
+        @return map.get($map: (
+            H: var(--status-orange-color),
+            P: var(--status-purple-color),
+            R: var(--status-blue-color),
+            I: var(--status-green-color),
+            X: var(--status-gray-color),
+            M: var(--status-gray-color),
+            C: var(--status-gray-color),
+            L: var(--status-orange-color)
+        ), $key: $status);
+    }
+}
+
+@include status-background-light("H");
+@include status-background-light("P");
+@include status-background-light("R");
+@include status-background-light("I");
+@include status-background-light("X");
+@include status-background-light("M");
+@include status-background-light("C");
+@include status-background-light("L");
+
+@include status-background-dark("H");
+@include status-background-dark("P");
+@include status-background-dark("R");
+@include status-background-dark("I");
+@include status-background-dark("X");
+@include status-background-dark("M");
+@include status-background-dark("C");
+@include status-background-dark("L");
+
+qp-tool-bar  {
+	#ProdItemPopup & {
+		margin-bottom: 12px;
+		max-height: 32px;
+	}
+}
+
+.qp-sch-event-info > div:first-child > span:first-child {
+	&, & * {
+		font-weight: bold !important;
+	}
+}
+
+:is(.qp-sch-left-container,.qp-sch-events-container) span[sch-field="OrderTemplate.ProdOrdID"], 
+span[sch-field="ProdOpersMatls.OrderType"],
+span[sch-field="ProdOpersMatls.ProdOrdID"],
+span[sch-field="ProdOpersMatls.MatlPOOrderNbr"],
+span[sch-field="ProdOpersMatls.MaterialCD"] {
+	line-height: 16px;
+	font-size: 13px;
+	font-weight: bold !important;
+	
+	.b-sch-event-selected & * {
+		font-weight: bold !important;
+	}
+}
+
+.qp-sch-tile-icon {
+	&:has(span > svg[sch-field="OrderTemplate.IsLate"]) {
+		flex-shrink: 0;
+	}
+
+	&:has(span > svg[sch-field="OrderTemplate.FirmSchedule"]) {
+		flex-shrink: 0;
+	}
+
+	&:has(span > svg[sch-field="OrderTemplate.SchPriority"]) {
+		&:has(span > svg[sch-value="0"]),
+		&:has(span > svg[sch-value="1"]),
+		&:has(span > svg[sch-value="2"]),
+		&:has(span > svg[sch-value="3"]),
+		&:has(span > svg[sch-value="4"]) {
+			flex-shrink: 0;
+		}
+	}
+}
+
+span:has(span[sch-field="OrderTemplate.QtytoProd"]) {
+	flex-shrink: 0;
+}
+
+[sch-field="OrderTemplate.IsLate"] {
+	font-weight: bold !important;
+	color: var(--qp-late-icon-color-dark);
+}
+
+[sch-field="OrderTemplate.IsEarly"] {
+	font-weight: bold !important;
+	color: var(--qp-early-color-dark);
+}
+
+[sch-field="OrderTemplate.IsOnTime"] {
+	font-weight: bold !important;
+	color: var(--qp-on-time-color-dark);
+}
+
+[sch-field="OrderTemplate.SchPriority"] {
+	font-weight: bold !important;
+
+	&[sch-value="0"],
+	&[sch-value="1"],
+	&[sch-value="2"],
+	&[sch-value="3"],
+	&[sch-value="4"] {
+		color: var(--qp-priority-high-color-dark);
+	}
+
+	&[sch-value="5"],
+	&[sch-value=""] {
+		color: var(--qp-priority-normal-color-dark);
+
+		span:has(> &) {
+			display: none;
+		}
+	}
+
+	&[sch-value="6"],
+	&[sch-value="7"],
+	&[sch-value="8"],
+	&[sch-value="9"],
+	&[sch-value="10"] {
+		color: var(--qp-priority-low-color-dark);
+	}
+}
+
+[sch-field="OrderTemplate.LackOfMaterials"] {
+	color: var(--qp-lack-of-material-color-dark);
+}
+
+[sch-field="OrderTemplate.FirmSchedule"] {
+	color: var(--qp-firm-schedule-color-dark);
+}
+
+.b-sch-header-row-1 .b-sch-header-timeaxis-cell {
+	font-weight: normal;
+	font-size: 12px !important;
+	line-height: 14px;
+	word-wrap: normal;
+	overflow-wrap: normal;
+	word-break: normal;
+
+	&.qp-time-axis-cell-hour-h1, &.qp-time-axis-cell-hour-h2 {
+		min-width: 40px;
+	}
+
+	&.qp-time-axis-cell-day-h1, &.qp-time-axis-cell-day-h2 {
+		min-width: 41px;
+	}
+	
+	&.qp-time-axis-cell-week-h1, &.qp-time-axis-cell-week-h2 {
+		min-width: 55px;
+	}
+}

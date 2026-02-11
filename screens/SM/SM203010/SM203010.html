@@ -1,0 +1,214 @@
+<template>
+	<qp-tabbar id="tab" class="label-size-xm">
+		<qp-tab id="tabGeneral" caption="General Info">
+			<qp-template id="General" name="1-1">
+				<qp-fieldset id="UserSettings"
+						slot="A"
+						view.bind="UserProfile"
+						caption="User Settings"
+						wg-container="UserProfile_tab">
+					<field name="Username"></field>
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="Phone"></field>
+					<field name="Email" control-type="qp-mail-editor">
+						<qp-button id="PXButton1" state.bind="changeEmail" caption="Change Email"></qp-button>
+					</field>
+					<field name="Password">
+						<qp-button id="btnChangePassword" state.bind="changePassword" caption="Change Password"></qp-button>
+					</field>
+					<field name="PasswordQuestion">
+						<qp-button id="btnChangeAnswer" wg-name="ChangeAnswer" state.bind="changeSecretAnswer" caption="Change Answer"></qp-button>
+					</field>
+					<field name="Comment" config-type.bind="1" config-rows.bind="3"></field>
+				</qp-fieldset>
+				<qp-fieldset id="PersonalSettings"
+						slot="B"
+						view.bind="UserPrefs"
+						caption="Personal Settings"
+						wg-container="UserPrefs_formUserPrefs">
+					<field name="TimeZone">
+						<qp-button id="btnResetTimeZone"
+								state.bind="resetTimeZone"
+								wg-name="ResetToDefaultTimeZone"
+								caption="Reset To Default Time Zone"
+								tooltip.bind="LocalizableStrings.ResetTimeZone_tooltip">
+						</qp-button>
+					</field>
+					<field name="PdfCertificateName"></field>
+					<field name="DefBranchID" config-display-mode.bind="'text'"></field>
+					<field name="DfltBranchLocationID"></field>
+					<field name="DfltSrvOrdType"></field>
+					<field name="AskForSrvOrdTypeInCalendars"></field>
+					<field name="DefaultSite"></field>
+					<field name="DefaultScannerID"></field>
+					<field name="DefaultScalesID"></field>
+					<field name="HomePage" config-display-mode.bind="'text'"></field>
+					<field name="DisableSuggest"></field>
+					<field name="EnableSmartSuggest"></field>
+					<field name="PacejetWorkstationID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="DefAutOper"
+						slot="A"
+						view.bind="UserPrefs"
+						caption="Default Automated Operations"
+						wg-container="UserPrefs_formUserPrefs">
+					<field name="PPSMode"></field>
+					<field name="RPAMode"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabEmailSettings" caption="Email Settings">
+			<qp-grid id="EMailAccounts_gridEMailAccounts"
+					view.bind="EMailAccounts"
+					caption="Personal Email Accounts"
+					class="framed-section col-lg-12"
+					wg-container></qp-grid>
+			<qp-template id="UserPrefs_form2" name="1-1-1" class="equal-height" wg-container>
+				<qp-fieldset id="form2_0" slot="A" view.bind="UserPrefs" caption="Email Service">
+					<field name="DefaultEMailAccountID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="Calendar" slot="B" view.bind="UserPrefs" caption="Calendar" class="no-label">
+					<field name="CalendarSettings.IsPublic">
+						<qp-button id="cmdCheckMailSettings" caption="Synchronization URL" state.bind="GetCalendarSyncUrl"></qp-button>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-template id="UserPrefs_PXFormView1" name="1" wg-container>
+				<qp-fieldset id="UserPrefs_PXLayoutRuleEmailSignature"
+						slot="A"
+						view.bind="UserPrefs"
+						caption="Email Signature"
+						class="no-label">
+					<field name="SignatureToNewEmail"></field>
+					<field name="SignatureToReplyAndForward"></field>
+					<field id="edUserPrefs-MailSignature" name="MailSignature" control-type="qp-rich-text-editor" class="no-label"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabTeamsSettings" caption="Teams Settings">
+			<qp-template name="1-1" id="templateTeamsSettings">
+				<div slot="A" id="teamsSettingsHolder">
+					<qp-fieldset id="formOAuthTokenSettings" view.bind="AccessToken" caption="Authentication Token">
+						<field name="UserType"></field>
+						<field name="FakeField" class="no-label" unbound>
+							<qp-button id="edSignIn" state.bind="TeamsSignIn" class="col-4"></qp-button>
+							<qp-button id="edSignOut" state.bind="TeamsSignOut" class="col-4"></qp-button>
+							<qp-button id="edTestConnection" state.bind="TeamsTestConnection" class="col-4"></qp-button>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="formContactTeamsSettings_0" view.bind="Contact" wg-container="Contact_formContactTeamsSettings" caption="Teams Preferences">
+						<field name="TeamsID"></field>
+						<field name="DefaultTeamsClient"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabDelegates" caption="Delegates">
+			<qp-grid id="Delegates_gridUserEmployeeDelegates" view.bind="Delegates" wg-container></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFormats" caption="Custom Locale Format">
+			<qp-template id="formEditFormat_0" name="1-1">
+				<qp-fieldset id="formEditFormat_1" view.bind="LocaleFormats" wg-container="LocaleFormats_formEditFormat" slot="A">
+					<field name="TemplateLocale"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formEditFormat_2"
+						slot="B"
+						view.bind="LocaleFormats"
+						wg-container="LocaleFormats_formEditFormat"
+						caption="Date and Time Formats">
+					<field name="DateTimePattern"></field>
+					<field name="TimeShortPattern"></field>
+					<field name="TimeLongPattern"></field>
+					<field name="DateShortPattern"></field>
+					<field name="DateLongPattern"></field>
+					<field name="AMDesignator"></field>
+					<field name="PMDesignator"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formEditFormat_3"
+						slot="A"
+						view.bind="LocaleFormats"
+						wg-container="LocaleFormats_formEditFormat"
+						caption="Number Format">
+					<field name="NumberDecimalSeporator" config-allow-edit.bind="true"></field>
+					<field name="NumberGroupSeparator" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabIdentities" caption="External Identities">
+			<qp-grid id="Identities_gridIdentities" view.bind="Identities" wg-container></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDevices" caption="Devices">
+			<qp-grid id="UserDevices_gridDevices" view.bind="UserDevices" wg-container></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabPrint" caption="Printing Settings">
+			<qp-fieldset id="UserPrefs_PXLayoutRule51" view.bind="UserPrefs" wg-container="UserPrefs_formUserPrefsDH">
+				<field name="DefaultPrinterID"></field>
+			</qp-fieldset>
+
+			<qp-grid id="Notifications_gridNS" view.bind="Notifications" wg-container></qp-grid>
+		</qp-tab>
+		<qp-tab id="fundingAccounts" caption="Funding Accounts">
+			
+
+			<qp-grid id="gridFundingAccounts" view.bind="PaymentProcessorAccounts"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+	<qp-panel id="NewEmail" caption="Change Email" auto-repaint="true">
+		<qp-fieldset id="NewEmail_formNewEmail" view.bind="NewEmail" wg-container>
+			<field name="Email" control-type="qp-mail-editor"></field>
+			<field name="Password"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk2" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancel2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="Passwords" caption="Change Password" auto-repaint="true">
+		<qp-fieldset id="Passwords_formPasswords" view.bind="Passwords" wg-container>
+			<field name="OldPassword" config-type.bind="2"></field>
+			<field name="NewPassword" config-type.bind="2"></field>
+			<field name="ConfirmPassword" config-type.bind="2"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="NewAnswer" caption="Change Password Recovery Answer" auto-repaint="true">
+		<qp-fieldset id="NewAnswer_formNewAnswer" view.bind="NewAnswer" wg-container>
+			<field name="PasswordAnswer"></field>
+			<field name="Password" config-type.bind="2"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk3" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancel3" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="UpdatePasswordFilterView" caption="Update Password" auto-repaint="true">
+		<qp-fieldset id="formUpdatePassword_0"
+				view.bind="UpdatePasswordFilterView"
+				wg-container="UpdatePasswordFilterView_formUpdatePassword">
+			<field name="EmailAccountPassword"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnUpdate" dialog-result="OK" caption="Update" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancelChangePassword" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="SendTestEmailFilter"
+			caption="Send Test Email"
+			auto-repaint="true"
+			wg-container="SendTestEmailFilter_SendTestEmailFilter">
+		<qp-fieldset id="SendTestEmailFilter_form"
+				view.bind="SendTestEmailFilter">
+			<field name="EmailAddress"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton14" dialog-result="OK" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="PXButton15" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

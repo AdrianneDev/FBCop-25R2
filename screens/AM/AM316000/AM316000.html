@@ -1,0 +1,17 @@
+<template>
+	<qp-template id="Document_form" name="1-1" class="equal-height">
+		<qp-fieldset slot="A" id="form" view.bind="Document">
+			<field name="EmployeeID">
+				<qp-button id="btnCurrent" class="col-12" state.bind="FillCurrentUser" wg-name="CurrentUser"></qp-button>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabClockEntries" caption="Clock Entries">
+			<qp-grid id="gridClockEntires" view.bind="Transactions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOperations" caption="Operations">
+			<qp-grid id="gridOperations" view.bind="Operations"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

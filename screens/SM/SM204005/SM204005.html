@@ -1,0 +1,42 @@
+<template>
+	<qp-template id="TaskTemplates_frmTask" name="1-1" wg-container class="equal-height label-size-m"qp-collapsible>
+		<qp-fieldset id="formTaskTemplates_1" view.bind="TaskTemplates" slot="A">
+			<field name="TaskTemplateID" pinned></field>
+			<field name="Name" pinned></field>
+			<field name="OwnerName" control-type="qp-tree-selector"></field>
+			<field name="Summary" control-type="qp-tree-selector"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formTaskTemplates_2" view.bind="TaskTemplates" slot="B">
+			<field name="ScreenID" pinned></field>
+			<field name="RefNoteID" pinned></field>
+			<field name="LocaleName"></field>
+			<field name="attachActivity" pinned></field>
+			<field name="ShowCreatedByEventsTabExpr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabBody" wg-container="CurrentTaskTemplate_tab" caption="Body">
+			<qp-rich-text-editor id="edBody"
+								 state.bind="CurrentTaskTemplate.Body"
+								 wg-field
+								 class="stretch">
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="tabTaskSettings" caption="Task Settings">
+			<qp-grid id="TaskTemplateSettings_gridSettings" wg-container view.bind="TaskTemplateSettings"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCreatedByEvents" caption="Created by Events" if.bind="TaskTemplates.ShowCreatedByEventsTabExpr.value===true">
+			<qp-grid id="BusinessEvents_grdCreatedByEvents" wg-container view.bind="BusinessEvents"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="NewEventData" caption="Create Business Event" auto-repaint="true">
+		<qp-fieldset id="NewEventData_frmCreateBusinessEvent" wg-container view.bind="NewEventData">
+			<field name="Name"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

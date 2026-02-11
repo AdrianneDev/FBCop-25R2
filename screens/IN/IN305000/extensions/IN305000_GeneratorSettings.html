@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="GeneratorSettings" caption="Generate Physical Count" auto-repaint="true">
+		<qp-template id="form-GeneratorSettings" name="1" class="equal-height" wg-container="GeneratorSettings_insPanel">
+			<qp-fieldset id="fsColumnA-GeneratorSettings" slot="A" view.bind="GeneratorSettings">
+				<field name="PIClassID"></field>
+				<field name="Descr"></field>
+				<field name="SiteID"></field>
+				<field name="Method"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-GeneratorSettings">
+			<qp-button id="buttonOK-GeneratorSettings" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-GeneratorSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

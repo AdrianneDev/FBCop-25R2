@@ -1,0 +1,211 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP504010.scss"></require>
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<div class="h-stack sp-documents sp-wide-screen" tabindex="0">
+		<qp-tabbar class="sp-screen-container" active-tab-id="UnpaidOrders" id="mainTab" wg-container>
+			<qp-tab id="UnpaidOrders" load-on-demand="true" caption="Unpaid">
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfUnpaidOrders"
+						class="no-toolbar sp-documents-feed"
+						view.bind="UnpaidOrders"
+						page-size.bind="20"
+						auto-resize="true"
+						allow-filter="true"
+						show-filter-bar="always"
+						show-filter-picker="false"
+						allow-stored-filters="false"
+						show-stored-filters="true">
+						<template width="100%">
+							<div class="${ {{$viewName}}.getClass(SummaryFilter) }">
+								<qp-template id="dfUnpaidOrder" wg-container name="record-3-2-2-2">
+									<qp-include url="../order/order.html" view="{{$viewName}}"></qp-include>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</qp-tab>
+			<qp-tab id="OpenOrders" load-on-demand="true" caption="Open">
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfOpenOrders"
+						class="no-toolbar sp-documents-feed"
+						view.bind="OpenOrders"
+						page-size.bind="20"
+						auto-resize="true"
+						allow-filter="true"
+						show-filter-bar="always"
+						show-filter-picker="false"
+						allow-stored-filters="false"
+						show-stored-filters="true">
+						<template width="100%">
+							<div class="${ {{$viewName}}.getClass(SummaryFilter) }">
+								<qp-template id="dfOpenOrder" wg-container name="record-3-2-2-2">
+									<qp-include url="../order/order.html" view="{{$viewName}}"></qp-include>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</qp-tab>
+			<qp-tab id="AllOrders" load-on-demand="true" caption="All" class="stretch">
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfAllOrders"
+						class="no-toolbar sp-documents-feed"
+						view.bind="AllOrders"
+						page-size.bind="20"
+						auto-resize="true"
+						allow-filter="true"
+						show-filter-bar="always"
+						show-filter-picker="false"
+						allow-stored-filters="false"
+						show-stored-filters="true">
+						<template width="100%">
+							<div class="${ {{$viewName}}.getClass(SummaryFilter) }">
+								<qp-template id="dfAnOrder" wg-container name="record-3-2-2-2">
+									<qp-include url="../order/order.html" view="{{$viewName}}"></qp-include>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</qp-tab>
+		</qp-tabbar>
+
+		<div class="sp-sticky-summary">
+			<div class="sp-documents-summary-fixed sp-documents-totals">
+				<!-- <let count.bind="OrdersTotal.totalRowCount"></let> -->
+				<qp-text-light-scope>
+					<qp-data-feed
+						id="dfDocumentsTotals"
+						class="no-toolbar sp-documents-total"
+						view.bind="OrdersTotal"
+						auto-resize="true"
+						empty-message-mode="0">
+						<template width="100%">
+							<qp-fieldset id="fsDocumentsTotal" view.bind="{{$viewName}}"
+								class="sp-data-feed-fieldset-noborder sp-sticky-hidden"
+								caption.bind="OrdersTotal.totalsInLabel">
+								<field name="UnbilledOrderQtyTotal"></field>
+								<field name="OpenOrderQtyTotal"></field>
+								<field name="OutstandingTotal_Text"></field>
+								<field name="DocumentsSelected"></field>
+								<field name="ProceedToPaymentField" unbound replace-content>
+									<qp-button id="proceedToPayAllBtn"
+										caption.bind="OrdersTotal.payAllLabel"
+										config.bind="{ action: 'payAllDocuments' }">
+									</qp-button>
+								</field>
+							</qp-fieldset>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+				<qp-fieldset id="fsSummary"
+					class="sp-fieldset-summary ${SummaryFilter.DocumentsSelected.value > 0 ? '' : 'invisible'} sp-wide-only"
+					view.bind="SummaryFilter">
+					<field name="DocumentsSelected"></field>
+					<field name="SelectedTotal_Text"></field>
+					<field name="SelectedTotal" replace-content>
+						<qp-button id="proceedToPaymentBtn" class="major-button"
+							caption="Proceed to Pay"
+							config.bind="{ action: 'paySelectedOrders' }">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</div>
+
+
+		<qp-swipe-menu class="sp-mobile-only">
+			<div slot="collapsed">
+				<footer></footer>
+				<qp-data-feed
+					id="dfDocumentsTotals1"
+					if.bind="SummaryFilter.DocumentsSelected.value === 0"
+					class="no-toolbar sp-documents-total"
+					view.bind="OrdersTotal"
+					page-size.bind="5"
+					auto-resize="true"
+					empty-message-mode="0">
+					<template width="100%">
+						<qp-fieldset id="fsDocumentsTotal1" view.bind="{{$viewName}}"
+							class="sp-data-feed-fieldset-noborder sp-sticky-hidden1"
+							caption.bind="OrdersTotal.totalsInLabel">
+
+							<field name="OutstandingTotal_Text"></field>
+							<field name="ProceedToPaymentField2" unbound replace-content>
+								<qp-button id="proceedToPayAllBtn"
+									caption.bind="OrdersTotal.payAllLabel"
+									config.bind="{action: 'payAllDocuments' }">
+								</qp-button>
+							</field>
+						</qp-fieldset>
+					</template>
+
+				</qp-data-feed>
+
+
+
+				<qp-fieldset id="fsSummary2" if.bind="SummaryFilter.DocumentsSelected.value > 0"
+					class="sp-fieldset-summary ${SummaryFilter.DocumentsSelected.value > 0 ? '' : 'invisible'}"
+					view.bind="SummaryFilter">
+					<field name="DocumentsSelected"></field>
+					<field name="SelectedTotal_Text"></field>
+					<field name="SelectedTotal" replace-content>
+						<qp-button id="proceedToPaymentBtn1" class="major-button"
+							caption="Proceed to Pay"
+							config.bind="{ action: 'paySelectedOrders' }">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+			<div slot="expanded">
+
+				<qp-fieldset id="fsSummary24" if.bind="SummaryFilter.DocumentsSelected.value > 0"
+					class="sp-fieldset-summary ${SummaryFilter.DocumentsSelected.value > 0 ? '' : 'invisible'}"
+					view.bind="SummaryFilter">
+					<field name="DocumentsSelected"></field>
+					<field name="SelectedTotal_Text"></field>
+					<field name="SelectedTotal" replace-content>
+						<qp-button id="proceedToPaymentBtn1" class="major-button"
+							caption="Proceed to Pay"
+							config.bind="{ action: 'paySelectedOrders' }">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+
+
+				<qp-data-feed
+					id="dfDocumentsTotals1"
+					class="no-toolbar sp-documents-total"
+					view.bind="OrdersTotal"
+					page-size.bind="5"
+					auto-resize="true"
+					empty-message-mode="0">
+					<footer></footer>
+					<template width="100%">
+						<qp-fieldset id="fsDocumentsTotal1" view.bind="{{$viewName}}"
+							class="sp-data-feed-fieldset-noborder" caption.bind="OrdersTotal.totalsInLabel">
+							<field name="UnbilledOrderQtyTotal"></field>
+							<field name="OpenOrderQtyTotal"></field>
+							<field name="OutstandingTotal_Text"></field>
+							<field name="DocumentsSelected"></field>
+							<field name="ProceedToPaymentField2" unbound replace-content>
+								<qp-button id="proceedToPayAllBtn"
+									caption.bind="OrdersTotal.payAllLabel"
+									config.bind="{ action: 'payAllDocuments' }">
+								</qp-button>
+							</field>
+						</qp-fieldset>
+					</template>
+				</qp-data-feed>
+			</div>
+		</qp-swipe-menu>
+
+
+	</div>
+</template>

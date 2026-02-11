@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="form-PIHeader" name="17-17-14" class="equal-height" wg-container="PIHeader_form">
+		<qp-fieldset id="fsColumnA-PIHeader" slot="A" view.bind="PIHeader">
+			<field name="PIID"></field>
+			<field name="SiteID"></field>
+			<using view="Filter" wg-container="Filter_PXFormView1">
+				<field name="LocationID"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItem"></field>
+				<field name="LotSerialNbr"></field>
+			</using>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-PIHeader" slot="B" view.bind="PIHeader">
+			<field name="CountDate"></field>
+			<field name="LineCntr"></field>
+			<using view="Filter" wg-container="Filter_formFilter">
+				<field name="StartLineNbr"></field>
+				<field name="EndLineNbr"></field>
+			</using>
+			<field name="Descr" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="PIDetail"></qp-grid>
+</template>

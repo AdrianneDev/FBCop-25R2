@@ -1,0 +1,25 @@
+<template>
+	<qp-splitter id="GeneralForm" class="label-size-xm">
+		<split-pane>
+			<qp-grid id="grid" view.bind="Items" caption="Codes">
+			</qp-grid>
+		</split-pane>
+		<split-pane class="v-stack">
+			<qp-caption caption="Sources"></qp-caption>
+			<qp-tabbar id="tabSources" wg-container>
+				<qp-tab id="ProjectTasksTab" caption="Project Tasks">
+					<qp-grid id="projectTasksGrid" view.bind="ProjectTaskSources">
+					</qp-grid>
+				</qp-tab>
+				<qp-tab id="LaborItemsTab" caption="Labor Items">
+					<qp-grid id="laborItemsGrid" view.bind="LaborItemSources">
+					</qp-grid>
+				</qp-tab>
+				<qp-tab id="CostCodesTab" caption="Cost Codes">
+					<qp-grid id="costCodesGrid" view.bind="CostCodeRanges">
+					</qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

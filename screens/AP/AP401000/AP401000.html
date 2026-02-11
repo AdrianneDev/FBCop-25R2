@@ -1,0 +1,41 @@
+<template>
+	<qp-template id="formFilter" name="10-7-7" wg-container="Filter_form" class="equal-height label-size-m" qp-collapsible>
+		<qp-fieldset id="columnFirst" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID" pinned></field>
+			<field name="FinPeriodID" pinned></field>
+			<field name="VendorClassID"></field>
+			<field name="AccountID" pinned></field>
+			<field name="SubID" control-type="qp-segmented-selector"></field>
+			<field name="CuryID" class="control-size-sm" pinned>
+				<qp-field control-state.bind="Filter.SplitByCurrency" class="col-8" pinned></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond" slot="B" view.bind="Filter" class="highlights-section">
+			<using view="Summary" wg-container="Summary_form2">
+				<field name="BalanceSummary" pinned>
+					<qp-label slot="label" caption.bind="Summary.BalanceSummary_Label.value"></qp-label>
+				</field>
+				<field name="DepositsSummary" pinned>
+					<qp-label slot="label" caption.bind="Summary.DepositsSummary_Label.value"></qp-label>
+				</field>
+				<field name="BalanceRetainedSummary" pinned>
+					<qp-label slot="label" caption.bind="Summary.BalanceRetainedSummary_Label.value"></qp-label>
+				</field>
+			</using>
+			<field name="ShowWithBalanceOnly" class="no-label"></field>
+			<field name="UseMasterCalendar" class="no-label"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThird" slot="C" view.bind="Summary" wg-container="Summary_form2" class="highlights-section">
+			<field name="CuryBalanceSummary" pinned>
+				<qp-label slot="label" caption.bind="Summary.CuryBalanceSummary_Label.value"></qp-label>
+			</field>
+			<field name="CuryDepositsSummary" pinned>
+				<qp-label slot="label" caption.bind="Summary.CuryDepositsSummary_Label.value"></qp-label>
+			</field>
+			<field name="CuryBalanceRetainedSummary" pinned>
+				<qp-label slot="label" caption.bind="Summary.CuryBalanceRetainedSummary_Label.value"></qp-label>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridHistory" view.bind="History" wg-container="History_grid"></qp-grid>
+</template>

@@ -1,0 +1,15 @@
+<template>
+	<qp-panel id="InventoryFilter" caption="Add Items" auto-repaint="true">
+		<qp-template id="form-AddInventory" name="1" class="equal-height" wg-container="InventoryFilter_ifilter">
+			<qp-fieldset id="fsColumnA-AddInventory" slot="A" view.bind="InventoryFilter">
+				<field name="StartInventoryID"></field>
+				<field name="EndInventoryID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer id="footer-AddInventory">
+			<qp-button id="buttonAddClose-AddInventory" dialog-result="OK" caption="Add"></qp-button>
+			<qp-button id="buttonCancel-AddInventory" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

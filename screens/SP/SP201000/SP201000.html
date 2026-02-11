@@ -1,0 +1,126 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="../sp-paymethods.scss"></require>
+	<require from="../ar-document/ar-documents.scss"></require>
+	<require from="./SP201000.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+	<qp-include url="../sp-base-pm.html"></qp-include>
+
+	<div tabindex="0">
+		<qp-template id="accountTemplate" name="1-1">
+			<div slot="A">
+				<qp-fieldset id="first" view.bind="BAccount" caption="Company Info">
+					<field name="BAccount.AcctName"></field>
+					<field name="DefContact.WebSite"></field>
+					<field name="DefContact.Phone1"></field>
+					<field name="DefContact.EMail"></field>
+				</qp-fieldset>
+
+				<qp-fieldset id="fsPaymentMethods" view.bind="BAccount"
+					class="sp-documents sp-payment-methods sp-screen-container" caption="Payment Methods">
+					<field name="adjustments" unbound replace-content>
+						<qp-text-light-scope>
+							<qp-data-feed id="dfPayMethods" view.bind="PaymentMethods" auto-resize="true">
+								<template width="100%">
+									<div class="sp-documents-document">
+										<qp-template id="dfPayMethod" wg-container name="record-1" class="no-hover">
+											<qp-fieldset slot="A1" id="fsContactA1" view.bind="{{$viewName}}">
+												<field name="PaymentMethodID" replace-content>
+													<div class="wrapper sp-paymethod">
+														<qp-include url="../sp-paymethod.html" view="{{$viewName}}"></qp-include>
+														<div class="sp-pm-expiration">${ {{$viewName}}.expiration }</div>
+													</div>
+												</field>
+												<field name="IsPortalDefault" replace-content>
+													<div class="wrapper" if.bind="!!{{$viewName}}.IsPortalDefault.value">
+														<span class="sp-xxs-hidden">${PMbaseMessages.Default}</span>
+														<span class="sp-non-xxs-hidden">
+															<qp-hyper-icon
+																images.bind="{ normal: 'svg:main@doneMark' }"></qp-hyper-icon>
+														</span>
+													</div>
+												</field>
+											</qp-fieldset>
+											<qp-menu slot="Postfix" config.bind="paymentMethodCommands({{$viewName}})"
+												menuselected.delegate="processPaymentMethodMenuCommand({{$viewName}}, $event)">
+											</qp-menu>
+										</qp-template>
+									</div>
+								</template>
+								<toolbar>
+									<action name="AddNewCard" icon="svg:main@plus"></action>
+								</toolbar>
+							</qp-data-feed>
+						</qp-text-light-scope>
+					</field>
+				</qp-fieldset>
+
+				<qp-fieldset id="fsContacts" view.bind="BAccount" class="sp-documents sp-contacts sp-screen-container"
+					caption="Contacts">
+					<field name="adjustments" unbound replace-content>
+						<qp-text-light-scope>
+							<qp-data-feed id="dfContacts" view.bind="Contacts" auto-resize="true">
+								<template width="100%">
+									<div class="sp-documents-document">
+										<qp-template id="dfContact" wg-container name="record-1-2-compact" class="no-hover">
+											<qp-fieldset slot="A1" id="fsContactA1" view.bind="{{$viewName}}">
+												<field name="DisplayName" class="field--bold"></field>
+												<field name="Status"></field>
+											</qp-fieldset>
+											<qp-fieldset slot="AX" id="fsContactA2" view.bind="{{$viewName}}"
+												class="fieldset--condensed">
+												<field name="Salutation" no-label="true" class="field--bold"></field>
+												<field name="RolesCSV" replace-content>
+													<div class="wrapper field--long-text" innerHtml.bind="{{$viewName}}.rolesFormatted">
+													</div>
+												</field>
+											</qp-fieldset>
+											<qp-fieldset slot="BX" id="fsContactB"
+												class="fieldset--left fieldset--condensed fieldset--top-margin"
+												view.bind="{{$viewName}}">
+												<field name="Email">
+													<qp-hyper-icon slot="label"
+														images.bind="{ normal: 'svg:main@mail' }"></qp-hyper-icon>
+												</field>
+												<field name="Phone1">
+													<qp-hyper-icon slot="label"
+														images.bind="{ normal: 'svg:main@call' }"></qp-hyper-icon>
+												</field>
+												<field name="Users__Username">
+													<qp-hyper-icon slot="label"
+														images.bind="{ normal: 'svg:main@person' }"></qp-hyper-icon>
+												</field>
+												<field name="Users__LastLoginDate">
+													<qp-hyper-icon slot="label"
+														images.bind="{ normal: 'svg:main@aroundTheClock' }"></qp-hyper-icon>
+												</field>
+											</qp-fieldset>
+										</qp-template>
+									</div>
+								</template>
+								<toolbar>
+									<action name="NewContact" icon="svg:main@plus"></action>
+								</toolbar>
+							</qp-data-feed>
+						</qp-text-light-scope>
+					</field>
+				</qp-fieldset>
+			</div>
+			<qp-fieldset id="second" slot="B" view.bind="DefAddress" caption="Company Address" wg-container>
+				<field name="LookupBtn" unbound>
+					<qp-address-lookup class="size-default" view.bind="DefAddress"
+						config.bind="{cancelButtonText: (DefAddress.AddressLine1.enabled ? SysMessages.Cancel : SysMessages.Close) }"
+						override-address.bind="DefAddress.AddressLine1.enabled">
+					</qp-address-lookup>
+				</field>
+				<field name="AddressLine1"></field>
+				<field name="AddressLine2"></field>
+				<field name="City"></field>
+				<field name="State"></field>
+				<field name="PostalCode"></field>
+				<field name="CountryID"></field>
+			</qp-fieldset>
+		</qp-template>
+	</div>
+</template>

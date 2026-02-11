@@ -1,0 +1,21 @@
+<template>
+	<qp-template id="form-Filter" name="17-17-14" class="equal-height" qp-collapsible wg-container="Filter_form">
+		<qp-fieldset id="fsColumnA-Filter" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID" pinned="false"></field>
+			<field name="VendorID"></field>
+			<field name="FinPeriodID"></field>
+			<field name="AcctID"></field>
+			<field name="SubCD" control-type="qp-segmented-selector"></field>
+			<field name="ShowByLines" pinned="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Filter" slot="B" view.bind="Filter" class="highlights-section label-size-m">
+			<field name="UnbilledAmt" pinned="true"></field>
+			<field name="NotReceivedAmt"></field>
+			<field name="NotInvoicedAmt"></field>
+			<field name="NotAdjustedAmt"></field>
+			<field name="Balance" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="ResultRecords"></qp-grid>
+</template>

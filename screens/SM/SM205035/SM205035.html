@@ -1,0 +1,27 @@
+<template>
+
+	<qp-template id="Filter_form" name="1" class="label-size-m" wg-container>
+		<qp-fieldset id="formFilter1" view.bind="Filter" slot="A">
+			<field name="ScheduleID" class="control-size-xxl"></field>
+			<field name="DateFrom">
+				<qp-label slot="label" caption="Period" class="no-label"></qp-label>
+				<qp-field control-state.bind="Filter.DateTo" class="col-6"></qp-field>
+			</field>
+			<!-- <field name="fakeContainer" unbound replace-content>
+				<qp-label caption="Period"></qp-label>
+				<qp-field control-state.bind="Filter.DateFrom"></qp-field>
+				<qp-field control-state.bind="Filter.DateTo"></qp-field>
+			</field> -->
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Executions"></qp-grid>
+
+	<qp-panel id="HistoriesFilter" caption="Processing Results" auto-repaint="true" width="80vw" height="80vh" >
+		<qp-grid id="grid1" view.bind="Histories" on-filter-columns.call="onFilterHistoryColumns(col)"></qp-grid>
+		<footer>
+			<qp-button id="button1" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,26 @@
+<template>
+	<template modify="#fsShippingInfo-Shipping [name='ShipVia']">
+		<qp-button id="buttonShop-ShopForRates" state.bind="ShopRates" ref="buttonShopForRates" class="col-auto"></qp-button>
+		<qp-tooltip target.bind="buttonShopForRates" if.bind="CurrentDocument.UnlimitedPackages.value==true">
+			${CurrentDocument.ShopForRatesErrorMessage.value}
+		</qp-tooltip>
+	</template>
+
+	<qp-panel id="CurrentDocument" caption="Shop For Rates" auto-repaint="true" width="lg">
+		<qp-template id="form-ShopForRates" name="1-1-1" class="equal-height">
+			<qp-fieldset id="fsWeightColumnA-ShopForRates" slot="A" view.bind="CurrentDocument" wg-container="CurrentDocument_formCarrierRates">
+				<field name="ShipmentWeight"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsWeightColumnB-ShopForRates" slot="B" view.bind="CurrentDocument" wg-container="CurrentDocument_formCarrierRates">
+				<field name="PackageWeight"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-resizer id="resizer-RatesPackages" initial-size="300px">
+			<qp-grid id="gridPackages-ShopForRates" view.bind="PackagesForRates" caption="Packages" class="framed-section" wg-container="PackagesForRates_gridPackagesForRates"></qp-grid>
+		</qp-resizer>
+		<qp-grid id="gridRates-ShopForRates" view.bind="CarrierRates" caption="Carrier Rates" class="framed-section" wg-container="CarrierRates_gridRates"></qp-grid>
+		<footer id="footer-ShopForRates">
+			<qp-button id="buttonOK-ShopForRates" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

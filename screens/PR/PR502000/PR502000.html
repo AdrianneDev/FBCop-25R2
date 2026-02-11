@@ -1,0 +1,32 @@
+<template>
+    <qp-splitter id="splitter-PrepareTaxForm" initial-split="50%" split="width" class="stretch">
+        <split-pane id="splitPaneA-Grid" class="v-stack">
+            <qp-fieldset id="fs-Filter" wg-container="Filter_filterForm" view.bind="Filter" class="label-size-xm">
+                <field name="TaxForm"></field>
+                <field name="Year"></field>
+                <field name="OrgBAccountID"></field>
+                <field name="ProvinceOfEmployment"></field>
+                <field name="Operation"></field>
+                <field name="DocType"></field>
+                <field name="IncludeUnreleasedPaychecks"></field>
+            </qp-fieldset>
+
+            <qp-grid id="grid-EmployeesWithPaychecksListsGrid" wg-container="EmployeesWithPaychecksList_gridEmployeesWithPaychecks" view.bind="EmployeesWithPaychecksList"></qp-grid>
+        </split-pane>
+
+        <split-pane id="splitPaneB-PDF">
+            <div id="pdf_pane" class="stretch" style="display: flex; flex-direction: column;">
+                <qp-caption caption="Tax Form"></qp-caption>
+                <iframe id="iframe-pdfHolder" class="stretch col-12"></iframe>
+            </div>
+        </split-pane>
+    </qp-splitter>
+
+    <qp-panel id="TaxFormDiscrepancies" caption="View Discrepancies" auto-repaint="true" width="md" height="50vh">
+        <qp-grid id="grid-TaxFormDiscrepancies" wg-container="TaxFormDiscrepancies_ViewDiscrepanciesGrid" view.bind="TaxFormDiscrepancies"></qp-grid>
+
+        <footer>
+            <qp-button id="buttonOk-TaxFormDiscrepancies" dialog-result="OK"></qp-button>
+        </footer>
+    </qp-panel>
+</template>

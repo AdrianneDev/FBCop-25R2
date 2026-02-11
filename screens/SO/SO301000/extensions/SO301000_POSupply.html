@@ -1,0 +1,19 @@
+<template>
+	<qp-panel id="SOLineDemand" caption="Purchasing Settings" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="form-POSupply" name="17-17-14" class="equal-height">
+			<qp-fieldset id="fsColumnA-POSupply" slot="A" view.bind="SOLineDemand" wg-container="SOLineDemand_formSOLineDemand">
+				<field name="POSource"></field>
+				<field name="VendorID"></field>
+				<field name="POSiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-POSupply" view.bind="SupplyPOLines" wg-container="SupplyPOLines_gridPOSupply"></qp-grid>
+		<qp-grid id="gridLegacy-POSupply" view.bind="posupply" wg-container="posupply_gridPOSupplyLegacy"></qp-grid>
+
+		<footer id="footer-POSupply">
+			<qp-button id="buttonOK-POSupply" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="buttonCancel-POSupply" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

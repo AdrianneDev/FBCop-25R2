@@ -1,0 +1,182 @@
+.hidden {
+	display: none !important;
+}
+
+.arm-pane {
+	--qp-altrow-color: #FFFFFF;
+
+	--arm-base-row-background-color: #ECE2FF;
+	--arm-base-row-border-color: #6F42C1;
+	--arm-base-row-border-width: 2px;
+
+	--arm-linked-row-background-color: #e249dd16;
+	--arm-linked-row-border-color: #e249dd;
+	--arm-linked-row-border-width: 2px;
+
+	--arm-ref-border-width: 2px;
+	--arm-ref-border-color-0: #6ED287;
+	--arm-ref-background-color-0: #EBF9EE;
+	--arm-ref-border-color-1: #FFB800;
+	--arm-ref-background-color-1: #FFF5EA;
+	--arm-ref-border-color-2: #62e9fe;
+	--arm-ref-background-color-2: #62e9fe24;
+	--arm-ref-border-color-3: #e249dd;
+	--arm-ref-background-color-3: #e249dd16;
+	--arm-ref-border-color-4: #6F42C1;
+	--arm-ref-background-color-4: #ECE2FF;
+
+	--arm-selected-row-border-color: var(--primary-color);
+	--arm-selected-row-border-width: 2px;
+
+	--arm-hidden-background-color: #F5F5F5;
+
+	--qp-grid-selected-bg-color: transparent;
+
+	height: 100%;
+    display: flex;
+    flex-direction: column;
+
+	qp-field:has(> .wrapper > .control-container > qp-field) {
+		> .wrapper > .control-container > .main-field {
+			padding-inline-end: 20px;
+		}
+
+		qp-field {
+			overflow: visible;
+		}
+	}
+
+	.arm-typed-value {
+		.control-container {
+			max-width: 304px;
+		}
+	}
+
+	.arm-simple-fields .qp-field{
+		--qp-sections-column-gap: 8px;
+	}
+
+	td.read-only .cell-content > * {
+		opacity: 1 !important;
+	}
+
+	.arm-toolbar {
+		padding-bottom: 12px;
+		qp-tool-bar {
+			margin-block: 0;
+			margin-inline: -4px 0;
+		}
+	}
+
+	.arm-grid {
+		--qp-highlight-color: transparent;
+
+		tr.active td.row-selector {
+			--qp-highlight-color: var(--activerow-color);
+		}
+
+		&--column-set  {
+			.arm-row-set-row {
+				td {
+					vertical-align: top;
+
+					&.row-selector {
+						padding-top: 7px;
+					}
+
+					.cell-content {
+						height: auto !important;
+						line-height: 1.5;
+						min-height: var(--qp-grid-row-height) !important;
+					}
+				}
+				&--item {
+					padding-top: 4px;
+					padding-bottom: 4px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					min-height: 29px;
+				}
+			}
+
+			th.active {
+				background-color: var(--activerow-color);
+			}
+
+			.arm-datasource-param {
+				display: flex;
+				column-gap: 6px;
+			}
+		}
+
+		.arm-datasource-param {
+			&--name {
+				filter: opacity(0.3);
+			}
+
+			div {
+				max-width: fit-content;
+				flex: 1 1 50%;
+			}
+		}
+
+		&--no-settings
+		{
+			th:first-child {
+				pointer-events: none;
+				* {
+					display: none;
+				}
+			}
+		}
+
+		.arm-base-row-field input {
+			color: var(--arm-base-row-border-color);
+		}
+
+		.arm-linked-row-field input {
+			color: var(--arm-linked-row-border-color);
+		}
+	}
+
+	.modern-ui & .size-default .qp-text-editor.qp-integer,
+	.modern-ui & .size-default .qp-text-editor.qp-float {
+		max-width: unset;
+	}
+
+	.arm-range-fields {
+		qp-field qp-field {
+			position: relative;
+			&:before {
+				content: "–" !important;
+				position: absolute;
+				line-height: 32px;
+				inset-inline-start: -24px;
+				width: 24px;
+				text-align: center;
+			}
+		}
+	}
+}
+
+.arm-styles .hidden {
+	display: none !important;
+}
+
+// TODO: this or similar code should be introduced to platform so we can have multi-sections fieldsets
+.arm-delimiter {
+	height: 20px;
+	display: none; // changed to flex if not first to show
+
+	.collapsed & {
+		display: none !important;
+	}
+
+	&:not(:has(div)) {
+		display: none !important;
+	}
+
+	div:not(&):not(.invisible-field):not(.qp-fieldset-caption) ~ &:has(div):is(:not(& + &)) {
+		display: flex;
+	}
+}

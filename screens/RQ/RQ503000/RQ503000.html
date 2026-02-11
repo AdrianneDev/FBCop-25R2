@@ -1,0 +1,36 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-Requisition" name="7-10-7" class="equal-height" qp-collapsible wg-container="document_form">
+		<qp-fieldset id="fsColumnA-Requisition" slot="A" view.bind="Document">
+			<field name="ReqNbr"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="OrderDate" pinned="true"></field>
+			<field name="Priority"></field>
+			<field name="VendorRefNbr"></field>
+			<field name="Splittable"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Requisition" slot="B" view.bind="Document">
+			<field name="EmployeeID" pinned="true"></field>
+			<field name="VendorID" pinned="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_RQRequisition_CurrencyInfo_" pinned="true"></field>
+			<field name="Description" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Requisition" slot="C" view.bind="Document" class="highlights-section">
+			<field name="CuryEstExtCostTotal" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Vendor" caption="Bidding Vendors">
+			<qp-grid id="grid-Vendor" view.bind="Vendors" wg-container="Vendors_gridVendor"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-BiddingResults" caption="Bidding Results">
+			<qp-resizer id="resizer-BiddingResults" initial-size="270px" min-size="270px">
+				<qp-grid id="gridRequisitionLines-BiddingResults" view.bind="Lines" Caption="Requisition Details" wg-container="Lines_grid"></qp-grid>
+			</qp-resizer>
+			<qp-grid id="grid-BiddingResults" view.bind="Bidding" Caption="Bidding Details" wg-container="Bidding_gridBidding"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

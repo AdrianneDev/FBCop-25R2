@@ -1,0 +1,18 @@
+<template>
+	<qp-include url="../../common/barcode-processing/barcode-processing-screen.html">
+
+		<field append="#fsColumnA-Header" name="RefNbr" config-allow-edit.bind="true"></field>
+		<field append="#fsColumnA-Header" name="CartID"></field>
+		<field append="#fsColumnA-Header" name="SiteID" config-allow-edit.bind="true"></field>
+		<field append="#fsColumnA-Header" name="TransferToSiteID" config-allow-edit.bind="true"></field>
+
+		<div append="#fsColumnB-Header" id="header-flags" class="h-stack col-12">
+			<qp-info-box id="ibRemove-Header" type="warning" caption.bind="HeaderView.Remove.displayName" show.bind="HeaderView.Remove.visible == true" class="col-4"></qp-info-box>
+			<qp-info-box id="ibCartLoaded-Header" type="warning" caption.bind="HeaderView.CartLoaded.displayName" show.bind="HeaderView.CartLoaded.visible == true" class="col-4"></qp-info-box>
+		</div>
+
+		<qp-tab id="tab-Details" before="#tab-Logs" caption="Transfer">
+			<qp-grid id="grid-Details" view.bind="transactions" wg-container="transactions_gridPicked"></qp-grid>
+		</qp-tab>
+	</qp-include>
+</template>

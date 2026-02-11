@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+   <qp-panel id="ViewSelectWikiArticle"
+            wg-container="ViewSelectWikiArticle_ViewSelectWikiArticle"
+            caption="Add Wiki Page"
+            auto-repaint="true"
+            width="60vw"
+            height="60vh">
+      <qp-grid id="ViewSelectWikiArticle_gridAddWikiArticle" wg-container view.bind="ViewSelectWikiArticle"></qp-grid>
+      <footer>
+         <qp-button id="PXButton1" caption="Save" class="major-button" dialog-result="OK"></qp-button>
+         <qp-button id="PXButton2" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

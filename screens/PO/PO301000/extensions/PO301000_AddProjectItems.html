@@ -1,0 +1,17 @@
+<template>
+	<qp-panel id="AvailableProjectItems" caption="Add Project Items" auto-repaint="true" width="lg">
+		<qp-template id="form-AddProjectItems" name="17-17-14" wg-container="ProjectItemFilter_formProjectItemFilter">
+			<qp-fieldset id="fsColumnA-AddProjectItems" slot="A" view.bind="ProjectItemFilter">
+				<field name="ProjectID" config.bind="{allowEdit: true}"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddProjectItems" view.bind="AvailableProjectItems" wg-container="AvailableProjectItems_AvailableProjectItemsGrid"></qp-grid>
+
+		<footer id="footer-AddProjectItems">
+			<qp-button id="buttonAdd-AddProjectItems" state.bind="AppendSelectedProjectItems"></qp-button>
+			<qp-button id="buttonAddClose-AddProjectItems" dialog-result="OK" caption="Add Lines & Close"></qp-button>
+			<qp-button id="buttonCancel-AddProjectItems" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

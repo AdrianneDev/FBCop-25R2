@@ -1,0 +1,28 @@
+<template>
+	<qp-panel id="IncreaseAmount" caption="Increase Authorized Amount" auto-repaint="true" width="xs">
+		<qp-template id="form-IncreaseAmount" name="1" wg-container="IncreaseAmount_IncreaseAmountFormView">
+			<div slot="A">
+				<qp-info-box id="form-IncreaseAmount_infoPanelWarningMessage" caption.bind="IncreaseAmount.WarningMessage.value" type="info" if.bind="IncreaseAmount.WarningMessage.visible == true"></qp-info-box>
+				<qp-fieldset id="fsIncreaseAmountSummary" view.bind="IncreaseAmount">
+					<field name="InstanceType"></field>
+					<field name="ReferenceNumber"></field>
+					<field name="CuryID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsIncreaseAmountCurrent" view.bind="IncreaseAmount" caption="Current Amounts">
+					<field name="CuryAuthorizedAmt"></field>
+					<field name="CuryOrigAdjAmt"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsIncreaseAmountIncreased" view.bind="IncreaseAmount" caption="Increased Amounts">
+					<field name="CuryAuthorizedAmtNew"></field>
+					<field name="CuryOrigAdjAmtNew"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+
+		<footer id="footer-IncreaseAmount">
+			<qp-button id="buttonYes-IncreaseAndCaptureAuthorizedOK" caption="Increase and Capture" state.bind="IncreaseAndCaptureAuthorizedOK" dialog-result="Yes" config.bind="{validateInput: true}" class="major-button"></qp-button>
+			<qp-button id="buttonOK-IncreaseAuthorizedOK" caption="Increase" state.bind="IncreaseAuthorizedOK" dialog-result="OK" config.bind="{validateInput: true}" class="major-button"></qp-button>
+			<qp-button id="buttonCancel-IncreaseAuthorizedCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

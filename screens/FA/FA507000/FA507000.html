@@ -1,0 +1,22 @@
+<template>
+
+	<qp-template id="formFilter" name="17-17-14" class="equal-height" wg-container="Filter_form" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirstFilter" view.bind="Filter">
+			<field name="OrganizationID" pinned="false"></field>
+			<field name="TransferDate"></field>
+			<field name="PeriodID" pinned="false"></field>
+			<field name="BranchFrom" pinned></field>
+			<field name="DepartmentFrom" pinned></field>
+			<field name="ClassFrom" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" caption="Transfer To" id="columnSecondFilter" view.bind="Filter">
+			<field name="BranchTo" pinned></field>
+			<field name="DepartmentTo" pinned></field>
+			<field name="ClassTo" pinned></field>
+			<field name="Reason" pinned="false"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Assets"></qp-grid>
+
+</template>

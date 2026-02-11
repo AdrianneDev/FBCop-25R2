@@ -1,0 +1,89 @@
+<template>
+	<qp-template id="form-PIClass" name="1-1" class="equal-height label-size-m" wg-container="Classes_form">
+		<qp-fieldset id="fsColumnA-PIClass" slot="A" view.bind="Classes">
+			<field name="PIClassID"></field>
+			<field name="Descr"></field>
+			<field name="Method"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-PIClass" slot="B" view.bind="Classes" class="no-label">
+			<field name="IncludeZeroItems"></field>
+			<field name="UnlockSiteOnCountingFinish"></field>
+			<field name="HideBookQty"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar" class="label-size-m">
+		<qp-tab id="tab-Inventory" caption="Inventory Item Selection" visible.bind="Classes.Method.value == 'I'">
+			<qp-template id="form-Inventory" name="1-1">
+				<qp-fieldset id="fsColumnA-Inventory" slot="A" view.bind="CurrentClass" class="transparent-section" wg-container="CurrentClass_tab">
+					<field name="SelectedMethod"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsColumnB-Inventory" slot="B" view.bind="CurrentClass" class="transparent-section" wg-container="CurrentClass_tab">
+					<field name="RandomItemsLimit"></field>
+					<field name="LastCountPeriod"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="grid-Inventory" view.bind="Items" wg-container="Items_gridItems"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-ABCCode" caption="ABC Code Selection" visible.bind="Classes.Method.value == 'A'">
+			<qp-template id="form-ABCCode" name="1-1">
+				<qp-fieldset id="fsColumnA-ABCCode" slot="A" view.bind="CurrentClass" wg-container="CurrentClass_tab">
+					<field name="ABCCodeID"></field>
+					<field name="ByABCFrequency"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-MovementClass" caption="Movement Class Selection" visible.bind="Classes.Method.value == 'M'">
+			<qp-template id="form-MovementClass" name="1-1">
+				<qp-fieldset id="fsColumnA-MovementClass" slot="A" view.bind="CurrentClass" wg-container="CurrentClass_tab">
+					<field name="MovementClassID"></field>
+					<field name="ByMovementClassFrequency"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-PICycle" caption="PI Cycle Selection" visible.bind="Classes.Method.value == 'Y'">
+			<qp-template id="form-PICycle" name="1-1" class="equal-height">
+				<qp-fieldset id="fsColumnA-PICycle" slot="A" view.bind="CurrentClass" wg-container="CurrentClass_tab">
+					<field name="CycleID"></field>
+					<field name="ByCycleFrequency"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-ItemClasses" caption="Item Class Selection" visible.bind="Classes.Method.value == 'C'">
+			<qp-grid id="grid-ItemClasses" view.bind="ItemClasses" wg-container="ItemClasses_gridItemClasses"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-WarehouseLocation" caption="Warehouse/Location Selection">
+			<qp-template id="form-WarehouseLocation" name="1-1" class="equal-height">
+				<qp-fieldset id="fsColumnA-WarehouseLocation" slot="A" view.bind="CurrentClass" class="transparent-section" wg-container="CurrentClass_tab">
+					<field name="SiteID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="grid-WarehouseLocation" view.bind="Locations" wg-container="Locations_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-AssignmentOrder" caption="Assignment Order">
+			<qp-template id="form-AssignmentOrder" name="1-1" wg-container="CurrentClass_tab">
+				<qp-fieldset id="fsColumnA-AssignmentOrder" slot="A" view.bind="CurrentClass" caption="Line and Tag Number Assignment Order">
+					<field name="NAO1">
+						<qp-label slot="label" caption="1:"></qp-label>
+					</field>
+					<field name="NAO2">
+						<qp-label slot="label" caption="2:"></qp-label>
+					</field>
+					<field name="NAO3">
+						<qp-label slot="label" caption="3:"></qp-label>
+					</field>
+					<field name="NAO4">
+						<qp-label slot="label" caption="4:"></qp-label>
+					</field>
+					<field name="BlankLines"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

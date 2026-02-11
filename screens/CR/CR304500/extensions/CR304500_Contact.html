@@ -1,0 +1,31 @@
+<template>
+	<template id="tabContact_Content">
+		<qp-template id="contactInfo-form" name="1">
+			<div slot="A">
+				<qp-fieldset id="edQuoteCurrent" view.bind="QuoteCurrent" class="transparent-section" wg-container="QuoteCurrent_edQuoteCurrent">
+					<field name="AllowOverrideContactAddress" class="no-label"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<qp-template id="Contact-form" name="17-17-14" wg-container="Quote_Contact_edQuote_Contact">
+			<div slot="A">
+				<qp-include url="src/screens/common/form-contact-person/form-contact-person.html"
+					fs-id="form1"
+					contact-view="Quote_Contact"
+					fs-caption="Contact"
+					fs-wg-container="Quote_Contact_edQuote_Contact">
+				</qp-include>
+			</div>
+			<div slot="B">
+				<qp-include url="src/screens/common/form-address/form-address.html"
+					fs-id="edQuote_Address"
+					address-view="Quote_Address"
+					override-fieldname
+					view-on-map-action-name="ViewMainOnMap"
+				>
+					<field modify="#edQuote_Address [name='CountryID']" after="#edQuote_Address [name='PostalCode']"></field>
+				</qp-include>
+			</div>
+		</qp-template>
+	</template>
+</template>

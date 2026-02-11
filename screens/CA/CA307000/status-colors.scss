@@ -1,0 +1,8 @@
+@import 'static/status-colors.scss';
+@include colored-status('PIM', var(--status-blue-color));
+@include colored-status('PPR', var(--status-blue-color));
+@include colored-status('PRG', var(--status-blue-color));
+@include colored-status('PRV', var(--status-red-color));
+@include colored-status('PRD', var(--status-blue-color));
+@include colored-status('DPD', var(--status-gray-color));
+@include colored-status('ERR', var(--status-red-color));

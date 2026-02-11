@@ -1,0 +1,174 @@
+<template>
+
+	<require from="./status-colors.scss"></require>
+
+	<qp-template name="7-10-7" id="formDocument" class="equal-height" wg-container="Document_form" qp-collapsible>
+		<qp-fieldset slot="A" id="columnFirst-Document" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned></field>
+			<field name="CCPaymentStateDescr"></field>
+			<field name="AdjDate"></field>
+			<field name="AdjFinPeriodID" pinned="false"></field>
+			<field name="ExtRefNbr" pinned="false"></field>
+			<field name="DepositAfter" pinned="false"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-Document" view.bind="Document">
+			<field name="CustomerID"></field>
+			<field name="CustomerLocationID" pinned="false"></field>
+			<field name="PaymentMethodID" pinned></field>
+			<field name="ProcessingCenterID"></field>
+			<field name="TerminalID"></field>
+			<field name="PMInstanceID" config-display-mode.bind="'text'" pinned="false"></field>
+			<field name="CashAccountID" pinned></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="ProjectID" pinned="false"></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird-Document" view.bind="Document" class="highlights-section">
+			<field name="CuryDetailExtPriceTotal" pinned></field>
+			<field name="CuryLineDiscTotal"></field>
+			<field name="CuryTaxTotal" pinned></field>
+			<field name="CuryRoundDiff"></field>
+			<field name="CuryOrigDocAmt" pinned></field>
+			<field name="CuryDocBal"></field>
+			<field name="CuryOrigDiscAmt"></field>
+			<field name="CuryChargeAmt" pinned></field>
+			<field name="CuryConsolidateChargeTotal"></field>
+			<field name="RefTranExtNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridDetails" view.bind="Transactions" wg-container="Transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template name="17-17-14" id="formCurrentDocument-Financial" wg-container="CurrentDocument_tab">
+				<div id="columnFirst-Financial" slot="A">
+					<qp-fieldset id="groupLinkToGL" view.bind="CurrentDocument" caption="Link to GL">
+						<field name="BatchNbr"></field>
+						<field name="BranchID"></field>
+						<field name="ARAccountID"></field>
+						<field name="ARSubID"></field>
+						<field name="OrigRefNbr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupAssignedTo" view.bind="CurrentDocument" caption="Assigned To">
+						<field name="WorkgroupID"></field>
+						<field name="OwnerID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPrintAndEmailOptions" view.bind="CurrentDocument" caption="Print and Email Options" class="no-label">
+						<field name="Printed">
+							<qp-field control-state.bind="CurrentDocument.DontPrint"></qp-field>
+						</field>
+						<field name="Emailed">
+							<qp-field control-state.bind="CurrentDocument.DontEmail"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div id="columnSecond-Financial" slot="B">
+					<qp-fieldset id="groupPaymentInfo" view.bind="CurrentDocument" caption="Payment Info">
+						<field name="TermsID"></field>
+						<field name="Cleared"></field>
+						<field name="ClearDate"></field>
+						<field name="DepositAsBatch"></field>
+						<field name="Deposited"></field>
+						<field name="DepositDate"></field>
+						<field name="DepositNbr"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+
+		</qp-tab>
+
+		<qp-tab id="tabAddresses" caption="Addresses">
+			<qp-template name="17-17-14" id="formBillingAndShippingContact">
+				<div id="columnFirst-Addresses" slot="A">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="groupBillToContact"
+						contact-view="Billing_Contact"
+						fs-wg-container="Billing_Contact_Billing_Contact"
+						fs-caption="Bill-To Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupBillToAddress"
+						address-view="Billing_Address"
+						fs-caption="Bill-To Address"
+						fs-wg-container="Billing_Address_Billing_Address"
+					></qp-include>
+				</div>
+				<div id="columnSecond-Addresses" slot="B">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="groupShipToContact"
+						contact-view="Shipping_Contact"
+						fs-wg-container="Shipping_Contact_Shipping_Contact"
+						fs-caption="Ship-To Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="groupShipToAddress"
+						address-view="Shipping_Address"
+						fs-caption="Ship-To Address"
+						fs-wg-container="Shipping_Address_Shipping_Address"
+						with-coordinates="true"
+					></qp-include>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabTaxes" caption="Taxes">
+			<qp-template name="17-7" id="formTaxes" wg-container="CurrentDocument_tab">
+				<div id="columnFirst-Taxes" slot="A">
+					<qp-grid id="gridTaxes" view.bind="Taxes" class="framed-section" wg-container="Taxes_grid1"></qp-grid>
+				</div>
+				<div id="columnSecond-Taxes" slot="B">
+					<qp-fieldset id="groupTaxInfo" view.bind="CurrentDocument" caption="Tax Info">
+						<field name="TaxZoneID"></field>
+						<field name="TaxCalcMode"></field>
+						<field name="ExternalTaxExemptionNumber"></field>
+						<field name="AvalaraCustomerUsageType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupVATTotals" view.bind="CurrentDocument" caption="Tax Totals" class="highlights-section">
+						<field name="CuryVatTaxableTotal"></field>
+						<field name="CuryVatExemptTotal"></field>
+						<using view="Document">
+							<field name="CuryTaxTotal"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+
+		<qp-tab id="tabCommissions" caption="Commissions">
+			<qp-template name="17-7" id="formCommission" wg-container="CurrentDocument_Commission">
+				<div id="columnFirst-Commissions" slot="A">
+					<qp-grid id="gridSalesPerTran" view.bind="salesPerTrans" class="framed-section" wg-container="SalesPerTrans_grdSalesPerTrans"></qp-grid>
+				</div>
+				<div id="columnSecond-Commissions" slot="B">
+					<qp-fieldset id="groupCommissionInfo" view.bind="CurrentDocument" caption="Commission Info">
+						<field name="SalesPersonID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupCommissionTotals" view.bind="CurrentDocument" caption="Commission Totals" class="highlights-section">
+						<field name="CuryCommnblAmt"></field>
+						<field name="CuryCommnAmt"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabCharges" caption="Charges">
+			<qp-grid id="gridPaymentCharges" wg-container="PaymentCharges_detgrid3" view.bind="PaymentCharges">
+			</qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabCardProcessing" caption="Card Processing" load-on-demand.bind="false">
+			<qp-grid id="gridCardProcessingTransactions" wg-container="ccProcTran_grdCCProcTran" view.bind="ccProcTran">
+			</qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+</template>

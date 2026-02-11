@@ -1,0 +1,28 @@
+<template>
+	<qp-include-parameters view.required></qp-include-parameters>
+	<field name="CuryOrigDocAmt" replace-content>
+		<span class="wrapper">
+			<span class="sp-field-date-label"><span>${msg.DocumentAmount}</span>
+				<span class="sp-field-date ${ !!{{view}}.DueDate.value ? '' : 'hidden' }">&nbsp;(${msg.Due}
+					<span class="${ {{view}}.passedDue ? 'sp-due-date-passed' : '' }">${ {{view}}.DueDate.cellText }):</span>
+				</span>
+				<span class="label-container__dotted-space"></span>
+			</span>
+			${ {{view}}.CuryOrigDocAmt_Text.cellText }
+			<span class="sp-field-date-lg sp-due-date ${ !!{{view}}.DueDate.value ? '' : 'hidden' }">
+				${msg.Due}
+				<span class="${ {{view}}.passedDue ? 'sp-due-date-passed' : '' }"> ${ {{view}}.DueDate.cellText }</span>
+			</span>
+		</span>
+	</field>
+	<field name="CuryOrigDiscAmt" replace-content>
+		<span class="wrapper ${ {{view}}.CuryOrigDiscAmt.value > 0 ? '' : 'hidden' }">
+			<span class="sp-field-date-label">${msg.CashDiscount}
+				<span class="sp-field-date">&nbsp;(${msg.ValidTill} ${ {{view}}.DiscDate.cellText }):</span>
+				<span class="label-container__dotted-space"></span>
+			</span>
+			${ {{view}}.CuryOrigDiscAmt_Text.cellText }
+			<span class="sp-field-date-lg sp-valid-till"><span>${msg.ValidTill}</span> <span>${ {{view}}.DiscDate.cellText }</span></span>
+		</span>
+	</field>
+</template>

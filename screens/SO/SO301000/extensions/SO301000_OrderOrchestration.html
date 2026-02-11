@@ -1,0 +1,28 @@
+<template>
+	<qp-panel id="OrderOrchestrationSettingsView" caption="Orchestrate Order" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-OrderOrchestrationSettingsView" name="1" wg-container="OrderOrchestrationSettingsView_formOOSettings">
+			<div slot="A" class="h-stack">
+				<qp-fieldset id="fsColumnA-OrderOrchestrationSettings" view.bind="OrderOrchestrationSettingsView" class="col-4 transparent-section">
+					<field name="OrchestrationStrategy"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsColumnB-OrderOrchestrationSettings" view.bind="OrderOrchestrationSettingsView" class="col-4 transparent-section">
+					<field name="NumberOfWarehouses" class="label-size-m"></field>
+				</qp-fieldset>
+				<qp-fieldset id="fsColumnC-OrderOrchestrationSettings" view.bind="OrderOrchestrationSettingsView" class="col-4 transparent-section">
+					<field name="ShippingZoneID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+
+		<qp-resizer id="resizer-OrderOrchestrationDetailLine" initial-size="300px">
+			<qp-grid view.bind="OrderOrchestrationSummariesView" class="framed-section" wg-container="OrderOrchestrationSummariesView_gridOOSummaries"></qp-grid>
+		</qp-resizer>
+
+		<qp-grid view.bind="OrderOrchestrationDetailLineView" class="framed-section" wg-container="OOrderOrchestrationDetailLineView_gridOODetailLine"></qp-grid>
+
+		<footer id="footer-OrderOrchestrationSettingsView">
+			<qp-button id="buttonOO-OK" dialog-result="OK" caption="Save" state.bind="OrchestrateOrder" wg-name="Save"></qp-button>
+			<qp-button id="buttonOO-Cancel" dialog-result="Cancel" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

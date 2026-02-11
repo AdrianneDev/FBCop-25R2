@@ -1,0 +1,34 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="Filter_10" slot="A" view.bind="Filter" caption="Filtering Options">
+			<field name="PostTo"></field>
+			<field name="BillingCycleID"></field>
+			<field name="CustomerID"></field>
+			<field name="DateRangeField" unbound>
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.FromDate" class="col-6"></qp-field>
+				<qp-field control-state.bind="Filter.UpToDate" class="col-6"></qp-field>
+			</field>
+			<field name="IgnoreBillingCycles"></field>
+		</qp-fieldset>
+		<div slot="B">
+			<qp-fieldset id="Filter_20" view.bind="Filter" caption="Billing Options">
+				<field name="InvoiceDate"></field>
+				<field name="InvoiceFinPeriodID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Filter_30" view.bind="Filter" caption="Billing Actions">
+				<field name="PrepareInvoice"></field>
+				<field name="ReleaseInvoice"></field>
+				<field name="EmailInvoice"></field>
+				<field name="EmailSalesOrder"></field>
+				<field name="SOQuickProcess"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Filter_40" view.bind="Filter" caption="Billing Actions">
+				<field name="ReleaseBill"></field>
+				<field name="PayBill"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-grid id="gridServiceOrders" view.bind="PostLines">
+	</qp-grid>
+</template>

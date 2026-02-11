@@ -1,0 +1,29 @@
+<template>
+
+	<qp-tab after="#tabDocumentsToApply" id="tabOrders" caption="Orders">
+		<qp-grid id="gridPOAdjustments" view.bind="POAdjustments" wg-container="POAdjustments_detgrid4"></qp-grid>
+	</qp-tab>
+
+	<qp-panel id="LoadOrders" caption="Load Orders" auto-repaint="true">
+		<qp-template name="1" id="formLoadOrders" wg-container="LoadOrders_PXFormLoadPOOrders">
+			<qp-fieldset id="columnFirstLoadPOOrders" slot="A" view.bind="LoadOrders">
+				<field name="BranchID"></field>
+				<field name="dateRange" unbound caption="Date Range">
+					<qp-field control-state.bind="LoadOrders.FromDate" class="col-6"></qp-field>
+					<qp-field control-state.bind="LoadOrders.ToDate" class="col-6"></qp-field>
+				</field>
+				<field name="orderNbrRange" unbound caption="Order Nbr. Range">
+					<qp-field control-state.bind="LoadOrders.StartOrderNbr" class="col-6"></qp-field>
+					<qp-field control-state.bind="LoadOrders.EndOrderNbr" class="col-6"></qp-field>
+				</field>
+				<field name="MaxNumberOfDocuments"></field>
+				<field name="OrderBy"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnReasonOk-LoadOrders" caption="OK" dialog-result="Yes"></qp-button>
+			<qp-button id="btnReasonCancel-LoadOrders" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

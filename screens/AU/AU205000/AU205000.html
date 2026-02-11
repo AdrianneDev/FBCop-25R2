@@ -1,0 +1,15 @@
+<template>
+   <qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+   <qp-panel id="SystemLocales"
+            wg-container="SystemLocales_SystemLocales"
+            caption="Add Locale"
+            auto-repaint="true"
+            width="50vw"
+            height="50vh">
+      <qp-grid id="SystemLocales_gridAddFile" wg-container view.bind="SystemLocales"></qp-grid>
+      <footer>
+         <qp-button id="PXButton1" dialog-result="OK" wg-name="OK" caption="Add" class="major-button"></qp-button>
+         <qp-button id="PXButton4" caption="Cancel" dialog-result="No"></qp-button>
+      </footer>
+   </qp-panel>          	
+</template>

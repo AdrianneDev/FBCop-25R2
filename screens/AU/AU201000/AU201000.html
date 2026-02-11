@@ -1,0 +1,35 @@
+<template>
+	<qp-grid id="grid-Pages" wg-container="Pages_grid" view.bind="Pages"></qp-grid>
+
+	<qp-panel id="ViewPageWizard"
+		caption="Create New Screen"
+		auto-repaint="true">
+		<qp-fieldset id="fs-ViewPageWizard"
+			wg-container="ViewPageWizard_formPageWizard"
+			view.bind="ViewPageWizard">
+			<field name="ScreenID"></field>
+			<field name="GraphName"></field>
+			<field name="GraphNamespace"></field>
+			<field name="PageTitle"></field>
+			<field name="Template"></field>
+			<field name="CreateFilesForModernUI"></field>
+		</qp-fieldset>
+		<qp-info-box id="ViewPageWizardInfoBox" caption.bind="AccessRights.Message" type="info"></qp-info-box>
+		<footer>
+			<qp-button id="btnSave-ViewPageWizard" dialog-result="OK" class="major-button" caption="Create" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnCancel-ViewPageWizard" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ViewSelectScreen"
+		caption="Customize Existing Screen"
+		auto-repaint="true">
+		<qp-fieldset id="fs-ViewSelectScreen" wg-container="ViewSelectScreen_ViewSelectScreen" view.bind="ViewSelectScreen">
+			<field name="SiteMap" control-type="qp-selector" config.bind="{displayMode:'text'}"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK-ViewSelectScreen" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel-ViewSelectScreen" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

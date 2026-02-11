@@ -1,0 +1,143 @@
+<template>
+	<require from="./status-colors.scss"></require>
+	<qp-template id="form-Shipment" name="7-10-7" class="equal-height" qp-collapsible wg-container="Document_form">
+		<qp-fieldset id="fsColumnA-Shipment" slot="A" view.bind="Document">
+			<field name="ShipmentNbr"></field>
+			<field name="ShipmentType"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="Operation"></field>
+			<field name="ShipDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Shipment" slot="B" view.bind="Document">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID"></field>
+			<field name="SiteID"></field>
+			<field name="DestinationSiteID"></field>
+			<field name="CurrentWorksheetNbr"></field>
+			<field name="ShipmentDesc" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Shipment" slot="C" view.bind="Document" class="highlights-section">
+			<field name="ShipmentQty" pinned="true"></field>
+			<field name="ControlQty" pinned="true"></field>
+			<field name="ShipmentWeight"></field>
+			<field name="ShipmentVolume"></field>
+			<field name="PackageCount"></field>
+			<field name="PackageWeight" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Details">
+			<qp-grid id="grid-Details" view.bind="Transactions" wg-container="Transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Orders" caption="Orders">
+			<qp-grid id="grid-Orders" view.bind="OrderList" wg-container="OrderList_grid5"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Shipping" caption="Shipping">
+			<qp-template id="form-Shipping" name="17-17-14">
+				<div id="divColumnA-Shipping" slot="A">
+					<qp-fieldset id="fsOwnership-Shipping" view.bind="Document" caption="Ownership" wg-container="Document_form">
+						<field name="WorkgroupID"></field>
+						<field name="OwnerID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsShippingInfo-Shipping" view.bind="CurrentDocument" caption="Shipping Information" wg-container="CurrentDocument_formF">
+						<field name="ShipVia"></field>
+						<field name="WillCall"></field>
+						<field name="FreightClass"></field>
+						<field name="FOBPoint"></field>
+						<field name="ShipTermsID"></field>
+						<field name="ShipZoneID"></field>
+						<field name="TermsOfSale"></field>
+						<field name="DHLBillingRef"></field>
+						<field name="DeliveryConfirmation"></field>
+						<field name="EndorsementService"></field>
+						<field name="CuryID" control-type="qp-currency" view.bind="_SOShipment_CurrencyInfo_"></field>
+						<field name="CuryFreightCost">
+							<qp-button id="btnCheckFreightRate" class="col-12" state.bind="CalculateFreight">
+							</qp-button>
+						</field>
+						<field name="FreightAmountSource"></field>
+						<field name="OverrideFreightAmount"></field>
+						<field name="CuryFreightAmt"></field>
+						<field name="UnlimitedPackages"></field>
+						<using view="CarrierData" wg-container="CarrierData_formPacejetProcessing">
+							<field name="ExternalStatus"></field>
+							<field name="PacejetWorkstationID"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+				<div id="divColumnB-Shipping" slot="B">
+					<qp-fieldset id="fsDeliverySettings-Shipping" view.bind="CurrentDocument" caption="Delivery Settings" wg-container="CurrentDocument_formDeliverySettings">
+						<field name="SkipAddressVerification"></field>
+						<field name="UseCustomerAccount"></field>
+						<field name="Insurance"></field>
+						<field name="GroundCollect"></field>
+						<field name="Resedential"></field>
+						<field name="SaturdayDelivery"></field>
+						<using view="CarrierData" wg-container="CarrierData_formPacejetOptions">
+							<field name="AdditionalHandling"></field>
+							<field name="EmailNotification"></field>
+							<field name="HazardousMaterials"></field>
+							<field name="PrintReturnLabel"></field>
+							<field name="DeliveryInstructions" config-type.bind="1" config-rows.bind="3"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="fsLTLSettings-Shipping" view.bind="CarrierData" caption="LTL/FTL Settings" wg-container="CarrierData_formLTLSettings">
+						<field name="LiftGate"></field>
+						<field name="InsideDelivery"></field>
+						<field name="LimitedAccess"></field>
+						<field name="ProBillNbr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsBrokerInfo-Shipping" view.bind="CurrentDocument" caption="Broker Info" wg-container="CurrentDocument_formBroker">
+						<field name="BrokerContactID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsIntercompanyPurchase-Shipping" view.bind="CurrentDocument" caption="Intercompany Purchase" wg-container="CurrentDocument_formI">
+						<field name="IntercompanyPOReceiptNbr" config-enabled.bind="false" config-allow-edit.bind="true"></field>
+						<field name="ExcludeFromIntercompanyProc"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fsServiceManagemant-Shipping" view.bind="CurrentDocument" caption="Service Management" wg-container="CurrentDocument_gridSM">
+						<field name="Installed"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Addresses" caption="Addresses">
+			<qp-template id="form-Addresses" name="17-17-14">
+				<div id="divColumnA-Addresses" slot="A">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="fsShipToContact-Shipping"
+						contact-view="Shipping_Contact"
+						fs-wg-container="Shipping_Contact_formD"
+						fs-caption="Ship-To Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="fsShipToAddress-Shipping"
+						fs-wg-container="Shipping_Address_formB"
+						address-view="Shipping_Address"
+						fs-caption="Ship-To Address"
+						with-coordinates="true">
+					</qp-include>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tab-Packages" caption="Packages">
+			<qp-splitter id="splitter-Packages" split="height" initial-split="50%" class="stretch">
+				<split-pane id="splitPaneA-Packages" slot="A">
+					<qp-grid id="grid-Packages" view.bind="Packages" wg-container="Packages_gridPackages"></qp-grid>
+				</split-pane>
+				<split-pane id="splitPaneB-Packages" slot="B">
+					<qp-grid id="gridSplits-Packages"
+							view.bind="PackageDetailSplit"
+							caption="Contents of Selected Package"
+							wg-container="PackageDetailSplit_gridPackageDetailSplit">
+					</qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+	</qp-tabbar>
+</template>

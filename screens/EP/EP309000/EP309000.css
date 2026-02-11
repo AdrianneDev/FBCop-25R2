@@ -1,0 +1,197 @@
+.summary div {
+	height: 20px;
+	width: max-content !important;
+}
+
+.noLink a {
+	color: black !important;
+	pointer-events: none !important;
+	text-decoration: none !important;
+}
+
+.entityName {
+	height: 20px;
+	white-space: nowrap !important;
+}
+
+.documentNbr {
+	height: 20px;
+	margin-inline-start: 4px !important;
+	white-space: nowrap !important;
+	width: max-content !important;
+}
+
+.timeLogTypeID {
+	display: contents !important;
+}
+
+.timeLogTypeID .drop-down__editor {
+	border: #D2D4D7 1px solid !important;
+	height: 30px;
+	margin-top: 4px;
+	width: 238px !important;
+}
+
+.timeLogTypeID input {
+	text-align: start !important;
+}
+
+.timeLogTypeID span {
+	position: absolute;
+	inset-inline-start: 4px;
+}
+
+.timeLogTypeID qp-icon {
+	height: 30px;
+}
+
+.timerDisplay {
+	pointer-events: none;
+	display: inline !important;
+	margin-inline-start: -64px;
+}
+
+.timerDisplay .control-container {
+	margin-top: 8px;
+	pointer-events: none;
+}
+
+.timerDisplay input {
+	border: none;
+}
+
+.startDateUTC, .timeSpent, .timerStatus {
+	display: none !important;
+}
+
+.timerButton {
+	border-radius: 5px;
+	display: inline-block;
+	float: inline-end;
+	margin-inline-start: 8px;
+	margin-top: 4px;
+	top: 10px;
+}
+
+.timerButton > button {
+	background-color: rgba(0, 0, 0, 0) !important;
+	color: #FFF !important;
+	opacity: 1 !important;
+}
+
+.timerButton qp-icon {
+	width: 12px;
+}
+
+.clockInButton {
+	background-color: rgb(71, 168, 36);
+	position: absolute;
+	width: 84px;
+}
+
+.clockInButton > button {
+	height: 30px !important;
+}
+
+.stopButton {
+	background-color: rgb(239, 64, 81);
+}
+
+.clockInButton, .stopButton {
+	inset-inline-end: 12px;
+}
+
+.startButton qp-icon, .stopButton qp-icon {
+    filter: invert(1) hue-rotate(180deg);
+}
+ 
+.pauseButton > button, .startButton > button, .stopButton > button {
+	height: 30px !important;
+	width: 36px !important;
+}
+
+.pauseButton, .startButton, .stopButton {
+	position: absolute;
+	height: 30px;
+	width: 36px;
+}
+
+.pauseButton {
+	background-color: rgb(255, 184, 0);
+}
+
+.startButton {
+	background-color: rgb(71, 168, 36);
+}
+
+.pauseButton, .startButton {
+	inset-inline-end: 60px;
+}
+
+.qp-caption {
+	font-size: var(--qp-data-feed-caption-font);
+}
+
+.qp-data-feed {
+	padding: 0;
+}
+
+.qp-data-feed__caption {
+	font-weight: bold;
+	pointer-events: none;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+.qp-data-feed__top-bar {
+	border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+.qp-data-feed > :first-child {
+	padding-inline-start: 8px;
+}
+
+.qp-data-feed__caption[data-collapsed=false]::after {
+	display: none;
+}
+
+feed-status {
+	display: none;
+}
+
+.emptyFeedContainer {
+	display: none;
+	text-align: center;
+	width: 100%;
+}
+
+.emptyFeedContainer .label-container {
+	display: inline;
+}
+
+.emptyFeedLink {
+	display: inline-block;
+	margin-top: 7px;
+	vertical-align: top;
+}
+
+.record-item__container {
+	flex-wrap: nowrap;
+}
+
+.record-item__container > .col-xs-12 {
+	margin-top: 0px !important;
+}
+
+.record-item {
+	border-width: 0px 0px 1px 0px;
+    border-style: solid;
+	border-color: rgba(0, 0, 0, 0.05);
+	padding: 10px 0px 0px 0px !important;
+}
+
+.qp-tool-bar-opener {
+	display: none !important;
+}

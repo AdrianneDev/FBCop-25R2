@@ -1,0 +1,20 @@
+<template>
+	<qp-template id="frmHeader" name="1-1" wg-container="Calendar_frmHeader" class="equal-height label-size-m">
+		<qp-fieldset id="columnFirst" slot="A" view.bind="Calendar">
+			<field name="CalendarID"></field>
+			<field name="Description"></field>
+			<field name="TimeZone"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond" slot="B" view.bind="Calendar">
+			<field name="WorkdayTime">
+				<qp-field control-state.bind="Calendar.WorkdayTimeOverride"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template id="frmFooter" name="1" class="label-size-sm stretch">
+		<qp-tabbar id="tabs" slot="A">
+			<qp-tab id="tabCalendar" caption="Calendar" ref="tabCalendar_Content"></qp-tab>
+			<qp-tab id="tabExceptions" caption="Exceptions" ref="tabExceptions_Content"></qp-tab>
+		</qp-tabbar>
+	</qp-template>
+</template>

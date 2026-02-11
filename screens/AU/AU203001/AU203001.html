@@ -1,0 +1,14 @@
+<template>
+	<qp-grid id="ViewTables_grid" wg-container view.bind="ViewTables"></qp-grid>
+	<qp-panel id="TableSelectorDlg" wg-container="TableSelectorDlg_TableSelectorDlg" caption="Select Existing Data Access Class" auto-repaint="true">
+		<qp-fieldset id="FormSelectTable" wg-container view.bind="TableSelectorDlg">
+			<field name="TableName"></field>
+		</qp-fieldset>
+		<div class="v-stack" id="PXLayoutRule8" wg-container>
+			<footer>
+				<qp-button id="buttonOk" Caption="Select" wg-name="OK" class="major-button" dialog-result="OK"></qp-button>
+				<qp-button id="buttonCancel" dialog-result="Cancel"></qp-button>
+			</footer>
+		</div>
+	</qp-panel>
+</template>

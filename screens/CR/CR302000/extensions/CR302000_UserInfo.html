@@ -1,0 +1,23 @@
+<template>
+	<template id="tabUserInfo_Content">
+		<qp-template id="UserInfo-form" name="1-1" wg-container="User_frmLogin">
+			<div slot="A">
+				<qp-fieldset id="frmLogin" view.bind="User" caption="User">
+					<field name="State">
+						<qp-button id="btnDisableLogin" state.bind="DisableLogin"></qp-button>
+						<qp-button id="btnEnableLogin" state.bind="EnableLogin"></qp-button>
+					</field>
+					<field name="LoginTypeID"></field>
+					<field name="Username">
+						<qp-button id="btnResetPassword" state.bind="ResetPassword" caption="Reset Password"></qp-button>
+					</field>
+					<field name="GeneratePassword"></field>
+					<field name="Password"></field>
+					<qp-button id="btnActivateLogin" state.bind="ActivateLogin" class="col-4"></qp-button>
+					<qp-button id="btnUnlockLogin" state.bind="UnlockLogin" class="col-4"></qp-button>
+				</qp-fieldset>
+			</div>
+			<qp-grid slot="B" id="gridRoles" view.bind="Roles" caption="User Roles" class="framed-section"></qp-grid>
+		</qp-template>
+	</template>
+</template>

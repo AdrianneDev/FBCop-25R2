@@ -1,0 +1,6 @@
+<template>
+	<qp-tab after="#tabMailingPrinting" id="tabServiceBilling" caption="Service Billing" if.bind="CustomerClassRecord.ChkServiceManagement.value == true">
+		<qp-grid id="gridBillingCycles" view.bind="BillingCycles">
+		</qp-grid>
+	</qp-tab>
+</template>

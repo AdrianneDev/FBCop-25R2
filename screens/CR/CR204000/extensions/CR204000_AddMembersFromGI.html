@@ -1,0 +1,18 @@
+<template>
+	<qp-panel id="AddMembersFromGIFilterView"
+		caption="Add Members from Inquiry"
+		auto-repaint="true"
+		close-button-locator="#btnAddMembersFromGIButtonsCancel"
+	>
+		<qp-template id="AddMembersFromGITemplate" name="1-1-1">
+			<qp-fieldset id="AddMembersFromGIFilterView_frmAddMembersFromGI" slot="A" view.bind="AddMembersFromGIFilterView">
+				<field name="GIDesignID"></field>
+				<field name="SharedGIFilter"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnAddMembersFromGIButtonsOK" dialog-result="OK" caption="Add" config.bind="{validateInput: true}"></qp-button>
+			<qp-button id="btnAddMembersFromGIButtonsCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

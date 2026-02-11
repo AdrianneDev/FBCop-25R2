@@ -1,0 +1,11 @@
+<template>
+	<qp-template id="form-Policies" name="1-1" class="equal-height label-size-m" wg-container="Policies_form">
+		<qp-fieldset id="fsColumnA-Policies" slot="A" view.bind="Policies">
+			<field name="ReplenishmentPolicyID"></field>
+			<field name="Descr"></field>
+			<field name="CalendarID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid-Policies" view.bind="seasons" wg-container="seasons_grid"></qp-grid>
+</template>

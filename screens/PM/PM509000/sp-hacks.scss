@@ -1,0 +1,149 @@
+.pageHeader {
+	flex-wrap: nowrap !important;
+}
+
+#addresslookup_mapdialog .dialog-footer-content #btnConfirm:disabled {
+	display: none;
+}
+
+qp-screen-title .favoriteOn, .screen-title-fallback .favoriteOn,
+qp-screen-title .favoriteOff, .screen-title-fallback .favoriteOff {
+	visibility: hidden !important;
+}
+
+.invisible-field {
+	display: none;
+}
+
+.qp-datetime-edit-control {
+	max-width: unset!important;
+}
+
+qp-field {
+	&.sp-no-label {
+		.wrapper .label-wrapper {
+			width: auto!important;
+		}
+		.control-container * {
+			padding: 0px;
+			border: none;
+			height: 20px;
+		}
+	}
+
+	&.sp-no-value {
+		.wrapper .label-wrapper {
+			width: 100% !important;
+		}
+		.control-container {
+			display: none !important;
+		}
+	}
+}
+
+.qp-connotation-Primary,
+.qp-connotation-Primary:hover {
+	&:has(.qp-tool-bar-button.disabled) {
+		background-color: inherit !important;
+	}
+}
+
+qp-tool-bar .items-list .qp-tool-bar-button.disabled:has(.qp-tool-bar-text) {
+    background-color: #007ACC66 !important;
+    color: white;
+}
+
+@media (width < 692px) {
+
+	.qp-field .control-container.size-default,
+	.qp-field-wrapper .control-container.size-default {
+		flex: 1 1 auto;
+		width: 100%;
+	}
+
+	:root {
+		--qp-page-host-margin: 0px !important;
+	}
+}
+
+
+@container qp-screen (width < 480px) { /* Extra SM */
+	.qp-field {
+		&:not(.sp-no-label):not(.sp-no-value):has([readonly="readonly"]) .wrapper {
+			display: flex;
+
+			.label-wrapper {
+				width: auto !important;
+
+				qp-fieldset:not(.sp-filled-section) & {
+					width: calc(var(--qp-default-label-width)* var(--qp-label-zoom)) !important;
+				}
+			}
+		}
+
+		.label-wrapper {
+			margin-bottom: 0px !important;
+		}
+	}
+}
+
+.qp-fieldset-caption {
+	pointer-events: none;
+}
+
+.icon-container {
+	pointer-events: none;
+}
+
+// SP504002
+// ux-dialog:has(qp-image-uploader) {
+#pnlInlineScreenSP504002 {
+	.qp-dialog-maximize {
+		visibility: hidden;
+	}
+
+	ux-dialog-body {
+		padding-inline: 0 !important;
+	}
+
+	.qp-dialog-close {
+		margin-top: 6px;
+		margin-right: 0px;
+	}
+
+	@media screen and (width < 480px) {
+			.qp-resizable {
+			width: 100vw !important;
+			height: 100vh !important;
+		}
+
+		&:not(.qp-maximized) {
+			width: calc(100vw - 40px) !important;
+			height: calc(100vh - 18px) !important;
+			padding-right: 0px;
+		}
+
+		.qp-dialog-close {
+			margin-top: 14px;
+		    margin-right: 4px;
+		}
+	}
+}
+
+#addresslookup_mapdialog {
+	#searchBoxContainer {
+		display: none
+	}
+	ux-dialog-body {
+		padding-bottom: 10px;
+	}
+	ux-dialog-footer {
+		display: none;
+	}
+}
+
+
+.qp-menu-options {
+	min-width: 150px !important;
+}
+

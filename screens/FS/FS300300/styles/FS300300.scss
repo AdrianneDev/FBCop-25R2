@@ -1,0 +1,116 @@
+:root {
+	--qp-sch-top-offset: 38px; // TODO: use a Platform variable when available (height of .qp-tabbar .qp-tabbar-wrapper (34) + margin of .qp-tabbar .qp-tabbar-header (5) - border (1))
+}
+
+.hidden {
+	display: none !important;
+}
+
+.qp-system-menu {
+	z-index: auto; /* we need this for the drop down menu to be on top of Bing Map's controls AND appointment popup */
+}
+.qp-menu-options {
+	z-index: 4500; /* we need this for the drop down menu to be on top of Bing Map's controls  AND appointment popup */
+}
+
+.b-float-root {
+	z-index: 4000; /* below grid filter dialog */
+}
+
+.top-bar-cont {
+	display: none;
+}
+
+/* TODO: temporary fix for an issue in UI platform */
+#mainTabBar {
+	.left-toolbar-cont {
+		flex: 1 0 100px;
+	}
+	.right-toolbar-cont {
+		flex: 0 1 200px;
+	}
+	.filter-box {
+		min-width: 100px;
+		max-width: 200px;
+		width: auto !important;
+	}
+}
+
+/* TODO: temporary fix for an issue in UI platform */
+.qp-sch-grid-container .left-toolbar-cont {
+	flex: 1 0 190px;
+}
+
+/* TODO: temporary fix for an issue in UI platform */
+.filter-combo {
+	height: var(--qp-toolbar-height);
+}
+
+/* TODO: temporary fix for an issue in UI platform -- fix for Safari */
+qp-tool-bar .items-list {
+	white-space: nowrap;
+}
+
+
+.horizontal-splitter > .qp-splitter > .qp-splitter-bar {
+	margin-top: var(--qp-sch-top-offset);
+}
+
+
+*:hover::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+}
+*:not(:hover)::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.09);
+}
+
+*::-webkit-scrollbar-track {
+    background-color: var(--qp-sch-dark-background);
+}
+
+*:not(:hover)::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.04);
+}
+*:hover::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.10);
+}
+
+.main-map {
+	padding-top: var(--qp-sch-top-offset);
+    position: relative;
+    height: 100%;
+    display: block;
+}
+
+.MicrosoftMap .NavBar_Container {
+	z-index: 999 !important;
+}
+
+@mixin status-background($status, $color) {
+	#edEditedAppointment,
+	#edSelectedAppointment,
+	#edSelectedSO {
+		&-Status.drop-down__editor .drop-down__text[valueattr = "#{$status}"] {
+			background-color: $color;
+		}
+	}
+}
+
+@include status-background("V", rgba(195, 231, 255, 1));
+@include status-background("N", rgba(195, 231, 255, 1));
+@include status-background("H", rgba(228, 192, 0, 0.25));
+@include status-background("W", rgba(228, 192, 0, 0.25));
+@include status-background("C", rgba(0, 0, 0, 0.1));
+@include status-background("Z", rgba(0, 0, 0, 0.1));
+@include status-background("X", rgba(255, 208, 208, 0.6));
+@include status-background("A", rgba(200, 229, 190, 0.6));
+@include status-background("O", rgba(200, 229, 190, 0.6));
+@include status-background("P", rgba(200, 229, 190, 0.6));
+
+#pnlFiles, #pnlActivities, #pnlNote {
+	display: none;
+}
+
+.marker-container:hover {
+	cursor: pointer;
+}

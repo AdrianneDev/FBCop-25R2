@@ -1,0 +1,208 @@
+<template>
+	<require from="../sp-common.scss"></require>
+	<require from="./SP314002.scss"></require>
+
+	<qp-include url="../sp-base.html"></qp-include>
+	<qp-include url="../sp-base-pm.html"></qp-include>
+
+	<div class="h-stack sp-documents sp-wide-screen" tabindex="0">
+		<div class="h-stack gray-pane pay-invoice">
+
+			<div class="sp-payment-methods">
+				<qp-fieldset id="fsPaymentMethod" view.bind="Document" caption="Payment Method">
+
+					<field name="Document.PaymentMethodID" class="hidden"></field>
+					<field name="Document.PMInstanceID" class="hidden"></field>
+
+					<field name="unboundPaymentMethods" unbound replace-content>
+						<div class="sp-section">
+							<label repeat.for="method of PaymentMethods.records"
+								class="sp-section-item ${(selectedPaymentMethod ===  method) ? 'sp-section-item-selected' : ''}">
+								<div class="sp-radio">
+									<input type="radio" model.bind="method" checked.bind="selectedPaymentMethod"
+										name="radioPaymentMethod">
+									<div class="sp-paymethod">
+										<qp-include url="../sp-paymethod.html" view="method"></qp-include>
+										<div class="sp-pm-expiration">${method.expiration}</div>
+									</div>
+									<div class="sp-pm-default" if.bind="!!method.IsPortalDefault.value">
+										<span class="sp-xxs-hidden">${PMbaseMessages.Default}</span>
+										<span class="sp-non-xxs-hidden">
+											<qp-hyper-icon
+												images.bind="{ normal: 'svg:main@doneMark' }"></qp-hyper-icon>
+										</span>
+									</div>
+									<qp-menu config.bind="paymentMethodCommands(method)" class="sp-pm-menu"
+										menuselected.delegate="processPaymentMethodMenuCommand(method, $event)">
+									</qp-menu>
+								</div>
+							</label>
+						</div>
+						<qp-button id="btnAddNewCard" class="sp-add-card-button first"
+							state.bind="AddNewCard"></qp-button>
+					</field>
+				</qp-fieldset>
+
+				<div class="hidden">
+					<qp-grid id="gridPaymentMethods" view.bind="PaymentMethods" view-model.ref="PaymentMethodsGrid"
+						on-data-ready.call="paymentMethodsDataReadyHandler(grid, args)">
+					</qp-grid>
+				</div>
+			</div>
+
+
+			<qp-fieldset id="c" view.bind="Document" caption.bind="msg.PaymentDescription">
+				<field name="DocDesc" no-label="true"></field>
+			</qp-fieldset>
+
+			<div class="sp-fieldset">
+				<qp-fieldset id="a" class="sp-adjustments-panel" view.bind="Adjustments"
+					caption.bind="msg.Documents">
+					<field name="adjustments" unbound replace-content>
+						<div class="sp-payment-warning" if.bind="PayState.DocumentCount.value == 0">
+							<div class="sp-empty-document-list">
+								<div class="sp-empty-label">${msg.DocumentListEmpty}</div>
+							</div>
+						</div>
+					</field>
+				</qp-fieldset>
+
+				<qp-text-light-scope>
+					<qp-data-feed id="dfAdjustments" class="no-toolbar sp-documents-open"
+						view="Adjustments" auto-resize="true" if.bind="Adjustments.totalRowCount > 0">
+						<template width="100%">
+							<div class="sp-documents-document no-animation"
+								id="invoice_id${Adjustments.ARInvoice__RefNbr.cellText}">
+								<qp-template id="dfOpenInvoice" wg-container name="record-3-2-2-2" class="no-hover">
+									<qp-fieldset slot="A1" id="fsOpenInvoiceA1" view.bind="{{$viewName}}">
+										<field name="ARInvoice__DocType"></field>
+										<field name="ARInvoice__DocDate"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="A2" id="fsOpenInvoiceA2" view.bind="{{$viewName}}">
+										<field name="ARInvoice__RefNbr"></field>
+										<field name="ARInvoice__CustomerID_Customer_acctName"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="AX" id="fsOpenInvoiceAX" view.bind="{{$viewName}}"
+										class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg">
+										<field name="ARInvoice__ExtRefNbr" no-label="true"></field>
+										<field name="ARInvoice__DocDesc" replace-content>
+											<div class="wrapper field--text">${Adjustments.ARInvoice__DocDesc.value}
+											</div>
+										</field>
+									</qp-fieldset>
+									<qp-fieldset slot="BX" id="fsOpenInvoiceBX" view.bind="{{$viewName}}">
+										<field name="InvoiceTotal" unbound replace-content
+											control-state.bind="Adjustments.ARInvoice__CuryOrigDocAmt_Text">
+											<span class="wrapper">
+												<span class="sp-field-date-label">
+													${msg.InvoiceTotal}
+													<span class="sp-field-date">
+														&nbsp;(${msg.Due}
+														<span
+															class="${Adjustments.passedDue ? 'sp-due-date-passed' : ''}">${Adjustments.ARInvoice__DueDate.cellText}</span>):
+													</span>
+													<span class="label-container__dotted-space"></span>
+												</span>
+												${Adjustments.ARInvoice__CuryOrigDocAmt_Text.cellText}
+												<span class="sp-field-date-lg">
+													${msg.Due}
+													<span
+														class="${Adjustments.passedDue ? 'sp-due-date-passed' : ''}">${Adjustments.ARInvoice__DueDate.cellText}</span>
+												</span>
+											</span>
+										</field>
+										<field name="CashDiscount" unbound replace-content
+											control-state.bind="Adjustments.ARInvoice__CuryOrigDiscAmt">
+											<span
+												class="wrapper ${Adjustments.ARInvoice__CuryOrigDiscAmt.value > 0 ? '' : 'hidden'}">
+												<span class="sp-field-date-label">
+													${msg.CashDiscount}
+													<span class="sp-field-date">&nbsp;(${msg.ValidTill}
+														${Adjustments.ARInvoice__DiscDate.cellText}):</span>
+													<span class="label-container__dotted-space"></span>
+												</span>
+												${Adjustments.ARInvoice__CuryOrigDiscAmt_Text.cellText}
+												<span class="sp-field-date-lg">${msg.ValidTill}
+													<span>${Adjustments.ARInvoice__DiscDate.cellText}</span></span>
+											</span>
+										</field>
+									</qp-fieldset>
+									<qp-fieldset slot="CX" id="fsOpenInvoiceCX" view.bind="{{$viewName}}">
+										<field name="ARInvoice__CuryDocBal_Text"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="DX" id="fsOpenInvoiceDX" view.bind="{{$viewName}}">
+										<field name="CuryAdjgAmt" control-config.bind="{ prefix: currencySign }"
+											class="field--bold"></field>
+									</qp-fieldset>
+
+									<qp-button id="bRemoveAdjustment" slot="Postfix"
+										class="sp-remove-adjustment sp-hide-mobile" state.bind="RemoveAdjustment"
+										config.bind="{ images: { normal: 'svg:main@close' }}">
+									</qp-button>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+
+				<qp-text-light-scope>
+					<qp-data-feed id="dfSOAdjustments" class="no-toolbar sp-documents-open"
+						view="SOAdjustments" auto-resize="true" if.bind="SOAdjustments.totalRowCount > 0">
+						<template width="100%">
+							<div class="sp-documents-document no-animation">
+								<qp-template id="dfAnOrder" wg-container name="record-3-2-2-2" class="no-hover">
+									<qp-fieldset slot="A1" id="fsOpenOrderA1" view.bind="{{$viewName}}">
+										<field name="SOOrder__OrderNbr"></field>
+										<field name="SOOrder__Status" class="colored"></field>
+										<field name="AdjdOrderDate"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="A2" id="fsOpenOrderA2" view.bind="{{$viewName}}">
+										<field name="Customer__LegalName"></field>
+										<field name="Location__Descr"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="AX" id="fsOpenOrderAX" view.bind="{{$viewName}}"
+										class="fieldset--condensed-sm fieldset--condensed-md fieldset--condensed-lg">
+										<field name="SOOrder__CustomerOrderNbr"></field>
+										<field name="SOOrder__ShipDate"></field>
+										<field name="SOOrder__OrderQty"></field>
+										<field name="SOOrder__CuryOrderTotal_Text"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="BX" id="fsOpenOrderB" view.bind="{{$viewName}}">
+										<field name="SOOrder__CuryUnbilledOrderTotal_Text"></field>
+										<field name="SOOrder__UnbilledOrderQty"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="CX" id="fsOpenOrderC" view.bind="{{$viewName}}">
+										<field name="SOOrder__CuryOpenOrderTotal_Text"></field>
+										<field name="SOOrder__OpenOrderQty"></field>
+									</qp-fieldset>
+									<qp-fieldset slot="DX" id="fsOpenOrderD" view.bind="{{$viewName}}">
+										<field name="SOOrder__CuryPaidAmt_Text"></field>
+										<field name="CuryAdjgAmt" control-config.bind="{ prefix: currencySign }"
+											class="field--bold">
+										</field>
+									</qp-fieldset>
+
+									<qp-button id="bRemoveSOAdjustment" slot="Postfix"
+										class="sp-remove-adjustment sp-hide-mobile" state.bind="RemoveSOAdjustment"
+										config.bind="{ images: { normal: 'svg:main@close' }}">
+									</qp-button>
+								</qp-template>
+							</div>
+						</template>
+					</qp-data-feed>
+				</qp-text-light-scope>
+			</div>
+		</div>
+		<div class="sp-sticky-summary">
+			<div class="h-stack sp-documents-summary-fixed">
+				<qp-fieldset slot="D" id="d" view.bind="Document" class="sp-fieldset-summary sp-items-pnl">
+					<field name="CuryOrigDocAmt_Text"></field>
+					<field name="PaySelectedInvoiceField" unbound replace-content>
+						<qp-button id="payBtn" class="major-button" state.bind="Pay">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+			</div>
+		</div>
+	</div>
+</template>

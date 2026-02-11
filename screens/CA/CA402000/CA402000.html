@@ -1,0 +1,19 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" class="equal-height" wg-container="TranFilter_form">
+
+		<qp-fieldset slot="A" id="columnFirst" view.bind="TranFilter">
+			<field name="CashAccountID"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="TranFilter.EndDate"></qp-field>
+			</field>
+			<field name="TranType"></field>
+			<field name="HeaderRefNbr"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Result"></qp-grid>
+
+</template>

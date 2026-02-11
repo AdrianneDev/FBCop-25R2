@@ -1,0 +1,37 @@
+<template>
+	<qp-include url="../common/au-panel-view-changes.html"></qp-include>
+
+	<qp-template id="form_0" class="equal-height" name="1-1">
+		<qp-fieldset id="form_1" wg-container="Definition_form" view.bind="Definition" slot="A">
+			<field name="StateField"></field>
+			<field name="FlowTypeField"></field>
+			<field name="EnableWorkflowIDField"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_2" wg-container="Definition_form" view.bind="Definition" slot="B">
+			<field name="FlowSubTypeField"></field>
+			<field name="EnableWorkflowSubTypeField"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="Workflows_gridWorkflows" wg-container view.bind="Workflows"></qp-grid>
+	<qp-panel id="DlgExtendWorkflow" caption="Add Workflow" auto-repaint="true">
+		<qp-fieldset id="Form" wg-container view.bind="DlgExtendWorkflow">
+			<field name="Operation"></field>
+			<field name="SysWorkflowID"></field>
+			<field name="WorkflowToCopy"></field>
+			<field name="WorkflowID"></field>
+			<field name="WorkflowSubID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButtonOK" dialog-result="OK" wg-name="OK" caption="Add" class="major-button"></qp-button>
+			<qp-button id="PXButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="Conflicts" wg-container="Conflicts_Conflicts" caption="Upgrade conflicts" auto-repaint="true">
+		<qp-grid id="Conflicts_gridConflicts" wg-container view.bind="Conflicts"></qp-grid>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

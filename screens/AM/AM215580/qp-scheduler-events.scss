@@ -1,0 +1,241 @@
+.qp-sch-event-info {
+	padding-inline-end: 10px;
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 16px;
+	width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+
+	.h-stack {
+		height: 100%;
+	}
+
+	.v-stack {
+		height: 100%;
+	}
+
+	qp-tooltip {
+		display: none;
+	}
+
+	&[resource-event-type="Order"], &[resource-event-type="Operation"] {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 4px;
+
+		> div > :nth-child(1) {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
+		}
+
+		> div > :nth-child(2) {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
+		}
+
+		> div > div > span {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			gap: 4px;
+			height: 16px;
+		}
+	}
+
+	&[resource-event-type="Material"] {
+		display: flex;
+		flex-direction: row;
+		gap: 6px;
+		padding: 7px 12px 7px 8px;
+
+		& > div:first-child {
+			flex-grow: 0;
+			flex-shrink: 0;
+			display: flex;
+			gap: 4px;
+			justify-content: flex-start;
+			align-items: center;
+			height: 34px;
+
+			svg {
+				height: 34px;
+				width: 34px;
+			}
+		}
+
+		& > div:nth-child(2) {
+			align-self: center;
+			flex-grow: 10;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			gap: 4px;
+
+			& > div {
+				display: flex;
+				flex-direction: row;
+				width: 100%;
+				gap: 10px;
+
+				& > div {
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
+					gap: 4px;
+				}
+
+				& > div > span {
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					gap: 4px;
+					height: 16px;
+					line-height: 16px;
+				}
+			}
+		}
+	}
+
+	svg {
+		height: 16px;
+		width: 16px;
+	}
+
+	.qp-sch-popup-link {
+		text-decoration: none;
+		&:hover{
+			text-decoration: underline;
+			cursor: pointer;
+		}
+	}
+
+	&[resource-event-type] {
+		:is(:not(:nth-child(-n+2)), :last-child) {
+			padding-bottom: 0px !important;
+		}
+	}
+
+	span[field-seperator="true"]  {
+		line-height: 8px;
+	}
+}
+
+.b-sch-event:is(.qp-small-event) .b-sch-event-content:has(.qp-sch-event-info[resource-event-type="Operation"], .qp-sch-event-info[resource-event-type="Material"]) {
+	position: absolute !important;
+	left: 0px;
+}
+
+.b-sch-event:is(.qp-small-event) .b-sch-event-content:has(.qp-sch-event-info[resource-event-type="Order"]) {
+	overflow: unset;
+
+	.qp-sch-event-info > div {
+		color: var(--qp-sch-event-color) !important;
+		-webkit-text-fill-color: var(--qp-sch-event-color) !important;
+	}
+}
+
+.qp-sch-events-container {
+	.b-grid-row {
+		.b-tree-cell-inner {
+			gap: 5px;
+			.qp-sch-tile-icon {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+}
+
+.qp-sch-grid-container .b-sch-event-wrap:not(.b-sch-vertical) {
+	padding-left:0px;
+	padding-right: 0px;
+}
+
+:is(.qp-sch-calendar-container) .b-sch-event:has(.qp-product-event-container) {
+	border: unset !important;
+
+	.qp-product-event-bar {
+		flex-basis: unset;
+
+		&.qp-sch-search-highlight {
+			background-position: unset !important;
+		}
+	}
+}
+
+.qp-product-event-container:not(:has(.qp-product-signs-visble))
+	:is(.qp-sch-search-highlight.qp-product-event-bar) {
+	border: 3px solid black !important;
+}
+
+:is(.qp-sch-calendar-container) .b-sch-event{
+	&.qp-sch-small-event {
+		.b-sch-event-content {
+			position: absolute !important;
+		}
+	}
+}
+
+.qp-sch-grid-container.qp-sch-calendar-container {
+	.qp-sch-grid-container-inner {
+		padding-top: unset;
+	}
+}
+
+.qp-product-event-jaw.qp-sch-search-highlight {
+	position: relative;
+	bottom: 2.667px;
+	border-left: unset !important;
+	border-top: unset !important;
+}
+
+.qp-product-event-jaw.qp-sch-search-highlight::before {
+	margin-left: 2.667px;
+}
+
+.b-sch-event-content:has(.qp-sch-event-info[resource-event-type="Operation"]) {
+	height: auto !important;
+
+	& .qp-sch-event-status-bar-fixed {
+		width: 9px;
+		height: 50px;
+		border-start-start-radius: 10px;
+		border-end-start-radius: 10px;
+		position: fixed;
+
+		&.scrolling {
+			opacity: 0;
+		}
+	}
+
+	& .qp-sch-event-status-bar {
+		width: 9px !important;
+		margin-right: 10px;
+		height: 50px;
+		border-radius: 10px;
+		position: sticky;
+		opacity: 0;
+
+		&.scrolling {
+			opacity: 1;
+		}
+	}
+}
+
+.b-sch-event-content:has(.qp-sch-event-info[resource-event-type="Operation"]:has(.qp-sch-event-status-bar-fixed)) {
+	& .qp-sch-event-status-bar {
+		display: none;
+	}
+}
+
+
+.b-sch-event {
+	min-width: 16px !important;
+}

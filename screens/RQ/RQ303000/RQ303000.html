@@ -1,0 +1,50 @@
+<template>
+	<qp-template id="form-Vendor" name="7-10-7" class="equal-height" wg-container="Vendor_form">
+		<qp-fieldset id="fsColumnA-Vendor" slot="A" view.bind="Vendor">
+			<field name="ReqNbr"></field>
+			<field name="EntryDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Vendor" slot="B" view.bind="Vendor">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_RQBiddingVendor_CurrencyInfo_"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Vendor" slot="C" view.bind="Vendor" class="highlights-section">
+			<field name="TotalQuoteQty"></field>
+			<field name="CuryTotalQuoteExtCost"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-BiddingDetails" caption="Bidding Details">
+			<qp-grid id="grid-BiddingDetails" view.bind="Lines" wg-container="Lines_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-VendorInfo" caption="Vendor Info">
+			<qp-template id="form-VendorInfo" name="17-17-14" wg-container="CurrentDocument_tab">
+				<div id="divColumnA-VendorInfo" slot="A">
+					<qp-include
+						url="src/screens/common/form-contact-document/form-contact-document.html"
+						fs-id="fsVendorContact-VendorInfo"
+						contact-view="Remit_Contact"
+						fs-wg-container="Remit_Contact_formVC"
+						fs-caption="Vendor Contact">
+					</qp-include>
+					<qp-include url="src/screens/common/form-address/form-address.html"
+						fs-id="fsVendorAddress-VendorInfo"
+						fs-wg-container="Remit_Address_formVA"
+						address-view="Remit_Address"
+						fs-caption="Vendor Address"
+						with-validation="false">
+					</qp-include>
+				</div>
+				<qp-fieldset id="fsColumnB-VendorInfo" slot="B" view.bind="CurrentDocument" caption="Vendor Bidding">
+					<field name="ExpireDate"></field>
+					<field name="PromisedDate"></field>
+					<field name="FOBPoint"></field>
+					<field name="ShipVia"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

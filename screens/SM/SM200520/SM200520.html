@@ -1,0 +1,20 @@
+<template>
+	<qp-grid id="grid" view.bind="SiteMap">
+	</qp-grid>
+
+	<qp-panel id="ViewCompanyListFilter" wg-container="PanelMultipleTenants" caption="Copy UI Setting to Tenants"
+		auto-repaint="true">
+		<qp-template name="1" id="DeleteConfirmationPanelTemplate">
+			<qp-info-box id="frmPanelMultipleTenantsLabel" caption="You are about to copy the UI settings (Classic, Modern, or Default) of the listed forms to the selected tenants.
+					Please select the tenants to which you want to copy the UI settings:" type="info">
+					</qp-info-box>
+			<qp-fieldset slot="A" id="frmPanelMultipleTenants" view.bind="ViewCompanyListFilter" class="label-size-sm" wg-container>
+				<field name="SelectedCompany"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" wg-name="PXButton5" caption.bind="SiteMapMessages.Copy" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" wg-name="PXButton6" caption.bind="SysMessages.Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

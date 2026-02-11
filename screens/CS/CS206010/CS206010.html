@@ -1,0 +1,108 @@
+<template>
+	<require from="../common/arm/arm.scss"></require>
+	<div class="arm-styles">
+		<qp-grid id="gridStyles" view.bind="Styles" class="hidden"
+			on-data-ready.call="stylesDataReadyHandler(grid, args)">
+		</qp-grid>
+	</div>
+
+	<qp-splitter id="splitterMain" initial-split="60%" split="width" ref="splitterElement">
+		<split-pane>
+			<div class="arm-pane no-animation">
+				<qp-fieldset id="groupRowSet" view.bind="RowSetOrdered" class="hidden">
+					<field name="RowSetCode"></field>
+					<field name="Description"></field>
+				</qp-fieldset>
+				<!-- workaround for "retrieveMode: 1" issue -->
+				<qp-fieldset id="groupCurrentRowDataSource" view.bind="CurrentRowDataSource" class="hidden">
+					<field name="Expand"></field>
+					<field name="RowDescription"></field>
+				</qp-fieldset>
+				<qp-grid id="grid" caption="Rows" view.bind="RowsOrdered" view-model.ref="rowsOrderedGrid"
+					class="arm-grid arm-grid--no-settings"
+					on-active-row-changed.call="rowsActiveRowChanged(args)"
+					on-selected-rows-changed.call="rowsSelectedRowsChanged(args, isDragging)"
+					on-get-cell-text.call="rowsGetCellText(args)"
+					on-before-insert.call="rowsBeforeInsertRow(args)"
+					on-key-down.call="rowsKeyDown(sender, event)">
+				</qp-grid>
+			</div>
+		</split-pane>
+		<split-pane>
+			<div class="arm-pane">
+				<qp-tabbar id="RowSettings_tab" wg-container view-model.ref="tabBar" ref="tabBarElement"
+					tab-selected.call="tabSelected(newTabId)">
+					<qp-tab id="tabData" caption="Data">
+						<qp-fieldset id="groupValue" view.bind="CurrentRow" show.bind="CurrentRow.DataVisible.value" caption="Formula" class="label-size-sm">
+							<field name="Formula" caption="Calculation Formula"
+								control-type="qp-formula-editor"
+								config.bind="getColorizeConfig()">
+							</field>
+							<field name="BaseRowCode" class="arm-base-row-field"></field>
+						</qp-fieldset>
+						<div show.bind="CurrentRow.DataSourceVisible.value">
+							<qp-include url="../common/arm/arm-data-source.html" view="CurrentRowDataSource"></qp-include>
+						</div>
+						<qp-fieldset id="groupViewCondition" view.bind="CurrentRow" caption="View Condition" class="label-size-sm">
+							<field name="LinkedRowCode" class="arm-linked-row-field"></field>
+							<field name="ColumnGroupID"></field>
+							<field name="UnitGroupID"></field>
+							<field name="SuppressEmpty"></field>
+							<field name="HideZero"></field>
+						</qp-fieldset>
+					</qp-tab>
+					<qp-tab id="tabFormatting" caption="Formatting">
+						<div class="arm-toolbar">
+							<qp-tool-bar config.bind="formattingToolbarConfig"></qp-tool-bar>
+						</div>
+						<div show.bind="!CurrentRow.isLine && !CurrentRow.isSort">
+							<qp-include url="../common/arm/arm-style-font.html" view="CurrentRowStyle"></qp-include>
+						</div>
+						<!-- show.bind not getting the corrent initial 'false' value for qp-fieldset, which stays incorrect until isLine is true -- bug in Aurelia?  -->
+						<!-- <qp-fieldset id="groupLine" view.bind="CurrentRow" caption="Line" show.bind="CurrentRow.isLine" class="label-size-sm"> -->
+						<qp-fieldset id="groupLine" view.bind="CurrentRow" caption="Line" class="label-size-sm ${CurrentRow.isLine ? '' : 'hidden'}">
+							<field name="LineStyle" caption="Type"></field>
+							<field name="CurrentRowStyle.ColorRGB" control-type="qp-color-picker"></field>
+						</qp-fieldset>
+
+						<qp-fieldset id="groupRow" view.bind="CurrentRow" caption="Layout and Style" class="label-size-sm">
+							<field name="Format" caption="Number Format"></field>
+							<field name="PrintControl"></field>
+							<field name="PageBreak"></field>
+							<field name="Height" caption="Row Height"></field>
+							<field name="Indent" caption="Indent Size"></field>
+							<field name="CurrentRowStyle.BackColorRGB" caption="Background Color" control-type="qp-color-picker"></field>
+						</qp-fieldset>
+					</qp-tab>
+				</qp-tabbar>
+			</div>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="NewRowSetPanel" caption="New Row Set" auto-repaint="true" close-button-locator="#pbCancel">
+		<qp-template id="newRowSetPanelDataId" wg-container name="1">
+			<qp-fieldset slot="A" id="newRowSetPanelDataId1" view.bind="NewRowSetPanel">
+				<field name="RowSetCode"></field>
+				<field name="Type"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="pbClose" dialog-result="OK" caption="Save" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="Parameter" caption="Copy Row Set" auto-repaint="true" close-button-locator="#pbCancel">
+		<qp-template id="copyRowSetPanelDataId" wg-container name="1">
+			<qp-fieldset slot="A" id="copyRowSetPanelDataId1" view.bind="Parameter">
+				<field name="NewRowSetCode"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="pbClose" dialog-result="OK" caption="Save" config.bind="{ validateInput: true }"></qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="headerForm" wg-container="Filter_headerForm" name="17-17-14">
+		<qp-fieldset id="headerForm_0" view.bind="Filter" slot="A">
+			<field name="PeriodStartDate"></field>
+			<field name="PeriodEndDate"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="headerForm_1" view.bind="Filter" slot="B">
+			<field name="EmployeeID"></field>
+			<field name="BankID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="PTOBalancesgridPTOBalances" wg-container="PTOBalances_gridPTOBalances" view.bind="PTOBalances"></qp-grid>
+</template>

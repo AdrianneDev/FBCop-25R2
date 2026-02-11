@@ -1,0 +1,13 @@
+<template>
+	<qp-panel id="CreateOrderParams" caption="Create Return Order" width="sm" auto-repaint="true">
+		<qp-template id="CreateOrderParams_template" name="1-1-1">
+			<qp-fieldset id="CreateOrderParams_frmCreateReturnOrder" slot="A" view.bind="CreateOrderParams">
+				<field name="OrderType"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnCreateReturnOrderOK" dialog-result="OK" caption="Create" config-action.bind="CreateReturnOrderInPanel" wg-name="Create"></qp-button>
+			<qp-button id="btnCreateReturnOrderCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

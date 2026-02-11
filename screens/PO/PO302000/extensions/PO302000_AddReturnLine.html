@@ -1,0 +1,22 @@
+<template>
+	<qp-panel id="poReceiptLineReturn" caption="Add Receipt Line" auto-repaint="true" width="lg" height="85vh">
+		<qp-template id="form-AddReturnLine" name="1-1-1" class="equal-height" wg-container="ReturnFilter_frmReceiptReturnLineFilter">
+			<qp-fieldset id="fsColumnA-AddReturnLine" slot="A" view.bind="returnFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset id="fsColumnB-AddReturnLine" slot="B" view.bind="returnFilter">
+				<field name="ReceiptNbr"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="grid-AddReturnLine" view.bind="poReceiptLineReturn" wg-container="poReceiptLineReturn_grdReceiptLineReturn"></qp-grid>
+
+		<footer id="footer-AddReturnLine">
+			<qp-button id="buttonAdd-AddReturnLine" state.bind="AddPOReceiptLineReturn2"></qp-button>
+			<qp-button id="buttonAddClose-AddReturnLine" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AddReturnLine" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

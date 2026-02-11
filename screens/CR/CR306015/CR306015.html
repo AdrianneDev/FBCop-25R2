@@ -1,0 +1,27 @@
+<template>
+	<qp-template name="17-7" id="form" qp-collapsible class="equal-height">
+		<qp-fieldset id="form_MessageLeft" view.bind="Message" slot="A" wg-container="Message_message">
+			<field name="MailAccountID" pinned></field>
+			<field name="MailFrom" pinned></field>
+			<field name="MailTo" pinned></field>
+			<field name="MailCc"></field>
+			<field name="MailBcc"></field>
+			<field name="Subject" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_MessageRight" view.bind="Message" slot="B" wg-container="CurrentMessage_tab">
+			<field name="IsIncome" pinned>
+				<qp-field control-state.bind="Message.IsPrivate" class="col-6" pinned></qp-field>
+			</field>
+			<field name="ProvidesCaseSolution" wg-container="Message_message"></field>
+			<field name="RefNoteIDType" pinned></field>
+			<field name="RefNoteID" pinned></field>
+			<field name="MPStatus"></field>
+			<field name="StartDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTabBar">
+		<qp-tab id="tabMessage" caption="Message" ref="tabMessage_Content" wg-container="CurrentMessage_tab"></qp-tab>
+		<qp-tab id="tabDetails" caption="Details" ref="tabDetails_Content" wg-container="CurrentMessage_tab"></qp-tab>
+		<qp-tab id="tabTracking" caption="Tracking" ref="tabTracking_Content"></qp-tab>
+	</qp-tabbar>
+</template>

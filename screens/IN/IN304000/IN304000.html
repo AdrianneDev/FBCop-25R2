@@ -1,0 +1,39 @@
+<template>
+	<require from="src/screens/IN/common/status-styles.scss"></require>
+	<qp-template id="form-Transfer" name="7-10-7" class="equal-height" qp-collapsible wg-container="transfer_form">
+		<qp-fieldset id="fsColumnA-Transfer" slot="A" view.bind="transfer">
+			<field name="RefNbr"></field>
+			<field name="Status" class="colored" pinned="true"></field>
+			<field name="TransferType"></field>
+			<field name="TranDate" pinned="false"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnB-Transfer" slot="B" view.bind="transfer">
+			<field name="SiteID"></field>
+			<field name="ToSiteID"></field>
+			<field name="ExtRefNbr" pinned="true"></field>
+			<field name="TranDesc" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="fsColumnC-Transfer" slot="C" view.bind="transfer" class="highlights-section">
+			<field name="TotalQty" pinned="true"></field>
+			<field name="ControlQty" pinned="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tab-Details" caption="Details">
+			<qp-grid id="grid-Details" view.bind="transactions" wg-container="transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab-Financial" caption="Financial">
+			<qp-template id="form-Financial" name="17-17-14" wg-container="CurrentDocument_form2">
+				<qp-fieldset id="fsColumnA-Financial" slot="A" view.bind="CurrentDocument">
+					<field name="BatchNbr" config.bind="{allowEdit: true}"></field>
+					<field name="BranchID"></field>
+					<field name="BranchBaseCuryID"></field>
+					<field name="POReceiptNbr"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,21 @@
+<template>
+	<qp-template id="form_0" name="1-1">
+		<qp-fieldset id="form_01" wg-container="Features_form" view.bind="Features" slot="A">
+			<field name="Status"></field>
+			<field name="LicenseID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_10" wg-container="Features_form" view.bind="Features" slot="B">
+			<field name="ValidUntill"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template id="form_features" name="1-1" wg-container="Features_form">
+		<div slot="A" class="no-label">
+			<template repeat.for="feature of featuresControls" >
+				<qp-field control-id.bind="'edFeatures-' + feature.featureName"
+					class="${(feature.level > 0 ? ('indent-' + feature.level) : '')}"
+					control-state.bind="Features[feature.featureName]" control-type="qp-check-box">
+				</qp-field>
+			</template>
+		</div>
+	</qp-template>
+</template>

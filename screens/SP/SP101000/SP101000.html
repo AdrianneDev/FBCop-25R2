@@ -1,0 +1,82 @@
+<template>
+	<qp-include url="../sp-base.html"></qp-include>
+
+	<qp-template name="1-1" id="company-profile" tabindex="0">
+		<div slot="A">
+			<qp-fieldset id="first" view.bind="Contact" caption="Contact Information">
+				<field name="FirstName"></field>
+				<field name="LastName"></field>
+				<field name="Salutation"></field>
+				<field name="Email"></field>
+				<field name="Phone1"></field>
+			</qp-fieldset>
+			<qp-fieldset id="settingsCol2" view.bind="UserProfile" caption="Security Settings">
+				<field name="PasswordQuestion"></field>
+				<field name="ChangeSecretAnswerBtn" class="sp-size-fit" unbound>
+					<qp-button id="btnChangeSecretAnswer" state.bind="changeSecretAnswerExt"></qp-button>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="settingsCol1" view.bind="UserPrefs" caption="Display Settings" wg-container>
+				<field name="TimeZone"></field>
+				<field name="HomePage"></field>
+			</qp-fieldset>
+		</div>
+		<qp-fieldset slot="B" id="second" view.bind="AddressCurrent" caption="Address">
+			<field name="Contact.OverrideAddress"></field>
+			<field name="LookupBtn" unbound>
+				<qp-address-lookup class="control-container size-default col-12" view.bind="AddressCurrent"
+					override-address.bind="Contact.OverrideAddress.value"
+					config.bind="{cancelButtonText: (Contact.OverrideAddress.value ? SysMessages.Cancel : SysMessages.Close) }">
+				</qp-address-lookup>
+			</field>
+			<field name="AddressLine1"></field>
+			<field name="AddressLine2"></field>
+			<field name="City"></field>
+			<field name="State"></field>
+			<field name="PostalCode"></field>
+			<field name="CountryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-panel id="Passwords" caption="Change Password" auto-repaint="true" class="col-sm-10 col-md-4 col-lg-4">
+		<div class="h-stack invisible-pane">
+			<qp-fieldset id="fsPasswords" view.bind="Passwords" label-size="col-sm-4 col-md-4 col-lg-3">
+				<field name="OldPassword">
+				</field>
+				<field name="NewPassword">
+				</field>
+				<field name="ConfirmPassword">
+				</field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<div class="h-stack">
+				<qp-button id="btnChangePasswordOK"
+					caption="Change" dialog-result="OK" config.bind="{ validateInput: true }" >
+				</qp-button>
+				<qp-button id="btnCancel" dialog-result="Cancel">
+				</qp-button>
+			</div>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="NewAnswer" caption="Change Password Recovery Info" auto-repaint="true"
+		class="col-sm-10 col-md-4 col-lg-4">
+		<div class="h-stack invisible-pane">
+			<qp-fieldset id="fsNewAnswer" view.bind="NewAnswer" label-size="col-sm-4 col-md-4 col-lg-3">
+				<field name="PasswordQuestion"></field>
+				<field name="PasswordAnswer"></field>
+				<field name="Password" control-type="qp-text-editor" config-type.bind="2"></field>
+			</qp-fieldset>
+		</div>
+		<footer>
+			<div class="h-stack">
+				<qp-button id="btnChangeSecretAnswerOK"
+					caption="Change" dialog-result="OK" config.bind="{validateInput: true}">
+				</qp-button>
+				<qp-button id="btnCancel" dialog-result="Cancel">
+				</qp-button>
+			</div>
+		</footer>
+	</qp-panel>
+</template>

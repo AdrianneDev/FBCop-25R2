@@ -1,0 +1,21 @@
+.sp-documents {
+	padding-inline-start: 6px;
+
+	feed-item {
+		display: flex;
+		width: 100%;
+		border: 1px solid #dcdcdc;
+		background: white;
+		border-radius: 10px;
+		margin-inline-start: 10px;
+
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+
+		.record-item {
+			padding-inline: 10px;
+			padding-block: 12px;
+		}
+	}
+}

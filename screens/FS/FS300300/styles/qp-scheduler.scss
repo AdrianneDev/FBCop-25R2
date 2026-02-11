@@ -1,0 +1,545 @@
+:root {
+	/* --qp-highlight-color-alt: #d2e9fe80;
+	--qp-highlight-hover-color-alt: #d2e9fe; */
+	--qp-sch-event-background-alt: #d2e9fe;
+
+	--qp-highlight-color: #D6EFFF80;
+	--qp-highlight-hover-color: #D6EFFF;
+
+	--qp-sch-black: #1B1B1B;
+	--qp-sch-event-background: #D6EFFF;
+	--qp-sch-event-border: #007ACC1F;
+	--qp-sch-event-color: #1B1B1B;
+	--qp-sch-event-unassigned: #1B1B1B;
+	--qp-sch-event-unassigned-border: #D0D0D0;
+	--qp-sch-splitter-line: var(--qp-shadow-color, rgba(0, 0, 0, 0.2));
+	--qp-sch-unavailable-background: #00204012;
+	--qp-sch-unsuitable-background: rgba(255, 219, 219, 0.25);
+	--qp-sch-unsuitable-text: #E27A7A;
+	--qp-sch-non-recommended-background-header: rgba(255, 235, 131, 0.25);
+	--qp-sch-non-recommended-background: rgba(255, 235, 131, 0.25);
+	--qp-sch-non-recommended-text: #F9B70E;
+	--qp-sch-header-background: white;
+	--qp-sch-dark-background: #F5F7F8;
+	--qp-sch-button-hover-background: rgba(0, 0, 0, 0.06);
+	--qp-sch-header-border: #E8E8E8;
+	--qp-sch-border: rgba(0, 0, 0, 0.09);
+	--qp-sch-semi-transparent-main: rgba(var(--primary-color), 0.88);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0%;
+	}
+
+	to {
+		opacity: 100%;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 100%;
+	}
+
+	50% {
+		opacity: 100%;
+	}
+
+	100% {
+		opacity: 0%;
+	}
+}
+
+.qp-sch-left-container {
+	flex: 1 1 0%;
+
+	.b-grid-header-container {
+		display: none;
+	}
+	.b-grid-row {
+		border-color: transparent;
+
+		&.b-selected,
+		&.b-hover {
+			background-color: transparent !important;
+		}
+	}
+	.b-grid-vertical-scroller {
+		background-color: var(--qp-sch-dark-background);
+		padding-top: 0;
+		padding-inline-end: 4px;
+		padding-bottom: 12px;
+		padding-inline-start: 12px;
+	}
+	.b-grid-cell {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 0;
+		padding-bottom: 9px;
+	}
+	.b-gridbase .b-grid-panel-body:not(.b-autoheight) > .b-grid-body-container {
+		overflow-y: scroll !important;
+		padding-top: 11px;
+    	background-color: var(--qp-sch-dark-background);
+	}
+}
+
+.qp-sch-config-form {
+	position: absolute;
+    z-index: 1;
+    inset-inline-end: 0px;
+	pointer-events:none;
+
+	.container {
+		padding-inline-end: 0px;
+	}
+	.v-stack {
+		color: transparent;
+		overflow: hidden;
+	}
+	qp-fieldset {
+		padding: 0;
+		border: 0;
+	}
+
+	.qp-fieldset-icon {
+		pointer-events: all;
+		border: 1px solid var(--qp-sch-black);
+		padding-top: 4px;
+		padding-inline-start: 8px;
+		padding-inline-end: 10px;
+		top: 9px;
+		inset-inline-end: 10px;
+		width: max-content;
+		text-align: center;
+
+		.qp-sch-left-container & {
+			top: 10px;
+			inset-inline-end: 20px;
+		}
+		&:not(:hover) {
+			background: white;
+		}
+		&:hover {
+			background: #F0F0F0; /* can't have it semi-transparent - it's right on the grid */
+		}
+		&:after {
+			font-size: 13px;
+			font-family: Arial, sans-serif !important;
+			position: relative;
+			top: -2px;
+			inset-inline-start: -1px;
+		}
+	}
+
+	.toggle,
+	fieldset {
+		visibility: hidden;
+	}
+	.qp-sch-config-left {
+		position: absolute;
+		inset-inline-end: 82px;
+
+		.qp-fieldset-icon:after {
+			content: "Left";
+		}
+	}
+	.qp-sch-config-right {
+		position: absolute;
+
+		.qp-fieldset-icon:after {
+			content: "Right";
+		}
+	}
+}
+
+.b-grid-vertical-scroller {
+	min-height: 54px;
+}
+
+.qp-sch-main-container {
+	background-color: var(--qp-sch-header-background);
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 3%);
+	width: 100%;
+	border: 1px solid var(--qp-sch-border);
+	position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    transform: translate(0, 0);
+    overflow: hidden;
+
+	.b-grid-header-text > .b-grid-header-text-content {
+		font-size: 14px;
+	}
+}
+
+.qp-sch-backlog {
+	border-bottom: 1px solid var(--qp-sch-border);
+	min-height: 110px !important;
+	max-height: 33%;
+
+	.b-sch-color-blue {
+		min-height: 54px;
+	}
+	.b-grid-subgrid-locked {
+		background-color: var(--qp-sch-unavailable-background);
+
+		&.b-grid-subgrid-collapsed div {
+			display: none;
+		}
+		.b-grid-cell {
+			align-items: flex-start;
+			padding-top: 19px;
+		}
+	}
+	.b-virtual-scrollers {
+		display: none;
+	}
+	.b-grid-body-container {
+		min-height: 54px;
+
+		.b-grid-row {
+			min-height: 54px;
+			background: transparent;
+			border: none;
+		}
+	}
+	.b-grid-row.b-hover {
+		background-color: transparent !important;
+	}
+}
+
+.qp-sch-calendar {
+	flex: 1 1 0%;
+}
+	body:not(.b-draghelper-active) .qp-sch-calendar .b-grid-subgrid-locked .b-grid-cell {
+		cursor: pointer;
+	}
+
+.qp-sch-hide-grid {
+	.grid-content,
+	.grid-header,
+	.grid-pager {
+		position: absolute;
+		display: none;
+		height: 10000px;
+	}
+}
+
+.qp-sch-grid-container {
+	height: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+
+	.b-grid-cell {
+		color: inherit;
+		outline: none !important;
+	}
+
+	.b-sch-event-wrap {
+		&:not(.b-sch-vertical) {
+			padding-inline-start: 2px;
+			padding-inline-end: 2px;
+		}
+		&.b-sch-vertical {
+			padding-top: 2px;
+			padding-bottom: 3px;
+		}
+	}
+
+	&-inner {
+		display: flex;
+		overflow-y: auto;
+		flex-grow: 1;
+		flex-direction: column;
+		padding-top: var(--qp-sections-row-gap);
+	}
+	.reversed qp-hyper-icon {
+		vertical-align: baseline;
+		transform: rotate(270deg) scaleX(-1);
+	}
+	.around-the-clock svg {
+		color: var(--qp-link-color);
+	}
+
+	qp-tabbar { // hide tabbar content
+		height: initial;
+
+		.qp-tabbar-content {
+			display: none;
+		}
+	}
+
+	.grid-right-toolbar-cont .qp-tool-bar {
+		margin-inline-end: -4px; /* TODO: Qickfix for the bug in qp-tool-bar: it has a margin-inline-start:-4px, but 0 for margin-inline-end */
+		text-wrap: nowrap; /* TODO: Qickfixes for the bugs in qp-grid/qp-tool-bar */
+		overflow: visible;
+	}
+
+	.qp-datetime__editor {
+		border: none !important;
+		box-shadow: none !important;
+		background-color: var(--qp-sch-button-hover-background);
+
+		input {
+			color: transparent;
+		}
+
+		.buttonsCont {
+			display: flex;
+			flex-direction: row;
+
+			span {
+				padding-top: 2px;
+				padding-inline-end: 5px;
+				text-wrap: nowrap;
+			}
+			& > qp-icon {
+				margin-top: 7px;
+			}
+		}
+	}
+}
+
+.qp-sch-time-period {
+    border: 1px solid #0000001A !important;
+    height: calc(var(--qp-toolbar-height) - 2px) !important;
+
+	& > * {
+		padding: calc( ( var(--qp-toolbar-height) - var(--qp-icon-size) ) / 2 - 1px) 10px;
+	}
+	&:not(.qp-sch-selected-time-period):not(:hover) > * {
+		background: inherit !important;
+	}
+}
+
+/* Note: Bryntum manages b-hover incorrectly while dragging is on */
+
+.b-grid-subgrid:not(.b-timeaxissubgrid) .b-grid-row:not(.b-group-row) {
+	.qp-sch-calendar & {
+		body:not(.b-draghelper-active) &.b-hover,
+		&:is(.b-selected, [qp-sch-dragged-over~="true"]) {
+			background-color: var(--qp-highlight-color) !important;
+		}
+
+		body:not(.b-draghelper-active) &.b-hover.b-selected,
+		&.b-selected[qp-sch-dragged-over~="true"]  {
+			background-color: var(--qp-highlight-hover-color) !important;
+		}
+
+		body.b-draghelper-active &.b-hover:not(.b-selected):not([qp-sch-dragged-over~="true"]) {
+			background-color: transparent !important;
+		}
+	}
+
+	.qp-sch-grid-container &.b-hover .b-grid-cell {
+		background-color: transparent !important;
+	}
+}
+
+.qp-sch-new-event-tooltip {
+	width: 180px !important;
+	height: 100px !important;
+	overflow: visible !important;
+}
+
+.b-grid-header-container {
+	box-shadow: none;
+	background-color: var(--qp-sch-header-background);
+	flex-basis: 60px;
+
+	.b-sch-timeaxiscolumn {
+		background-color: var(--qp-sch-header-background);
+
+		&.b-depth-0:hover {
+			background-color: var(--qp-sch-header-background) !important;
+		}
+		.b-sch-header-timeaxis-cell:hover {
+			background-color: var(--qp-sch-button-hover-background) !important;
+		}
+	}
+
+	.b-depth-0:not(.b-sch-timeaxiscolumn):hover {
+		background-color: var(--qp-sch-button-hover-background) !important;
+	}
+}
+
+.b-grid-header {
+	text-transform: none;
+
+	&.b-sort &-text .b-sort-icon::before {
+		content: "\e9ed" !important;
+		display: inline-block;
+		font: normal normal normal 14px/1 "FontAwesome" !important;
+		text-rendering: auto;
+		-webkit-font-smoothing: antialiased;
+		color: rgba(0, 0, 0, 0.5) !important;
+	}
+}
+
+.b-sch-header-timeaxis-cell {
+	text-transform: none !important;
+	justify-content: flex-start;
+	padding-bottom: 2px !important;
+	color: black;
+	border-color: var(--qp-sch-header-border);
+}
+	.b-sch-header-row-0 .b-sch-header-timeaxis-cell {
+		padding-inline-start: 0px;
+		font-size: 14px;
+	}
+	.b-sch-header-row-1 .b-sch-header-timeaxis-cell {
+		padding-inline-start: 5px;
+		font-size: 10px;
+		height: 36px;
+	}
+
+	.b-sticky-headers .b-horizontaltimeaxis .b-sch-header-text.b-sticky-header {
+		padding-inline-start: 6px;
+	}
+
+.b-sch-color-blue.b-sch-resourcetimerange {
+	background-color: var(--qp-sch-unavailable-background);
+}
+
+.qp-sch-resource-header {
+	.name {
+		color: #000000;
+	}
+	.label {
+		color: #838383;
+		width: fit-content;
+		font-size: 12px;
+		line-height: 16px;
+	}
+}
+
+.qp-sch-resource-header {
+	display: flex;
+	.qp-sch-resource-header-icon {
+		width: 24px;
+		height: 16px;
+		padding-top: 0;
+		padding-inline-end: 6px;
+		padding-bottom: 0;
+		padding-inline-start: 2px;
+	}
+}
+
+.qp-sch-unsuitable-resource {
+	&.b-grid-row {
+		z-index: 2;
+		background-color: var(--qp-sch-unsuitable-background) !important;
+	}
+
+	.qp-sch-resource-header .label {
+		color: var(--qp-sch-unsuitable-text) !important;
+	}
+
+	// .b-sch-color-blue.b-sch-resourcetimerange:has(&){
+	// 	background-color: transparent;
+	// }
+}
+
+.qp-sch-non-recommended-resource {
+	&.b-grid-row {
+		z-index: 2;
+		background-color: var(--qp-sch-non-recommended-background) !important;
+	}
+
+	.qp-sch-resource-header .label {
+		color: var(--qp-sch-non-recommended-text) !important;
+	}
+}
+
+.qp-sch-menu {
+	color: black;
+
+	&.b-menuitem {
+		&.b-contains-focus,
+		&:focus {
+			background-color: var(--qp-highlight-color);
+		}
+	}
+}
+
+.qp-sch-time-projection {
+	background: {
+		image:
+			repeating-linear-gradient(to right, transparent 0%, transparent 100%),
+			repeating-linear-gradient(to right, transparent 0%, transparent 100%),
+			repeating-linear-gradient(to bottom, var(--qp-sch-semi-transparent-main) 0%, var(--qp-sch-semi-transparent-main) 50%, transparent 50%, transparent 100%),
+			repeating-linear-gradient(to bottom, var(--qp-sch-semi-transparent-main) 0%, var(--qp-sch-semi-transparent-main) 50%, transparent 50%, transparent 100%);
+		position: left top, left bottom, left top, right top;
+		repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+		size: 20px 1px, 20px 1px, 1px 20px, 1px 20px;
+		color: transparent!important;
+	};
+}
+
+// TODO: Check if we need any of those after scrollbars are fixed in Platform
+
+// *:hover::-webkit-scrollbar-thumb {
+//     background: rgba(0,0,0,0.15);
+// }
+// *:not(:hover)::-webkit-scrollbar-thumb {
+//     background: rgba(0,0,0,0.09);
+// }
+//
+// .qp-sch-left-container *::-webkit-scrollbar-track {
+//     background-color: var(--qp-sch-dark-background);
+// }
+
+// .qp-sch-left-container *:not(:hover)::-webkit-scrollbar-thumb {
+//     background: rgba(0,0,0,0.04);
+// }
+// .qp-sch-left-container *:hover::-webkit-scrollbar-thumb {
+//     background: rgba(0,0,0,0.10);
+// }
+
+.qp-sch-left-container .qp-fieldset-caption {
+	display: none;
+}
+.qp-sch-calendar-container.qp-disable-filters .filter-button.filtered .content span.text {
+    text-decoration-color: black;
+    color: #bbb;
+    font-style: italic;
+}
+
+.qp-sch-calendar-container .grid-left-toolbar-cont {
+	flex: 1 0 132px; /* TODO: it's a quickfix for a bug in Platform */
+}
+
+.qp-sch-calendar-container .grid-filter-button .text {
+	display: none; /* text duplicates tab name */
+}
+
+.b-sch-tooltip-startdate svg {
+	width: 16px;
+	height: 16px;
+	padding-top: 4px;
+}
+
+.b-sch-event-title {
+	white-space: nowrap;
+}
+
+.b-float-root {
+	& > .b-floating.b-tooltip {
+		&, & > .b-panel-body-wrap {
+			overflow: visible !important;
+		}
+	}
+
+	.b-anchor-bottom {
+		transform: translateX(77.7778px);
+	}
+	.b-pointer-el path {
+		fill: rgb(255, 255, 255);
+	}
+}

@@ -1,0 +1,45 @@
+<template>
+	<require from="../common/pm-status-colors-common.scss"></require>
+	<qp-template id="Document_form" name="14-17-17" class="equal-height" wg-container>
+		<qp-fieldset id="form01" slot="A" view.bind="Document">
+			<field name="RefNbr" config-display-mode.bind="'id'"></field>
+			<field name="Status" class="colored" pinned="false"></field>
+			<field name="Date"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form02" slot="B" view.bind="Document">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="DailyFieldReportCD"></field>
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form03" slot="C" view.bind="Document">
+			<field name="Project.OwnerID" config-display-mode.bind="'text'"></field>
+			<field name="CreatedByID"></field>
+			<field name="LastModifiedByID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="DocumentSettings_tab" wg-container>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-grid id="Details_DetailsGrid" view.bind="Details"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content"></qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CostBudgets" caption="Add Budget Lines" auto-repaint="true" width="lg" height="85vh">
+		<qp-template name="17-17-14" class="equal-height" id="costBudgetfilter_formSelectBudgetLines" wg-container>
+			<qp-fieldset slot="A" id="formSelectBudgetLines01" view.bind="costBudgetfilter">
+				<field name="TaskID"></field>
+				<field name="AccountGroupID"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="formSelectBudgetLines02" slot="B" view.bind="costBudgetfilter">
+				<field name="CostCodeFrom"></field>
+				<field name="CostCodeTo"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="CostBudgets_gridCostBudgetLines" view.bind="CostBudgets"></qp-grid>
+		<footer>
+			<qp-button id="PXButton6" state.bind="AddSelectedBudgetLines"></qp-button>
+			<qp-button id="PXButton7" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="PXButton8" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

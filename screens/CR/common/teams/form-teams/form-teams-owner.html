@@ -1,0 +1,26 @@
+<template>
+	<qp-button id="buttonOwnerTeamsCardOffline"
+		state.bind="OwnerTeamsCardOffline"
+		config.bind="{ images: { normal: 'svg:teams@teams_offline' } }"
+		if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+		class="col-2">
+	</qp-button>
+	<qp-button id="buttonOwnerTeamsCardAvailable"
+		state.bind="OwnerTeamsCardAvailable"
+		config.bind="{ images: { normal: 'svg:teams@teams_available' } }"
+		if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+		class="col-2">
+	</qp-button>
+	<qp-button id="buttonOwnerTeamsCardBusy"
+		state.bind="OwnerTeamsCardBusy"
+		config.bind="{ images: { normal: 'svg:teams@teams_busy' } }"
+		if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+		class="col-2">
+	</qp-button>
+	<qp-button id="buttonOwnerTeamsCardAway"
+		state.bind="OwnerTeamsCardAway"
+		config.bind="{ images: { normal: 'svg:teams@teams_away' } }"
+		if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['TeamsIntegration']"
+		class="col-2">
+	</qp-button>
+</template>

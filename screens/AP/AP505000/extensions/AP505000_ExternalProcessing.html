@@ -1,0 +1,8 @@
+<template>
+	<field after="#columnFirstFilter [name='CuryID']" name="infobox" replace-content unbound >
+		 <qp-info-box caption.bind="CurrentExternalPaymentProcessor.DisclaimerMessage.value" type="info" show.bind="CurrentExternalPaymentProcessor.ExternalPaymentProcessorID.value.id != null"></qp-info-box>
+		 <using view="CurrentExternalPaymentProcessor">
+			<field name="ExternalPaymentProcessorID" show.bind="false"></field>
+ 		</using>
+	</field>
+</template>

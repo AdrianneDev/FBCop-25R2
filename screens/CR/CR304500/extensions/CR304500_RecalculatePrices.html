@@ -1,0 +1,16 @@
+<template>
+	<qp-panel id="recalcdiscountsfilter" caption="Recalculate Prices" auto-repaint="true" width="40vw">
+		<qp-fieldset id="formRecalculate" view.bind="recalcdiscountsfilter">
+			<field name="RecalcTarget"></field>
+			<field name="RecalcUnitPrices"></field>
+			<field name="OverrideManualPrices" class="indent-1"></field>
+			<field name="RecalcDiscounts"></field>
+			<field name="OverrideManualDiscounts" class="indent-1"></field>
+			<field name="OverrideManualDocGroupDiscounts" class="indent-1"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="BtnOk" dialog-result="OK"></qp-button>
+			<qp-button id="BtnCancel" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,44 @@
+<template>
+	<qp-template id="document" name="7-10-7" class="equal-height" qp-collapsible wg-container="Revision_form">
+		<qp-fieldset id="fs-revision" view.bind="Revision" slot="A" class="label-size-sm">
+			<field name="ProjectID" config-allow-edit.bind="true" pinned></field>
+			<field name="AccountGroups" ></field>
+			<field name="Period"></field>
+			<field name="StartDate" pinned></field>
+			<field name="EndDate" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="fs-filter" view.bind="Revision" slot="B" class="label-size-s">
+			<field name="ProjectTaskID" pinned>
+				<qp-field control-state.bind="Revision.GroupByProjectTaskID" pinned></qp-field>
+			</field>
+			<field name="AccountGroupID" pinned>
+				<qp-field control-state.bind="Revision.GroupByAccountGroupID" pinned></qp-field>
+			</field>
+			<field name="InventoryID">
+				<qp-field control-state.bind="Revision.GroupByInventoryID"></qp-field>
+			</field>
+			<field name="CostCodeID" >
+				<qp-field control-state.bind="Revision.GroupByCostCodeID"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset id="fs-project_properties" view.bind="Project" slot="C" class="label-size-sm highlights-section">
+			<field name="Project.OwnerID"></field>
+			<field name="StartDate"></field>
+			<field name="ExpireDate"></field>
+			<field name="BudgetTotals.CuryActualAmount"></field>
+			<field name="BudgetTotals.CuryRevisedAmount"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="Items_grid" wg-container view.bind="Items"></qp-grid>
+	<qp-panel id="Items" caption="Chart" auto-repaint="true" width="lg">
+		<div id="dashboard" class="stretch">
+			<qp-dashboard-container>
+				<qp-dashboard-widget
+					type.bind="chart.type"
+					config.bind="chart.config"
+					data.bind="chart.data">
+				</qp-dashboard-widget>
+			</qp-dashboard-container>
+		</div>
+	</qp-panel>
+</template>

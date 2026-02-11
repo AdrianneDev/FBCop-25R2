@@ -1,0 +1,146 @@
+@use "sass:map";
+
+.qp-sch-event-info > div:first-child > span:first-child {
+	&, & * {
+		font-weight: bold !important;
+	}
+}
+
+:is(.qp-sch-main-container, .qp-sch-dragged) span[sch-field="SelectedWCOperation.ProdOrdID"] {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+:is(.qp-sch-left-container,.qp-sch-events-container) span[sch-field="SelectedWCOperation.ProdOrdID"] {
+	line-height: 16px;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.qp-sch-tile-icon {
+	&:has(span > svg[sch-field="SelectedWCOperation.IsLate"]) {
+		flex-shrink: 0;
+	}
+
+	&:has(span > svg[sch-field="SelectedWCOperation.FirmSchedule"]) {
+		flex-shrink: 0;
+	}
+	&:has(span > svg[sch-field="SelectedWCOperation.SchPriority"]) {
+		&:has(span > svg[sch-value="0"]),
+		&:has(span > svg[sch-value="1"]),
+		&:has(span > svg[sch-value="2"]),
+		&:has(span > svg[sch-value="3"]),
+		&:has(span > svg[sch-value="4"]) {
+			flex-shrink: 0;
+		}
+	}
+}
+
+span:has(span[sch-field="SelectedWCOperation.QtytoProd"]){
+	flex-shrink: 0;
+}
+
+[sch-field="SelectedWCOperation.IsLate"] {
+	font-weight: bold !important;
+	color: var(--qp-late-icon-color-dark);
+}
+
+[sch-field="SelectedWCOperation.IsEarly"] {
+	font-weight: bold !important;
+	color: var(--qp-early-color-dark);
+}
+
+[sch-field="SelectedWCOperation.IsOnTime"] {
+	font-weight: bold !important;
+	color: var(--qp-on-time-color-dark);
+}
+
+[sch-field="SelectedWCOperation.Selected"] {
+}
+
+[sch-field="SelectedWCOperation.SchPriority"] {
+	font-weight: bold !important;
+
+	&[sch-value="0"],
+	&[sch-value="1"],
+	&[sch-value="2"],
+	&[sch-value="3"],
+	&[sch-value="4"] {
+		color: var(--qp-priority-high-color-dark);
+	}
+	&[sch-value="5"],
+	&[sch-value=""] {
+		color: var(--qp-priority-normal-color-dark);
+
+		span:has(> &) {
+			display: none;
+		}
+	}
+	&[sch-value="6"],
+	&[sch-value="7"],
+	&[sch-value="8"],
+	&[sch-value="9"],
+	&[sch-value="10"] {
+		color: var(--qp-priority-low-color-dark);
+	}
+}
+
+[sch-field="SelectedWCOperation.LackOfMaterials"] {
+	color: var(--qp-lack-of-material-color-dark);
+}
+
+[sch-field="SelectedWCOperation.FirmSchedule"] {
+	color: var(--qp-firm-schedule-color-dark);
+}
+
+@mixin status-background-light($status) {
+	#edSelectedProdOper,
+	#edSelectedProdItem {
+		&-StatusID.drop-down__editor .drop-down__text[valueattr = "#{$status}"] {
+			background-color: status-color($status, false);
+		}
+	}
+}
+
+@mixin status-background-dark($status) {
+	.b-sch-event {
+		& [event-background-dark = "#{$status}"]:not(.qp-sch-event-status-bar-fixed, .qp-sch-event-status-bar, .qp-product-event-jaw) {
+			background-color: status-color($status, true);
+		}
+
+		& :is(.qp-sch-event-status-bar-fixed, .qp-sch-event-status-bar)[event-background-dark = "#{$status}"] {
+			background: linear-gradient(to right, status-color($status, true) 0px, status-color($status, true) 9px, transparent 9px);
+		}
+
+		& .qp-product-event-jaw[event-background-dark = "#{$status}"] {
+			color: status-color($status, true);
+		}
+	}
+}
+
+@function status-color($status, $is-dark: true) {
+	@if $is-dark {
+		@return map.get($map: ( H: var(--status-dark-orange-color), P: var(--status-dark-purple-color), R: var(--status-dark-blue-color), I: var(--status-dark-green-color), X: var(--status-dark-gray-color), M: var(--status-dark-gray-color), C: var(--status-dark-gray-color), L: var(--status-dark-orange-color) ), $key: $status);
+	}
+	@else {
+		@return map.get($map: ( H: var(--status-orange-color), P: var(--status-purple-color), R: var(--status-blue-color), I: var(--status-green-color), X: var(--status-gray-color), M: var(--status-gray-color), C: var(--status-gray-color), L: var(--status-orange-color) ), $key: $status);
+	}
+}
+
+@include status-background-light("H");
+@include status-background-light("P");
+@include status-background-light("R");
+@include status-background-light("I");
+@include status-background-light("X");
+@include status-background-light("M");
+@include status-background-light("C");
+@include status-background-light("L");
+
+@include status-background-dark("H");
+@include status-background-dark("P");
+@include status-background-dark("R");
+@include status-background-dark("I");
+@include status-background-dark("X");
+@include status-background-dark("M");
+@include status-background-dark("C");
+@include status-background-dark("L");

@@ -1,0 +1,21 @@
+<template>
+	<qp-template id="formFilter" name="1-1" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsFilterCriteria" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID"></field>
+			<field name="ScheduleType"></field>
+			<field name="StartDate"></field>
+			<field name="EndDate"></field>
+			<field name="CustomerID"></field>
+			<field name="TaxID"></field>
+		</qp-fieldset>
+		
+		<qp-fieldset id="fsTotals" slot="B" view.bind="Filter" class="highlights-section">
+			<field name="TotalGrossSales"></field>
+			<field name="TotalDiscount"></field>
+			<field name="TotalOutputVAT"></field>
+			<field name="TotalNetSales"></field>
+		</qp-fieldset>
+	</qp-template>
+	
+	<qp-grid id="gridSchedule" view.bind="Schedule" wg-container="Schedule_grid"></qp-grid>
+</template>

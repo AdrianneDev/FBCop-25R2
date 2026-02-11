@@ -1,0 +1,21 @@
+<template>
+	<qp-template id="formFilter" name="1-1-1" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="fsCompanyInfo" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID"></field>
+			<field name="AsOfDate"></field>
+		</qp-fieldset>
+		
+		<qp-fieldset id="fsCurrencyFilters" slot="B" view.bind="Filter">
+			<field name="Currency"></field>
+			<field name="ItemClassID"></field>
+		</qp-fieldset>
+		
+		<qp-fieldset id="fsLocationFilters" slot="C" view.bind="Filter">
+			<field name="SiteID"></field>
+			<field name="LocationID"></field>
+			<field name="LotSerialNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+	
+	<qp-grid id="gridInventoryBookResult" view.bind="InventoryBookResult" wg-container="InventoryBookResult_grid"></qp-grid>
+</template>
